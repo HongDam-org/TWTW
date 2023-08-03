@@ -1,0 +1,17 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    include: oauth
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/TWTW
+    username: root
+    password: root!
+  jpa:
+    database: mysql
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
