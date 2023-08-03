@@ -25,4 +25,14 @@ public class Member {
     @Embedded
     private OAuth2Info oAuth2Info;
 
+
+    public Member(String nickname,String profileImage,String phoneNumber) {
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void updateOAuth(OAuth2Info oAuth2Info){
+        this.oAuth2Info = oAuth2Info;
+    }
 }
