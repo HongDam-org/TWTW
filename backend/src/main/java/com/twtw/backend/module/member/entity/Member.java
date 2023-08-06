@@ -16,20 +16,27 @@ public class Member {
     @Column(name = "id",columnDefinition = "BINARY(16)")
     private UUID id;
 
+    private String userEmail;
+
     private String nickname;
 
     private String profileImage;
 
     private String phoneNumber;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @Embedded
     private OAuth2Info oAuth2Info;
 
 
-    public Member(String nickname,String profileImage,String phoneNumber) {
+    public Member(String userEmail,String nickname,String profileImage,String phoneNumber,Role role) {
+        this.userEmail = userEmail;
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.phoneNumber = phoneNumber;
+        this.role = role;
     }
 
     public void updateOAuth(OAuth2Info oAuth2Info){

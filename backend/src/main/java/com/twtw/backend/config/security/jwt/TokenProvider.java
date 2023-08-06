@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class TokenProvider implements InitializingBean {
+
     private Key key;
     private final String secretKey;
     private static final String AUTHORITIES_KEY = "auth";
@@ -72,20 +74,24 @@ public class TokenProvider implements InitializingBean {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 
-        Collection<? extends GrantedAuthority> authorities =
-                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        String role = claims.get(AUTHORITIES_KEY).toString();
 
-        UserDetails principal = new User(claims.getSubject(),"",authorities);
+        if(role.equals("ROLE_ADMIN")) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
 
-        return new UsernamePasswordAuthenticationToken(principal,accessToken,authorities);
+        else if(role.equals("ROLE_USER")){
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
+
+        return new UsernamePasswordAuthenticationToken(claims.getSubject(),"",authorities);
 
     }
 
-    public boolean validateToken(String accessToken) {
+    public boolean validateToken(String token) {
         try{
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken);
+            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         }catch (ExpiredJwtException | UnsupportedJwtException | IllegalStateException e) {
             return false;
