@@ -41,4 +41,8 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+
+    // TODO("OAuth2Info 를 이용하여 토큰 발급 메소드");
+    // TODO("SOFT DELETE 구현");
+
 }
