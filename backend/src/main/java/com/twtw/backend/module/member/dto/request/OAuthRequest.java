@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @RequiredArgsConstructor
 public class OAuthRequest {
-    private String clientId;
+    private String token;
 
     @Enumerated(EnumType.STRING)
     private AuthType authType;

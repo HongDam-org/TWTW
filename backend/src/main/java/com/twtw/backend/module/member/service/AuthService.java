@@ -3,9 +3,11 @@ package com.twtw.backend.module.member.service;
 import com.twtw.backend.config.security.entity.RefreshToken;
 import com.twtw.backend.config.security.jwt.TokenProvider;
 import com.twtw.backend.config.security.repository.RefreshTokenRepository;
+import com.twtw.backend.module.member.client.KakaoWebClient;
 import com.twtw.backend.module.member.dto.request.OAuthRequest;
 import com.twtw.backend.module.member.dto.response.TokenDto;
 import com.twtw.backend.module.member.dto.request.MemberSaveRequest;
+import com.twtw.backend.module.member.entity.AuthType;
 import com.twtw.backend.module.member.entity.Member;
 import com.twtw.backend.module.member.entity.OAuth2Info;
 import com.twtw.backend.module.member.repository.MemberRepository;
@@ -25,11 +27,13 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProvider tokenProvider;
+    private final KakaoWebClient kakaoWebClient;
 
-    public AuthService(MemberRepository memberRepository,RefreshTokenRepository refreshTokenRepository,TokenProvider tokenProvider) {
+    public AuthService(MemberRepository memberRepository,RefreshTokenRepository refreshTokenRepository,TokenProvider tokenProvider,KakaoWebClient kakaoWebClient) {
         this.memberRepository = memberRepository;
         this.refreshTokenRepository = refreshTokenRepository;
         this.tokenProvider = tokenProvider;
+        this.kakaoWebClient = kakaoWebClient;
     }
 
     private Member toMemberEntity(MemberSaveRequest request)
@@ -38,9 +42,9 @@ public class AuthService {
         return  member;
     }
 
-    private OAuth2Info toOAuthInfo(OAuthRequest request)
+    private OAuth2Info toOAuthInfo(String clientId,AuthType type)
     {
-        OAuth2Info info = new OAuth2Info(request.getClientId(),request.getAuthType());
+        OAuth2Info info = new OAuth2Info(clientId,type);
 
         return info;
     }
@@ -54,7 +58,10 @@ public class AuthService {
     * */
     public void saveMember(MemberSaveRequest request){
         Member member = toMemberEntity(request);
-        member.updateOAuth(toOAuthInfo(request.getOAuthRequest()));
+
+        String clientId = getClientId(request.getOAuthRequest());
+
+        member.updateOAuth(toOAuthInfo(clientId,request.getOAuthRequest().getAuthType()));
         memberRepository.save(member);
     }
     /*
@@ -63,7 +70,9 @@ public class AuthService {
     *
     * */
     public TokenDto getTokenByOAuth(OAuthRequest request) {
-        Optional<Member> member = memberRepository.findByOAuthIdAndAuthType(request.getClientId(),request.getAuthType());
+        String clientId = getClientId(request);
+
+        Optional<Member> member = memberRepository.findByOAuthIdAndAuthType(clientId,request.getAuthType());
 
         if(member.isPresent()) {
             Member curMember = member.get();
@@ -119,5 +128,11 @@ public class AuthService {
         return token;
     }
 
+    private String getClientId(OAuthRequest request){
+        if(request.getAuthType().equals(AuthType.KAKAO)){
+            return Long.toString(kakaoWebClient.requestKakao(request.getToken()).getId());
+        }
+        return request.getToken();
+    }
 
 }
