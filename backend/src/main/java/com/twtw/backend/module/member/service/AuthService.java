@@ -56,13 +56,18 @@ public class AuthService {
     * 4. 저장
     * 5. 토큰(jwt) 발급
     * */
-    public void saveMember(MemberSaveRequest request){
+    public TokenDto saveMember(MemberSaveRequest request){
         Member member = toMemberEntity(request);
 
         String clientId = getClientId(request.getOAuthRequest());
 
         member.updateOAuth(toOAuthInfo(clientId,request.getOAuthRequest().getAuthType()));
-        memberRepository.save(member);
+        member = memberRepository.save(member);
+
+        UsernamePasswordAuthenticationToken credit = makeCredit(member);
+        TokenDto tokenDto = saveRefreshToken(credit,member.getId().toString());
+
+        return tokenDto;
     }
     /*
     * 1.로그인(Social) 후의 토큰 발급
