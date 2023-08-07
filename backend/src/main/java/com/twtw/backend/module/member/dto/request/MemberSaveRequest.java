@@ -1,5 +1,6 @@
 package com.twtw.backend.module.member.dto.request;
 
+import com.twtw.backend.module.member.entity.OAuth2Info;
 import com.twtw.backend.module.member.entity.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,9 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class MemberRequest {
-    private String userEmail;
-
+public class MemberSaveRequest {
     private String nickname;
 
     private String profileImage;
@@ -21,4 +20,6 @@ public class MemberRequest {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    private OAuthRequest oAuthRequest;
 }

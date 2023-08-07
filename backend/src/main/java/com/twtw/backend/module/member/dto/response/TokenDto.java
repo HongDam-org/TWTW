@@ -1,4 +1,4 @@
-package com.twtw.backend.module.member.dto;
+package com.twtw.backend.module.member.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

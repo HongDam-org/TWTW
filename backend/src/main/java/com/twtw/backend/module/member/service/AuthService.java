@@ -3,9 +3,9 @@ package com.twtw.backend.module.member.service;
 import com.twtw.backend.config.security.entity.RefreshToken;
 import com.twtw.backend.config.security.jwt.TokenProvider;
 import com.twtw.backend.config.security.repository.RefreshTokenRepository;
-import com.twtw.backend.module.member.dto.TokenDto;
-import com.twtw.backend.module.member.dto.request.MemberRequest;
-import com.twtw.backend.module.member.entity.AuthType;
+import com.twtw.backend.module.member.dto.request.OAuthRequest;
+import com.twtw.backend.module.member.dto.response.TokenDto;
+import com.twtw.backend.module.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.module.member.entity.Member;
 import com.twtw.backend.module.member.entity.OAuth2Info;
 import com.twtw.backend.module.member.repository.MemberRepository;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -33,36 +32,58 @@ public class AuthService {
         this.tokenProvider = tokenProvider;
     }
 
-    private Member toEntity(MemberRequest request)
+    private Member toMemberEntity(MemberSaveRequest request)
     {
-        Member member = new Member(request.getUserEmail(), request.getNickname(), request.getProfileImage(), request.getPhoneNumber(), request.getRole());
+        Member member = new Member(request.getNickname(), request.getProfileImage(), request.getPhoneNumber(), request.getRole());
         return  member;
     }
 
-    public void saveMember(MemberRequest request){
-        Member member = toEntity(request);
-        member.updateOAuth(new OAuth2Info("1111", AuthType.KAKAO));
+    private OAuth2Info toOAuthInfo(OAuthRequest request)
+    {
+        OAuth2Info info = new OAuth2Info(request.getClientId(),request.getAuthType());
+
+        return info;
+    }
+
+    /*
+    * 1. after social SignUp
+    * 2. 기본 정보 기입
+    * 3. OAuth Info 저장 -> kakao , apple enum 구분
+    * 4. 저장
+    * 5. 토큰(jwt) 발급
+    * */
+    public void saveMember(MemberSaveRequest request){
+        Member member = toMemberEntity(request);
+        member.updateOAuth(toOAuthInfo(request.getOAuthRequest()));
         memberRepository.save(member);
     }
+    /*
+    * 1.로그인(Social) 후의 토큰 발급
+    * 2.JWT 토큰 발급 -> OAuth 정보 (clientId , AuthType)으로 진행
+    *
+    * */
+    public TokenDto getTokenByOAuth(OAuthRequest request) {
+        Optional<Member> member = memberRepository.findByOAuthIdAndAuthType(request.getClientId(),request.getAuthType());
 
-    /*임시 메소드*/
-    public TokenDto checkMember(UUID uuid) {
-        Optional<Member> member = memberRepository.findById(uuid);
+        if(member.isPresent()) {
+            Member curMember = member.get();
+            UsernamePasswordAuthenticationToken credit = makeCredit(curMember);
+            TokenDto tokenDto = saveRefreshToken(credit,curMember.getId().toString());
+            return tokenDto;
+        }
 
-        if(!member.isPresent())
-            return null;
-
-        Member curMember = member.get();
-        List<GrantedAuthority> role = new ArrayList<>();
-        role.add(new SimpleGrantedAuthority(curMember.getRole().toString()));
-        UsernamePasswordAuthenticationToken credit = new UsernamePasswordAuthenticationToken(uuid.toString(),"",role);
-
-        TokenDto token = tokenProvider.createToken(credit);
-
-        refreshTokenRepository.save(new RefreshToken(curMember.getId().toString(),token.getRefreshToken()));
-
-        return token;
+        return null;
     }
+
+    private UsernamePasswordAuthenticationToken makeCredit(Member member)
+    {
+        List<GrantedAuthority> role = new ArrayList<>();
+        role.add(new SimpleGrantedAuthority(member.getRole().toString()));
+        UsernamePasswordAuthenticationToken credit = new UsernamePasswordAuthenticationToken(member.getId().toString(),"",role);
+
+        return credit;
+    }
+
 
     /*
     * Token 재발급

@@ -1,7 +1,9 @@
 package com.twtw.backend.module.member.controller;
 
-import com.twtw.backend.module.member.dto.TokenDto;
-import com.twtw.backend.module.member.dto.request.MemberRequest;
+import com.twtw.backend.config.security.repository.RefreshTokenRepository;
+import com.twtw.backend.module.member.dto.request.OAuthRequest;
+import com.twtw.backend.module.member.dto.response.TokenDto;
+import com.twtw.backend.module.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.module.member.dto.request.TokenRequest;
 import com.twtw.backend.module.member.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -25,24 +27,23 @@ public class AuthController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity saveMember(@RequestBody MemberRequest memberRequest) {
-        authService.saveMember(memberRequest);
+    public ResponseEntity saveMember(@RequestBody MemberSaveRequest memberSaveRequest) {
+        authService.saveMember(memberSaveRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @GetMapping("/check/{id}")
-    public ResponseEntity<TokenDto> checkMember(@PathVariable(name = "id") String uuid){
-        try{
-            TokenDto tokenDto = authService.checkMember(UUID.fromString(uuid));
-            return ResponseEntity.ok(tokenDto);
-        }catch (Exception e)
-        {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> afterSocialLogin(@RequestBody OAuthRequest request){
+        TokenDto tokenDto = authService.getTokenByOAuth(request);
+
+        if(tokenDto == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(tokenDto);
+        }
+
+        else{
+            return ResponseEntity.status(HttpStatus.OK).body(tokenDto);
         }
     }
-
-    // TODO("OAuth2Info 를 이용하여 토큰 발급 메소드");
-    // TODO("SOFT DELETE 구현");
 
 }
