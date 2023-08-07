@@ -1,4 +1,4 @@
-package com.twtw.backend.module.member;
+package com.twtw.backend.domain.member;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

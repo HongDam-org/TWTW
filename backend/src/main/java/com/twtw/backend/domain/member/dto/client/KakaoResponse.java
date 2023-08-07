@@ -1,12 +1,12 @@
-package com.twtw.backend.module.member.dto.client;
+package com.twtw.backend.domain.member.dto.client;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class KakaoResponse {
     public long id;
 }

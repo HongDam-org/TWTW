@@ -1,17 +1,13 @@
-package com.twtw.backend.module.member.controller;
+package com.twtw.backend.domain.member.controller;
 
-import com.twtw.backend.config.security.repository.RefreshTokenRepository;
-import com.twtw.backend.module.member.dto.request.OAuthRequest;
-import com.twtw.backend.module.member.dto.response.TokenDto;
-import com.twtw.backend.module.member.dto.request.MemberSaveRequest;
-import com.twtw.backend.module.member.dto.request.TokenRequest;
-import com.twtw.backend.module.member.entity.AuthType;
-import com.twtw.backend.module.member.service.AuthService;
+import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
+import com.twtw.backend.domain.member.dto.response.TokenDto;
+import com.twtw.backend.domain.member.service.AuthService;
+import com.twtw.backend.domain.member.dto.request.OAuthRequest;
+import com.twtw.backend.domain.member.dto.request.TokenRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")

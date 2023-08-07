@@ -1,4 +1,4 @@
-package com.twtw.backend.config.security.entity;
+package com.twtw.backend.domain.member.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

@@ -1,8 +1,8 @@
-package com.twtw.backend.module.member.repository;
+package com.twtw.backend.domain.member.repository;
 
 
-import com.twtw.backend.module.member.entity.AuthType;
-import com.twtw.backend.module.member.entity.Member;
+import com.twtw.backend.domain.member.entity.AuthType;
+import com.twtw.backend.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

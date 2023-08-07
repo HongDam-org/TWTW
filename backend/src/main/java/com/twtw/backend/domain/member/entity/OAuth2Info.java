@@ -1,4 +1,4 @@
-package com.twtw.backend.module.member.entity;
+package com.twtw.backend.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

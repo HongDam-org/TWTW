@@ -1,6 +1,6 @@
-package com.twtw.backend.module.member.service;
+package com.twtw.backend.domain.member.service;
 
-import com.twtw.backend.module.member.repository.MemberRepository;
+import com.twtw.backend.domain.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 @Service

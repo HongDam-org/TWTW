@@ -1,5 +1,6 @@
 package com.twtw.backend.config.security.jwt;
-import com.twtw.backend.module.member.dto.response.TokenDto;
+import com.twtw.backend.domain.member.dto.response.TokenDto;
+import com.twtw.backend.domain.member.entity.Member;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,6 +17,7 @@ import java.security.Key;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -104,6 +106,15 @@ public class TokenProvider implements InitializingBean {
         {
             return e.getClaims();
         }
+    }
+
+    public UsernamePasswordAuthenticationToken makeCredit(Member member)
+    {
+        List<GrantedAuthority> role = new ArrayList<>();
+        role.add(new SimpleGrantedAuthority(member.getRole().toString()));
+        UsernamePasswordAuthenticationToken credit = new UsernamePasswordAuthenticationToken(member.getId().toString(),"",role);
+
+        return credit;
     }
 
 }

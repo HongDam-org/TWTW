@@ -1,6 +1,6 @@
-package com.twtw.backend.module.member.client;
+package com.twtw.backend.domain.member.client;
 
-import com.twtw.backend.module.member.dto.client.KakaoResponse;
+import com.twtw.backend.domain.member.dto.client.KakaoResponse;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

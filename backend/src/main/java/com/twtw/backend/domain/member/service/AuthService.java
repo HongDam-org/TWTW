@@ -1,25 +1,21 @@
-package com.twtw.backend.module.member.service;
+package com.twtw.backend.domain.member.service;
 
-import com.twtw.backend.config.security.entity.RefreshToken;
+import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
+import com.twtw.backend.domain.member.dto.response.TokenDto;
+import com.twtw.backend.domain.member.entity.AuthType;
+import com.twtw.backend.domain.member.entity.Member;
+import com.twtw.backend.domain.member.entity.RefreshToken;
 import com.twtw.backend.config.security.jwt.TokenProvider;
-import com.twtw.backend.config.security.repository.RefreshTokenRepository;
-import com.twtw.backend.module.member.client.KakaoWebClient;
-import com.twtw.backend.module.member.dto.request.OAuthRequest;
-import com.twtw.backend.module.member.dto.response.TokenDto;
-import com.twtw.backend.module.member.dto.request.MemberSaveRequest;
-import com.twtw.backend.module.member.entity.AuthType;
-import com.twtw.backend.module.member.entity.Member;
-import com.twtw.backend.module.member.entity.OAuth2Info;
-import com.twtw.backend.module.member.repository.MemberRepository;
+import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
+import com.twtw.backend.domain.member.client.KakaoWebClient;
+import com.twtw.backend.domain.member.dto.request.OAuthRequest;
+import com.twtw.backend.domain.member.entity.OAuth2Info;
+import com.twtw.backend.domain.member.repository.MemberRepository;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,7 +38,7 @@ public class AuthService {
         return  member;
     }
 
-    private OAuth2Info toOAuthInfo(String clientId,AuthType type)
+    private OAuth2Info toOAuthInfo(String clientId, AuthType type)
     {
         OAuth2Info info = new OAuth2Info(clientId,type);
 
@@ -64,7 +60,7 @@ public class AuthService {
         member.updateOAuth(toOAuthInfo(clientId,request.getOAuthRequest().getAuthType()));
         member = memberRepository.save(member);
 
-        UsernamePasswordAuthenticationToken credit = makeCredit(member);
+        UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(member);
         TokenDto tokenDto = saveRefreshToken(credit,member.getId().toString());
 
         return tokenDto;
@@ -81,21 +77,12 @@ public class AuthService {
 
         if(member.isPresent()) {
             Member curMember = member.get();
-            UsernamePasswordAuthenticationToken credit = makeCredit(curMember);
+            UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(curMember);
             TokenDto tokenDto = saveRefreshToken(credit,curMember.getId().toString());
             return tokenDto;
         }
 
         return null;
-    }
-
-    private UsernamePasswordAuthenticationToken makeCredit(Member member)
-    {
-        List<GrantedAuthority> role = new ArrayList<>();
-        role.add(new SimpleGrantedAuthority(member.getRole().toString()));
-        UsernamePasswordAuthenticationToken credit = new UsernamePasswordAuthenticationToken(member.getId().toString(),"",role);
-
-        return credit;
     }
 
 

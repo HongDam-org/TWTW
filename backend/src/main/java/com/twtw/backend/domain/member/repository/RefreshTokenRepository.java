@@ -1,6 +1,6 @@
-package com.twtw.backend.config.security.repository;
+package com.twtw.backend.domain.member.repository;
 
-import com.twtw.backend.config.security.entity.RefreshToken;
+import com.twtw.backend.domain.member.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken,String> {

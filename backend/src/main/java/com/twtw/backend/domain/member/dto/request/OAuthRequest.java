@@ -1,15 +1,13 @@
-package com.twtw.backend.module.member.dto.request;
+package com.twtw.backend.domain.member.dto.request;
 
-import com.twtw.backend.module.member.entity.AuthType;
+import com.twtw.backend.domain.member.entity.AuthType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class OAuthRequest {
     private String token;
 
