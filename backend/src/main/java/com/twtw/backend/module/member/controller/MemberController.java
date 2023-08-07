@@ -14,9 +14,4 @@ public class MemberController {
         this.memberService = memberService;
     }
 
-    @GetMapping("/memer1")
-    public String getMember()
-    {
-        return "hello";
-    }
 }

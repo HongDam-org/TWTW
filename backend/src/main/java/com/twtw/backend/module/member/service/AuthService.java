@@ -11,7 +11,6 @@ import com.twtw.backend.module.member.entity.OAuth2Info;
 import com.twtw.backend.module.member.repository.MemberRepository;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
