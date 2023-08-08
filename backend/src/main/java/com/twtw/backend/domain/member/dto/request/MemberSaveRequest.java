@@ -5,8 +5,10 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class MemberSaveRequest {
     private String nickname;
@@ -18,5 +20,5 @@ public class MemberSaveRequest {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private OAuthRequest oAuthRequest;
+    private OauthRequest oauthRequest;
 }

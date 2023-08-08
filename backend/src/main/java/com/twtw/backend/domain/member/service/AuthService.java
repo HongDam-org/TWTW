@@ -6,15 +6,16 @@ import com.twtw.backend.domain.member.entity.AuthType;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.RefreshToken;
 import com.twtw.backend.config.security.jwt.TokenProvider;
+import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.domain.member.client.KakaoWebClient;
-import com.twtw.backend.domain.member.dto.request.OAuthRequest;
-import com.twtw.backend.domain.member.entity.OAuth2Info;
+import com.twtw.backend.domain.member.dto.request.OauthRequest;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -24,25 +25,14 @@ public class AuthService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProvider tokenProvider;
     private final KakaoWebClient kakaoWebClient;
+    private final MemberMapper memberMapper;
 
-    public AuthService(MemberRepository memberRepository,RefreshTokenRepository refreshTokenRepository,TokenProvider tokenProvider,KakaoWebClient kakaoWebClient) {
+    public AuthService(MemberRepository memberRepository,RefreshTokenRepository refreshTokenRepository,TokenProvider tokenProvider,KakaoWebClient kakaoWebClient,MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
         this.refreshTokenRepository = refreshTokenRepository;
         this.tokenProvider = tokenProvider;
         this.kakaoWebClient = kakaoWebClient;
-    }
-
-    private Member toMemberEntity(MemberSaveRequest request)
-    {
-        Member member = new Member(request.getNickname(), request.getProfileImage(), request.getPhoneNumber(), request.getRole());
-        return  member;
-    }
-
-    private OAuth2Info toOAuthInfo(String clientId, AuthType type)
-    {
-        OAuth2Info info = new OAuth2Info(clientId,type);
-
-        return info;
+        this.memberMapper = memberMapper;
     }
 
     /*
@@ -52,13 +42,15 @@ public class AuthService {
     * 4. 저장
     * 5. 토큰(jwt) 발급
     * */
+
+    @Transactional
     public TokenDto saveMember(MemberSaveRequest request){
-        Member member = toMemberEntity(request);
+        Member member = memberMapper.toMemberEntity(request);
 
-        String clientId = getClientId(request.getOAuthRequest());
+        String clientId = getClientId(request.getOauthRequest());
 
-        member.updateOAuth(toOAuthInfo(clientId,request.getOAuthRequest().getAuthType()));
-        member = memberRepository.save(member);
+        member.updateOAuth(memberMapper.toOAuthInfo(clientId,request.getOauthRequest().getAuthType()));
+        memberRepository.save(member);
 
         UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(member);
         TokenDto tokenDto = saveRefreshToken(credit,member.getId().toString());
@@ -70,7 +62,7 @@ public class AuthService {
     * 2.JWT 토큰 발급 -> OAuth 정보 (clientId , AuthType)으로 진행
     *
     * */
-    public TokenDto getTokenByOAuth(OAuthRequest request) {
+    public TokenDto getTokenByOAuth(OauthRequest request) {
         String clientId = getClientId(request);
 
         Optional<Member> member = memberRepository.findByOAuthIdAndAuthType(clientId,request.getAuthType());
@@ -120,7 +112,7 @@ public class AuthService {
         return token;
     }
 
-    private String getClientId(OAuthRequest request){
+    private String getClientId(OauthRequest request){
         if(request.getAuthType().equals(AuthType.KAKAO)){
             return Long.toString(kakaoWebClient.requestKakao(request.getToken()).getId());
         }

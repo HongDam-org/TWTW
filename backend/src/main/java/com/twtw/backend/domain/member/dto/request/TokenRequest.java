@@ -1,13 +1,11 @@
 package com.twtw.backend.domain.member.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
 public class TokenRequest {
-    String accessToken;
-    String refreshToken;
+    private String accessToken;
+    private String refreshToken;
 }
