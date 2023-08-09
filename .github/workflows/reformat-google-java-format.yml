@@ -3,12 +3,12 @@ on:
   push:
     paths:
       - '**.java'
-
+permissions:
+  contents: write
 defaults:
   run:
     shell: bash
     working-directory: ./backend
-
 jobs:
   replace-google-format:
     runs-on: ubuntu-latest
