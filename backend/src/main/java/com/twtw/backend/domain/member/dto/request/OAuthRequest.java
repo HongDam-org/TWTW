@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor
-public class OauthRequest {
+public class OAuthRequest {
     private String token;
 
     @Enumerated(EnumType.STRING)

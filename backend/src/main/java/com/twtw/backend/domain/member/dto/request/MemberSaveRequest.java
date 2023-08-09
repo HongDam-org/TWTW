@@ -20,5 +20,5 @@ public class MemberSaveRequest {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private OauthRequest oauthRequest;
+    private OAuthRequest oauthRequest;
 }

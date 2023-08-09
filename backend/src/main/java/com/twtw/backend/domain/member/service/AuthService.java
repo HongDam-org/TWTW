@@ -2,14 +2,12 @@ package com.twtw.backend.domain.member.service;
 
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
-import com.twtw.backend.domain.member.entity.AuthType;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.RefreshToken;
 import com.twtw.backend.config.security.jwt.TokenProvider;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
-import com.twtw.backend.domain.member.client.KakaoWebClient;
-import com.twtw.backend.domain.member.dto.request.OauthRequest;
+import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,14 +22,12 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final TokenProvider tokenProvider;
-    private final KakaoWebClient kakaoWebClient;
     private final MemberMapper memberMapper;
 
-    public AuthService(MemberRepository memberRepository,RefreshTokenRepository refreshTokenRepository,TokenProvider tokenProvider,KakaoWebClient kakaoWebClient,MemberMapper memberMapper) {
+    public AuthService(MemberRepository memberRepository,RefreshTokenRepository refreshTokenRepository,TokenProvider tokenProvider,MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
         this.refreshTokenRepository = refreshTokenRepository;
         this.tokenProvider = tokenProvider;
-        this.kakaoWebClient = kakaoWebClient;
         this.memberMapper = memberMapper;
     }
 
@@ -47,7 +43,7 @@ public class AuthService {
     public TokenDto saveMember(MemberSaveRequest request){
         Member member = memberMapper.toMemberEntity(request);
 
-        String clientId = getClientId(request.getOauthRequest());
+        String clientId = request.getOauthRequest().getToken();
 
         member.updateOAuth(memberMapper.toOAuthInfo(clientId,request.getOauthRequest().getAuthType()));
         memberRepository.save(member);
@@ -62,8 +58,8 @@ public class AuthService {
     * 2.JWT 토큰 발급 -> OAuth 정보 (clientId , AuthType)으로 진행
     *
     * */
-    public TokenDto getTokenByOAuth(OauthRequest request) {
-        String clientId = getClientId(request);
+    public TokenDto getTokenByOAuth(OAuthRequest request) {
+        String clientId = request.getToken();
 
         Optional<Member> member = memberRepository.findByOAuthIdAndAuthType(clientId,request.getAuthType());
 
@@ -110,13 +106,6 @@ public class AuthService {
         refreshTokenRepository.save(new RefreshToken(userName,token.getRefreshToken()));
 
         return token;
-    }
-
-    private String getClientId(OauthRequest request){
-        if(request.getAuthType().equals(AuthType.KAKAO)){
-            return Long.toString(kakaoWebClient.requestKakao(request.getToken()).getId());
-        }
-        return request.getToken();
     }
 
 }

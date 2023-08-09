@@ -63,7 +63,7 @@ public class TokenProvider implements InitializingBean {
                 .signWith(key,SignatureAlgorithm.HS512)
                 .compact();
 
-        return new TokenDto(accessToken,refreshToken,validAccessDate.getTime());
+        return new TokenDto(accessToken,refreshToken);
     }
 
     public Authentication getAuthentication(String accessToken) {

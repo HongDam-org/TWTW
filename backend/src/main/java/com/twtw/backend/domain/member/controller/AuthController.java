@@ -3,7 +3,7 @@ package com.twtw.backend.domain.member.controller;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.service.AuthService;
-import com.twtw.backend.domain.member.dto.request.OauthRequest;
+import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.request.TokenRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +31,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> afterSocialLogin(@RequestBody OauthRequest request){
+    public ResponseEntity<TokenDto> afterSocialLogin(@RequestBody OAuthRequest request){
         TokenDto tokenDto = authService.getTokenByOAuth(request);
 
         if(tokenDto == null){
