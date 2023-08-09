@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.member.entity;
 
 import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,6 @@ public class OAuth2Info {
     @Enumerated(value = EnumType.STRING)
     private AuthType authType;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,11 +29,11 @@ public class OAuth2Info {
 
         OAuth2Info tmp = (OAuth2Info) o;
 
-        return Objects.equals(clientId,tmp.clientId) && authType == tmp.authType;
+        return Objects.equals(clientId, tmp.clientId) && authType == tmp.authType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(clientId,authType);
+        return Objects.hash(clientId, authType);
     }
 }

@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.member.entity;
 
 import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public class Member {
     @Id
     @GeneratedValue(generator = "uuid2")
-    @Column(name = "id",columnDefinition = "BINARY(16)")
+    @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
     private String nickname;
@@ -25,18 +26,16 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Embedded
-    private OAuth2Info oAuth2Info;
+    @Embedded private OAuth2Info oAuth2Info;
 
-
-    public Member(String nickname,String profileImage,String phoneNumber,Role role) {
+    public Member(String nickname, String profileImage, String phoneNumber, Role role) {
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.phoneNumber = phoneNumber;
         this.role = role;
     }
 
-    public void updateOAuth(OAuth2Info oAuth2Info){
+    public void updateOAuth(OAuth2Info oAuth2Info) {
         this.oAuth2Info = oAuth2Info;
     }
 }
