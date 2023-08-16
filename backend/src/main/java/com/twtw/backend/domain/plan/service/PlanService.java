@@ -5,7 +5,9 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.repository.PlanRepository;
 import com.twtw.backend.global.client.MapClient;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 @Service

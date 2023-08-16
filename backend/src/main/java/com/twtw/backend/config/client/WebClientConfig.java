@@ -1,7 +1,9 @@
 package com.twtw.backend.config.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,11 +22,17 @@ public class WebClientConfig {
     public WebClient webClient(
             @Value("${kakao-map.url}") final String url,
             @Value("${kakao-map.key}") final String authHeader) {
-        final ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
-                .codecs(configurer -> {
-                    configurer.defaultCodecs().maxInMemorySize(-1);
-                    configurer.defaultCodecs().jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper));
-                }).build();
+        final ExchangeStrategies exchangeStrategies =
+                ExchangeStrategies.builder()
+                        .codecs(
+                                configurer -> {
+                                    configurer.defaultCodecs().maxInMemorySize(-1);
+                                    configurer
+                                            .defaultCodecs()
+                                            .jackson2JsonDecoder(
+                                                    new Jackson2JsonDecoder(objectMapper));
+                                })
+                        .build();
 
         return WebClient.builder()
                 .exchangeStrategies(exchangeStrategies)

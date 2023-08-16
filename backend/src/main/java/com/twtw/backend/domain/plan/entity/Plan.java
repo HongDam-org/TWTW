@@ -1,7 +1,9 @@
 package com.twtw.backend.domain.plan.entity;
 
 import com.twtw.backend.domain.member.entity.Member;
+
 import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,8 +20,7 @@ public class Plan {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Embedded
-    private PlanPlace planPlace;
+    @Embedded private PlanPlace planPlace;
 
     @OneToMany(mappedBy = "plan", cascade = CascadeType.PERSIST)
     private Set<PlanMember> planMembers = new HashSet<>();
@@ -31,8 +32,6 @@ public class Plan {
     }
 
     public void organizePlanMember(final List<Member> members) {
-        members.stream()
-                .map(member -> new PlanMember(this, member))
-                .forEach(this.planMembers::add);
+        members.stream().map(member -> new PlanMember(this, member)).forEach(this.planMembers::add);
     }
 }

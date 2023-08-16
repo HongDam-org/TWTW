@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.plan.dto.client;
 
 import com.twtw.backend.domain.plan.entity.CategoryGroupCode;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
