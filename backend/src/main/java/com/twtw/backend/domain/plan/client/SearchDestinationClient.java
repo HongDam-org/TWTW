@@ -50,7 +50,7 @@ public class SearchDestinationClient
 
         final CategoryGroupCode categoryGroupCode = request.getCategoryGroupCode();
 
-        if (categoryGroupCode == CategoryGroupCode.NONE) {
+        if (categoryGroupCode.isNone()) {
             return builder.build();
         }
         return builder.queryParam("category_group_code", categoryGroupCode).build();

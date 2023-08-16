@@ -25,4 +25,8 @@ public enum CategoryGroupCode {
     NONE("");
 
     private final String toKorean;
+
+    public boolean isNone() {
+        return this == NONE;
+    }
 }
