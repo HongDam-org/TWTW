@@ -8,6 +8,7 @@ import com.twtw.backend.global.exception.WebClientResponseException;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -22,6 +23,7 @@ public class SearchDestinationClient
         implements MapClient<SearchDestinationRequest, SearchDestinationResponse> {
     private static final Integer MAX_SIZE_PER_REQUEST = 15;
     private static final Integer DEFAULT_DISTANCE_RADIUS = 20000;
+    @Qualifier("KakaoWebClient")
     private final WebClient webClient;
 
     @Override

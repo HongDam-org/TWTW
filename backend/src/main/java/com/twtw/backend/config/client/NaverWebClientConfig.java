@@ -1,27 +1,28 @@
 package com.twtw.backend.config.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
 @RequiredArgsConstructor
-public class WebClientConfig {
-    private static final String HEADER_PREFIX = "KakaoAK ";
+public class NaverWebClientConfig {
+    private static final String HEADER_CLIENT_ID = "X-NCP-APIGW-API-KEY-ID";
+    private static final String HEADER_CLIENT_SECRET = "X-NCP-APIGW-API-KEY";
     private final ObjectMapper objectMapper;
 
     @Bean
-    public WebClient webClient(
-            @Value("${kakao-map.url}") final String url,
-            @Value("${kakao-map.key}") final String authHeader) {
+    @Qualifier("NaverWebClient")
+    public WebClient webClient(@Value("${naver-map.url}") final String url,
+                               @Value("${naver-map.id}") final String clientId,
+                               @Value("${naver-map.secret}") final String secretKey){
+
         final ExchangeStrategies exchangeStrategies =
                 ExchangeStrategies.builder()
                         .codecs(
@@ -37,7 +38,8 @@ public class WebClientConfig {
         return WebClient.builder()
                 .exchangeStrategies(exchangeStrategies)
                 .baseUrl(url)
-                .defaultHeader(HttpHeaders.AUTHORIZATION, HEADER_PREFIX + authHeader)
+                .defaultHeader(HEADER_CLIENT_ID,clientId)
+                .defaultHeader(HEADER_CLIENT_SECRET,secretKey)
                 .build();
     }
 }
