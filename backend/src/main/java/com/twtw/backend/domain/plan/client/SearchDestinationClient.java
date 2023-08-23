@@ -23,6 +23,7 @@ public class SearchDestinationClient
         implements MapClient<SearchDestinationRequest, SearchDestinationResponse> {
     private static final Integer MAX_SIZE_PER_REQUEST = 15;
     private static final Integer DEFAULT_DISTANCE_RADIUS = 20000;
+
     @Qualifier("KakaoWebClient")
     private final WebClient webClient;
 

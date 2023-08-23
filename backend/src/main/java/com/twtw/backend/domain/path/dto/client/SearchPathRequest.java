@@ -7,6 +7,4 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchPathRequest {
-
-}
+public class SearchPathRequest {}
