@@ -1,7 +1,9 @@
 package com.twtw.backend.config.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,9 +21,10 @@ public class NaverWebClientConfig {
 
     @Bean
     @Qualifier("NaverWebClient")
-    public WebClient webClient(@Value("${naver-map.url}") final String url,
-                               @Value("${naver-map.id}") final String clientId,
-                               @Value("${naver-map.secret}") final String secretKey){
+    public WebClient webClient(
+            @Value("${naver-map.url}") final String url,
+            @Value("${naver-map.id}") final String clientId,
+            @Value("${naver-map.secret}") final String secretKey) {
 
         final ExchangeStrategies exchangeStrategies =
                 ExchangeStrategies.builder()
@@ -38,8 +41,8 @@ public class NaverWebClientConfig {
         return WebClient.builder()
                 .exchangeStrategies(exchangeStrategies)
                 .baseUrl(url)
-                .defaultHeader(HEADER_CLIENT_ID,clientId)
-                .defaultHeader(HEADER_CLIENT_SECRET,secretKey)
+                .defaultHeader(HEADER_CLIENT_ID, clientId)
+                .defaultHeader(HEADER_CLIENT_SECRET, secretKey)
                 .build();
     }
 }
