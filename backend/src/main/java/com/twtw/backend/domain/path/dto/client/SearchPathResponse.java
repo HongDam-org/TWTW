@@ -4,7 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchPathResponse {}
+public class SearchPathResponse {
+    int code;
+    String message;
+    String currentDateTime;
+
+}
