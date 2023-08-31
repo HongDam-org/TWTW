@@ -14,13 +14,15 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@RequiredArgsConstructor
 public class KakaoWebClientConfig {
     private static final String HEADER_PREFIX = "KakaoAK ";
     private final ObjectMapper objectMapper;
 
-    @Bean
-    @Qualifier("KakaoWebClient")
+    public KakaoWebClientConfig(@Qualifier("KakaoObjectMapper") ObjectMapper objectMapper){
+        this.objectMapper = objectMapper;
+    }
+
+    @Bean(name = "KakaoWebClient")
     public WebClient webClient(
             @Value("${kakao-map.url}") final String url,
             @Value("${kakao-map.key}") final String authHeader) {

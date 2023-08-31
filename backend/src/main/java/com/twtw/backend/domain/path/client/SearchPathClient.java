@@ -2,7 +2,6 @@ package com.twtw.backend.domain.path.client;
 
 import com.twtw.backend.domain.path.dto.client.SearchPathRequest;
 import com.twtw.backend.domain.path.dto.client.SearchPathResponse;
-import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.global.client.PathClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,33 +16,43 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class SearchPathClient implements PathClient<SearchPathRequest, SearchPathResponse> {
-    @Qualifier("NaverWebClient")
     private final WebClient webClient;
 
-    public SearchPathClient(WebClient webClient){
+    public SearchPathClient(@Qualifier("NaverWebClient") WebClient webClient){
         this.webClient = webClient;
     }
 
     /*상세 검색을 위한 변경 필요*/
     private URI getPathUri(final SearchPathRequest request, final UriBuilder uriBuilder){
+
         final UriBuilder builder =
                 uriBuilder.
                         path("driving")
                         .queryParam("start",request.getStart())
-                        .queryParam("goal",request.getEnd());
+                        .queryParam("goal",request.getEnd())
+                        .queryParam("option",request.getOption().toSmallOption())
+                        .queryParam("cartype",request.getCar())
+                        .queryParam("fueltype",request.getFuel().toSmallFuel())
+                ;
 
-        return builder.build();
+        String wayPoints = request.getWay();
+
+        if(wayPoints == ""){
+            return builder.build();
+        }
+
+        return builder.queryParam("waypoints",wayPoints).build();
     }
 
     @Override
-    public String request(final SearchPathRequest request) {
+    public SearchPathResponse request(final SearchPathRequest request) {
         return webClient
                 .get()
                 .uri(uri -> getPathUri(request,uri))
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
-                .bodyToMono(String.class)
+                .bodyToMono(SearchPathResponse.class)
                 .blockOptional()
                 .orElseThrow(WebClientResponseException::new);
     }

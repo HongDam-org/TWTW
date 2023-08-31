@@ -13,7 +13,7 @@ public class PathService {
         this.client = client;
     }
 
-    public String searchPath(final SearchPathRequest request){
+    public SearchPathResponse searchPath(final SearchPathRequest request){
         return this.client.request(request);
     }
 

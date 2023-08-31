@@ -6,11 +6,14 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
-public class ObjectMapperConfig {
+public class KakaoObjectMapperConfig {
+
+    @Primary
     @Bean
-    public ObjectMapper objectMapper() {
+    public ObjectMapper KakaoObjectMapper() {
         return new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)

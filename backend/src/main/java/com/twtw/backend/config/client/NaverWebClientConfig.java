@@ -2,8 +2,7 @@ package com.twtw.backend.config.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.RequiredArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,14 +12,17 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@RequiredArgsConstructor
 public class NaverWebClientConfig {
     private static final String HEADER_CLIENT_ID = "X-NCP-APIGW-API-KEY-ID";
     private static final String HEADER_CLIENT_SECRET = "X-NCP-APIGW-API-KEY";
     private final ObjectMapper objectMapper;
 
-    @Bean
-    @Qualifier("NaverWebClient")
+    @Autowired
+    public NaverWebClientConfig(@Qualifier("NaverObjectMapper") ObjectMapper objectMapper){
+        this.objectMapper = objectMapper;
+    }
+
+    @Bean(name = "NaverWebClient")
     public WebClient webClient(
             @Value("${naver-map.url}") final String url,
             @Value("${naver-map.id}") final String clientId,

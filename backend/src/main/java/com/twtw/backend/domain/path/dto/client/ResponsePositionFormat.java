@@ -4,15 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
-
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchPathResponse {
-    private int code;
-    private String message;
-    private String currentDateTime;
-    private Map<String,RouteUnitEnt[]> route;
+public class ResponsePositionFormat {
+    Double[][] location;
+    int dir;
+    int distance;
+    int duration;
+    int pointIndex;
 }
