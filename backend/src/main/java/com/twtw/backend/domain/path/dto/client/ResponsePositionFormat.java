@@ -10,9 +10,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponsePositionFormat {
-    Double[][] location;
-    int dir;
-    int distance;
-    int duration;
-    int pointIndex;
+    private Double[][] location;
+    private int dir;
+    private int distance;
+    private int duration;
+    private int pointIndex;
 }

@@ -13,7 +13,7 @@ public class KakaoObjectMapperConfig {
 
     @Primary
     @Bean
-    public ObjectMapper KakaoObjectMapper() {
+    public ObjectMapper kakaoObjectMapper() {
         return new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)

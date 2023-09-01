@@ -18,7 +18,7 @@ public class KakaoWebClientConfig {
     private static final String HEADER_PREFIX = "KakaoAK ";
     private final ObjectMapper objectMapper;
 
-    public KakaoWebClientConfig(@Qualifier("KakaoObjectMapper") ObjectMapper objectMapper){
+    public KakaoWebClientConfig(@Qualifier("kakaoObjectMapper") ObjectMapper objectMapper){
         this.objectMapper = objectMapper;
     }
 

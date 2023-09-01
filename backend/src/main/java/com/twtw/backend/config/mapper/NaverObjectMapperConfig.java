@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class NaverObjectMapperConfig {
 
     @Bean
-    public ObjectMapper NaverObjectMapper() {
+    public ObjectMapper naverObjectMapper() {
         return new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)

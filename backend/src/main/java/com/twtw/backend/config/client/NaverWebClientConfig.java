@@ -18,7 +18,7 @@ public class NaverWebClientConfig {
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public NaverWebClientConfig(@Qualifier("NaverObjectMapper") ObjectMapper objectMapper){
+    public NaverWebClientConfig(@Qualifier("naverObjectMapper") ObjectMapper objectMapper){
         this.objectMapper = objectMapper;
     }
 

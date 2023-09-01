@@ -10,6 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RouteUnitEnt {
-    Summary summary;
-    List<Double[]> path;
+    private Summary summary;
+    private List<Double[]> path;
 }
