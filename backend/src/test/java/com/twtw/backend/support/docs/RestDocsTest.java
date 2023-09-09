@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.twtw.backend.config.security.jwt.JwtFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public abstract class RestDocsTest {
     @Autowired private ObjectMapper objectMapper;
     protected MockMvc mockMvc;
     @MockBean private JpaMetamodelMappingContext jpaMetamodelMappingContext;
+    @MockBean private JwtFilter jwtFilter;
 
     protected String toRequestBody(Object value) throws JsonProcessingException {
         return objectMapper.writeValueAsString(value);

@@ -1,0 +1,9 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Plan
+=== 검색어와 카테고리를 통한 장소 검색
+operation::get search plan destination[snippets='http-request,http-response']
