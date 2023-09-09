@@ -6,8 +6,6 @@ import com.twtw.backend.domain.plan.entity.CategoryGroupCode;
 import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -18,14 +16,15 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 @Component
-@RequiredArgsConstructor
 public class SearchDestinationClient
         implements MapClient<SearchDestinationRequest, SearchDestinationResponse> {
     private static final Integer MAX_SIZE_PER_REQUEST = 15;
     private static final Integer DEFAULT_DISTANCE_RADIUS = 20000;
-
-    @Qualifier("KakaoWebClient")
     private final WebClient webClient;
+
+    public SearchDestinationClient(@Qualifier("KakaoWebClient") WebClient webClient) {
+        this.webClient = webClient;
+    }
 
     @Override
     public SearchDestinationResponse request(final SearchDestinationRequest request) {

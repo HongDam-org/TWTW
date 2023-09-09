@@ -2,8 +2,6 @@ package com.twtw.backend.config.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -14,13 +12,15 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@RequiredArgsConstructor
 public class KakaoWebClientConfig {
     private static final String HEADER_PREFIX = "KakaoAK ";
     private final ObjectMapper objectMapper;
 
-    @Bean
-    @Qualifier("KakaoWebClient")
+    public KakaoWebClientConfig(@Qualifier("kakaoObjectMapper") ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    @Bean(name = "KakaoWebClient")
     public WebClient webClient(
             @Value("${kakao-map.url}") final String url,
             @Value("${kakao-map.key}") final String authHeader) {

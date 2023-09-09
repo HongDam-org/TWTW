@@ -10,4 +10,8 @@ public enum SearchPathFuel {
     LPG("lpg");
 
     private final String toSmall;
+
+    public String toSmallFuel() {
+        return this.toSmall;
+    }
 }

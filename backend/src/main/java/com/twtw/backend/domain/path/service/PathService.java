@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 public class PathService {
     private final PathClient<SearchPathRequest, SearchPathResponse> client;
 
-    PathService(PathClient<SearchPathRequest, SearchPathResponse> client) {
+    public PathService(PathClient<SearchPathRequest, SearchPathResponse> client) {
         this.client = client;
     }
 
-    public String searchPath(final SearchPathRequest request) {
+    public SearchPathResponse searchPath(final SearchPathRequest request) {
         return this.client.request(request);
     }
 }

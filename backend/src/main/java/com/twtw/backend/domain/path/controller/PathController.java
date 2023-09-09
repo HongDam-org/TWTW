@@ -1,8 +1,10 @@
 package com.twtw.backend.domain.path.controller;
 
 import com.twtw.backend.domain.path.dto.client.SearchPathRequest;
+import com.twtw.backend.domain.path.dto.client.SearchPathResponse;
 import com.twtw.backend.domain.path.service.PathService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,8 +17,8 @@ public class PathController {
     }
 
     /*response 변경*/
-    @PostMapping("/search/path")
-    String searchPath(@RequestBody SearchPathRequest request) {
-        return pathService.searchPath(request);
+    @PostMapping("/search")
+    public ResponseEntity<SearchPathResponse> searchPath(@RequestBody SearchPathRequest request) {
+        return ResponseEntity.ok(pathService.searchPath(request));
     }
 }
