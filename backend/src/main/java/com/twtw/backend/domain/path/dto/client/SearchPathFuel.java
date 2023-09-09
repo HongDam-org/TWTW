@@ -11,7 +11,7 @@ public enum SearchPathFuel {
 
     private final String toSmall;
 
-    public String toSmallFuel(){
+    public String toSmallFuel() {
         return this.toSmall;
     }
 }

@@ -2,8 +2,6 @@ package com.twtw.backend.config.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.RequiredArgsConstructor;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +16,7 @@ public class KakaoWebClientConfig {
     private static final String HEADER_PREFIX = "KakaoAK ";
     private final ObjectMapper objectMapper;
 
-    public KakaoWebClientConfig(@Qualifier("kakaoObjectMapper") ObjectMapper objectMapper){
+    public KakaoWebClientConfig(@Qualifier("kakaoObjectMapper") ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

@@ -1,12 +1,8 @@
 package com.twtw.backend.domain.path.dto.client;
 
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 
 @Getter
 @NoArgsConstructor

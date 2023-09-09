@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,5 +13,5 @@ public class SearchPathResponse {
     private int code;
     private String message;
     private String currentDateTime;
-    private Map<String,RouteUnitEnt[]> route;
+    private Map<String, RouteUnitEnt[]> route;
 }
