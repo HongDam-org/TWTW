@@ -69,7 +69,7 @@ class PlanControllerTest extends RestDocsTest {
                                 .queryParam("x", "127.426")
                                 .queryParam("y", "37.0764")
                                 .queryParam("page", "1")
-                                .queryParam("category_group_code", "CE7")
+                                .queryParam("categoryGroupCode", "CE7")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(
                                         "Authorization",
