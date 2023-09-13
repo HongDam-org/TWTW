@@ -6,15 +6,20 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
-public class NaverObjectMapperConfig {
+public class ObjectMapperConfig {
 
     @Bean
-    public ObjectMapper naverObjectMapper() {
+    @Primary
+    public ObjectMapper objectMapper() {
         return new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-                .setPropertyNamingStrategy(PropertyNamingStrategies.LOWER_CAMEL_CASE);
+                .setPropertyNamingStrategy(
+                        new CompositePropertyNamingStrategy(
+                                PropertyNamingStrategies.SNAKE_CASE,
+                                PropertyNamingStrategies.LOWER_CAMEL_CASE));
     }
 }

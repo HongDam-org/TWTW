@@ -2,9 +2,10 @@ package com.twtw.backend.domain.path.client;
 
 import com.twtw.backend.domain.path.dto.client.SearchPathRequest;
 import com.twtw.backend.domain.path.dto.client.SearchPathResponse;
-import com.twtw.backend.global.client.PathClient;
+import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 
+import com.twtw.backend.global.properties.NaverProperties;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -15,11 +16,13 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 @Component
-public class SearchPathClient implements PathClient<SearchPathRequest, SearchPathResponse> {
+public class SearchPathClient implements MapClient<SearchPathRequest, SearchPathResponse> {
     private final WebClient webClient;
+    private final NaverProperties naverProperties;
 
-    public SearchPathClient(@Qualifier("NaverWebClient") WebClient webClient) {
+    public SearchPathClient(final WebClient webClient, final NaverProperties naverProperties) {
         this.webClient = webClient;
+        this.naverProperties = naverProperties;
     }
 
     /*상세 검색을 위한 변경 필요*/
@@ -27,6 +30,7 @@ public class SearchPathClient implements PathClient<SearchPathRequest, SearchPat
 
         final UriBuilder builder =
                 uriBuilder
+                        .path(naverProperties.getUrl())
                         .path("driving")
                         .queryParam("start", request.getStart())
                         .queryParam("goal", request.getEnd())
@@ -36,7 +40,7 @@ public class SearchPathClient implements PathClient<SearchPathRequest, SearchPat
 
         String wayPoints = request.getWay();
 
-        if (wayPoints == "") {
+        if (wayPoints.isEmpty()) {
             return builder.build();
         }
 
@@ -50,6 +54,8 @@ public class SearchPathClient implements PathClient<SearchPathRequest, SearchPat
                 .uri(uri -> getPathUri(request, uri))
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
+                .header(naverProperties.getHeaderClientId(), naverProperties.getId())
+                .header(naverProperties.getHeaderClientSecret(), naverProperties.getSecret())
                 .retrieve()
                 .bodyToMono(SearchPathResponse.class)
                 .blockOptional()
