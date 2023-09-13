@@ -2,8 +2,8 @@ package com.twtw.backend.domain.path.service;
 
 import com.twtw.backend.domain.path.dto.client.SearchPathRequest;
 import com.twtw.backend.domain.path.dto.client.SearchPathResponse;
-
 import com.twtw.backend.global.client.MapClient;
+
 import org.springframework.stereotype.Service;
 
 @Service

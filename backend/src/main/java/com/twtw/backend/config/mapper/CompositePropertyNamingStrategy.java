@@ -13,7 +13,8 @@ public class CompositePropertyNamingStrategy extends PropertyNamingStrategy {
     }
 
     @Override
-    public String nameForField(final MapperConfig<?> config, final AnnotatedField field, final String defaultName) {
+    public String nameForField(
+            final MapperConfig<?> config, final AnnotatedField field, final String defaultName) {
         String name = defaultName;
         for (final PropertyNamingStrategy strategy : strategies) {
             name = strategy.nameForField(config, field, name);
@@ -22,7 +23,8 @@ public class CompositePropertyNamingStrategy extends PropertyNamingStrategy {
     }
 
     @Override
-    public String nameForGetterMethod(final MapperConfig<?> config, final AnnotatedMethod method, final String defaultName) {
+    public String nameForGetterMethod(
+            final MapperConfig<?> config, final AnnotatedMethod method, final String defaultName) {
         String name = defaultName;
         for (final PropertyNamingStrategy strategy : strategies) {
             name = strategy.nameForGetterMethod(config, method, name);
@@ -31,7 +33,8 @@ public class CompositePropertyNamingStrategy extends PropertyNamingStrategy {
     }
 
     @Override
-    public String nameForSetterMethod(final MapperConfig<?> config, final AnnotatedMethod method, final String defaultName) {
+    public String nameForSetterMethod(
+            final MapperConfig<?> config, final AnnotatedMethod method, final String defaultName) {
         String name = defaultName;
         for (final PropertyNamingStrategy strategy : strategies) {
             name = strategy.nameForSetterMethod(config, method, name);

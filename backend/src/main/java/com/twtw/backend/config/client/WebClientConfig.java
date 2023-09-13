@@ -3,6 +3,7 @@ package com.twtw.backend.config.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
@@ -28,8 +29,6 @@ public class WebClientConfig {
                                 })
                         .build();
 
-        return WebClient.builder()
-                .exchangeStrategies(exchangeStrategies)
-                .build();
+        return WebClient.builder().exchangeStrategies(exchangeStrategies).build();
     }
 }

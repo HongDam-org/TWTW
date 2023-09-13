@@ -4,9 +4,8 @@ import com.twtw.backend.domain.path.dto.client.SearchPathRequest;
 import com.twtw.backend.domain.path.dto.client.SearchPathResponse;
 import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
-
 import com.twtw.backend.global.properties.NaverProperties;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

@@ -5,9 +5,10 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.domain.plan.entity.CategoryGroupCode;
 import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
-
 import com.twtw.backend.global.properties.KakaoProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,9 @@ public class SearchDestinationClient
                 .get()
                 .uri(uriBuilder -> getUri(request, uriBuilder))
                 .accept(MediaType.APPLICATION_JSON)
-                .header(HttpHeaders.AUTHORIZATION, kakaoProperties.getHeaderPrefix() + kakaoProperties.getKey())
+                .header(
+                        HttpHeaders.AUTHORIZATION,
+                        kakaoProperties.getHeaderPrefix() + kakaoProperties.getKey())
                 .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
                 .bodyToMono(SearchDestinationResponse.class)
