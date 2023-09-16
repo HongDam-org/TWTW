@@ -5,8 +5,11 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.domain.plan.entity.CategoryGroupCode;
 import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
+import com.twtw.backend.global.properties.KakaoProperties;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,15 +19,13 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 @Component
+@RequiredArgsConstructor
 public class SearchDestinationClient
         implements MapClient<SearchDestinationRequest, SearchDestinationResponse> {
     private static final Integer MAX_SIZE_PER_REQUEST = 15;
     private static final Integer DEFAULT_DISTANCE_RADIUS = 20000;
     private final WebClient webClient;
-
-    public SearchDestinationClient(@Qualifier("KakaoWebClient") WebClient webClient) {
-        this.webClient = webClient;
-    }
+    private final KakaoProperties kakaoProperties;
 
     @Override
     public SearchDestinationResponse request(final SearchDestinationRequest request) {
@@ -32,6 +33,9 @@ public class SearchDestinationClient
                 .get()
                 .uri(uriBuilder -> getUri(request, uriBuilder))
                 .accept(MediaType.APPLICATION_JSON)
+                .header(
+                        HttpHeaders.AUTHORIZATION,
+                        kakaoProperties.getHeaderPrefix() + kakaoProperties.getKey())
                 .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
                 .bodyToMono(SearchDestinationResponse.class)
@@ -42,6 +46,7 @@ public class SearchDestinationClient
     private URI getUri(final SearchDestinationRequest request, final UriBuilder uriBuilder) {
         final UriBuilder builder =
                 uriBuilder
+                        .path(kakaoProperties.getUrl())
                         .path("search/keyword")
                         .queryParam("query", request.getQuery())
                         .queryParam("x", request.getX())
