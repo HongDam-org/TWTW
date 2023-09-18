@@ -1,2 +1,4 @@
 .DS_Store
 backend/src/main/resources/application-env.yml
+
+.env
