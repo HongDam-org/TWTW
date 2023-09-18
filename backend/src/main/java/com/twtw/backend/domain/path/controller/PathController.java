@@ -18,7 +18,8 @@ public class PathController {
 
     /*response 변경*/
     @PostMapping("/search")
-    public ResponseEntity<SearchCarPathResponse> searchPath(@RequestBody SearchCarPathRequest request) {
+    public ResponseEntity<SearchCarPathResponse> searchPath(
+            @RequestBody SearchCarPathRequest request) {
         return ResponseEntity.ok(pathService.searchPath(request));
     }
 }
