@@ -1,7 +1,9 @@
 package com.twtw.backend.config.redis;
 
 import com.twtw.backend.global.properties.RedisProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -42,11 +44,18 @@ public class RedisConfig {
 
     @Bean
     public CacheManager cacheManager(final RedisConnectionFactory cf) {
-        final RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
-                .entryTtl(Duration.ofHours(TIME_TO_LIVE));
+        final RedisCacheConfiguration redisCacheConfiguration =
+                RedisCacheConfiguration.defaultCacheConfig()
+                        .serializeKeysWith(
+                                RedisSerializationContext.SerializationPair.fromSerializer(
+                                        new StringRedisSerializer()))
+                        .serializeValuesWith(
+                                RedisSerializationContext.SerializationPair.fromSerializer(
+                                        new GenericJackson2JsonRedisSerializer()))
+                        .entryTtl(Duration.ofHours(TIME_TO_LIVE));
 
-        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(cf).cacheDefaults(redisCacheConfiguration).build();
+        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(cf)
+                .cacheDefaults(redisCacheConfiguration)
+                .build();
     }
 }

@@ -1,7 +1,9 @@
 package com.twtw.backend.config.socket;
 
 import com.twtw.backend.global.properties.RabbitMQProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -16,8 +18,7 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
-        registry.addEndpoint("/socket")
-                .setAllowedOrigins("*");
+        registry.addEndpoint("/socket").setAllowedOrigins("*");
     }
 
     @Override
