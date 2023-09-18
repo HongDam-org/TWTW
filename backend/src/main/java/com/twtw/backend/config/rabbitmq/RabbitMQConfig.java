@@ -22,20 +22,20 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class RabbitMQConfig {
 
-    private static final String CHAT_QUEUE_NAME = "map.queue";
-    private static final String CHAT_EXCHANGE_NAME = "map.exchange";
-    private static final String ROUTING_KEY = "party.*";
+    private static final String QUEUE_NAME = "map.queue";
+    private static final String EXCHANGE_NAME = "map.exchange";
+    private static final String ROUTING_KEY = "group.*";
     private final RabbitMQProperties rabbitMQProperties;
     private final ObjectMapper objectMapper;
 
     @Bean
     public Queue queue() {
-        return new Queue(CHAT_QUEUE_NAME, true);
+        return new Queue(QUEUE_NAME, true);
     }
 
     @Bean
     public TopicExchange topicExchange() {
-        return new TopicExchange(CHAT_EXCHANGE_NAME);
+        return new TopicExchange(EXCHANGE_NAME);
     }
 
     @Bean
@@ -47,7 +47,7 @@ public class RabbitMQConfig {
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
-        rabbitTemplate.setRoutingKey(CHAT_QUEUE_NAME);
+        rabbitTemplate.setRoutingKey(QUEUE_NAME);
         return rabbitTemplate;
     }
 
