@@ -1,4 +1,4 @@
-package com.twtw.backend.domain.path.dto.client;
+package com.twtw.backend.domain.path.dto.client.car;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchPathResponse {
+public class SearchCarPathResponse {
     private int code;
     private String message;
     private String currentDateTime;

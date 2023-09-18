@@ -1,4 +1,4 @@
-package com.twtw.backend.domain.path.dto.client;
+package com.twtw.backend.domain.path.dto.client.car;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
