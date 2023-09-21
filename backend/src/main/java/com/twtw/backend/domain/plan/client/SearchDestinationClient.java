@@ -24,7 +24,8 @@ public class SearchDestinationClient
     private static final Integer DEFAULT_DISTANCE_RADIUS = 20000;
     private final WebClient webClient;
 
-    public SearchDestinationClient(final ObjectMapper objectMapper, final KakaoProperties kakaoProperties) {
+    public SearchDestinationClient(
+            final ObjectMapper objectMapper, final KakaoProperties kakaoProperties) {
         super(objectMapper, kakaoProperties);
         this.webClient = generateWebClient();
     }

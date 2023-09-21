@@ -7,9 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableConfigurationProperties({
-        NaverProperties.class,
-        KakaoProperties.class,
-        TmapProperties.class,
-        RabbitMQProperties.class,
-        RedisProperties.class})
+    NaverProperties.class,
+    KakaoProperties.class,
+    TmapProperties.class,
+    RabbitMQProperties.class,
+    RedisProperties.class
+})
 public class PropertiesConfig {}

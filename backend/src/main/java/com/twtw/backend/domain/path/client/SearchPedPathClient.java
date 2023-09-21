@@ -3,7 +3,6 @@ package com.twtw.backend.domain.path.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathRequest;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
-import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.client.TmapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.TmapProperties;
@@ -21,7 +20,8 @@ public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, Search
 
     private final WebClient webClient;
 
-    public SearchPedPathClient(final ObjectMapper objectMapper, final TmapProperties tmapProperties) {
+    public SearchPedPathClient(
+            final ObjectMapper objectMapper, final TmapProperties tmapProperties) {
         super(objectMapper, tmapProperties);
         this.webClient = generateWebClient();
     }
@@ -42,8 +42,7 @@ public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, Search
     }
 
     private URI getPathUri(final UriBuilder uriBuilder) {
-        final UriBuilder builder =
-                uriBuilder.queryParam("version", 1);
+        final UriBuilder builder = uriBuilder.queryParam("version", 1);
 
         return builder.build();
     }

@@ -2,7 +2,9 @@ package com.twtw.backend.global.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.global.properties.KakaoProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
@@ -29,7 +31,8 @@ public abstract class KakaoMapClient<T, R> implements MapClient<T, R> {
 
         return WebClient.builder()
                 .baseUrl(kakaoProperties.getUrl())
-                .defaultHeader(HttpHeaders.AUTHORIZATION,
+                .defaultHeader(
+                        HttpHeaders.AUTHORIZATION,
                         kakaoProperties.getHeaderPrefix() + kakaoProperties.getKey())
                 .exchangeStrategies(exchangeStrategies)
                 .build();

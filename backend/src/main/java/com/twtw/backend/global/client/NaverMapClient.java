@@ -2,7 +2,9 @@ package com.twtw.backend.global.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.global.properties.NaverProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;

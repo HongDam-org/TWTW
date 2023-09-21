@@ -3,7 +3,6 @@ package com.twtw.backend.domain.path.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.domain.path.dto.client.car.SearchCarPathRequest;
 import com.twtw.backend.domain.path.dto.client.car.SearchCarPathResponse;
-import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.client.NaverMapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.NaverProperties;
@@ -17,10 +16,12 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 @Component
-public class SearchCarPathClient extends NaverMapClient<SearchCarPathRequest, SearchCarPathResponse> {
+public class SearchCarPathClient
+        extends NaverMapClient<SearchCarPathRequest, SearchCarPathResponse> {
     private final WebClient webClient;
 
-    public SearchCarPathClient(final ObjectMapper objectMapper, final NaverProperties naverProperties) {
+    public SearchCarPathClient(
+            final ObjectMapper objectMapper, final NaverProperties naverProperties) {
         super(objectMapper, naverProperties);
         this.webClient = generateWebClient();
     }
