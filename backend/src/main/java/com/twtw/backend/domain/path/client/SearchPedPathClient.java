@@ -32,7 +32,7 @@ public class SearchPedPathClient implements MapClient<SearchPedPathRequest, Sear
                 .uri(uri -> getPathUri(uri))
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
-                .header("appKey",tmapProperties.getAppKey())
+                .header("appKey", tmapProperties.getAppKey())
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(SearchPedPathResponse.class)
@@ -40,11 +40,9 @@ public class SearchPedPathClient implements MapClient<SearchPedPathRequest, Sear
                 .orElseThrow(WebClientResponseException::new);
     }
 
-    private URI getPathUri(final UriBuilder uriBuilder){
+    private URI getPathUri(final UriBuilder uriBuilder) {
         final UriBuilder builder =
-                uriBuilder
-                        .path(tmapProperties.getUrl())
-                        .queryParam("version",1);
+                uriBuilder.path(tmapProperties.getUrl()).queryParam("version", 1);
 
         return builder.build();
     }

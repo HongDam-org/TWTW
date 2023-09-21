@@ -27,7 +27,7 @@ public class PathController {
 
     @PostMapping("search/ped")
     public ResponseEntity<SearchPedPathResponse> searchPedPath(
-            @RequestBody SearchPedPathRequest request){
+            @RequestBody SearchPedPathRequest request) {
         return ResponseEntity.ok(pathService.searchPedPath(request));
     }
 }
