@@ -1,8 +1,10 @@
 package com.twtw.backend.domain.path.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathRequest;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
 import com.twtw.backend.global.client.MapClient;
+import com.twtw.backend.global.client.TmapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.TmapProperties;
 
@@ -15,14 +17,13 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 @Component
-public class SearchPedPathClient implements MapClient<SearchPedPathRequest, SearchPedPathResponse> {
+public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, SearchPedPathResponse> {
 
     private final WebClient webClient;
-    private final TmapProperties tmapProperties;
 
-    public SearchPedPathClient(final WebClient webClient, final TmapProperties tmapProperties) {
-        this.webClient = webClient;
-        this.tmapProperties = tmapProperties;
+    public SearchPedPathClient(final ObjectMapper objectMapper, final TmapProperties tmapProperties) {
+        super(objectMapper, tmapProperties);
+        this.webClient = generateWebClient();
     }
 
     @Override
@@ -42,7 +43,7 @@ public class SearchPedPathClient implements MapClient<SearchPedPathRequest, Sear
 
     private URI getPathUri(final UriBuilder uriBuilder) {
         final UriBuilder builder =
-                uriBuilder.path(tmapProperties.getUrl()).queryParam("version", 1);
+                uriBuilder.queryParam("version", 1);
 
         return builder.build();
     }

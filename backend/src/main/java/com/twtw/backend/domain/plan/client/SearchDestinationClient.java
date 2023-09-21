@@ -1,13 +1,12 @@
 package com.twtw.backend.domain.plan.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.domain.plan.entity.CategoryGroupCode;
-import com.twtw.backend.global.client.MapClient;
+import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.KakaoProperties;
-
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -19,13 +18,16 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 @Component
-@RequiredArgsConstructor
 public class SearchDestinationClient
-        implements MapClient<SearchDestinationRequest, SearchDestinationResponse> {
+        extends KakaoMapClient<SearchDestinationRequest, SearchDestinationResponse> {
     private static final Integer MAX_SIZE_PER_REQUEST = 15;
     private static final Integer DEFAULT_DISTANCE_RADIUS = 20000;
     private final WebClient webClient;
-    private final KakaoProperties kakaoProperties;
+
+    public SearchDestinationClient(final ObjectMapper objectMapper, final KakaoProperties kakaoProperties) {
+        super(objectMapper, kakaoProperties);
+        this.webClient = generateWebClient();
+    }
 
     @Override
     public SearchDestinationResponse request(final SearchDestinationRequest request) {
@@ -46,7 +48,6 @@ public class SearchDestinationClient
     private URI getUri(final SearchDestinationRequest request, final UriBuilder uriBuilder) {
         final UriBuilder builder =
                 uriBuilder
-                        .path(kakaoProperties.getUrl())
                         .path("search/keyword")
                         .queryParam("query", request.getQuery())
                         .queryParam("x", request.getX())
