@@ -1,6 +1,28 @@
 version: "3"
 
 services:
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    depends_on:
+      - db
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      SCHEMA: ${SCHEMA}
+      SPRING_PROFILES_ACTIVE: prod
+    restart: always
+    tty: true
+
   db:
     image: mariadb:10
     container_name: db

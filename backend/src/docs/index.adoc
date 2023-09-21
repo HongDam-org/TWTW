@@ -9,3 +9,5 @@
 HongDamJin
 
 include::plan.adoc[]
+include::auth.adoc[]
+include::path.adoc[]
