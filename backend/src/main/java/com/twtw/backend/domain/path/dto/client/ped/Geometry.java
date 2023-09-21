@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class Geometry {
     private String type;
     private Double[][] coordinates;
-
 }

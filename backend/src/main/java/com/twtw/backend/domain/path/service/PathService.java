@@ -13,7 +13,9 @@ public class PathService {
     private final MapClient<SearchCarPathRequest, SearchCarPathResponse> carPathClient;
     private final MapClient<SearchPedPathRequest, SearchPedPathResponse> pedPathClient;
 
-    public PathService(MapClient<SearchCarPathRequest, SearchCarPathResponse> carPathClient,MapClient<SearchPedPathRequest, SearchPedPathResponse> pedPathClient) {
+    public PathService(
+            MapClient<SearchCarPathRequest, SearchCarPathResponse> carPathClient,
+            MapClient<SearchPedPathRequest, SearchPedPathResponse> pedPathClient) {
         this.carPathClient = carPathClient;
         this.pedPathClient = pedPathClient;
     }
@@ -22,7 +24,7 @@ public class PathService {
         return this.carPathClient.request(request);
     }
 
-    public SearchPedPathResponse searchPedPath(final SearchPedPathRequest request){
+    public SearchPedPathResponse searchPedPath(final SearchPedPathRequest request) {
         return this.pedPathClient.request(request);
     }
 }
