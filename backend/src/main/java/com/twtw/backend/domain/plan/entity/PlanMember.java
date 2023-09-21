@@ -20,11 +20,11 @@ public class PlanMember {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @JoinColumn
+    @JoinColumn(columnDefinition = "BINARY(16)")
     @ManyToOne(fetch = FetchType.LAZY)
     private Plan plan;
 
-    @JoinColumn
+    @JoinColumn(columnDefinition = "BINARY(16)")
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
