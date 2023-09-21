@@ -1,0 +1,15 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Auth
+=== 리프레시 토큰 갱신
+operation::post refresh token[snippets='http-request,http-response']
+
+=== 첫 로그인
+operation::post save member[snippets='http-request,http-response']
+
+=== 저장된 멤버 로그인
+operation::post login[snippets='http-request,http-response']
