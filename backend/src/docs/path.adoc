@@ -1,0 +1,9 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Path
+=== 경로 검색
+operation::post search path[snippets='http-request,http-response']
