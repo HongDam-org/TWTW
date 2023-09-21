@@ -1,7 +1,7 @@
 package com.twtw.backend.domain.path.client;
 
-import com.twtw.backend.domain.path.dto.client.SearchPathRequest;
-import com.twtw.backend.domain.path.dto.client.SearchPathResponse;
+import com.twtw.backend.domain.path.dto.client.car.SearchCarPathRequest;
+import com.twtw.backend.domain.path.dto.client.car.SearchCarPathResponse;
 import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.NaverProperties;
@@ -15,17 +15,17 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 @Component
-public class SearchPathClient implements MapClient<SearchPathRequest, SearchPathResponse> {
+public class SearchCarPathClient implements MapClient<SearchCarPathRequest, SearchCarPathResponse> {
     private final WebClient webClient;
     private final NaverProperties naverProperties;
 
-    public SearchPathClient(final WebClient webClient, final NaverProperties naverProperties) {
+    public SearchCarPathClient(final WebClient webClient, final NaverProperties naverProperties) {
         this.webClient = webClient;
         this.naverProperties = naverProperties;
     }
 
     /*상세 검색을 위한 변경 필요*/
-    private URI getPathUri(final SearchPathRequest request, final UriBuilder uriBuilder) {
+    private URI getPathUri(final SearchCarPathRequest request, final UriBuilder uriBuilder) {
 
         final UriBuilder builder =
                 uriBuilder
@@ -38,7 +38,6 @@ public class SearchPathClient implements MapClient<SearchPathRequest, SearchPath
                         .queryParam("fueltype", request.getFuel().toSmallFuel());
 
         String wayPoints = request.getWay();
-
         if (wayPoints.isEmpty()) {
             return builder.build();
         }
@@ -47,7 +46,7 @@ public class SearchPathClient implements MapClient<SearchPathRequest, SearchPath
     }
 
     @Override
-    public SearchPathResponse request(final SearchPathRequest request) {
+    public SearchCarPathResponse request(final SearchCarPathRequest request) {
         return webClient
                 .get()
                 .uri(uri -> getPathUri(request, uri))
@@ -56,7 +55,7 @@ public class SearchPathClient implements MapClient<SearchPathRequest, SearchPath
                 .header(naverProperties.getHeaderClientId(), naverProperties.getId())
                 .header(naverProperties.getHeaderClientSecret(), naverProperties.getSecret())
                 .retrieve()
-                .bodyToMono(SearchPathResponse.class)
+                .bodyToMono(SearchCarPathResponse.class)
                 .blockOptional()
                 .orElseThrow(WebClientResponseException::new);
     }

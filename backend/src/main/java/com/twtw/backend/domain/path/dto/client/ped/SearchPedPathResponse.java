@@ -1,4 +1,4 @@
-package com.twtw.backend.domain.path.dto.client;
+package com.twtw.backend.domain.path.dto.client.ped;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RouteUnitEnt {
-    private Summary summary;
-    private List<Double[]> path;
+public class SearchPedPathResponse {
+    private String type;
+    private List<Geometry> geometry;
 }
