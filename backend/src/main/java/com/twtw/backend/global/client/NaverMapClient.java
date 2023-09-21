@@ -1,27 +1,26 @@
-package com.twtw.backend.config.client;
+package com.twtw.backend.global.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.twtw.backend.global.properties.NaverProperties;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
-@Configuration
 @RequiredArgsConstructor
-public class WebClientConfig {
+public abstract class NaverMapClient<T, R> implements MapClient<T, R> {
+    private static final Integer NO_LIMIT = -1;
     private final ObjectMapper objectMapper;
+    protected final NaverProperties naverProperties;
 
-    @Bean
-    public WebClient webClient() {
+    protected WebClient generateWebClient() {
         final ExchangeStrategies exchangeStrategies =
                 ExchangeStrategies.builder()
                         .codecs(
                                 configurer -> {
-                                    configurer.defaultCodecs().maxInMemorySize(-1);
+                                    configurer.defaultCodecs().maxInMemorySize(NO_LIMIT);
                                     configurer
                                             .defaultCodecs()
                                             .jackson2JsonDecoder(
@@ -29,6 +28,11 @@ public class WebClientConfig {
                                 })
                         .build();
 
-        return WebClient.builder().exchangeStrategies(exchangeStrategies).build();
+        return WebClient.builder()
+                .baseUrl(naverProperties.getUrl())
+                .defaultHeader(naverProperties.getHeaderClientId(), naverProperties.getId())
+                .defaultHeader(naverProperties.getHeaderClientSecret(), naverProperties.getSecret())
+                .exchangeStrategies(exchangeStrategies)
+                .build();
     }
 }
