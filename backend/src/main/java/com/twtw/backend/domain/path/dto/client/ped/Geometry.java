@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Geometry {
     private String type;
+    private Double[][] coordinates;
+
 }

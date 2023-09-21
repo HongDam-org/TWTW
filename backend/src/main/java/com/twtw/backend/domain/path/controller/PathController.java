@@ -2,6 +2,8 @@ package com.twtw.backend.domain.path.controller;
 
 import com.twtw.backend.domain.path.dto.client.car.SearchCarPathRequest;
 import com.twtw.backend.domain.path.dto.client.car.SearchCarPathResponse;
+import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathRequest;
+import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
 import com.twtw.backend.domain.path.service.PathService;
 
 import org.springframework.http.ResponseEntity;
@@ -17,9 +19,15 @@ public class PathController {
     }
 
     /*response 변경*/
-    @PostMapping("/search")
-    public ResponseEntity<SearchCarPathResponse> searchPath(
+    @PostMapping("/search/car")
+    public ResponseEntity<SearchCarPathResponse> searchCarPath(
             @RequestBody SearchCarPathRequest request) {
-        return ResponseEntity.ok(pathService.searchPath(request));
+        return ResponseEntity.ok(pathService.searchCarPath(request));
+    }
+
+    @PostMapping("search/ped")
+    public ResponseEntity<SearchPedPathResponse> searchPedPath(
+            @RequestBody SearchPedPathRequest request){
+        return ResponseEntity.ok(pathService.searchPedPath(request));
     }
 }

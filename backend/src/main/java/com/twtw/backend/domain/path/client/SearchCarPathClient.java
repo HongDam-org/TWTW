@@ -38,7 +38,6 @@ public class SearchCarPathClient implements MapClient<SearchCarPathRequest, Sear
                         .queryParam("fueltype", request.getFuel().toSmallFuel());
 
         String wayPoints = request.getWay();
-
         if (wayPoints.isEmpty()) {
             return builder.build();
         }

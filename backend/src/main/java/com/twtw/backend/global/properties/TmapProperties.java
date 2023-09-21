@@ -10,4 +10,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "tmap")
 public class TmapProperties {
     private final String appKey;
+    private final String url;
 }
