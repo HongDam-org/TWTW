@@ -1,6 +1,4 @@
-package com.twtw.backend.domain.plan.dto.client;
-
-import com.twtw.backend.domain.place.entity.CategoryGroupCode;
+package com.twtw.backend.domain.place.dto.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,10 +9,8 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchDestinationRequest {
-    private String query;
+public class SurroundPlaceRequest {
     private String x;
     private String y;
     private Integer page;
-    private CategoryGroupCode categoryGroupCode;
 }

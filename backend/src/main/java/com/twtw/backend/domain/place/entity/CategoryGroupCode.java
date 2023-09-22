@@ -1,4 +1,4 @@
-package com.twtw.backend.domain.plan.entity;
+package com.twtw.backend.domain.place.entity;
 
 import lombok.RequiredArgsConstructor;
 
