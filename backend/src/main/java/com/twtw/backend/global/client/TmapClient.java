@@ -1,11 +1,13 @@
 package com.twtw.backend.global.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.twtw.backend.global.properties.TmapProperties;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -26,6 +28,10 @@ public abstract class TmapClient<T, R> implements MapClient<T, R> {
                                             .defaultCodecs()
                                             .jackson2JsonDecoder(
                                                     new Jackson2JsonDecoder(objectMapper));
+                                    configurer
+                                            .defaultCodecs()
+                                            .jackson2JsonEncoder(
+                                                    new Jackson2JsonEncoder(objectMapper));
                                 })
                         .build();
 

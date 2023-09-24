@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -26,6 +27,10 @@ public abstract class KakaoMapClient<T, R> implements MapClient<T, R> {
                                             .defaultCodecs()
                                             .jackson2JsonDecoder(
                                                     new Jackson2JsonDecoder(objectMapper));
+                                    configurer
+                                            .defaultCodecs()
+                                            .jackson2JsonEncoder(
+                                                    new Jackson2JsonEncoder(objectMapper));
                                 })
                         .build();
 

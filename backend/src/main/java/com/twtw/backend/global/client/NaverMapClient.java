@@ -1,11 +1,16 @@
 package com.twtw.backend.global.client;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.twtw.backend.config.mapper.CompositePropertyNamingStrategy;
 import com.twtw.backend.global.properties.NaverProperties;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
+import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -16,6 +21,8 @@ public abstract class NaverMapClient<T, R> implements MapClient<T, R> {
     protected final NaverProperties naverProperties;
 
     protected WebClient generateWebClient() {
+        objectMapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+
         final ExchangeStrategies exchangeStrategies =
                 ExchangeStrategies.builder()
                         .codecs(
@@ -25,6 +32,10 @@ public abstract class NaverMapClient<T, R> implements MapClient<T, R> {
                                             .defaultCodecs()
                                             .jackson2JsonDecoder(
                                                     new Jackson2JsonDecoder(objectMapper));
+                                    configurer
+                                            .defaultCodecs()
+                                            .jackson2JsonEncoder(
+                                                    new Jackson2JsonEncoder(objectMapper));
                                 })
                         .build();
 
