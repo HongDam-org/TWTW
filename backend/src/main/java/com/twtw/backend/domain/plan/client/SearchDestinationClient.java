@@ -6,6 +6,7 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.KakaoProperties;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

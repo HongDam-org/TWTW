@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.place.entity;
 
 import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,11 +29,9 @@ public class Place {
 
     private CategoryGroupCode categoryGroupCode;
 
-    @Embedded
-    private Address address;
+    @Embedded private Address address;
 
-    @Embedded
-    private Coordinate coordinate;
+    @Embedded private Coordinate coordinate;
 
     @Builder
     public Place(

@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.plan.entity;
 
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
+
 import jakarta.persistence.Embeddable;
 
 import lombok.*;

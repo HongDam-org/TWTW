@@ -11,9 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
-import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.plan.service.PlanService;
 import com.twtw.backend.support.docs.RestDocsTest;
 

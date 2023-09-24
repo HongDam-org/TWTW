@@ -6,6 +6,7 @@ import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.KakaoProperties;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
@@ -14,7 +15,8 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 @Component
-public class SurroundPlaceClient extends KakaoMapClient<SurroundPlaceRequest, SurroundPlaceResponse> {
+public class SurroundPlaceClient
+        extends KakaoMapClient<SurroundPlaceRequest, SurroundPlaceResponse> {
     private static final Integer MAX_SIZE_PER_REQUEST = 15;
     private static final Integer DEFAULT_DISTANCE_RADIUS = 1500;
     private final WebClient webClient;

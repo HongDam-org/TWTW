@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.place.entity;
 
 import jakarta.persistence.Embeddable;
+
 import lombok.*;
 
 @Getter

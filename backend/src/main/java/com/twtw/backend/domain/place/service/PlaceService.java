@@ -4,7 +4,9 @@ import com.twtw.backend.domain.place.dto.client.SurroundPlaceRequest;
 import com.twtw.backend.domain.place.dto.client.SurroundPlaceResponse;
 import com.twtw.backend.domain.place.dto.response.PlaceResponse;
 import com.twtw.backend.global.client.KakaoMapClient;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 @Service
