@@ -1,12 +1,10 @@
 package com.twtw.backend.domain.path.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathRequest;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
 import com.twtw.backend.global.client.TmapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.TmapProperties;
-
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,9 +18,8 @@ public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, Search
 
     private final WebClient webClient;
 
-    public SearchPedPathClient(
-            final ObjectMapper objectMapper, final TmapProperties tmapProperties) {
-        super(objectMapper, tmapProperties);
+    public SearchPedPathClient(final TmapProperties tmapProperties) {
+        super(tmapProperties);
         this.webClient = generateWebClient();
     }
 

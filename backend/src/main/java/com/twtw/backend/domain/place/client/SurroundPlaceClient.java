@@ -1,6 +1,5 @@
 package com.twtw.backend.domain.place.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.domain.place.dto.client.SurroundPlaceRequest;
 import com.twtw.backend.domain.place.dto.client.SurroundPlaceResponse;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
@@ -20,8 +19,8 @@ public class SurroundPlaceClient extends KakaoMapClient<SurroundPlaceRequest, Su
     private static final Integer DEFAULT_DISTANCE_RADIUS = 1500;
     private final WebClient webClient;
 
-    public SurroundPlaceClient(final ObjectMapper objectMapper, final KakaoProperties kakaoProperties) {
-        super(objectMapper, kakaoProperties);
+    public SurroundPlaceClient(final KakaoProperties kakaoProperties) {
+        super(kakaoProperties);
         this.webClient = generateWebClient();
     }
 
