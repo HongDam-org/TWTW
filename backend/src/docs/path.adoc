@@ -5,5 +5,8 @@
 :toclevels: 4
 
 == Path
-=== 경로 검색
-operation::post search path[snippets='http-request,http-response']
+=== 차 경로 검색
+operation::post search car path[snippets='http-request,http-response']
+
+=== 보행자 경로 검색
+operation::post search ped path[snippets='http-request,http-response']
