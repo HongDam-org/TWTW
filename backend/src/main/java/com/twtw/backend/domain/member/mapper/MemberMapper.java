@@ -15,7 +15,6 @@ public class MemberMapper {
                 new Member(
                         request.getNickname(),
                         request.getProfileImage(),
-                        request.getPhoneNumber(),
                         request.getRole());
         return member;
     }
