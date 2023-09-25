@@ -1,14 +1,12 @@
 package com.twtw.backend.domain.plan.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
-import com.twtw.backend.domain.plan.entity.CategoryGroupCode;
 import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.KakaoProperties;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,9 +22,8 @@ public class SearchDestinationClient
     private static final Integer DEFAULT_DISTANCE_RADIUS = 20000;
     private final WebClient webClient;
 
-    public SearchDestinationClient(
-            final ObjectMapper objectMapper, final KakaoProperties kakaoProperties) {
-        super(objectMapper, kakaoProperties);
+    public SearchDestinationClient(final KakaoProperties kakaoProperties) {
+        super(kakaoProperties);
         this.webClient = generateWebClient();
     }
 
@@ -36,9 +33,6 @@ public class SearchDestinationClient
                 .get()
                 .uri(uriBuilder -> getUri(request, uriBuilder))
                 .accept(MediaType.APPLICATION_JSON)
-                .header(
-                        HttpHeaders.AUTHORIZATION,
-                        kakaoProperties.getHeaderPrefix() + kakaoProperties.getKey())
                 .acceptCharset(StandardCharsets.UTF_8)
                 .retrieve()
                 .bodyToMono(SearchDestinationResponse.class)

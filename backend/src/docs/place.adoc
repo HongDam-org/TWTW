@@ -1,0 +1,9 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Place
+=== 주변 장소 검색
+operation::get search surround place[snippets='http-request,http-response']

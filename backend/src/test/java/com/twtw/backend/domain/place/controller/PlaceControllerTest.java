@@ -1,8 +1,9 @@
-package com.twtw.backend.domain.plan.controller;
+package com.twtw.backend.domain.place.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -11,10 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.twtw.backend.domain.place.dto.response.PlaceResponse;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
+import com.twtw.backend.domain.place.service.PlaceService;
 import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
-import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
-import com.twtw.backend.domain.plan.service.PlanService;
 import com.twtw.backend.support.docs.RestDocsTest;
 
 import org.junit.jupiter.api.DisplayName;
@@ -26,17 +27,16 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-@DisplayName("PlanController의")
-@WebMvcTest(PlanController.class)
-class PlanControllerTest extends RestDocsTest {
-    @MockBean private PlanService planService;
+@DisplayName("PlaceController의")
+@WebMvcTest(PlaceController.class)
+class PlaceControllerTest extends RestDocsTest {
+    @MockBean private PlaceService placeService;
 
     @Test
-    @DisplayName("키워드와 카테고리 기반 검색 API가 수행되는가")
-    void searchPlanDestination() throws Exception {
-        // given
-        final PlanDestinationResponse expected =
-                new PlanDestinationResponse(
+    @DisplayName("주변 장소 검색 API가 수행되는가")
+    void searchSurroundPlace() throws Exception {
+        final PlaceResponse expected =
+                new PlaceResponse(
                         List.of(
                                 new PlaceDetails(
                                         "이디야커피 안성죽산점",
@@ -59,12 +59,12 @@ class PlanControllerTest extends RestDocsTest {
                                         "127.420430538256",
                                         "37.0766874564297")),
                         false);
-        given(planService.searchPlanDestination(any())).willReturn(expected);
+        given(placeService.searchSurroundPlace(any())).willReturn(expected);
 
         // when
         final ResultActions perform =
                 mockMvc.perform(
-                        get("/plans/search/destination")
+                        get("/places/surround")
                                 .queryParam("query", "이디야 안성")
                                 .queryParam("x", "127.426")
                                 .queryParam("y", "37.0764")
@@ -84,7 +84,7 @@ class PlanControllerTest extends RestDocsTest {
         perform.andDo(print())
                 .andDo(
                         document(
-                                "get search plan destination",
+                                "get search surround place",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
     }

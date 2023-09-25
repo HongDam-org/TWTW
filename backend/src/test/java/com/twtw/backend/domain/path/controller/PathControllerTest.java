@@ -10,7 +10,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.twtw.backend.domain.path.dto.client.*;
+import com.twtw.backend.domain.path.dto.client.car.*;
+import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
 import com.twtw.backend.domain.path.service.PathService;
 import com.twtw.backend.support.docs.RestDocsTest;
 
@@ -30,11 +31,11 @@ class PathControllerTest extends RestDocsTest {
     @MockBean private PathService pathService;
 
     @Test
-    @DisplayName("경로 검색 API가 수행되는가")
-    void searchPath() throws Exception {
+    @DisplayName("자동차 경로 검색 API가 수행되는가")
+    void searchCarPath() throws Exception {
         // given
-        final SearchPathResponse expected =
-                new SearchPathResponse(
+        final SearchCarPathResponse expected =
+                new SearchCarPathResponse(
                         0,
                         "",
                         "",
@@ -48,15 +49,15 @@ class PathControllerTest extends RestDocsTest {
                                                     new Double[] {0.0, 0.0}))
                                 }));
 
-        given(pathService.searchPath(any())).willReturn(expected);
+        given(pathService.searchCarPath(any())).willReturn(expected);
 
         // when
         final ResultActions perform =
                 mockMvc.perform(
-                        post("/paths/search")
+                        post("/paths/search/car")
                                 .content(
                                         toRequestBody(
-                                                new SearchPathRequest(
+                                                new SearchCarPathRequest(
                                                         "",
                                                         "",
                                                         "",
@@ -70,6 +71,45 @@ class PathControllerTest extends RestDocsTest {
 
         // docs
         perform.andDo(print())
-                .andDo(document("post search path", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "post search car path",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("보행자 경로 검색 API가 수행되는가")
+    void searchPedPath() throws Exception {
+        // given
+        final SearchPedPathResponse expected = new SearchPedPathResponse("", List.of());
+
+        given(pathService.searchPedPath(any())).willReturn(expected);
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/paths/search/car")
+                                .content(
+                                        toRequestBody(
+                                                new SearchCarPathRequest(
+                                                        "",
+                                                        "",
+                                                        "",
+                                                        SearchPathOption.TRAFAST,
+                                                        SearchPathFuel.DIESEL,
+                                                        0)))
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        perform.andExpect(status().isOk());
+
+        // docs
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "post search ped path",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 }

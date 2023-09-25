@@ -1,6 +1,5 @@
 package com.twtw.backend.domain.path.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.domain.path.dto.client.car.SearchCarPathRequest;
 import com.twtw.backend.domain.path.dto.client.car.SearchCarPathResponse;
 import com.twtw.backend.global.client.NaverMapClient;
@@ -20,9 +19,8 @@ public class SearchCarPathClient
         extends NaverMapClient<SearchCarPathRequest, SearchCarPathResponse> {
     private final WebClient webClient;
 
-    public SearchCarPathClient(
-            final ObjectMapper objectMapper, final NaverProperties naverProperties) {
-        super(objectMapper, naverProperties);
+    public SearchCarPathClient(final NaverProperties naverProperties) {
+        super(naverProperties);
         this.webClient = generateWebClient();
     }
 
