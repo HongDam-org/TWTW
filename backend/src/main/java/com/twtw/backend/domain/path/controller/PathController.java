@@ -18,14 +18,13 @@ public class PathController {
         this.pathService = pathService;
     }
 
-    /*response 변경*/
     @PostMapping("/search/car")
     public ResponseEntity<SearchCarPathResponse> searchCarPath(
             @RequestBody SearchCarPathRequest request) {
         return ResponseEntity.ok(pathService.searchCarPath(request));
     }
 
-    @PostMapping("search/ped")
+    @PostMapping("/search/ped")
     public ResponseEntity<SearchPedPathResponse> searchPedPath(
             @RequestBody SearchPedPathRequest request) {
         return ResponseEntity.ok(pathService.searchPedPath(request));
