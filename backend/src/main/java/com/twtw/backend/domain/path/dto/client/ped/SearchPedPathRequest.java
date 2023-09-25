@@ -4,14 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class SearchPedPathRequest {
-    private String startX;
-    private String startY;
-    private String endX;
-    private String endY;
-    private String startName;
-    private String endName;
+   private Double startX;
+   private Double startY;
+   private Double endX;
+   private Double endY;
+   private String startName;
+   private String endName;
 }
