@@ -86,8 +86,8 @@ class AuthControllerTest extends RestDocsTest {
 
         // then
         perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken").isString())
-                .andExpect(jsonPath("$.refreshToken").isString());
+                .andExpect(jsonPath("$.tokenDto.accessToken").isString())
+                .andExpect(jsonPath("$.tokenDto.refreshToken").isString());
 
         // docs
         perform.andDo(print())
@@ -112,8 +112,8 @@ class AuthControllerTest extends RestDocsTest {
 
         // then
         perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.accessToken").isString())
-                .andExpect(jsonPath("$.refreshToken").isString());
+                .andExpect(jsonPath("$.tokenDto.accessToken").isString())
+                .andExpect(jsonPath("$.tokenDto.refreshToken").isString());
 
         // docs
         perform.andDo(print())

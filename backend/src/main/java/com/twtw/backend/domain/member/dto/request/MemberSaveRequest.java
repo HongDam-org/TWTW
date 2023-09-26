@@ -19,7 +19,6 @@ public class MemberSaveRequest {
 
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
     private Role role;
 
     private OAuthRequest oauthRequest;
