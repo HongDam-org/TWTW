@@ -6,6 +6,7 @@ import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,6 +34,25 @@ import org.springframework.test.web.servlet.ResultActions;
 @WebMvcTest(AuthController.class)
 class AuthControllerTest extends RestDocsTest {
     @MockBean private AuthService authService;
+
+    @Test
+    @DisplayName("토큰이 만료되었는가")
+    void validate() throws Exception {
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        get("/auth/validate")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header("Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isNoContent());
+        //docs
+
+        perform.andDo(print())
+                .andDo(document("토큰 유효성 검사 성공", getDocumentRequest(), getDocumentResponse()));
+    }
 
     @Test
     @DisplayName("JWT 리프레시 API가 수행되는가")
