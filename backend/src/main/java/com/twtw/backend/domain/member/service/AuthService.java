@@ -46,7 +46,7 @@ public class AuthService {
      * */
 
     @Transactional
-    public TokenDto saveMember(MemberSaveRequest request) {
+    public AfterLoginDto saveMember(MemberSaveRequest request) {
         Member member = memberMapper.toMemberEntity(request);
 
         String clientId = request.getOauthRequest().getToken();
@@ -58,7 +58,7 @@ public class AuthService {
         UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(member);
         TokenDto tokenDto = saveRefreshToken(credit, member.getId().toString());
 
-        return tokenDto;
+        return new AfterLoginDto(AuthStatus.SI,tokenDto);
     }
 
     /*
