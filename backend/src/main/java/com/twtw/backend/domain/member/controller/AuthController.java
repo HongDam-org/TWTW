@@ -35,6 +35,11 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(tokenDto);
     }
 
+    @GetMapping("/validate")
+    public ResponseEntity<Void> validate(){
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/login")
     public ResponseEntity<AfterLoginDto> afterSocialLogin(@RequestBody OAuthRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.getTokenByOAuth(request));
