@@ -80,8 +80,6 @@ class AuthControllerTest extends RestDocsTest {
                                                 new MemberSaveRequest(
                                                         "정해진",
                                                         "http://some-url-to-profile-image",
-                                                        "01000000000",
-                                                        Role.ROLE_USER,
                                                         new OAuthRequest(
                                                                 "client-id", AuthType.APPLE))))
                                 .contentType(MediaType.APPLICATION_JSON));
