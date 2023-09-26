@@ -28,7 +28,8 @@ public class AuthController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<AfterLoginDto> saveMember(@RequestBody MemberSaveRequest memberSaveRequest) {
+    public ResponseEntity<AfterLoginDto> saveMember(
+            @RequestBody MemberSaveRequest memberSaveRequest) {
         AfterLoginDto tokenDto = authService.saveMember(memberSaveRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(tokenDto);

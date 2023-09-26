@@ -66,7 +66,9 @@ class AuthControllerTest extends RestDocsTest {
     @DisplayName("첫 로그인 API가 수행되는가")
     void saveMember() throws Exception {
         // given
-        final AfterLoginDto expected = new AfterLoginDto(AuthStatus.SI,new TokenDto("access.token.value", "refresh.token.value"));
+        final AfterLoginDto expected =
+                new AfterLoginDto(
+                        AuthStatus.SI, new TokenDto("access.token.value", "refresh.token.value"));
         given(authService.saveMember(any())).willReturn(expected);
 
         // when
@@ -98,7 +100,9 @@ class AuthControllerTest extends RestDocsTest {
     @DisplayName("멤버가 저장된 상태에서의 로그인 API가 수행되는가")
     void afterSocialLogin() throws Exception {
         // given
-        final AfterLoginDto expected = new AfterLoginDto(AuthStatus.SI,new TokenDto("access.token.value", "refresh.token.value"));
+        final AfterLoginDto expected =
+                new AfterLoginDto(
+                        AuthStatus.SI, new TokenDto("access.token.value", "refresh.token.value"));
         given(authService.getTokenByOAuth(any())).willReturn(expected);
 
         // when

@@ -11,10 +11,7 @@ import org.springframework.stereotype.Component;
 public class MemberMapper {
 
     public Member toMemberEntity(MemberSaveRequest request) {
-        Member member =
-                new Member(
-                        request.getNickname(),
-                        request.getProfileImage());
+        Member member = new Member(request.getNickname(), request.getProfileImage());
         return member;
     }
 
