@@ -26,10 +26,10 @@ public class Member {
 
     @Embedded private OAuth2Info oAuth2Info;
 
-    public Member(String nickname, String profileImage, Role role) {
+    public Member(String nickname, String profileImage) {
         this.nickname = nickname;
         this.profileImage = profileImage;
-        this.role = role;
+        this.role = Role.ROLE_USER;
     }
 
     public void updateOAuth(OAuth2Info oAuth2Info) {

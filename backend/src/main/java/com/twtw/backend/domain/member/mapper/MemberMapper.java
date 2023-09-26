@@ -14,8 +14,7 @@ public class MemberMapper {
         Member member =
                 new Member(
                         request.getNickname(),
-                        request.getProfileImage(),
-                        request.getRole());
+                        request.getProfileImage());
         return member;
     }
 

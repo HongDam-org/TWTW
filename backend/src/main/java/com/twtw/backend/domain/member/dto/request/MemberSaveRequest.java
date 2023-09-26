@@ -17,9 +17,5 @@ public class MemberSaveRequest {
 
     private String profileImage;
 
-    private String phoneNumber;
-
-    private Role role;
-
     private OAuthRequest oauthRequest;
 }
