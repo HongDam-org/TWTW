@@ -36,7 +36,7 @@ public class AuthController {
     }
 
     @GetMapping("/validate")
-    public ResponseEntity<Void> validate(){
+    public ResponseEntity<Void> validate() {
         return ResponseEntity.noContent().build();
     }
 
