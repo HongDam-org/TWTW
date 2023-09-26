@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchPedPathResponse {
+public class Feature {
     private String type;
-    private List<Feature> features;
+    private Geometry geometry;
 }

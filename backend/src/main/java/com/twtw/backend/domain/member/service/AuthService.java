@@ -3,7 +3,9 @@ package com.twtw.backend.domain.member.service;
 import com.twtw.backend.config.security.jwt.TokenProvider;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
+import com.twtw.backend.domain.member.dto.response.AfterLoginDto;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
+import com.twtw.backend.domain.member.entity.AuthStatus;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.RefreshToken;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
@@ -44,7 +46,7 @@ public class AuthService {
      * */
 
     @Transactional
-    public TokenDto saveMember(MemberSaveRequest request) {
+    public AfterLoginDto saveMember(MemberSaveRequest request) {
         Member member = memberMapper.toMemberEntity(request);
 
         String clientId = request.getOauthRequest().getToken();
@@ -56,7 +58,7 @@ public class AuthService {
         UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(member);
         TokenDto tokenDto = saveRefreshToken(credit, member.getId().toString());
 
-        return tokenDto;
+        return new AfterLoginDto(AuthStatus.SI, tokenDto);
     }
 
     /*
@@ -64,7 +66,7 @@ public class AuthService {
      * 2.JWT 토큰 발급 -> OAuth 정보 (clientId , AuthType)으로 진행
      *
      * */
-    public TokenDto getTokenByOAuth(OAuthRequest request) {
+    public AfterLoginDto getTokenByOAuth(OAuthRequest request) {
         String clientId = request.getToken();
 
         Optional<Member> member =
@@ -74,10 +76,10 @@ public class AuthService {
             Member curMember = member.get();
             UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(curMember);
             TokenDto tokenDto = saveRefreshToken(credit, curMember.getId().toString());
-            return tokenDto;
+            return new AfterLoginDto(AuthStatus.SI, tokenDto);
         }
 
-        return null;
+        return new AfterLoginDto(AuthStatus.SU, null);
     }
 
     /*

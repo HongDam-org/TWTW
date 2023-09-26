@@ -1,4 +1,4 @@
-package com.twtw.backend.config.mapper;
+package com.twtw.backend.config.web;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

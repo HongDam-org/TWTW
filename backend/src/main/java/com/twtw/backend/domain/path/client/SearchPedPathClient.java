@@ -31,7 +31,6 @@ public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, Search
                 .uri(uri -> getPathUri(uri))
                 .accept(MediaType.APPLICATION_JSON)
                 .acceptCharset(StandardCharsets.UTF_8)
-                .header("appKey", tmapProperties.getAppKey())
                 .bodyValue(request)
                 .retrieve()
                 .bodyToMono(SearchPedPathResponse.class)
@@ -40,8 +39,7 @@ public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, Search
     }
 
     private URI getPathUri(final UriBuilder uriBuilder) {
-        final UriBuilder builder = uriBuilder.queryParam("version", 1);
-
+        final UriBuilder builder = uriBuilder.queryParam("version", 1.1);
         return builder.build();
     }
 }

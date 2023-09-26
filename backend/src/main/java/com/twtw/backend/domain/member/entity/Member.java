@@ -21,18 +21,15 @@ public class Member {
 
     private String profileImage;
 
-    private String phoneNumber;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @Embedded private OAuth2Info oAuth2Info;
 
-    public Member(String nickname, String profileImage, String phoneNumber, Role role) {
+    public Member(String nickname, String profileImage) {
         this.nickname = nickname;
         this.profileImage = profileImage;
-        this.phoneNumber = phoneNumber;
-        this.role = role;
+        this.role = Role.ROLE_USER;
     }
 
     public void updateOAuth(OAuth2Info oAuth2Info) {
