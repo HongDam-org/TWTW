@@ -8,6 +8,8 @@ import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.RefreshToken;
+import com.twtw.backend.domain.member.exception.RefreshTokenInfoMatchException;
+import com.twtw.backend.domain.member.exception.RefreshTokenValidationException;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
@@ -91,7 +93,7 @@ public class AuthService {
 
     public TokenDto refreshToken(String accessToken, String refreshToken) {
         if (!tokenProvider.validateToken(refreshToken)) {
-            throw new RuntimeException("Refresh Token이 유효하지 않습니다.");
+            throw new RefreshTokenValidationException();
         }
 
         Authentication authentication = tokenProvider.getAuthentication(accessToken);
@@ -99,7 +101,7 @@ public class AuthService {
         String userName = authentication.getName();
 
         if (!getRefreshTokenValue(userName).equals(refreshToken)) {
-            throw new RuntimeException("Refresh Token 정보가 일치하지 않습니다.");
+            throw new RefreshTokenInfoMatchException();
         }
 
         return saveRefreshToken(authentication, userName);
