@@ -2,8 +2,8 @@ package com.twtw.backend.config.security.jwt;
 
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.Member;
-
 import com.twtw.backend.global.exception.AuthorityException;
+
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

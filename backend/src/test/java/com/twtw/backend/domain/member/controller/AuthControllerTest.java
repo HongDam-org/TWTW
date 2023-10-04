@@ -19,7 +19,6 @@ import com.twtw.backend.domain.member.dto.response.AfterLoginDto;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
 import com.twtw.backend.domain.member.entity.AuthType;
-import com.twtw.backend.domain.member.entity.Role;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.support.docs.RestDocsTest;
 
@@ -44,11 +43,12 @@ class AuthControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         get("/auth/validate")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .header("Authorization",
+                                .header(
+                                        "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
         // then
         perform.andExpect(status().isNoContent());
-        //docs
+        // docs
 
         perform.andDo(print())
                 .andDo(document("get validate token", getDocumentRequest(), getDocumentResponse()));
