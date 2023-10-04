@@ -17,7 +17,9 @@ public class SearchCarPathRequest {
     private String end;
     @NotNull
     private String way;
+    @NotNull
     private SearchPathOption option;
+    @NotNull
     private SearchPathFuel fuel;
     @Min(1)
     private int car;

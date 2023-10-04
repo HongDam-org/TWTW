@@ -10,12 +10,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor
 public class OAuthRequest {
     @NotBlank
     private String token;
     @NotNull
-    @Enumerated(EnumType.STRING)
     private AuthType authType;
 }
