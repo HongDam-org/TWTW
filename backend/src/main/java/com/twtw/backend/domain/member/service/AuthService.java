@@ -8,7 +8,7 @@ import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.RefreshToken;
-import com.twtw.backend.domain.member.exception.RefreshTokenInfoMatchException;
+import com.twtw.backend.domain.member.exception.RefreshTokenInfoMissMatchException;
 import com.twtw.backend.domain.member.exception.RefreshTokenValidationException;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
@@ -101,7 +101,7 @@ public class AuthService {
         String userName = authentication.getName();
 
         if (!getRefreshTokenValue(userName).equals(refreshToken)) {
-            throw new RefreshTokenInfoMatchException();
+            throw new RefreshTokenInfoMissMatchException();
         }
 
         return saveRefreshToken(authentication, userName);
