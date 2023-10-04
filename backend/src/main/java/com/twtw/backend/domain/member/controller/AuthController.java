@@ -7,6 +7,8 @@ import com.twtw.backend.domain.member.dto.response.AfterLoginDto;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.service.AuthService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<TokenDto> authorize(@RequestBody TokenRequest tokenRequest) {
+    public ResponseEntity<TokenDto> authorize(@RequestBody @Valid TokenRequest tokenRequest) {
         return ResponseEntity.ok(
                 authService.refreshToken(
                         tokenRequest.getAccessToken(), tokenRequest.getRefreshToken()));
@@ -29,7 +31,7 @@ public class AuthController {
 
     @PostMapping("/save")
     public ResponseEntity<AfterLoginDto> saveMember(
-            @RequestBody MemberSaveRequest memberSaveRequest) {
+            @RequestBody @Valid MemberSaveRequest memberSaveRequest) {
         AfterLoginDto tokenDto = authService.saveMember(memberSaveRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(tokenDto);
@@ -41,7 +43,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AfterLoginDto> afterSocialLogin(@RequestBody OAuthRequest request) {
+    public ResponseEntity<AfterLoginDto> afterSocialLogin(
+            @RequestBody @Valid OAuthRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.getTokenByOAuth(request));
     }
 }
