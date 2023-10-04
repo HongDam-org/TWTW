@@ -8,6 +8,7 @@ import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.service.AuthService;
 
 import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AfterLoginDto> afterSocialLogin(@RequestBody @Valid OAuthRequest request) {
+    public ResponseEntity<AfterLoginDto> afterSocialLogin(
+            @RequestBody @Valid OAuthRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.getTokenByOAuth(request));
     }
 }
