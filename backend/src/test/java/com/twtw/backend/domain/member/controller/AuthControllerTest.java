@@ -51,7 +51,7 @@ class AuthControllerTest extends RestDocsTest {
         // docs
 
         perform.andDo(print())
-                .andDo(document("토큰 유효성 검사 성공", getDocumentRequest(), getDocumentResponse()));
+                .andDo(document("get validate token", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test

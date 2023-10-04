@@ -2,6 +2,7 @@ package com.twtw.backend.config.security.jwt;
 
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.Member;
+import com.twtw.backend.global.exception.AuthorityException;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -72,7 +73,7 @@ public class TokenProvider implements InitializingBean {
         Claims claims = parseClaims(accessToken);
 
         if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            throw new AuthorityException();
         }
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();

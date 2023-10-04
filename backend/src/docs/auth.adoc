@@ -5,6 +5,9 @@
 :toclevels: 4
 
 == Auth
+=== 토큰 유효성 검사
+operation::get validate token[snippets='http-request,http-response']
+
 === 리프레시 토큰 갱신
 operation::post refresh token[snippets='http-request,http-response']
 
