@@ -2,7 +2,9 @@ package com.twtw.backend.domain.friend.controller;
 
 import com.twtw.backend.domain.friend.dto.request.FriendRequest;
 import com.twtw.backend.domain.friend.service.FriendService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

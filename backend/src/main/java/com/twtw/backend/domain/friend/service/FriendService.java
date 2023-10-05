@@ -4,7 +4,9 @@ import com.twtw.backend.domain.friend.dto.request.FriendRequest;
 import com.twtw.backend.domain.friend.mapper.FriendMapper;
 import com.twtw.backend.domain.friend.repository.FriendRepository;
 import com.twtw.backend.domain.member.service.AuthService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
