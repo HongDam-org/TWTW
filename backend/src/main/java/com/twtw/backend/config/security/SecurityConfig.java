@@ -34,7 +34,9 @@ public class SecurityConfig {
                                                 "/v3/api-docs/**",
                                                 "/swagger-ui/**",
                                                 "/swagger-ui.html",
-                                                "auth/refresh","auth/save","auth/login")
+                                                "auth/refresh",
+                                                "auth/save",
+                                                "auth/login")
                                         .permitAll())
                 .authorizeHttpRequests(
                         x -> x.requestMatchers("/test/**").permitAll().anyRequest().authenticated())
