@@ -60,7 +60,7 @@ public class AuthService {
         UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(member);
         TokenDto tokenDto = saveRefreshToken(credit, member.getId().toString());
 
-        return new AfterLoginDto(AuthStatus.SI, tokenDto);
+        return new AfterLoginDto(AuthStatus.SIGNIN, tokenDto);
     }
 
     /*
@@ -78,10 +78,10 @@ public class AuthService {
             Member curMember = member.get();
             UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(curMember);
             TokenDto tokenDto = saveRefreshToken(credit, curMember.getId().toString());
-            return new AfterLoginDto(AuthStatus.SI, tokenDto);
+            return new AfterLoginDto(AuthStatus.SIGNIN, tokenDto);
         }
 
-        return new AfterLoginDto(AuthStatus.SU, null);
+        return new AfterLoginDto(AuthStatus.SIGNUP, null);
     }
 
     /*
