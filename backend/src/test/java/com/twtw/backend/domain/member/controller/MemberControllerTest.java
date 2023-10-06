@@ -29,6 +29,9 @@ public class MemberControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         get("/member/duplicate/{name}","진주원")
                                 .contentType(MediaType.APPLICATION_JSON)
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh")
                                 );
 
         // then
