@@ -19,8 +19,7 @@ public class MemberController {
     }
 
     @GetMapping("/duplicate/{name}")
-    public ResponseEntity<DuplicateNicknameDto> duplicateNickname(@PathVariable String name){
+    public ResponseEntity<DuplicateNicknameDto> duplicateNickname(@PathVariable String name) {
         return ResponseEntity.ok(memberService.duplicateNickname(name));
     }
-
 }

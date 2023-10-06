@@ -13,15 +13,14 @@ import com.twtw.backend.domain.member.exception.RefreshTokenValidationException;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
-
 import com.twtw.backend.global.exception.EntityNotFoundException;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.rmi.server.UID;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -122,14 +121,14 @@ public class AuthService {
         return token;
     }
 
-    public Member getMemberByJwt(){
+    public Member getMemberByJwt() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UUID id =  UUID.fromString(authentication.getName());
+        UUID id = UUID.fromString(authentication.getName());
 
         Optional<Member> member = memberRepository.findById(id);
 
-        if(member.isPresent()){
+        if (member.isPresent()) {
             return member.get();
         }
 

@@ -88,7 +88,8 @@ class AuthControllerTest extends RestDocsTest {
         // given
         final AfterLoginDto expected =
                 new AfterLoginDto(
-                        AuthStatus.SIGNIN, new TokenDto("access.token.value", "refresh.token.value"));
+                        AuthStatus.SIGNIN,
+                        new TokenDto("access.token.value", "refresh.token.value"));
         given(authService.saveMember(any())).willReturn(expected);
 
         // when
@@ -120,7 +121,8 @@ class AuthControllerTest extends RestDocsTest {
         // given
         final AfterLoginDto expected =
                 new AfterLoginDto(
-                        AuthStatus.SIGNIN, new TokenDto("access.token.value", "refresh.token.value"));
+                        AuthStatus.SIGNIN,
+                        new TokenDto("access.token.value", "refresh.token.value"));
         given(authService.getTokenByOAuth(any())).willReturn(expected);
 
         // when
