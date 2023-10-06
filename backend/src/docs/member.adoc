@@ -4,3 +4,7 @@
 :toc: left
 :toclevels: 4
 
+== Member
+=== 닉네임 중복 검색
+operation::get duplicate nickname[snippets='http-request,http-response']
+
