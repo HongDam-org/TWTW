@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DuplicateNicknameDto {
-    private boolean isPresent;
+    private Boolean isPresent;
 }
