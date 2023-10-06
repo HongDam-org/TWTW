@@ -29,14 +29,8 @@ public class MemberService {
     }
 
     public Member getMemberById(UUID id){
-        Optional<Member> member = memberRepository.findById(id);
+        Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-        if(member.isPresent()){
-            Member curMember = member.get();
-
-            return curMember;
-        }
-
-        throw new EntityNotFoundException();
+        return member;
     }
 }
