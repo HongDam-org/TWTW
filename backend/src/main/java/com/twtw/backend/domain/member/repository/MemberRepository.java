@@ -12,6 +12,8 @@ import java.util.UUID;
 public interface MemberRepository extends JpaRepository<Member, UUID> {
     Optional<Member> findById(UUID uuid);
 
+    Optional<Member> findByNickname(String nickName);
+
     @Query(
             "SELECT m FROM Member m WHERE m.oAuth2Info.clientId = :oAuthId AND"
                     + " m.oAuth2Info.authType = :authType")
