@@ -58,12 +58,12 @@ class PathControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new SearchCarPathRequest(
-                                                        "",
-                                                        "",
+                                                        "37.636040,126.827507",
+                                                        "37.644998,126.832659",
                                                         "",
                                                         SearchPathOption.TRAFAST,
                                                         SearchPathFuel.DIESEL,
-                                                        0)))
+                                                        1)))
                                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
@@ -93,12 +93,12 @@ class PathControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new SearchCarPathRequest(
-                                                        "",
-                                                        "",
+                                                        "37.636040,126.827507",
+                                                        "37.644998,126.832659",
                                                         "",
                                                         SearchPathOption.TRAFAST,
                                                         SearchPathFuel.DIESEL,
-                                                        0)))
+                                                        1)))
                                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
