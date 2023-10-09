@@ -1,6 +1,5 @@
 package com.twtw.backend.domain.group.service;
 
-import com.twtw.backend.domain.group.repository.GroupMemberRepository;
 import com.twtw.backend.domain.group.repository.GroupRepository;
 import org.springframework.stereotype.Service;
 
