@@ -36,7 +36,8 @@ public class SecurityConfig {
                                                 "/swagger-ui.html",
                                                 "auth/refresh",
                                                 "auth/save",
-                                                "auth/login")
+                                                "auth/login",
+                                                "member/duplicate/**")
                                         .permitAll())
                 .authorizeHttpRequests(
                         x -> x.requestMatchers("/test/**").permitAll().anyRequest().authenticated())
