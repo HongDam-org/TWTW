@@ -1,7 +1,9 @@
 package com.twtw.backend.domain.group.entity;
 
 import com.twtw.backend.domain.member.entity.Member;
+
 import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
