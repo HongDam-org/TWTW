@@ -1,11 +1,14 @@
 package com.twtw.backend.domain.member.entity;
 
+import com.twtw.backend.domain.group.entity.GroupMember;
 import jakarta.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +28,9 @@ public class Member {
     private Role role;
 
     @Embedded private OAuth2Info oAuth2Info;
+
+    @OneToMany(mappedBy = "member")
+    private List<GroupMember> groupMembers = new ArrayList<>();
 
     public Member(String nickname, String profileImage) {
         this.nickname = nickname;
