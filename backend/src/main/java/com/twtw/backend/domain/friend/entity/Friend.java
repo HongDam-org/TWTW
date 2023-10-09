@@ -2,7 +2,9 @@ package com.twtw.backend.domain.friend.entity;
 
 import com.twtw.backend.domain.friend.exception.InvalidFriendMemberException;
 import com.twtw.backend.domain.member.entity.Member;
+
 import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

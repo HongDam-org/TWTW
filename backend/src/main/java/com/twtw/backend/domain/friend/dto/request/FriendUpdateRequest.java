@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.friend.dto.request;
 
 import com.twtw.backend.domain.friend.entity.FriendStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

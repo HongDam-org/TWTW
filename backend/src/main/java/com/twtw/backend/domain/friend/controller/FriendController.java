@@ -26,7 +26,8 @@ public class FriendController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FriendResponse>> getFriendsByStatus(@RequestParam final FriendStatus friendStatus) {
+    public ResponseEntity<List<FriendResponse>> getFriendsByStatus(
+            @RequestParam final FriendStatus friendStatus) {
         return ResponseEntity.ok(friendService.getFriendsByStatus(friendStatus));
     }
 
@@ -43,7 +44,8 @@ public class FriendController {
     }
 
     @GetMapping("search")
-    public ResponseEntity<List<FriendResponse>> getFriendByName(@RequestParam final String nickname) {
+    public ResponseEntity<List<FriendResponse>> getFriendByName(
+            @RequestParam final String nickname) {
         return ResponseEntity.ok(friendService.getFriendByNickname(nickname));
     }
 }

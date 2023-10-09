@@ -11,7 +11,9 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.global.exception.EntityNotFoundException;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +42,8 @@ public class FriendService {
     }
 
     private Friend getFriendById(final UUID loginMemberId, final UUID memberId) {
-        return friendRepository.findByTwoMemberId(memberId, loginMemberId)
+        return friendRepository
+                .findByTwoMemberId(memberId, loginMemberId)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
@@ -52,13 +55,15 @@ public class FriendService {
 
     public List<FriendResponse> getFriendsByStatus(final FriendStatus friendStatus) {
         final Member loginMember = authService.getMemberByJwt();
-        final List<Friend> friends = friendRepository.findByMemberAndFriendStatus(loginMember, friendStatus);
+        final List<Friend> friends =
+                friendRepository.findByMemberAndFriendStatus(loginMember, friendStatus);
         return friendMapper.toResponses(friends);
     }
 
     public List<FriendResponse> getFriendByNickname(final String nickname) {
         final Member loginMember = authService.getMemberByJwt();
-        final List<Friend> friends = friendRepository.findByMemberAndMemberNickname(loginMember, nickname);
+        final List<Friend> friends =
+                friendRepository.findByMemberAndMemberNickname(loginMember, nickname);
         return friendMapper.toResponses(friends);
     }
 }

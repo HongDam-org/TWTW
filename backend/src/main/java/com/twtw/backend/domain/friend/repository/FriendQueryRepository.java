@@ -10,7 +10,10 @@ import java.util.UUID;
 
 public interface FriendQueryRepository {
     Optional<Friend> findByTwoMemberId(final UUID loginMemberId, final UUID memberId);
+
     List<Friend> findByMember(final Member member);
+
     List<Friend> findByMemberAndFriendStatus(final Member member, final FriendStatus friendStatus);
+
     List<Friend> findByMemberAndMemberNickname(final Member member, final String nickname);
 }
