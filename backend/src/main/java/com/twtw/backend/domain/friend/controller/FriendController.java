@@ -38,7 +38,8 @@ public class FriendController {
     }
 
     @PostMapping("deny")
-    public ResponseEntity<Void> updateStatus(@RequestBody final FriendUpdateRequest friendUpdateRequest) {
+    public ResponseEntity<Void> updateStatus(
+            @RequestBody final FriendUpdateRequest friendUpdateRequest) {
         friendService.updateStatus(friendUpdateRequest);
         return ResponseEntity.noContent().build();
     }
