@@ -1,9 +1,8 @@
 package com.twtw.backend.domain.friend.entity;
 
+import com.twtw.backend.domain.friend.exception.InvalidFriendMemberException;
 import com.twtw.backend.domain.member.entity.Member;
-
 import jakarta.persistence.*;
-
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,12 +32,19 @@ public class Friend {
 
     @Builder
     public Friend(final Member fromMember, final Member toMember) {
+        validate(fromMember, toMember);
         this.fromMember = fromMember;
         this.toMember = toMember;
         this.friendStatus = FriendStatus.REQUESTED;
     }
 
-    public void accept() {
-        this.friendStatus = FriendStatus.ACCEPTED;
+    private void validate(final Member fromMember, final Member toMember) {
+        if (fromMember.getId().equals(toMember.getId())) {
+            throw new InvalidFriendMemberException();
+        }
+    }
+
+    public void updateStatus(final FriendStatus friendStatus) {
+        this.friendStatus = friendStatus;
     }
 }
