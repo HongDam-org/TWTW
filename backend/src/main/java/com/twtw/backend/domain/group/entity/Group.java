@@ -22,6 +22,13 @@ public class Group {
     private String name;
     private String groupImage;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(
+            mappedBy = "group",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<GroupMember> groupMembers = new ArrayList<>();
+
+    public Group(String name, String groupImage) {
+        this.name = name;
+        this.groupImage = groupImage;
+    }
 }
