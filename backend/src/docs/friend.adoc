@@ -1,0 +1,21 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+
+== Friend
+=== 친구 신청
+operation::post request friend[snippets='http-request,http-response']
+
+=== 친구 승락/거절/차단
+operation::post update friend status[snippets='http-request,http-response']
+
+=== 친구 검색
+operation::get search friend[snippets='http-request,http-response']
+
+=== 친구 전체 조회
+operation::get all friends[snippets='http-request,http-response']
+
+=== 친구 상태별 조회
+operation::get friends by status[snippets='http-request,http-response']
