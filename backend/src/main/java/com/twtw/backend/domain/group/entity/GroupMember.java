@@ -26,4 +26,11 @@ public class GroupMember {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public GroupMember(Group group,Member member){
+        this.group = group;
+        this.member = member;
+        group.getGroupMembers().add(this);
+        member.getGroupMembers().add(this);
+    }
 }

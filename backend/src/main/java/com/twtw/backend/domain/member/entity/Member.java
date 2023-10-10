@@ -30,7 +30,7 @@ public class Member {
 
     @Embedded private OAuth2Info oAuth2Info;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     private List<GroupMember> groupMembers = new ArrayList<>();
 
     public Member(String nickname, String profileImage) {
