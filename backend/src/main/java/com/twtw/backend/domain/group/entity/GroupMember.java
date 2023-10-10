@@ -27,7 +27,7 @@ public class GroupMember {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public GroupMember(Group group,Member member){
+    public GroupMember(Group group, Member member) {
         this.group = group;
         this.member = member;
         group.getGroupMembers().add(this);

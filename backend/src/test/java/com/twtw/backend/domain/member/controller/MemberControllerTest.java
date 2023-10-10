@@ -30,16 +30,13 @@ public class MemberControllerTest extends RestDocsTest {
     @Test
     @DisplayName("닉네임이 중복되었는가")
     void duplicate() throws Exception {
-        final DuplicateNicknameDto expected =
-                new DuplicateNicknameDto(false);
+        final DuplicateNicknameDto expected = new DuplicateNicknameDto(false);
         given(memberService.duplicateNickname(any())).willReturn(expected);
-
 
         final ResultActions perform =
                 mockMvc.perform(
                         get("/member/duplicate/{name}", "JinJooOne")
-                                .contentType(MediaType.APPLICATION_JSON)
-                );
+                                .contentType(MediaType.APPLICATION_JSON));
 
         // then
         perform.andExpect(status().isOk()).andExpect(jsonPath("$.isPresent").exists());
