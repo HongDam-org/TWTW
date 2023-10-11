@@ -13,49 +13,39 @@ import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.UUID;
 
 @Service
 public class GroupService {
     private final GroupRepository groupRepository;
-    private final GroupMemberRepository groupMemberRepository;
     private final AuthService authService;
     private final GroupMapper groupMapper;
-    private final MemberService memberService;
 
     public GroupService(
             GroupRepository groupRepository,
-            GroupMemberRepository groupMemberRepository,
             AuthService authService,
-            GroupMapper groupMapper,
-            MemberService memberService) {
+            GroupMapper groupMapper) {
         this.groupRepository = groupRepository;
-        this.groupMemberRepository = groupMemberRepository;
         this.authService = authService;
         this.groupMapper = groupMapper;
-        this.memberService = memberService;
     }
 
     @Transactional
     public void makeGroup(MakeGroupDto groupDto) {
-        Member member = this.authService.getMemberByJwt();
-        Group group = this.groupMapper.toGroupEntity(groupDto);
+        Member member = authService.getMemberByJwt();
+        Group group = groupMapper.toGroupEntity(groupDto);
+        GroupMember groupMember = groupMapper.connectGroupMember(group, member);
 
-        GroupMember groupMember = this.groupMapper.connectGroupMember(group, member);
-
-        groupMemberRepository.save(groupMember);
+        groupRepository.save(group);
     }
 
     @Transactional
     public void joinGroup(UUID groupId) {
         Member member = this.authService.getMemberByJwt();
         Group group =
-                this.groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
+                groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
 
-        GroupMember groupMember = this.groupMapper.connectGroupMember(group, member);
-
-        groupMemberRepository.save(groupMember);
+        GroupMember groupMember = groupMapper.connectGroupMember(group, member);
     }
 
     public void removeGroup(UUID groupId) {

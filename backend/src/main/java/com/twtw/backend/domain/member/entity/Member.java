@@ -15,6 +15,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "MEMBER_TABLE")
 public class Member {
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -30,9 +31,7 @@ public class Member {
 
     @Embedded private OAuth2Info oAuth2Info;
 
-    @OneToMany(
-            mappedBy = "member",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "member")
     private List<GroupMember> groupMembers = new ArrayList<>();
 
     public Member(String nickname, String profileImage) {

@@ -25,6 +25,7 @@ spring:
     hibernate:
       ddl-auto: create
     database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
 
   h2:
     console:
