@@ -13,7 +13,6 @@ import java.util.UUID;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "GROUP_TABLE")
 public class Group {
     @Id
     @GeneratedValue(generator = "uuid2")

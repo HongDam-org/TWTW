@@ -15,7 +15,6 @@ import java.util.UUID;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "MEMBER_TABLE")
 public class Member {
     @Id
     @GeneratedValue(generator = "uuid2")

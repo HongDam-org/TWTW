@@ -16,17 +16,21 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:mem:test;DATABASE_TO_UPPER=false;MODE=MySQL
     username: sa
     password:
 
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: create
-    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        auto_quote_keyword: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        storage_engine: innodb
+        format_sql: true
+    show-sql: true
     generate-ddl: true
-
   h2:
     console:
       enabled: true
