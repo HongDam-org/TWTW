@@ -45,7 +45,7 @@ public class GroupService {
         Group group =
                 groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
 
-        GroupMember groupMember = groupMapper.connectGroupMember(group, member);
+        groupMapper.connectGroupMember(group, member);
     }
 
     public void removeGroup(UUID groupId) {
