@@ -24,7 +24,8 @@ public class LocationController {
 
     @MessageMapping("map.share.{planId}")
     public void share(
-            @DestinationVariable final UUID planId, @Payload final LocationRequest locationRequest) {
+            @DestinationVariable final UUID planId,
+            @Payload final LocationRequest locationRequest) {
         rabbitTemplate.convertAndSend(
                 EXCHANGE_NAME, ROUTING_KEY + planId, locationService.addInfo(locationRequest));
     }
