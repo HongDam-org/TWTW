@@ -2,7 +2,9 @@ package com.twtw.backend.domain.location.controller;
 
 import com.twtw.backend.domain.location.dto.request.LocationRequest;
 import com.twtw.backend.domain.location.service.LocationService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -20,12 +22,16 @@ public class LocationController {
     private final LocationService locationService;
 
     @MessageMapping("map.join.{planId}")
-    public void join(@DestinationVariable final UUID planId, final LocationRequest locationRequest) {
-        rabbitTemplate.convertAndSend(EXCHANGE_NAME, ROUTING_KEY + planId, locationService.addInfo(locationRequest));
+    public void join(
+            @DestinationVariable final UUID planId, final LocationRequest locationRequest) {
+        rabbitTemplate.convertAndSend(
+                EXCHANGE_NAME, ROUTING_KEY + planId, locationService.addInfo(locationRequest));
     }
 
     @MessageMapping("map.share.{planId}")
-    public void share(@DestinationVariable final UUID planId, final LocationRequest locationRequest) {
-        rabbitTemplate.convertAndSend(EXCHANGE_NAME, ROUTING_KEY + planId, locationService.addInfo(locationRequest));
+    public void share(
+            @DestinationVariable final UUID planId, final LocationRequest locationRequest) {
+        rabbitTemplate.convertAndSend(
+                EXCHANGE_NAME, ROUTING_KEY + planId, locationService.addInfo(locationRequest));
     }
 }
