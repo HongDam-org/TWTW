@@ -33,5 +33,4 @@ public class GroupMember {
         group.getGroupMembers().add(this);
         member.getGroupMembers().add(this);
     }
-
 }
