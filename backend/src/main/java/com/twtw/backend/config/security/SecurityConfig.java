@@ -37,7 +37,8 @@ public class SecurityConfig {
                                                 "auth/refresh",
                                                 "auth/save",
                                                 "auth/login",
-                                                "member/duplicate/**")
+                                                "member/duplicate/**",
+                                                "socket/**")
                                         .permitAll())
                 .authorizeHttpRequests(
                         x -> x.requestMatchers("/test/**").permitAll().anyRequest().authenticated())

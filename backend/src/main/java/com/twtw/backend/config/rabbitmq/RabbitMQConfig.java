@@ -24,7 +24,7 @@ public class RabbitMQConfig {
 
     private static final String QUEUE_NAME = "map.queue";
     private static final String EXCHANGE_NAME = "map.exchange";
-    private static final String ROUTING_KEY = "group.*";
+    private static final String ROUTING_KEY = "plan.*";
     private final RabbitMQProperties rabbitMQProperties;
     private final ObjectMapper objectMapper;
 
