@@ -21,14 +21,16 @@ public class Group {
 
     private String name;
     private String groupImage;
+    private UUID leader;
 
     @OneToMany(
             mappedBy = "group",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<GroupMember> groupMembers = new ArrayList<>();
 
-    public Group(String name, String groupImage) {
+    public Group(String name, String groupImage, UUID leader) {
         this.name = name;
         this.groupImage = groupImage;
+        this.leader = leader;
     }
 }

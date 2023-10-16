@@ -10,7 +10,8 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GroupInfoDto {
-    private UUID id;
+    private UUID groupId;
+    private UUID leaderId;
     private String name;
     private String groupImage;
 }

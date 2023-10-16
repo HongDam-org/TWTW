@@ -4,13 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MakeGroupDto {
-    private String name;
-    private String groupImage;
-    private String leaderId;
+public class JoinGroupDto {
+    private String groupId;
 }

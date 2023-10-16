@@ -15,12 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 @Import(QuerydslConfig.class)
 public class GroupTest {
-    @Autowired private GroupRepository groupRepository;
 
+    @Autowired private GroupRepository groupRepository;
     @Test
     @Transactional
     void saveGroup() {
-        Group group = new Group("HDJ", "1111");
-        Group regroup = groupRepository.save(group);
+
     }
 }

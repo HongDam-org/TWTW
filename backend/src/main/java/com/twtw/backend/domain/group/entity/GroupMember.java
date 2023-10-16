@@ -27,10 +27,17 @@ public class GroupMember {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private Boolean share;
+
     public GroupMember(Group group, Member member) {
         this.group = group;
         this.member = member;
+        this.share = true;
         group.getGroupMembers().add(this);
         member.getGroupMembers().add(this);
+    }
+
+    public void changeShare(){
+        this.share = !this.share;
     }
 }
