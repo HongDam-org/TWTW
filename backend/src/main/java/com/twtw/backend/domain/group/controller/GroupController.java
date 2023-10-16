@@ -8,6 +8,8 @@ import com.twtw.backend.domain.group.service.GroupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/group")
 public class GroupController {
@@ -18,12 +20,12 @@ public class GroupController {
     }
 
     // 자신이 속한 그룹 반환 API
-    @GetMapping("/get/{id}")
-    public ResponseEntity<GroupInfoDto> getGroupByGroupId(@PathVariable String id) {
-        return ResponseEntity.ok(groupService.getGroupByGroupId(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<GroupInfoDto> getGroupByGroupId(@PathVariable UUID id) {
+        return ResponseEntity.ok(groupService.getGroupById(id));
     }
 
-    @PostMapping("/make")
+    @PostMapping()
     public ResponseEntity<GroupInfoDto> makeGroup(@RequestBody MakeGroupDto makeGroupDto){
         return ResponseEntity.ok(groupService.makeGroup(makeGroupDto));
     }
@@ -34,8 +36,8 @@ public class GroupController {
     }
 
     @PutMapping("/share/{group}")
-    public ResponseEntity<Void> changeShare(@PathVariable String group){
-        groupService.changeShare(group);
+    public ResponseEntity<Void> changeShare(@PathVariable UUID id){
+        groupService.changeShare(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -21,7 +21,7 @@ public class Group {
 
     private String name;
     private String groupImage;
-    private UUID leader;
+    private UUID leaderId;
 
     @OneToMany(
             mappedBy = "group",
@@ -31,6 +31,6 @@ public class Group {
     public Group(String name, String groupImage, UUID leader) {
         this.name = name;
         this.groupImage = groupImage;
-        this.leader = leader;
+        this.leaderId = leader;
     }
 }

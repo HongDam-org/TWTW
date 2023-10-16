@@ -32,8 +32,8 @@ public class GroupService {
         this.groupMapper = groupMapper;
     }
 
-    public GroupInfoDto getGroupByGroupId(String groupId){
-        return groupMapper.toGroupInfo(groupRepository.findById(UUID.fromString(groupId)).orElseThrow(EntityNotFoundException::new));
+    public GroupInfoDto getGroupById(UUID groupId){
+        return groupMapper.toGroupInfo(groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional
@@ -56,9 +56,9 @@ public class GroupService {
     }
 
     @Transactional
-    public void changeShare(String id){
+    public void changeShare(UUID id){
         Member member = this.authService.getMemberByJwt();
-        GroupInfoDto groupInfo = getGroupByGroupId(id);
+        GroupInfoDto groupInfo = getGroupById(id);
 
         GroupMember groupMember = groupMemberRepository.findByGroupIdAndMemberId(groupInfo.getGroupId(),member.getId()).orElseThrow(EntityNotFoundException::new);
         groupMember.changeShare();
