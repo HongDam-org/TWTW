@@ -28,9 +28,9 @@ public class Group {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<GroupMember> groupMembers = new ArrayList<>();
 
-    public Group(String name, String groupImage, UUID leader) {
+    public Group(String name, String groupImage, UUID leaderId) {
         this.name = name;
         this.groupImage = groupImage;
-        this.leaderId = leader;
+        this.leaderId = leaderId;
     }
 }
