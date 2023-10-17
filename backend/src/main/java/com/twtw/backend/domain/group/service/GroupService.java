@@ -3,6 +3,7 @@ package com.twtw.backend.domain.group.service;
 import com.twtw.backend.domain.group.dto.request.JoinGroupDto;
 import com.twtw.backend.domain.group.dto.request.MakeGroupDto;
 import com.twtw.backend.domain.group.dto.response.GroupInfoDto;
+import com.twtw.backend.domain.group.dto.response.ShareInfo;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.group.mapper.GroupMapper;
@@ -64,7 +65,13 @@ public class GroupService {
         groupMember.changeShare();
     }
 
-    public void removeGroup(UUID groupId) {
-        // TODO()
+    @Transactional
+    public ShareInfo getShare(UUID id){
+        Member member = this.authService.getMemberByJwt();
+        GroupInfoDto groupInfo = getGroupById(id);
+
+        GroupMember groupMember = groupMemberRepository.findByGroupIdAndMemberId(groupInfo.getGroupId(),member.getId()).orElseThrow(EntityNotFoundException::new);
+
+        return groupMapper.toShareInfo(groupMember);
     }
 }

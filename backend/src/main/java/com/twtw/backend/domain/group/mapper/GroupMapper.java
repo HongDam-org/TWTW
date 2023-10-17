@@ -2,6 +2,7 @@ package com.twtw.backend.domain.group.mapper;
 
 import com.twtw.backend.domain.group.dto.request.MakeGroupDto;
 import com.twtw.backend.domain.group.dto.response.GroupInfoDto;
+import com.twtw.backend.domain.group.dto.response.ShareInfo;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
@@ -21,6 +22,10 @@ public class GroupMapper {
     }
 
     public GroupInfoDto toGroupInfo(Group group){
-        return new GroupInfoDto(group.getId(),group.getLeader(),group.getName(),group.getGroupImage());
+        return new GroupInfoDto(group.getId(),group.getLeaderId(),group.getName(),group.getGroupImage());
+    }
+
+    public ShareInfo toShareInfo(GroupMember groupMember){
+        return new ShareInfo(groupMember.getGroup().getId(),groupMember.getMember().getId(),groupMember.getShare());
     }
 }
