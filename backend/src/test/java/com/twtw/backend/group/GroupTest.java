@@ -1,7 +1,6 @@
 package com.twtw.backend.group;
 
 import com.twtw.backend.config.database.QuerydslConfig;
-import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.repository.GroupRepository;
 
 import org.junit.jupiter.api.Test;
@@ -17,9 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class GroupTest {
 
     @Autowired private GroupRepository groupRepository;
+
     @Test
     @Transactional
-    void saveGroup() {
-
-    }
+    void saveGroup() {}
 }

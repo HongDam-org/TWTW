@@ -10,7 +10,8 @@ import java.util.UUID;
 
 public interface GroupMemberRepository extends JpaRepository<GroupMember, UUID> {
 
-    @Query("SELECT gm from GroupMember gm WHERE gm.group.id = :groupID AND " +
-            "gm.member.id = :memberID")
-    Optional<GroupMember> findByGroupIdAndMemberId(UUID groupId,UUID memberId);
+    @Query(
+            "SELECT gm from GroupMember gm WHERE gm.group.id = :groupID AND "
+                    + "gm.member.id = :memberID")
+    Optional<GroupMember> findByGroupIdAndMemberId(UUID groupId, UUID memberId);
 }

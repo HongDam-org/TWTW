@@ -19,6 +19,4 @@ public class LocationService {
     public LocationResponse addInfo(final LocationRequest locationRequest) {
         return locationMapper.toResponse(locationRequest, LocalDateTime.now());
     }
-
-
 }

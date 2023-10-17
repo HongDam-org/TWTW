@@ -18,14 +18,21 @@ public class GroupMapper {
     }
 
     public Group toGroupEntity(MakeGroupDto groupDto) {
-        return new Group(groupDto.getName(), groupDto.getGroupImage(), UUID.fromString(groupDto.getLeaderId()));
+        return new Group(
+                groupDto.getName(),
+                groupDto.getGroupImage(),
+                UUID.fromString(groupDto.getLeaderId()));
     }
 
-    public GroupInfoDto toGroupInfo(Group group){
-        return new GroupInfoDto(group.getId(),group.getLeaderId(),group.getName(),group.getGroupImage());
+    public GroupInfoDto toGroupInfo(Group group) {
+        return new GroupInfoDto(
+                group.getId(), group.getLeaderId(), group.getName(), group.getGroupImage());
     }
 
-    public ShareInfo toShareInfo(GroupMember groupMember){
-        return new ShareInfo(groupMember.getGroup().getId(),groupMember.getMember().getId(),groupMember.getShare());
+    public ShareInfo toShareInfo(GroupMember groupMember) {
+        return new ShareInfo(
+                groupMember.getGroup().getId(),
+                groupMember.getMember().getId(),
+                groupMember.getShare());
     }
 }

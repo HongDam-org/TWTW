@@ -29,7 +29,4 @@ public class LocationController {
         rabbitTemplate.convertAndSend(
                 EXCHANGE_NAME, ROUTING_KEY + planId, locationService.addInfo(locationRequest));
     }
-
-
-
 }

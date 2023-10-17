@@ -37,7 +37,7 @@ public class GroupMember {
         member.getGroupMembers().add(this);
     }
 
-    public void changeShare(){
+    public void changeShare() {
         this.share = !this.share;
     }
 }

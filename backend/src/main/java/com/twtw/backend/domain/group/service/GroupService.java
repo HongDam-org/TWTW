@@ -26,15 +26,19 @@ public class GroupService {
     private final GroupMapper groupMapper;
 
     public GroupService(
-            GroupRepository groupRepository, GroupMemberRepository groupMemberRepository, AuthService authService, GroupMapper groupMapper) {
+            GroupRepository groupRepository,
+            GroupMemberRepository groupMemberRepository,
+            AuthService authService,
+            GroupMapper groupMapper) {
         this.groupRepository = groupRepository;
         this.groupMemberRepository = groupMemberRepository;
         this.authService = authService;
         this.groupMapper = groupMapper;
     }
 
-    public GroupInfoDto getGroupById(UUID groupId){
-        return groupMapper.toGroupInfo(groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new));
+    public GroupInfoDto getGroupById(UUID groupId) {
+        return groupMapper.toGroupInfo(
+                groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new));
     }
 
     @Transactional
@@ -49,7 +53,10 @@ public class GroupService {
     @Transactional
     public GroupInfoDto joinGroup(JoinGroupDto joinGroupDto) {
         Member member = this.authService.getMemberByJwt();
-        Group group = groupRepository.findById(UUID.fromString(joinGroupDto.getGroupId())).orElseThrow(EntityNotFoundException::new);
+        Group group =
+                groupRepository
+                        .findById(UUID.fromString(joinGroupDto.getGroupId()))
+                        .orElseThrow(EntityNotFoundException::new);
 
         groupMapper.connectGroupMember(group, member);
 
@@ -57,20 +64,26 @@ public class GroupService {
     }
 
     @Transactional
-    public void changeShare(UUID id){
+    public void changeShare(UUID id) {
         Member member = this.authService.getMemberByJwt();
         GroupInfoDto groupInfo = getGroupById(id);
 
-        GroupMember groupMember = groupMemberRepository.findByGroupIdAndMemberId(groupInfo.getGroupId(),member.getId()).orElseThrow(EntityNotFoundException::new);
+        GroupMember groupMember =
+                groupMemberRepository
+                        .findByGroupIdAndMemberId(groupInfo.getGroupId(), member.getId())
+                        .orElseThrow(EntityNotFoundException::new);
         groupMember.changeShare();
     }
 
     @Transactional
-    public ShareInfo getShare(UUID id){
+    public ShareInfo getShare(UUID id) {
         Member member = this.authService.getMemberByJwt();
         GroupInfoDto groupInfo = getGroupById(id);
 
-        GroupMember groupMember = groupMemberRepository.findByGroupIdAndMemberId(groupInfo.getGroupId(),member.getId()).orElseThrow(EntityNotFoundException::new);
+        GroupMember groupMember =
+                groupMemberRepository
+                        .findByGroupIdAndMemberId(groupInfo.getGroupId(), member.getId())
+                        .orElseThrow(EntityNotFoundException::new);
 
         return groupMapper.toShareInfo(groupMember);
     }

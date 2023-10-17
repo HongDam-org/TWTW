@@ -27,23 +27,23 @@ public class GroupController {
     }
 
     @PostMapping()
-    public ResponseEntity<GroupInfoDto> makeGroup(@RequestBody MakeGroupDto makeGroupDto){
+    public ResponseEntity<GroupInfoDto> makeGroup(@RequestBody MakeGroupDto makeGroupDto) {
         return ResponseEntity.ok(groupService.makeGroup(makeGroupDto));
     }
 
     @PostMapping("/join")
-    public ResponseEntity<GroupInfoDto> joinGroup(@RequestBody JoinGroupDto joinGroupDto){
+    public ResponseEntity<GroupInfoDto> joinGroup(@RequestBody JoinGroupDto joinGroupDto) {
         return ResponseEntity.ok(groupService.joinGroup(joinGroupDto));
     }
 
     @PutMapping("/share/{id}")
-    public ResponseEntity<Void> changeShare(@PathVariable UUID id){
+    public ResponseEntity<Void> changeShare(@PathVariable UUID id) {
         groupService.changeShare(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/share/{id}")
-    public ResponseEntity<ShareInfo> getshare(@PathVariable UUID id){
+    public ResponseEntity<ShareInfo> getshare(@PathVariable UUID id) {
         return ResponseEntity.ok(groupService.getShare(id));
     }
 }
