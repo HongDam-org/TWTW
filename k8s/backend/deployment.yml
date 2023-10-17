@@ -1,0 +1,116 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twtw-backend
+spec:
+  selector:
+    matchLabels:
+      app: twtw-backend
+      component: twtw-backend
+      tier: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: twtw-backend
+        component: twtw-backend
+        tier: backend
+    spec:
+      containers:
+        - name: twtw-backend
+          image: ohksj77/twtw-backend:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: jwt.token
+            - name: KAKAO_MAP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: kakao-map.url
+            - name: KAKAO_MAP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: kakao-map.key
+            - name: KAKAO_MAP_HEADER_PREFIX
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: kakao-map.header-prefix
+            - name: NAVER_MAP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: naver-map.id
+            - name: NAVER_MAP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: naver-map.secret
+            - name: NAVER_MAP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: naver-map.url
+            - name: NAVER_MAP_HEADER_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: naver-map.header-client-id
+            - name: NAVER_MAP_HEADER_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: naver-map.header-client-secret
+            - name: TMAP_APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: tmap.app-key
+            - name: TMAP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: tmap.url
+            - name: SPRING_RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: spring.rabbitmq.username
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: spring.rabbitmq.password
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: database.username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: database.password
+            - name: DATABASE_SCHEMA
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: database.schema
+            - name: DATABASE_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: database.port
+            - name: DATABASE_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: twtw-secret
+                  key: database.host
