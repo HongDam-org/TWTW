@@ -20,9 +20,8 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    // 자신이 속한 그룹 반환 API
     @GetMapping("/{id}")
-    public ResponseEntity<GroupInfoDto> getGroupByGroupId(@PathVariable UUID id) {
+    public ResponseEntity<GroupInfoDto> getGroupById(@PathVariable UUID id) {
         return ResponseEntity.ok(groupService.getGroupById(id));
     }
 
