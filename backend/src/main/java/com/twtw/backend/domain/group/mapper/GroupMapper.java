@@ -9,7 +9,6 @@ import com.twtw.backend.domain.member.entity.Member;
 
 import org.springframework.stereotype.Component;
 
-
 @Component
 public class GroupMapper {
     public GroupMember connectGroupMember(Group group, Member member) {
@@ -17,10 +16,7 @@ public class GroupMapper {
     }
 
     public Group toGroupEntity(MakeGroupDto groupDto) {
-        return new Group(
-                groupDto.getName(),
-                groupDto.getGroupImage(),
-                groupDto.getLeaderId());
+        return new Group(groupDto.getName(), groupDto.getGroupImage(), groupDto.getLeaderId());
     }
 
     public GroupInfoDto toGroupInfo(Group group) {
