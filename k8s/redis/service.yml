@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: twtw-redis
+spec:
+  selector:
+    app: twtw-redis
+    component: twtw-redis
+    tier: backend
+  ports:
+  - name: twtw-redis
+    protocol: TCP
+    port: 6379
+    targetPort: 6379
+  clusterIP: None

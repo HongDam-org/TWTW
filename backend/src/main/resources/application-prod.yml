@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://${MYSQL_HOST}:${MYSQL_PORT}/${SCHEMA}?serverTimezone=Asia/Seoul
-    username: ${MYSQL_USER}
-    password: ${MYSQL_ROOT_PASSWORD}
+    url: jdbc:mariadb://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_SCHEMA}?serverTimezone=Asia/Seoul
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   jpa:
     database: mysql
     generate-ddl: true
@@ -15,12 +15,11 @@ spring:
       ddl-auto: create
   main:
     allow-bean-definition-overriding: true
-  config:
-    import:
-      - classpath:application-env.yml
   rabbitmq:
     host: rabbitmq
     port: 5672
+    username: ${SPRING_RABBITMQ_USERNAME}
+    password: ${SPRING_RABBITMQ_PASSWORD}
   cache:
     type: redis
     redis:
@@ -29,3 +28,19 @@ spring:
     redis:
       host: redis
       port: 6379
+
+jwt:
+  secret: ${JWT_SECRET}
+kakao-map:
+  url: ${KAKAO_MAP_URL}
+  key: ${KAKAO_MAP_KEY}
+  header-prefix: ${KAKAO_MAP_HEADER_PREFIX}
+naver-map:
+  id: ${NAVER_MAP_ID}
+  secret: ${NAVER_MAP_SECRET}
+  url: ${NAVER_MAP_URL}
+  header-client-id: ${NAVER_MAP_HEADER_CLIENT_ID}
+  header-client-secret: ${NAVER_MAP_HEADER_CLIENT_SECRET}
+tmap:
+  app-key: ${TMAP_APP_KEY}
+  url: ${TMAP_URL}
