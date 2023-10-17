@@ -9,7 +9,6 @@ import com.twtw.backend.domain.member.entity.Member;
 
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
 
 @Component
 public class GroupMapper {
@@ -21,7 +20,7 @@ public class GroupMapper {
         return new Group(
                 groupDto.getName(),
                 groupDto.getGroupImage(),
-                UUID.fromString(groupDto.getLeaderId()));
+                groupDto.getLeaderId());
     }
 
     public GroupInfoDto toGroupInfo(Group group) {

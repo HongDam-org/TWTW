@@ -1,5 +1,7 @@
 package com.twtw.backend.domain.group.controller;
 
+import com.twtw.backend.domain.friend.dto.request.FriendRequest;
+import com.twtw.backend.domain.group.dto.request.MakeGroupDto;
 import com.twtw.backend.domain.group.dto.response.GroupInfoDto;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.support.docs.RestDocsTest;
@@ -17,6 +19,7 @@ import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,4 +54,22 @@ public class GroupControllerTest extends RestDocsTest {
         perform.andDo(print())
                 .andDo(document("get group by id", getDocumentRequest(), getDocumentResponse()));
     }
+
+    @Test
+    @DisplayName("Group이 정상적으로 생성되는가")
+    void makeGroup() throws Exception{
+
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/group")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(
+                                   new MakeGroupDto(
+                                           "HDJ","GROUP-IMAGE",UUID.fromString("550e8400-e29b-41d4-a716-446655440000")
+                                   )))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+    }
+
 }
