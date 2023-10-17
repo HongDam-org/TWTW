@@ -19,7 +19,7 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
-        registry.addEndpoint("/socket").setAllowedOrigins("*");
+        registry.addEndpoint("/plan").setAllowedOrigins("*");
     }
 
     @Override

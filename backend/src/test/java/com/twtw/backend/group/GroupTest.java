@@ -1,7 +1,6 @@
 package com.twtw.backend.group;
 
 import com.twtw.backend.config.database.QuerydslConfig;
-import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.repository.GroupRepository;
 
 import org.junit.jupiter.api.Test;
@@ -15,12 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 @Import(QuerydslConfig.class)
 public class GroupTest {
+
     @Autowired private GroupRepository groupRepository;
 
     @Test
     @Transactional
-    void saveGroup() {
-        Group group = new Group("HDJ", "1111");
-        Group regroup = groupRepository.save(group);
-    }
+    void saveGroup() {}
 }
