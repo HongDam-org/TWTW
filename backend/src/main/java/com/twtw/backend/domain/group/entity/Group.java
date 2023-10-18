@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.group.entity;
 
+import com.twtw.backend.domain.plan.entity.Plan;
 import jakarta.persistence.*;
 
 import lombok.AccessLevel;
@@ -27,6 +28,12 @@ public class Group {
             mappedBy = "group",
             cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<GroupMember> groupMembers = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "group",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE}
+    )
+    private List<Plan> groupPlans = new ArrayList<>();
 
     public Group(String name, String groupImage, UUID leaderId) {
         this.name = name;
