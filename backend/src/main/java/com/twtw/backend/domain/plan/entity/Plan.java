@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.plan.entity;
 
+import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.place.entity.Place;
 
@@ -25,6 +26,10 @@ public class Plan {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Place place;
 
+    @JoinColumn(name = "group_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private Group group;
+
     @OneToMany(mappedBy = "plan", cascade = CascadeType.PERSIST)
     private Set<PlanMember> planMembers = new HashSet<>();
 
@@ -39,5 +44,10 @@ public class Plan {
 
     public void addPlace(final Place place) {
         this.place = place;
+    }
+
+    public void addGroup(Group group) {
+        this.group = group;
+        group.getGroupPlans().add(this);
     }
 }
