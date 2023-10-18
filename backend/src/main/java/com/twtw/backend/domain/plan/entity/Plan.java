@@ -46,7 +46,7 @@ public class Plan {
         this.place = place;
     }
 
-    public void addGroup(Group group){
+    public void addGroup(Group group) {
         this.group = group;
         group.getGroupPlans().add(this);
     }
