@@ -42,11 +42,11 @@ public class PlanService {
     }
 
     @Transactional
-    public SavePlanResponse savePlan(final SavePlanRequest request){
+    public SavePlanResponse savePlan(final SavePlanRequest request) {
         Member member = authService.getMemberByJwt();
         Group group = groupService.getGroupEntity(request.getGroupId());
         Place place = placeMapper.toEntity(request.getPlaceDetails());
-        Plan plan = new Plan(member,place,group);
+        Plan plan = new Plan(member, place, group);
 
         return planMapper.toPlanResponse(planRepository.save(plan));
     }

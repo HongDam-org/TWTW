@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.plan.dto.request;
 
 import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

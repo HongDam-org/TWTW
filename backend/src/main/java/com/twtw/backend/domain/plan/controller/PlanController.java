@@ -24,7 +24,7 @@ public class PlanController {
     }
 
     @PostMapping
-    public ResponseEntity<SavePlanResponse> savePlan(@RequestBody SavePlanRequest request){
+    public ResponseEntity<SavePlanResponse> savePlan(@RequestBody SavePlanRequest request) {
         return ResponseEntity.ok(planService.savePlan(request));
     }
 }

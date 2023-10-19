@@ -7,7 +7,6 @@ import com.twtw.backend.domain.place.entity.Place;
 import jakarta.persistence.*;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,15 +32,14 @@ public class Plan {
     @OneToMany(mappedBy = "plan", cascade = CascadeType.PERSIST)
     private Set<PlanMember> planMembers = new HashSet<>();
 
-
-    public Plan(Member member,Place place,Group group) {
+    public Plan(Member member, Place place, Group group) {
         addMember(member);
         addPlace(place);
         addGroup(group);
     }
 
-    public void addMember(final Member member){
-        this.planMembers.add(new PlanMember(this,member));
+    public void addMember(final Member member) {
+        this.planMembers.add(new PlanMember(this, member));
     }
 
     public void addPlace(final Place place) {
