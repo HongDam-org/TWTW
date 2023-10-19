@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.group.service;
 
+import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
@@ -90,5 +91,10 @@ public class GroupService {
                         .orElseThrow(EntityNotFoundException::new);
 
         return groupMapper.toShareInfo(groupMember);
+    }
+
+    @Transactional
+    public void inviteGroup(InviteGroupRequest inviteGroupRequest){
+
     }
 }

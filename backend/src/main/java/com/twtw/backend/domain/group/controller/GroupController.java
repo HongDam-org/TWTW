@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.group.controller;
 
+import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
@@ -35,8 +36,10 @@ public class GroupController {
         return ResponseEntity.ok(groupService.joinGroup(joinGroupRequest));
     }
 
-    // 그룹에 초대 하는 API (백엔드 단에서 친구 검사는 하지 말자)
-    // FRIEND의 MEMBER UUID -> 잘못된 경우
+    @PostMapping("/invite")
+    public void inviteGroup(@RequestBody InviteGroupRequest inviteGroupRequest){
+        groupService.inviteGroup(inviteGroupRequest);
+    }
 
     @PutMapping("/share/{id}")
     public ResponseEntity<Void> changeShare(@PathVariable UUID id) {
