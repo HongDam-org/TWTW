@@ -41,6 +41,10 @@ public class GroupService {
                 groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new));
     }
 
+    public Group getGroupEntity(UUID groupId){
+        return  groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
+    }
+
     @Transactional
     public GroupInfoDto makeGroup(MakeGroupDto groupDto) {
         Member member = authService.getMemberByJwt();
