@@ -7,7 +7,6 @@ import com.twtw.backend.domain.place.entity.Place;
 import jakarta.persistence.*;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +22,7 @@ public class Plan {
     private UUID id;
 
     @JoinColumn(columnDefinition = "BINARY(16)")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Place place;
 
     @JoinColumn(name = "group_id")
@@ -33,13 +32,14 @@ public class Plan {
     @OneToMany(mappedBy = "plan", cascade = CascadeType.PERSIST)
     private Set<PlanMember> planMembers = new HashSet<>();
 
-    @Builder
-    public Plan(final List<Member> members) {
-        organizePlanMember(members);
+    public Plan(Member member, Place place, Group group) {
+        addMember(member);
+        addPlace(place);
+        addGroup(group);
     }
 
-    private void organizePlanMember(final List<Member> members) {
-        members.stream().map(member -> new PlanMember(this, member)).forEach(this.planMembers::add);
+    public void addMember(final Member member) {
+        this.planMembers.add(new PlanMember(this, member));
     }
 
     public void addPlace(final Place place) {

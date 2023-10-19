@@ -17,7 +17,6 @@ public class MemberMapper {
 
     public OAuth2Info toOAuthInfo(String clientId, AuthType type) {
         OAuth2Info info = new OAuth2Info(clientId, type);
-
         return info;
     }
 }
