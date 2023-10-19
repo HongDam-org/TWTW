@@ -11,6 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SavePlanRequest {
-    UUID groupId;
-    PlaceDetails placeDetails;
+    private UUID groupId;
+    private PlaceDetails placeDetails;
 }

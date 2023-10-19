@@ -23,7 +23,7 @@ public class PlanController {
         return ResponseEntity.ok(planService.searchPlanDestination(request));
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<SavePlanResponse> savePlan(@RequestBody SavePlanRequest request){
         return ResponseEntity.ok(planService.savePlan(request));
     }
