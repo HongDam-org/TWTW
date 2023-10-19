@@ -3,7 +3,7 @@ package com.twtw.backend.domain.member.controller;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.request.TokenRequest;
-import com.twtw.backend.domain.member.dto.response.AfterLoginDto;
+import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.service.AuthService;
 
@@ -30,9 +30,9 @@ public class AuthController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<AfterLoginDto> saveMember(
+    public ResponseEntity<AfterLoginResponse> saveMember(
             @RequestBody @Valid MemberSaveRequest memberSaveRequest) {
-        AfterLoginDto tokenDto = authService.saveMember(memberSaveRequest);
+        AfterLoginResponse tokenDto = authService.saveMember(memberSaveRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(tokenDto);
     }
@@ -43,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AfterLoginDto> afterSocialLogin(
+    public ResponseEntity<AfterLoginResponse> afterSocialLogin(
             @RequestBody @Valid OAuthRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.getTokenByOAuth(request));
     }

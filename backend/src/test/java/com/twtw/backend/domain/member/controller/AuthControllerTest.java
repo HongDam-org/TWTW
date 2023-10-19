@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.request.TokenRequest;
-import com.twtw.backend.domain.member.dto.response.AfterLoginDto;
+import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
 import com.twtw.backend.domain.member.entity.AuthType;
@@ -86,8 +86,8 @@ class AuthControllerTest extends RestDocsTest {
     @DisplayName("첫 로그인 API가 수행되는가")
     void saveMember() throws Exception {
         // given
-        final AfterLoginDto expected =
-                new AfterLoginDto(
+        final AfterLoginResponse expected =
+                new AfterLoginResponse(
                         AuthStatus.SIGNIN,
                         new TokenDto("access.token.value", "refresh.token.value"));
         given(authService.saveMember(any())).willReturn(expected);
@@ -119,8 +119,8 @@ class AuthControllerTest extends RestDocsTest {
     @DisplayName("멤버가 저장된 상태에서의 로그인 API가 수행되는가")
     void afterSocialLogin() throws Exception {
         // given
-        final AfterLoginDto expected =
-                new AfterLoginDto(
+        final AfterLoginResponse expected =
+                new AfterLoginResponse(
                         AuthStatus.SIGNIN,
                         new TokenDto("access.token.value", "refresh.token.value"));
         given(authService.getTokenByOAuth(any())).willReturn(expected);

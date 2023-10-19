@@ -12,8 +12,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.twtw.backend.domain.group.dto.request.MakeGroupDto;
-import com.twtw.backend.domain.group.dto.response.GroupInfoDto;
+import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
+import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.support.docs.RestDocsTest;
 
@@ -35,8 +35,8 @@ public class GroupControllerTest extends RestDocsTest {
     @DisplayName("GroupId로 그룹 조회가 되는가")
     void getGroupById() throws Exception {
 
-        final GroupInfoDto expected =
-                new GroupInfoDto(
+        final GroupInfoResponse expected =
+                new GroupInfoResponse(
                         UUID.fromString("550e8400-e29b-41d4-a716-446655440000"),
                         UUID.randomUUID(),
                         "HDJ",
@@ -61,8 +61,8 @@ public class GroupControllerTest extends RestDocsTest {
     @Test
     @DisplayName("Group이 정상적으로 생성되는가")
     void makeGroup() throws Exception {
-        final GroupInfoDto expected =
-                new GroupInfoDto(
+        final GroupInfoResponse expected =
+                new GroupInfoResponse(
                         UUID.fromString("550e8400-e29b-41d4-a716-446655440000"),
                         UUID.randomUUID(),
                         "HDJ",
@@ -75,7 +75,7 @@ public class GroupControllerTest extends RestDocsTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         toRequestBody(
-                                                new MakeGroupDto(
+                                                new MakeGroupRequest(
                                                         "HDJ",
                                                         "GROUP-IMAGE",
                                                         UUID.fromString(

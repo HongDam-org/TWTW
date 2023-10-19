@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.twtw.backend.domain.member.dto.response.DuplicateNicknameDto;
+import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.support.docs.RestDocsTest;
 
@@ -30,7 +30,7 @@ public class MemberControllerTest extends RestDocsTest {
     @Test
     @DisplayName("닉네임이 중복되었는가")
     void duplicate() throws Exception {
-        final DuplicateNicknameDto expected = new DuplicateNicknameDto(false);
+        final DuplicateNicknameResponse expected = new DuplicateNicknameResponse(false);
         given(memberService.duplicateNickname(any())).willReturn(expected);
 
         final ResultActions perform =

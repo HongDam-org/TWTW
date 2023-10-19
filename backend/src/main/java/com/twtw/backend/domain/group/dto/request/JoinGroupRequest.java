@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JoinGroupDto {
-    private String groupId;
+public class JoinGroupRequest {
+    private UUID groupId;
 }

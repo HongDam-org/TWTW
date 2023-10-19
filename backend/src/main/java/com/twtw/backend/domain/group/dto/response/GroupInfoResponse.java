@@ -1,4 +1,4 @@
-package com.twtw.backend.domain.group.dto.request;
+package com.twtw.backend.domain.group.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,9 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MakeGroupDto {
+public class GroupInfoResponse {
+    private UUID groupId;
+    private UUID leaderId;
     private String name;
     private String groupImage;
-    private UUID leaderId;
 }

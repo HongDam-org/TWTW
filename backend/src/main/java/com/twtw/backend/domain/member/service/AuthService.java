@@ -3,7 +3,7 @@ package com.twtw.backend.domain.member.service;
 import com.twtw.backend.config.security.jwt.TokenProvider;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
-import com.twtw.backend.domain.member.dto.response.AfterLoginDto;
+import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
 import com.twtw.backend.domain.member.entity.Member;
@@ -51,7 +51,7 @@ public class AuthService {
      * */
 
     @Transactional
-    public AfterLoginDto saveMember(MemberSaveRequest request) {
+    public AfterLoginResponse saveMember(MemberSaveRequest request) {
         Member member = memberMapper.toMemberEntity(request);
 
         String clientId = request.getOauthRequest().getToken();
@@ -63,7 +63,7 @@ public class AuthService {
         UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(member);
         TokenDto tokenDto = saveRefreshToken(credit, member.getId().toString());
 
-        return new AfterLoginDto(AuthStatus.SIGNIN, tokenDto);
+        return new AfterLoginResponse(AuthStatus.SIGNIN, tokenDto);
     }
 
     /*
@@ -71,7 +71,7 @@ public class AuthService {
      * 2.JWT 토큰 발급 -> OAuth 정보 (clientId , AuthType)으로 진행
      *
      * */
-    public AfterLoginDto getTokenByOAuth(OAuthRequest request) {
+    public AfterLoginResponse getTokenByOAuth(OAuthRequest request) {
         String clientId = request.getToken();
 
         Optional<Member> member =
@@ -81,10 +81,10 @@ public class AuthService {
             Member curMember = member.get();
             UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(curMember);
             TokenDto tokenDto = saveRefreshToken(credit, curMember.getId().toString());
-            return new AfterLoginDto(AuthStatus.SIGNIN, tokenDto);
+            return new AfterLoginResponse(AuthStatus.SIGNIN, tokenDto);
         }
 
-        return new AfterLoginDto(AuthStatus.SIGNUP, null);
+        return new AfterLoginResponse(AuthStatus.SIGNUP, null);
     }
 
     /*

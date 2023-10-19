@@ -1,6 +1,6 @@
 package com.twtw.backend.domain.member.service;
 
-import com.twtw.backend.domain.member.dto.response.DuplicateNicknameDto;
+import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.global.exception.EntityNotFoundException;
@@ -18,14 +18,14 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public DuplicateNicknameDto duplicateNickname(String nickName) {
+    public DuplicateNicknameResponse duplicateNickname(String nickName) {
         Optional<Member> member = memberRepository.findByNickname(nickName);
 
         if (member.isPresent()) {
-            return new DuplicateNicknameDto(true);
+            return new DuplicateNicknameResponse(true);
         }
 
-        return new DuplicateNicknameDto(false);
+        return new DuplicateNicknameResponse(false);
     }
 
     public Member getMemberById(UUID id) {
