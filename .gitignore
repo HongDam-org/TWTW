@@ -2,9 +2,3 @@
 backend/src/main/resources/application-env.yml
 .env
 secret.yml
-
-*.tgz
-
-pipeline/get_helm.sh
-
-pipeline/kustomize
