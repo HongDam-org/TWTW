@@ -18,7 +18,7 @@ public class MemberService {
 
     private final MemberMapper memberMapper;
 
-    public MemberService(MemberRepository memberRepository,MemberMapper memberMapper) {
+    public MemberService(MemberRepository memberRepository, MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
         this.memberMapper = memberMapper;
     }
@@ -39,7 +39,7 @@ public class MemberService {
         return member;
     }
 
-    public MemberResponse getResponseByMember(Member member){
+    public MemberResponse getResponseByMember(Member member) {
         return memberMapper.toMemberResponse(member);
     }
 }

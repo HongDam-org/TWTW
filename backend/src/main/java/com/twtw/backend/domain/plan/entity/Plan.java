@@ -22,14 +22,17 @@ public class Plan {
     private UUID id;
 
     @JoinColumn(columnDefinition = "BINARY(16)")
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST,orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Place place;
 
     @JoinColumn(name = "group_id")
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Group group;
 
-    @OneToMany(mappedBy = "plan", cascade = {CascadeType.PERSIST,CascadeType.MERGE},orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "plan",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            orphanRemoval = true)
     private Set<PlanMember> planMembers = new HashSet<>();
 
     public Plan(Member member, Place place, Group group) {
@@ -42,9 +45,10 @@ public class Plan {
         this.planMembers.add(new PlanMember(this, member));
     }
 
-    public void deleteMember(final Member member){
+    public void deleteMember(final Member member) {
         this.planMembers.remove(member);
     }
+
     public void addPlace(final Place place) {
         this.place = place;
     }

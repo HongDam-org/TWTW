@@ -21,8 +21,8 @@ import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.domain.plan.mapper.PlanMapper;
 import com.twtw.backend.domain.plan.repository.PlanRepository;
 import com.twtw.backend.global.client.MapClient;
-
 import com.twtw.backend.global.exception.EntityNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
@@ -65,7 +65,7 @@ public class PlanService {
     }
 
     @Transactional
-    public PlanResponse joinPlan(PlanMemberRequest request){
+    public PlanResponse joinPlan(PlanMemberRequest request) {
         Member member = authService.getMemberByJwt();
         Plan plan = getPlanEntity(request.getPlanId());
         plan.addMember(member);
@@ -74,14 +74,14 @@ public class PlanService {
     }
 
     @Transactional
-    public void outPlan(PlanMemberRequest request){
+    public void outPlan(PlanMemberRequest request) {
         Member member = authService.getMemberByJwt();
         Plan plan = getPlanEntity(request.getPlanId());
         plan.deleteMember(member);
     }
 
     @Transactional
-    public PlanInfoResponse getPlanById(UUID id){
+    public PlanInfoResponse getPlanById(UUID id) {
         Plan plan = getPlanEntity(id);
 
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
@@ -90,25 +90,21 @@ public class PlanService {
         List<MemberResponse> memberResponse = toMemberResponse(plan);
 
         return new PlanInfoResponse(
-                plan.getId(),
-                plan.getPlace().getId(),
-                placeDetails,
-                groupInfo,
-                memberResponse
-        );
+                plan.getId(), plan.getPlace().getId(), placeDetails, groupInfo, memberResponse);
     }
 
     @Transactional
-    public void deletePlan(UUID id){
+    public void deletePlan(UUID id) {
         planRepository.deleteById(id);
     }
 
-    private List<MemberResponse> toMemberResponse(Plan plan){
+    private List<MemberResponse> toMemberResponse(Plan plan) {
         return plan.getPlanMembers().stream()
                 .map(x -> memberService.getResponseByMember(x.getMember()))
                 .toList();
     }
-    private Plan getPlanEntity(UUID id){
+
+    private Plan getPlanEntity(UUID id) {
         return planRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

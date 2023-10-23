@@ -22,7 +22,7 @@ public class PlaceMapper {
                 .build();
     }
 
-    public PlaceDetails toPlaceResponse(Place place){
+    public PlaceDetails toPlaceResponse(Place place) {
         return new PlaceDetails(
                 place.getPlaceName(),
                 String.valueOf(place.getDistance()),
@@ -32,7 +32,6 @@ public class PlaceMapper {
                 place.getAddress().getRoadAddressName(),
                 place.getCategoryGroupCode(),
                 String.valueOf(place.getCoordinate().getX()),
-                String.valueOf(place.getCoordinate().getY())
-        );
+                String.valueOf(place.getCoordinate().getY()));
     }
 }

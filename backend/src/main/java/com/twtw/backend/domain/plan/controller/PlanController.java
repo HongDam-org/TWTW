@@ -33,21 +33,23 @@ public class PlanController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PlanInfoResponse> getPlanById(@PathVariable UUID id){
+    public ResponseEntity<PlanInfoResponse> getPlanById(@PathVariable UUID id) {
         return ResponseEntity.ok(planService.getPlanById(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePlanById(@PathVariable UUID id){
+    public ResponseEntity<Void> deletePlanById(@PathVariable UUID id) {
         planService.deletePlan(id);
         return ResponseEntity.ok().build();
     }
+
     @PostMapping("/join")
-    public ResponseEntity<PlanResponse> joinPlan(@RequestBody PlanMemberRequest request){
+    public ResponseEntity<PlanResponse> joinPlan(@RequestBody PlanMemberRequest request) {
         return ResponseEntity.ok(planService.joinPlan(request));
     }
+
     @PostMapping("/out")
-    public ResponseEntity<Void> outPlan(@RequestBody PlanMemberRequest request){
+    public ResponseEntity<Void> outPlan(@RequestBody PlanMemberRequest request) {
         planService.outPlan(request);
         return ResponseEntity.ok().build();
     }

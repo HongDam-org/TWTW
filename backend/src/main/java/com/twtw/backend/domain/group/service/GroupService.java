@@ -94,11 +94,9 @@ public class GroupService {
     }
 
     @Transactional
-    public void inviteGroup(InviteGroupRequest inviteGroupRequest){
+    public void inviteGroup(InviteGroupRequest inviteGroupRequest) {}
 
-    }
-
-    public GroupInfoResponse getGroupInfoResponse(Group group){
+    public GroupInfoResponse getGroupInfoResponse(Group group) {
         return groupMapper.toGroupInfo(group);
     }
 }

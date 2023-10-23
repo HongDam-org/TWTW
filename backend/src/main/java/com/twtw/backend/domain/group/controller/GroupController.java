@@ -27,17 +27,19 @@ public class GroupController {
     }
 
     @PostMapping()
-    public ResponseEntity<GroupInfoResponse> makeGroup(@RequestBody MakeGroupRequest makeGroupRequest) {
+    public ResponseEntity<GroupInfoResponse> makeGroup(
+            @RequestBody MakeGroupRequest makeGroupRequest) {
         return ResponseEntity.ok(groupService.makeGroup(makeGroupRequest));
     }
 
     @PostMapping("/join")
-    public ResponseEntity<GroupInfoResponse> joinGroup(@RequestBody JoinGroupRequest joinGroupRequest) {
+    public ResponseEntity<GroupInfoResponse> joinGroup(
+            @RequestBody JoinGroupRequest joinGroupRequest) {
         return ResponseEntity.ok(groupService.joinGroup(joinGroupRequest));
     }
 
     @PostMapping("/invite")
-    public void inviteGroup(@RequestBody InviteGroupRequest inviteGroupRequest){
+    public void inviteGroup(@RequestBody InviteGroupRequest inviteGroupRequest) {
         groupService.inviteGroup(inviteGroupRequest);
     }
 
