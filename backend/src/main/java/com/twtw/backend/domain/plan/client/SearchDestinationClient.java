@@ -54,9 +54,7 @@ public class SearchDestinationClient
         final String y = request.getY();
 
         if (x != null && y != null) {
-            builder
-                    .queryParam("x", x)
-                    .queryParam("y", y);
+            builder.queryParam("x", x).queryParam("y", y);
         }
         if (categoryGroupCode.isNone()) {
             return builder.build();
