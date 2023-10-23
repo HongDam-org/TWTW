@@ -42,6 +42,9 @@ public class Plan {
         this.planMembers.add(new PlanMember(this, member));
     }
 
+    public void deleteMember(final Member member){
+        this.planMembers.remove(member);
+    }
     public void addPlace(final Place place) {
         this.place = place;
     }

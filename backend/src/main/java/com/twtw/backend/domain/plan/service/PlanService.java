@@ -78,7 +78,7 @@ public class PlanService {
     public void outPlan(PlanMemberRequest request){
         Member member = authService.getMemberByJwt();
         Plan plan = getPlanEntity(request.getPlanId());
-        plan.getPlanMembers().remove(member);
+        plan.deleteMember(member);
     }
 
     @Transactional
@@ -90,7 +90,7 @@ public class PlanService {
 
         List<MemberResponse> memberResponse = plan.getPlanMembers().stream()
                 .map(x -> memberService.getResponseByMember(x.getMember()))
-                .collect(Collectors.toList());
+                .toList();
 
         return new PlanInfoResponse(
                 plan.getId(),
