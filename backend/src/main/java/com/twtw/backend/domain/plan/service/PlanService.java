@@ -87,7 +87,7 @@ public class PlanService {
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
         PlaceDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
 
-        List<MemberResponse> memberResponse = ToMemberResponse(plan);
+        List<MemberResponse> memberResponse = toMemberResponse(plan);
 
         return new PlanInfoResponse(
                 plan.getId(),
@@ -103,7 +103,7 @@ public class PlanService {
         planRepository.deleteById(id);
     }
 
-    private List<MemberResponse> ToMemberResponse(Plan plan){
+    private List<MemberResponse> toMemberResponse(Plan plan){
         return plan.getPlanMembers().stream()
                 .map(x -> memberService.getResponseByMember(x.getMember()))
                 .toList();
