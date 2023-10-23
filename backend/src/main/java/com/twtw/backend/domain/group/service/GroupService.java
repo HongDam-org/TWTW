@@ -1,9 +1,10 @@
 package com.twtw.backend.domain.group.service;
 
-import com.twtw.backend.domain.group.dto.request.JoinGroupDto;
-import com.twtw.backend.domain.group.dto.request.MakeGroupDto;
-import com.twtw.backend.domain.group.dto.response.GroupInfoDto;
-import com.twtw.backend.domain.group.dto.response.ShareInfo;
+import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
+import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
+import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
+import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
+import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.group.mapper.GroupMapper;
@@ -36,7 +37,7 @@ public class GroupService {
         this.groupMapper = groupMapper;
     }
 
-    public GroupInfoDto getGroupById(UUID groupId) {
+    public GroupInfoResponse getGroupById(UUID groupId) {
         return groupMapper.toGroupInfo(
                 groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new));
     }
@@ -46,7 +47,7 @@ public class GroupService {
     }
 
     @Transactional
-    public GroupInfoDto makeGroup(MakeGroupDto groupDto) {
+    public GroupInfoResponse makeGroup(MakeGroupRequest groupDto) {
         Member member = authService.getMemberByJwt();
         Group group = groupMapper.toGroupEntity(groupDto);
         GroupMember groupMember = groupMapper.connectGroupMember(group, member);
@@ -55,11 +56,11 @@ public class GroupService {
     }
 
     @Transactional
-    public GroupInfoDto joinGroup(JoinGroupDto joinGroupDto) {
+    public GroupInfoResponse joinGroup(JoinGroupRequest joinGroupRequest) {
         Member member = this.authService.getMemberByJwt();
         Group group =
                 groupRepository
-                        .findById(UUID.fromString(joinGroupDto.getGroupId()))
+                        .findById(joinGroupRequest.getGroupId())
                         .orElseThrow(EntityNotFoundException::new);
 
         groupMapper.connectGroupMember(group, member);
@@ -70,7 +71,7 @@ public class GroupService {
     @Transactional
     public void changeShare(UUID id) {
         Member member = this.authService.getMemberByJwt();
-        GroupInfoDto groupInfo = getGroupById(id);
+        GroupInfoResponse groupInfo = getGroupById(id);
 
         GroupMember groupMember =
                 groupMemberRepository
@@ -80,9 +81,9 @@ public class GroupService {
     }
 
     @Transactional
-    public ShareInfo getShare(UUID id) {
+    public ShareInfoResponse getShare(UUID id) {
         Member member = this.authService.getMemberByJwt();
-        GroupInfoDto groupInfo = getGroupById(id);
+        GroupInfoResponse groupInfo = getGroupById(id);
 
         GroupMember groupMember =
                 groupMemberRepository
@@ -90,5 +91,12 @@ public class GroupService {
                         .orElseThrow(EntityNotFoundException::new);
 
         return groupMapper.toShareInfo(groupMember);
+    }
+
+    @Transactional
+    public void inviteGroup(InviteGroupRequest inviteGroupRequest) {}
+
+    public GroupInfoResponse getGroupInfoResponse(Group group) {
+        return groupMapper.toGroupInfo(group);
     }
 }

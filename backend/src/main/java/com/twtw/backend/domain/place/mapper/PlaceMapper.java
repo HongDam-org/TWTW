@@ -21,4 +21,17 @@ public class PlaceMapper {
                 .y(detail.getY())
                 .build();
     }
+
+    public PlaceDetails toPlaceResponse(Place place) {
+        return new PlaceDetails(
+                place.getPlaceName(),
+                String.valueOf(place.getDistance()),
+                place.getPlaceUrl(),
+                place.getCategoryName(),
+                place.getAddress().getAddressName(),
+                place.getAddress().getRoadAddressName(),
+                place.getCategoryGroupCode(),
+                String.valueOf(place.getCoordinate().getX()),
+                String.valueOf(place.getCoordinate().getY()));
+    }
 }

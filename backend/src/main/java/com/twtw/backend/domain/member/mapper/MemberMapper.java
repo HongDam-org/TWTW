@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.member.mapper;
 
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
+import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.entity.AuthType;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.OAuth2Info;
@@ -18,5 +19,9 @@ public class MemberMapper {
     public OAuth2Info toOAuthInfo(String clientId, AuthType type) {
         OAuth2Info info = new OAuth2Info(clientId, type);
         return info;
+    }
+
+    public MemberResponse toMemberResponse(Member member) {
+        return new MemberResponse(member.getId(), member.getNickname());
     }
 }

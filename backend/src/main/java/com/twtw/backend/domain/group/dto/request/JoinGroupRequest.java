@@ -1,12 +1,14 @@
-package com.twtw.backend.domain.member.dto.response;
+package com.twtw.backend.domain.group.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DuplicateNicknameDto {
-    private Boolean isPresent;
+public class JoinGroupRequest {
+    private UUID groupId;
 }

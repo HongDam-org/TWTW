@@ -1,4 +1,4 @@
-package com.twtw.backend.domain.plan.dto.response;
+package com.twtw.backend.domain.plan.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SavePlanResponse {
+public class PlanMemberRequest {
     private UUID planId;
-    private UUID groupId;
 }

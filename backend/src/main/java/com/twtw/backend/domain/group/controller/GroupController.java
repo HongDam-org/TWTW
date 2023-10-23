@@ -1,9 +1,10 @@
 package com.twtw.backend.domain.group.controller;
 
-import com.twtw.backend.domain.group.dto.request.JoinGroupDto;
-import com.twtw.backend.domain.group.dto.request.MakeGroupDto;
-import com.twtw.backend.domain.group.dto.response.GroupInfoDto;
-import com.twtw.backend.domain.group.dto.response.ShareInfo;
+import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
+import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
+import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
+import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
+import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 
 import org.springframework.http.ResponseEntity;
@@ -21,18 +22,25 @@ public class GroupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupInfoDto> getGroupById(@PathVariable UUID id) {
+    public ResponseEntity<GroupInfoResponse> getGroupById(@PathVariable UUID id) {
         return ResponseEntity.ok(groupService.getGroupById(id));
     }
 
     @PostMapping()
-    public ResponseEntity<GroupInfoDto> makeGroup(@RequestBody MakeGroupDto makeGroupDto) {
-        return ResponseEntity.ok(groupService.makeGroup(makeGroupDto));
+    public ResponseEntity<GroupInfoResponse> makeGroup(
+            @RequestBody MakeGroupRequest makeGroupRequest) {
+        return ResponseEntity.ok(groupService.makeGroup(makeGroupRequest));
     }
 
     @PostMapping("/join")
-    public ResponseEntity<GroupInfoDto> joinGroup(@RequestBody JoinGroupDto joinGroupDto) {
-        return ResponseEntity.ok(groupService.joinGroup(joinGroupDto));
+    public ResponseEntity<GroupInfoResponse> joinGroup(
+            @RequestBody JoinGroupRequest joinGroupRequest) {
+        return ResponseEntity.ok(groupService.joinGroup(joinGroupRequest));
+    }
+
+    @PostMapping("/invite")
+    public void inviteGroup(@RequestBody InviteGroupRequest inviteGroupRequest) {
+        groupService.inviteGroup(inviteGroupRequest);
     }
 
     @PutMapping("/share/{id}")
@@ -42,7 +50,7 @@ public class GroupController {
     }
 
     @GetMapping("/share/{id}")
-    public ResponseEntity<ShareInfo> getshare(@PathVariable UUID id) {
+    public ResponseEntity<ShareInfoResponse> getshare(@PathVariable UUID id) {
         return ResponseEntity.ok(groupService.getShare(id));
     }
 }

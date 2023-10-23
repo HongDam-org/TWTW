@@ -9,7 +9,7 @@ import java.util.UUID;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShareInfo {
+public class ShareInfoResponse {
     private UUID groupId;
     private UUID memberId;
     private Boolean share;
