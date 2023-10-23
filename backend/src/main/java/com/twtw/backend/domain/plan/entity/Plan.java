@@ -29,7 +29,7 @@ public class Plan {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Group group;
 
-    @OneToMany(mappedBy = "plan", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "plan", cascade = {CascadeType.PERSIST,CascadeType.MERGE},orphanRemoval = true)
     private Set<PlanMember> planMembers = new HashSet<>();
 
     public Plan(Member member, Place place, Group group) {
