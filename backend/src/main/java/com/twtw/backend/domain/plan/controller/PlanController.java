@@ -38,6 +38,14 @@ public class PlanController {
 
     @DeleteMapping("/{id}")
     public void deletePlanById(@PathVariable UUID id){
-
+        planService.deletePlan(id);
+    }
+    @PutMapping("/join/{id}")
+    public ResponseEntity<PlanResponse> joinPlan(@PathVariable UUID id){
+        return ResponseEntity.ok(planService.joinPlan(id));
+    }
+    @PutMapping("/out/{id}")
+    public void outPlan(@PathVariable UUID id){
+        planService.outPlan(id);
     }
 }

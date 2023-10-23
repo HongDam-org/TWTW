@@ -101,5 +101,8 @@ public class PlanService {
         );
     }
 
-
+    @Transactional
+    public void deletePlan(UUID id){
+        planRepository.deleteById(id);
+    }
 }

@@ -22,7 +22,7 @@ public class Plan {
     private UUID id;
 
     @JoinColumn(columnDefinition = "BINARY(16)")
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST,orphanRemoval = true)
     private Place place;
 
     @JoinColumn(name = "group_id")
