@@ -30,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -88,9 +87,7 @@ public class PlanService {
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
         PlaceDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
 
-        List<MemberResponse> memberResponse = plan.getPlanMembers().stream()
-                .map(x -> memberService.getResponseByMember(x.getMember()))
-                .toList();
+        List<MemberResponse> memberResponse = ToMemberResponse(plan);
 
         return new PlanInfoResponse(
                 plan.getId(),
@@ -106,7 +103,11 @@ public class PlanService {
         planRepository.deleteById(id);
     }
 
-
+    private List<MemberResponse> ToMemberResponse(Plan plan){
+        return plan.getPlanMembers().stream()
+                .map(x -> memberService.getResponseByMember(x.getMember()))
+                .toList();
+    }
     private Plan getPlanEntity(UUID id){
         return planRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
