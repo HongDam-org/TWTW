@@ -1,7 +1,9 @@
 package com.twtw.backend.domain.member.service;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
+import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
+import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
@@ -14,8 +16,11 @@ import java.util.UUID;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberRepository memberRepository) {
+    private final MemberMapper memberMapper;
+
+    public MemberService(MemberRepository memberRepository,MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
+        this.memberMapper = memberMapper;
     }
 
     public DuplicateNicknameResponse duplicateNickname(String nickName) {
@@ -32,5 +37,9 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         return member;
+    }
+
+    public MemberResponse getResponseByMember(Member member){
+        return memberMapper.toMemberResponse(member);
     }
 }

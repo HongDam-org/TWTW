@@ -97,4 +97,8 @@ public class GroupService {
     public void inviteGroup(InviteGroupRequest inviteGroupRequest){
 
     }
+
+    public GroupInfoResponse getGroupInfoResponse(Group group){
+        return groupMapper.toGroupInfo(group);
+    }
 }

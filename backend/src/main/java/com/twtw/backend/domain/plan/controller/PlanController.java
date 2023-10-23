@@ -1,10 +1,12 @@
 package com.twtw.backend.domain.plan.controller;
 
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
+import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
+import com.twtw.backend.domain.plan.entity.PlanMember;
 import com.twtw.backend.domain.plan.service.PlanService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,12 +42,12 @@ public class PlanController {
     public void deletePlanById(@PathVariable UUID id){
         planService.deletePlan(id);
     }
-    @PutMapping("/join/{id}")
-    public ResponseEntity<PlanResponse> joinPlan(@PathVariable UUID id){
-        return ResponseEntity.ok(planService.joinPlan(id));
+    @PostMapping("/join")
+    public ResponseEntity<PlanResponse> joinPlan(@RequestBody PlanMemberRequest request){
+        return ResponseEntity.ok(planService.joinPlan(request));
     }
-    @PutMapping("/out/{id}")
-    public void outPlan(@PathVariable UUID id){
-        planService.outPlan(id);
+    @PostMapping("/out")
+    public void outPlan(@RequestBody PlanMemberRequest request){
+        planService.outPlan(request);
     }
 }
