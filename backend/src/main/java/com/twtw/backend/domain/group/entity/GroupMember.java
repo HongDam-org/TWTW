@@ -35,10 +35,10 @@ public class GroupMember implements Auditable {
     private Member member;
 
     private Boolean share;
-  
+
     @Enumerated(EnumType.STRING)
     private GroupInviteCode groupInviteCode;
-  
+
     @Setter
     @Embedded
     @Column(nullable = false)
