@@ -54,10 +54,6 @@ public class AuthService {
     public AfterLoginResponse saveMember(MemberSaveRequest request) {
         Member member = memberMapper.toMemberEntity(request);
 
-        String clientId = request.getOauthRequest().getToken();
-
-        member.updateOAuth(
-                memberMapper.toOAuthInfo(clientId, request.getOauthRequest().getAuthType()));
         memberRepository.save(member);
 
         UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(member);
