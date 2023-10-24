@@ -53,8 +53,9 @@ public class GroupService {
         return groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
     }
 
-    public GroupMember getGroupMemberEntity(UUID groupId,UUID memberId){
-        return groupMemberRepository.findByGroupIdAndMemberId(groupId, memberId)
+    public GroupMember getGroupMemberEntity(UUID groupId, UUID memberId) {
+        return groupMemberRepository
+                .findByGroupIdAndMemberId(groupId, memberId)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
@@ -71,7 +72,8 @@ public class GroupService {
     @Transactional
     public SimpleGroupInfoResponse joinGroup(JoinGroupRequest joinGroupRequest) {
         Member member = authService.getMemberByJwt();
-        GroupMember groupMember = getGroupMemberEntity(joinGroupRequest.getGroupId(),member.getId());
+        GroupMember groupMember =
+                getGroupMemberEntity(joinGroupRequest.getGroupId(), member.getId());
 
         groupMember.changeGroupCode(GroupInviteCode.ACCEPTED);
 
@@ -83,7 +85,7 @@ public class GroupService {
         Member member = this.authService.getMemberByJwt();
         GroupInfoResponse groupInfo = getGroupById(id);
 
-        GroupMember groupMember = getGroupMemberEntity(groupInfo.getGroupId(),member.getId());
+        GroupMember groupMember = getGroupMemberEntity(groupInfo.getGroupId(), member.getId());
         groupMember.changeShare();
     }
 
@@ -92,21 +94,21 @@ public class GroupService {
         Member member = this.authService.getMemberByJwt();
         GroupInfoResponse groupInfo = getGroupById(id);
 
-        GroupMember groupMember = getGroupMemberEntity(groupInfo.getGroupId(),member.getId());
+        GroupMember groupMember = getGroupMemberEntity(groupInfo.getGroupId(), member.getId());
 
         return groupMapper.toShareInfo(groupMember);
     }
 
     @Transactional
-    public GroupInfoResponse inviteGroup(InviteGroupRequest inviteGroupRequest){
+    public GroupInfoResponse inviteGroup(InviteGroupRequest inviteGroupRequest) {
         Group group = getGroupEntity(inviteGroupRequest.getGroupId());
         Member friend = memberService.getMemberById(inviteGroupRequest.getFriendMemberId());
-        GroupMember connection = groupMapper.connectGroupMember(group,friend);
+        GroupMember connection = groupMapper.connectGroupMember(group, friend);
 
         return groupMapper.toGroupInfo(group);
     }
 
-    public GroupInfoResponse getGroupInfoResponse(Group group){
+    public GroupInfoResponse getGroupInfoResponse(Group group) {
         return groupMapper.toGroupInfo(group);
     }
 }

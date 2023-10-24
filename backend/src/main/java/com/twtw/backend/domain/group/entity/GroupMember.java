@@ -45,8 +45,7 @@ public class GroupMember {
         this.share = !this.share;
     }
 
-    public void changeGroupCode(GroupInviteCode groupInviteCode){
+    public void changeGroupCode(GroupInviteCode groupInviteCode) {
         this.groupInviteCode = groupInviteCode;
     }
-
 }
