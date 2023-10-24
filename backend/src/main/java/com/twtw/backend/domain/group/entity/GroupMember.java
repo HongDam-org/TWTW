@@ -35,7 +35,10 @@ public class GroupMember implements Auditable {
     private Member member;
 
     private Boolean share;
-
+  
+    @Enumerated(EnumType.STRING)
+    private GroupInviteCode groupInviteCode;
+  
     @Setter
     @Embedded
     @Column(nullable = false)
@@ -47,9 +50,14 @@ public class GroupMember implements Auditable {
         this.share = true;
         group.getGroupMembers().add(this);
         member.getGroupMembers().add(this);
+        this.groupInviteCode = GroupInviteCode.REQUESTED;
     }
 
     public void changeShare() {
         this.share = !this.share;
+    }
+
+    public void changeGroupCode(GroupInviteCode groupInviteCode) {
+        this.groupInviteCode = groupInviteCode;
     }
 }
