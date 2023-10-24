@@ -45,14 +45,17 @@ public class SearchDestinationClient
                 uriBuilder
                         .path("search/keyword")
                         .queryParam("query", request.getQuery())
-                        .queryParam("x", request.getX())
-                        .queryParam("y", request.getY())
                         .queryParam("radius", DEFAULT_DISTANCE_RADIUS)
                         .queryParam("page", request.getPage())
                         .queryParam("size", MAX_SIZE_PER_REQUEST);
 
         final CategoryGroupCode categoryGroupCode = request.getCategoryGroupCode();
+        final String x = request.getX();
+        final String y = request.getY();
 
+        if (x != null && y != null) {
+            builder.queryParam("x", x).queryParam("y", y);
+        }
         if (categoryGroupCode.isNone()) {
             return builder.build();
         }

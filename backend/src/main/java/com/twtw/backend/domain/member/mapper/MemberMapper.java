@@ -21,8 +21,7 @@ public class MemberMapper {
         return info;
     }
 
-    public MemberResponse toMemberResponse(Member member){
+    public MemberResponse toMemberResponse(Member member) {
         return new MemberResponse(member.getId(), member.getNickname());
     }
-
 }

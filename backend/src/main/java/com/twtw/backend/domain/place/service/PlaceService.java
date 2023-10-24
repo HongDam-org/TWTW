@@ -23,12 +23,11 @@ public class PlaceService {
         return new PlaceResponse(response.getDocuments(), response.getMeta().getIsEnd());
     }
 
-    public PlaceDetails getPlaceDetails(Place place){
+    public PlaceDetails getPlaceDetails(Place place) {
         return placeMapper.toPlaceResponse(place);
     }
 
-
-    public Place getEntityByDetail(PlaceDetails detail){
+    public Place getEntityByDetail(PlaceDetails detail) {
         return placeMapper.toEntity(detail);
     }
 }

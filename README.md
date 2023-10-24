@@ -1,4 +1,4 @@
 # 🛣️ TWTW
 길치들을 위한 서비스
 
-![image](https://github.com/HongDam-org/TWTW/assets/89020004/c8daa2cc-2a9d-4b11-a90f-6db2fa1dc993)
+![image](https://github.com/HongDam-org/TWTW/assets/89020004/0f85e114-b96a-4a0a-acaf-e01dbcd497cc)
