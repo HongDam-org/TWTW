@@ -5,6 +5,7 @@ import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
+import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 
 import org.springframework.http.ResponseEntity;
@@ -33,14 +34,15 @@ public class GroupController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<GroupInfoResponse> joinGroup(
+    public ResponseEntity<SimpleGroupInfoResponse> joinGroup(
             @RequestBody JoinGroupRequest joinGroupRequest) {
         return ResponseEntity.ok(groupService.joinGroup(joinGroupRequest));
     }
 
     @PostMapping("/invite")
-    public void inviteGroup(@RequestBody InviteGroupRequest inviteGroupRequest) {
-        groupService.inviteGroup(inviteGroupRequest);
+    public ResponseEntity<GroupInfoResponse> inviteGroup(
+            @RequestBody InviteGroupRequest inviteGroupRequest) {
+        return ResponseEntity.ok(groupService.inviteGroup(inviteGroupRequest));
     }
 
     @PutMapping("/share/{id}")
