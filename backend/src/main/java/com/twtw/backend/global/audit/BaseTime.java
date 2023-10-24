@@ -1,11 +1,13 @@
 package com.twtw.backend.global.audit;
 
 import jakarta.persistence.Embeddable;
-import java.time.LocalDateTime;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter

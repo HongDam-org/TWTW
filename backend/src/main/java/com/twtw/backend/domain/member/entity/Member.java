@@ -1,21 +1,21 @@
 package com.twtw.backend.domain.member.entity;
 
 import com.twtw.backend.domain.group.entity.GroupMember;
-
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
 import com.twtw.backend.global.audit.SoftDelete;
+
 import jakarta.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import lombok.Setter;
 
 @Entity
 @Getter

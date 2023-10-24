@@ -4,15 +4,16 @@ import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
 import com.twtw.backend.global.audit.SoftDelete;
+
 import jakarta.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.UUID;
-import lombok.Setter;
 
 @Getter
 @Entity
