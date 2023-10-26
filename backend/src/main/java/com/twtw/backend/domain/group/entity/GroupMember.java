@@ -4,20 +4,26 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
-import com.twtw.backend.global.audit.SoftDelete;
-
-import jakarta.persistence.*;
-
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.UUID;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Getter
-@SoftDelete
+@Where(clause = "deleted_at is null")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GroupMember implements Auditable {

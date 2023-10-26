@@ -9,23 +9,22 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.plan.entity.Plan;
-
 import jakarta.persistence.EntityManager;
-
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
-
 @DataJpaTest
 @Transactional
 @ActiveProfiles("test")
 @Import(QuerydslConfig.class)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class PlanRepositoryTest {
 
     @Autowired private PlanRepository planRepository;
@@ -50,9 +49,10 @@ class PlanRepositoryTest {
 
         // when
         planRepository.deleteById(planId);
+        em.flush();
+        em.clear();
 
         // then
         assertThat(planRepository.findById(planId)).isEmpty();
     }
 }
-/** flush (o) -> 값이 존재해서 조회됨 (테스트 실패) flush (x) -> 값 조회 못해옴 (테스트 성공) */
