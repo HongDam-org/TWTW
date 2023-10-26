@@ -1,12 +1,26 @@
 package com.twtw.backend.domain.member.entity;
 
 import com.twtw.backend.domain.group.entity.GroupMember;
+import com.twtw.backend.global.audit.AuditListener;
+import com.twtw.backend.global.audit.Auditable;
+import com.twtw.backend.global.audit.BaseTime;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import org.hibernate.annotations.Where;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +28,10 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@Where(clause = "deleted_at is null")
+@EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Member {
+public class Member implements Auditable {
     @Id
     @GeneratedValue(generator = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
@@ -33,13 +49,15 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<GroupMember> groupMembers = new ArrayList<>();
 
-    public Member(String nickname, String profileImage) {
+    @Setter
+    @Embedded
+    @Column(nullable = false)
+    private BaseTime baseTime;
+
+    public Member(String nickname, String profileImage, String clientId, AuthType authType) {
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.role = Role.ROLE_USER;
-    }
-
-    public void updateOAuth(OAuth2Info oAuth2Info) {
-        this.oAuth2Info = oAuth2Info;
+        this.oAuth2Info = new OAuth2Info(clientId, authType);
     }
 }

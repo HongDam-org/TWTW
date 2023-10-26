@@ -16,7 +16,7 @@ spring:
 
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test;DATABASE_TO_UPPER=false;MODE=MySQL
+    url: jdbc:h2:mem:test;DATABASE_TO_UPPER=FALSE;MODE=MySQL;
     username: sa
     password:
 
