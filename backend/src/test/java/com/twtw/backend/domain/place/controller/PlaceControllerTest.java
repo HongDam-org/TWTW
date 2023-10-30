@@ -2,8 +2,6 @@ package com.twtw.backend.domain.place.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -17,15 +15,13 @@ import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.place.service.PlaceService;
 import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
 import com.twtw.backend.support.docs.RestDocsTest;
-
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.List;
 
 @DisplayName("PlaceController의")
 @WebMvcTest(PlaceController.class)
@@ -65,11 +61,9 @@ class PlaceControllerTest extends RestDocsTest {
         final ResultActions perform =
                 mockMvc.perform(
                         get("/places/surround")
-                                .queryParam("query", "이디야 안성")
                                 .queryParam("x", "127.426")
                                 .queryParam("y", "37.0764")
                                 .queryParam("page", "1")
-                                .queryParam("categoryGroupCode", "CE7")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(
                                         "Authorization",

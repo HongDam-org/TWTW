@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 public class SurroundPlaceClient
         extends KakaoMapClient<SurroundPlaceRequest, SurroundPlaceResponse> {
     private static final Integer MAX_SIZE_PER_REQUEST = 15;
-    private static final Integer DEFAULT_DISTANCE_RADIUS = 1500;
+    private static final Integer DEFAULT_DISTANCE_RADIUS = 1000;
     private final WebClient webClient;
 
     public SurroundPlaceClient(final KakaoProperties kakaoProperties) {
