@@ -12,6 +12,7 @@ import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
@@ -39,8 +40,23 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public Binding binding(final Queue queue, final TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(ROUTING_KEY);
+    public Binding binding(final Queue queue, final TopicExchange topicExchange) {
+        return BindingBuilder.bind(queue).to(topicExchange).with(ROUTING_KEY);
+    }
+
+    @Bean
+    public ConnectionFactory connectionFactory() {
+        CachingConnectionFactory factory = new CachingConnectionFactory();
+        factory.setHost(rabbitMQProperties.getHost());
+        factory.setPort(rabbitMQProperties.getPort());
+        factory.setUsername(rabbitMQProperties.getUsername());
+        factory.setPassword(rabbitMQProperties.getPassword());
+        return factory;
+    }
+
+    @Bean
+    public Jackson2JsonMessageConverter jsonMessageConverter() {
+        return new Jackson2JsonMessageConverter(objectMapper);
     }
 
     @Bean
@@ -52,16 +68,15 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory factory = new CachingConnectionFactory();
-        factory.setHost(rabbitMQProperties.getHost());
-        factory.setUsername(rabbitMQProperties.getUsername());
-        factory.setPassword(rabbitMQProperties.getPassword());
-        return factory;
-    }
-
-    @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter(objectMapper);
+    public RabbitAdmin rabbitAdmin(
+            final ConnectionFactory connectionFactory,
+            final Queue queue,
+            final TopicExchange topicExchange,
+            final Binding binding) {
+        final RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
+        rabbitAdmin.declareQueue(queue);
+        rabbitAdmin.declareExchange(topicExchange);
+        rabbitAdmin.declareBinding(binding);
+        return rabbitAdmin;
     }
 }
