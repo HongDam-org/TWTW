@@ -2,7 +2,9 @@ package com.twtw.backend.config.rabbitmq;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.global.properties.RabbitMQProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
