@@ -60,4 +60,11 @@ public class Member implements Auditable {
         this.role = Role.ROLE_USER;
         this.oAuth2Info = new OAuth2Info(clientId, authType);
     }
+
+    public Member(String nickname, String profileImage, OAuth2Info oAuth2Info){
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        this.role = Role.ROLE_USER;
+        this.oAuth2Info = oAuth2Info;
+    }
 }

@@ -16,7 +16,10 @@ public interface GroupMapper2 {
 
     Group toGroupEntity(MakeGroupRequest groupDto);
 
+    @Mapping(target = "groupId", source = "id")
     GroupInfoResponse toGroupInfo(Group group);
 
+    @Mapping(target = "groupId", source ="group.id")
+    @Mapping(target = "memberId", source ="member.id")
     ShareInfoResponse toShareInfo(GroupMember groupMember);
 }
