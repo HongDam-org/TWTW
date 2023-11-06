@@ -4,28 +4,21 @@ import com.twtw.backend.domain.friend.dto.response.FriendResponse;
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.member.entity.Member;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.IterableMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants.ComponentModel;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Component
-public class FriendMapper {
+@Mapper(componentModel = ComponentModel.SPRING)
+public interface FriendMapper {
+    Friend toEntity(Member fromMember, Member toMember);
 
-    public Friend toEntity(final Member fromMember, final Member toMember) {
-        return Friend.builder().fromMember(fromMember).toMember(toMember).build();
-    }
+    @IterableMapping(elementTargetType = FriendResponse.class)
+    List<FriendResponse> toResponses(List<Friend> friends);
 
-    public List<FriendResponse> toResponses(final List<Friend> friends) {
-        return friends.stream().map(this::toResponse).collect(Collectors.toList());
-    }
-
-    private FriendResponse toResponse(final Friend friend) {
-        final Member fromMember = friend.getFromMember();
-
-        return FriendResponse.builder()
-                .memberId(fromMember.getId())
-                .nickname(fromMember.getNickname())
-                .build();
-    }
+    @Mapping(target = "memberId", source = "fromMember.id")
+    @Mapping(target = "nickname", source = "fromMember.nickname")
+    FriendResponse toResponse(Friend friend);
 }

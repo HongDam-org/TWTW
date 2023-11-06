@@ -5,8 +5,10 @@ import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlaceDetails {

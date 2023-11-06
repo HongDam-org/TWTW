@@ -3,35 +3,26 @@ package com.twtw.backend.domain.place.mapper;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.Named;
 
-@Component
-public class PlaceMapper {
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface PlaceMapper {
+    @Mapping(target = "distance", source = "distance", qualifiedByName = "convertInteger")
+    Place toEntity(PlaceDetails detail);
 
-    public Place toEntity(PlaceDetails detail) {
-        return Place.builder()
-                .placeName(detail.getPlaceName())
-                .distance(Integer.parseInt(detail.getDistance()))
-                .categoryName(detail.getCategoryName())
-                .categoryGroupCode(detail.getCategoryGroupCode())
-                .placeUrl(detail.getPlaceUrl())
-                .addressName(detail.getAddressName())
-                .roadAddressName(detail.getRoadAddressName())
-                .x(detail.getX())
-                .y(detail.getY())
-                .build();
+    @Mapping(target = "distance", source = "distance", qualifiedByName = "convertString")
+    PlaceDetails toPlaceResponse(Place place);
+
+    @Named("convertInteger")
+    default Integer convertInteger(String distance) {
+        return Integer.parseInt(distance);
     }
 
-    public PlaceDetails toPlaceResponse(Place place) {
-        return new PlaceDetails(
-                place.getPlaceName(),
-                String.valueOf(place.getDistance()),
-                place.getPlaceUrl(),
-                place.getCategoryName(),
-                place.getAddress().getAddressName(),
-                place.getAddress().getRoadAddressName(),
-                place.getCategoryGroupCode(),
-                String.valueOf(place.getCoordinate().getX()),
-                String.valueOf(place.getCoordinate().getY()));
+    @Named("convertString")
+    default String convertString(Integer distance) {
+        return String.valueOf(distance);
     }
 }
