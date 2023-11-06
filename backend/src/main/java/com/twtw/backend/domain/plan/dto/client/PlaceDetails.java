@@ -5,8 +5,11 @@ import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.mapstruct.Named;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlaceDetails {

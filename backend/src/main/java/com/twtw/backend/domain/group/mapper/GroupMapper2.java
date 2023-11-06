@@ -12,8 +12,12 @@ import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface GroupMapper2 {
+    @Mapping(target = "baseTime" , ignore = true)
     GroupMember connectGroupMember(Group group, Member member);
 
+    @Mapping(target = "baseTime" , ignore = true)
+    @Mapping(target = "groupMembers" , ignore = true)
+    @Mapping(target = "groupPlans" , ignore = true)
     Group toGroupEntity(MakeGroupRequest groupDto);
 
     @Mapping(target = "groupId", source = "id")

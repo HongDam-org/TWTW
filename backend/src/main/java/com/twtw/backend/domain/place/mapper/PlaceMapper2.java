@@ -9,17 +9,17 @@ import org.mapstruct.Named;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PlaceMapper2 {
-    @Mapping(target ="distance",source = "distance",qualifiedByName = "toInteger")
+    @Mapping(target ="distance",source = "distance",qualifiedByName = "convertInteger")
     Place toEntity(PlaceDetails detail);
-    @Mapping(target ="distance",source = "distance",qualifiedByName = "toString")
+    @Mapping(target ="distance",source = "distance",qualifiedByName = "convertString")
     PlaceDetails toPlaceResponse(Place place);
 
-    @Named("toInteger")
+    @Named("convertInteger")
     default Integer convertInteger(String distance){
         return Integer.parseInt(distance);
     }
 
-    @Named("toString")
+    @Named("convertString")
     default String convertString(Integer distance){
         return String.valueOf(distance);
     }

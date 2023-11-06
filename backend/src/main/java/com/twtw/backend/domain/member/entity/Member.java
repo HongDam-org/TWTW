@@ -15,10 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import org.hibernate.annotations.Where;
 
@@ -44,7 +41,7 @@ public class Member implements Auditable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Embedded private OAuth2Info oAuth2Info;
+    @Embedded private OAuth2Info oauthInfo;
 
     @OneToMany(mappedBy = "member")
     private List<GroupMember> groupMembers = new ArrayList<>();
@@ -58,13 +55,15 @@ public class Member implements Auditable {
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.role = Role.ROLE_USER;
-        this.oAuth2Info = new OAuth2Info(clientId, authType);
+        this.oauthInfo = new OAuth2Info(clientId, authType);
     }
 
-    public Member(String nickname, String profileImage, OAuth2Info oAuth2Info){
+
+    @Builder
+    public Member(String nickname, String profileImage, OAuth2Info oauthInfo){
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.role = Role.ROLE_USER;
-        this.oAuth2Info = oAuth2Info;
+        this.oauthInfo = oauthInfo;
     }
 }
