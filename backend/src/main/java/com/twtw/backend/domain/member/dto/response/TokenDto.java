@@ -3,7 +3,7 @@ package com.twtw.backend.domain.member.dto.response;
 import lombok.*;
 
 @Getter
-@NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class TokenDto {
     private String accessToken;
