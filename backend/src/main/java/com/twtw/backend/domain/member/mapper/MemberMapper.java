@@ -1,25 +1,25 @@
 package com.twtw.backend.domain.member.mapper;
 
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
+import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
+import com.twtw.backend.domain.member.entity.OAuth2Info;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.Named;
 
-import org.springframework.stereotype.Component;
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface MemberMapper {
 
-@Component
-public class MemberMapper {
+    @Mapping(target = "oauthInfo", source = "oauthRequest",qualifiedByName = "convertOauth")
+    Member toMemberEntity(MemberSaveRequest request);
 
-    public Member toMemberEntity(MemberSaveRequest request) {
-        Member member =
-                new Member(
-                        request.getNickname(),
-                        request.getProfileImage(),
-                        request.getOauthRequest().getToken(),
-                        request.getOauthRequest().getAuthType());
-        return member;
-    }
+    MemberResponse toMemberResponse(Member member);
 
-    public MemberResponse toMemberResponse(Member member) {
-        return new MemberResponse(member.getId(), member.getNickname());
+    @Named("convertOauth")
+    default OAuth2Info convertOauth(OAuthRequest request){
+        return new OAuth2Info(request.getToken(),request.getAuthType());
     }
 }

@@ -2,12 +2,13 @@ package com.twtw.backend.domain.plan.mapper;
 
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.entity.Plan;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class PlanMapper {
-    public PlanResponse toPlanResponse(Plan plan) {
-        return new PlanResponse(plan.getId(), plan.getGroup().getId());
-    }
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface PlanMapper {
+    @Mapping(target = "planId", source ="id")
+    @Mapping(target = "groupId", source = "group.id")
+    PlanResponse toPlanResponse(Plan plan);
 }

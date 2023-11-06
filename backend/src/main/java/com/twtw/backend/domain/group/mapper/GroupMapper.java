@@ -6,28 +6,24 @@ import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
-import org.springframework.stereotype.Component;
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface GroupMapper {
+    @Mapping(target = "baseTime" , ignore = true)
+    GroupMember connectGroupMember(Group group, Member member);
 
-@Component
-public class GroupMapper {
-    public GroupMember connectGroupMember(Group group, Member member) {
-        return new GroupMember(group, member);
-    }
+    @Mapping(target = "baseTime" , ignore = true)
+    @Mapping(target = "groupMembers" , ignore = true)
+    @Mapping(target = "groupPlans" , ignore = true)
+    Group toGroupEntity(MakeGroupRequest groupDto);
 
-    public Group toGroupEntity(MakeGroupRequest groupDto) {
-        return new Group(groupDto.getName(), groupDto.getGroupImage(), groupDto.getLeaderId());
-    }
+    @Mapping(target = "groupId", source = "id")
+    GroupInfoResponse toGroupInfo(Group group);
 
-    public GroupInfoResponse toGroupInfo(Group group) {
-        return new GroupInfoResponse(
-                group.getId(), group.getLeaderId(), group.getName(), group.getGroupImage());
-    }
-
-    public ShareInfoResponse toShareInfo(GroupMember groupMember) {
-        return new ShareInfoResponse(
-                groupMember.getGroup().getId(),
-                groupMember.getMember().getId(),
-                groupMember.getShare());
-    }
+    @Mapping(target = "groupId", source ="group.id")
+    @Mapping(target = "memberId", source ="member.id")
+    ShareInfoResponse toShareInfo(GroupMember groupMember);
 }
