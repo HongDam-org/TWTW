@@ -1,5 +1,6 @@
 package com.twtw.backend.global.advice;
 
+import com.twtw.backend.global.exception.AuthorityException;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 import com.twtw.backend.global.exception.WebClientResponseException;
 
@@ -19,6 +20,12 @@ public class GlobalErrorAdvice {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> entityNotFound(final EntityNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(AuthorityException.class)
+    public ResponseEntity<ErrorResponse> authority(final AuthorityException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(e.getMessage()));
     }
