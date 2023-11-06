@@ -18,7 +18,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.hibernate.annotations.Where;
-import org.mapstruct.Named;
 
 import java.util.UUID;
 

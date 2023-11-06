@@ -6,24 +6,25 @@ import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface GroupMapper {
-    @Mapping(target = "baseTime" , ignore = true)
+    @Mapping(target = "baseTime", ignore = true)
     GroupMember connectGroupMember(Group group, Member member);
 
-    @Mapping(target = "baseTime" , ignore = true)
-    @Mapping(target = "groupMembers" , ignore = true)
-    @Mapping(target = "groupPlans" , ignore = true)
+    @Mapping(target = "baseTime", ignore = true)
+    @Mapping(target = "groupMembers", ignore = true)
+    @Mapping(target = "groupPlans", ignore = true)
     Group toGroupEntity(MakeGroupRequest groupDto);
 
     @Mapping(target = "groupId", source = "id")
     GroupInfoResponse toGroupInfo(Group group);
 
-    @Mapping(target = "groupId", source ="group.id")
-    @Mapping(target = "memberId", source ="member.id")
+    @Mapping(target = "groupId", source = "group.id")
+    @Mapping(target = "memberId", source = "member.id")
     ShareInfoResponse toShareInfo(GroupMember groupMember);
 }

@@ -50,8 +50,9 @@ public class Member implements Auditable {
     @Embedded
     @Column(nullable = false)
     private BaseTime baseTime;
+
     @Builder
-    public Member(String nickname, String profileImage, OAuth2Info oauthInfo){
+    public Member(String nickname, String profileImage, OAuth2Info oauthInfo) {
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.role = Role.ROLE_USER;

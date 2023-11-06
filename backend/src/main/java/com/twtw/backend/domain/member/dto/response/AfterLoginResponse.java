@@ -5,7 +5,6 @@ import com.twtw.backend.domain.member.entity.AuthStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @Builder

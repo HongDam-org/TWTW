@@ -14,5 +14,4 @@ public class LocationResponse {
     private Double x;
     private Double y;
     private LocalDateTime time;
-
 }
