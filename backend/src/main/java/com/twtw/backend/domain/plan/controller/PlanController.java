@@ -40,7 +40,7 @@ public class PlanController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePlanById(@PathVariable UUID id) {
         planService.deletePlan(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/join")
@@ -51,6 +51,6 @@ public class PlanController {
     @PostMapping("/out")
     public ResponseEntity<Void> outPlan(@RequestBody PlanMemberRequest request) {
         planService.outPlan(request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
