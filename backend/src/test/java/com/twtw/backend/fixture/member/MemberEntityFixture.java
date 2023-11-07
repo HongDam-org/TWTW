@@ -12,7 +12,11 @@ public enum MemberEntityFixture {
     private final String clientId;
     private final AuthType authType;
 
-    MemberEntityFixture(final String name, final String profileImage, final String clientId, final AuthType authType) {
+    MemberEntityFixture(
+            final String name,
+            final String profileImage,
+            final String clientId,
+            final AuthType authType) {
         this.name = name;
         this.profileImage = profileImage;
         this.clientId = clientId;
