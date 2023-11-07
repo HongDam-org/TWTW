@@ -34,3 +34,22 @@ spring:
   h2:
     console:
       enabled: true
+  rabbitmq:
+    listener:
+      simple:
+        auto-startup: false
+      direct:
+        auto-startup: false
+      stream:
+        auto-startup: false
+    port: 5672
+    host: localhost
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration
+  data:
+    redis:
+      host: redis
+      port: 6379
