@@ -5,10 +5,15 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 
 public enum FriendEntityFixture {
-
-    FIRST_FRIEND(MemberEntityFixture.LOGIN_MEMBER.toEntity(), MemberEntityFixture.FIRST_MEMBER.toEntity()),
-    SECOND_FRIEND(MemberEntityFixture.LOGIN_MEMBER.toEntity(), MemberEntityFixture.SECOND_MEMBER.toEntity()),
-    THIRD_FRIEND(MemberEntityFixture.SECOND_MEMBER.toEntity(), MemberEntityFixture.FIRST_MEMBER.toEntity());
+    FIRST_FRIEND(
+            MemberEntityFixture.LOGIN_MEMBER.toEntity(),
+            MemberEntityFixture.FIRST_MEMBER.toEntity()),
+    SECOND_FRIEND(
+            MemberEntityFixture.LOGIN_MEMBER.toEntity(),
+            MemberEntityFixture.SECOND_MEMBER.toEntity()),
+    THIRD_FRIEND(
+            MemberEntityFixture.SECOND_MEMBER.toEntity(),
+            MemberEntityFixture.FIRST_MEMBER.toEntity());
 
     private final Member fromMember;
     private final Member toMember;
