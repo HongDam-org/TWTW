@@ -5,7 +5,8 @@ import com.twtw.backend.domain.group.entity.Group;
 import java.util.UUID;
 
 public enum GroupEntityFixture {
-    HDJ_GROUP("HDG", "http://someUrlToS3", UUID.fromString("550e8400-e29b-41d4-a716-446655440000"));
+    HDJ_GROUP("HDG", "http://hdgToS3", UUID.randomUUID()),
+    BTS_GROUP("BTS","https://btsToS3",UUID.randomUUID());
 
     private String name;
 

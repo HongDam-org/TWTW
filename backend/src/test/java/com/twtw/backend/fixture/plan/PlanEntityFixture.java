@@ -4,6 +4,7 @@ import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.plan.entity.Plan;
+import com.twtw.backend.fixture.group.GroupEntityFixture;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 
@@ -13,11 +14,11 @@ public enum PlanEntityFixture {
     FIRST_PLACE(
             MemberEntityFixture.LOGIN_MEMBER.toEntity(),
             PlaceEntityFixture.FIRST_PLACE.toEntity(),
-            new Group("1", "2", UUID.randomUUID())),
+            GroupEntityFixture.HDJ_GROUP.toEntity()),
     SECOND_PLACE(
             MemberEntityFixture.FIRST_MEMBER.toEntity(),
             PlaceEntityFixture.SECOND_PLACE.toEntity(),
-            new Group("3", "4", UUID.randomUUID()));
+            GroupEntityFixture.HDJ_GROUP.toEntity());
 
     private final Member member;
     private final Place place;
