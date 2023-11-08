@@ -5,7 +5,9 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.OAuth2Info;
 
 public enum MemberEntityFixture {
-    LOGIN_MEMBER("호즨이", "http://someUrlToS3", "12345", AuthType.APPLE);
+    LOGIN_MEMBER("호즨이", "http://someUrlToS3", "12345", AuthType.APPLE),
+    FIRST_MEMBER("담이와써요", "http://myPictureIsExpensive", "777", AuthType.APPLE),
+    SECOND_MEMBER("홍담진", "http://fighting", "1234567", AuthType.KAKAO);
 
     private final String name;
     private final String profileImage;
