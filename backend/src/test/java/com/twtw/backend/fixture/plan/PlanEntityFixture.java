@@ -8,8 +8,6 @@ import com.twtw.backend.fixture.group.GroupEntityFixture;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 
-import java.util.UUID;
-
 public enum PlanEntityFixture {
     FIRST_PLACE(
             MemberEntityFixture.LOGIN_MEMBER.toEntity(),

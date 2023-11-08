@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public enum GroupEntityFixture {
     HDJ_GROUP("HDG", "http://hdgToS3", UUID.randomUUID()),
-    BTS_GROUP("BTS","https://btsToS3",UUID.randomUUID());
+    BTS_GROUP("BTS", "https://btsToS3", UUID.randomUUID());
 
     private String name;
 
