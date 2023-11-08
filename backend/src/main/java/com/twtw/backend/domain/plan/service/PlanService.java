@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PlanService {
     private final PlanRepository planRepository;
@@ -54,7 +55,6 @@ public class PlanService {
         return destinationClient.request(request);
     }
 
-    @Transactional
     public PlanResponse savePlan(final SavePlanRequest request) {
         Member member = authService.getMemberByJwt();
         Group group = groupService.getGroupEntity(request.getGroupId());
@@ -64,7 +64,6 @@ public class PlanService {
         return planMapper.toPlanResponse(planRepository.save(plan));
     }
 
-    @Transactional
     public PlanResponse joinPlan(PlanMemberRequest request) {
         Member member = authService.getMemberByJwt();
         Plan plan = getPlanEntity(request.getPlanId());
@@ -73,14 +72,12 @@ public class PlanService {
         return planMapper.toPlanResponse(plan);
     }
 
-    @Transactional
     public void outPlan(PlanMemberRequest request) {
         Member member = authService.getMemberByJwt();
         Plan plan = getPlanEntity(request.getPlanId());
         plan.deleteMember(member);
     }
 
-    @Transactional
     public PlanInfoResponse getPlanById(UUID id) {
         Plan plan = getPlanEntity(id);
 
@@ -93,7 +90,6 @@ public class PlanService {
                 plan.getId(), plan.getPlace().getId(), placeDetails, groupInfo, memberResponse);
     }
 
-    @Transactional
     public void deletePlan(UUID id) {
         planRepository.deleteById(id);
     }
