@@ -10,11 +10,14 @@ import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.repository.RepositoryTest;
+
 import jakarta.persistence.EntityManager;
-import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.UUID;
 
 @DisplayName("PlanRepository의")
 class PlanRepositoryTest extends RepositoryTest {

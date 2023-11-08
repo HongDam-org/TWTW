@@ -8,12 +8,9 @@ import com.twtw.backend.fixture.group.GroupEntityFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 
 public enum PlanEntityFixture {
-    FIRST_PLACE(
-            PlaceEntityFixture.FIRST_PLACE.toEntity(),
-            GroupEntityFixture.HDJ_GROUP.toEntity()),
+    FIRST_PLACE(PlaceEntityFixture.FIRST_PLACE.toEntity(), GroupEntityFixture.HDJ_GROUP.toEntity()),
     SECOND_PLACE(
-            PlaceEntityFixture.SECOND_PLACE.toEntity(),
-            GroupEntityFixture.HDJ_GROUP.toEntity());
+            PlaceEntityFixture.SECOND_PLACE.toEntity(), GroupEntityFixture.HDJ_GROUP.toEntity());
 
     private final Place place;
     private final Group group;
