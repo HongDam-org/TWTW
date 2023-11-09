@@ -97,7 +97,8 @@ public class AuthService {
             throw new RefreshTokenValidationException();
         }
 
-        Authentication authentication = tokenProvider.getAuthentication(tokenRequest.getAccessToken());
+        Authentication authentication =
+                tokenProvider.getAuthentication(tokenRequest.getAccessToken());
 
         String userName = authentication.getName();
 
