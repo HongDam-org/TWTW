@@ -25,8 +25,7 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<TokenDto> authorize(@RequestBody @Valid TokenRequest tokenRequest) {
         return ResponseEntity.ok(
-                authService.refreshToken(
-                        tokenRequest.getAccessToken(), tokenRequest.getRefreshToken()));
+                authService.refreshToken(tokenRequest));
     }
 
     @PostMapping("/save")

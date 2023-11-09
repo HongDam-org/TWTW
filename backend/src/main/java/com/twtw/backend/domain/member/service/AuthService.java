@@ -3,6 +3,7 @@ package com.twtw.backend.domain.member.service;
 import com.twtw.backend.config.security.jwt.TokenProvider;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
+import com.twtw.backend.domain.member.dto.request.TokenRequest;
 import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
@@ -90,12 +91,13 @@ public class AuthService {
      * 3. 토큰 만들어서 반환
      * */
 
-    public TokenDto refreshToken(String accessToken, String refreshToken) {
+    public TokenDto refreshToken(TokenRequest tokenRequest) {
+        final String refreshToken = tokenRequest.getRefreshToken();
         if (!tokenProvider.validateToken(refreshToken)) {
             throw new RefreshTokenValidationException();
         }
 
-        Authentication authentication = tokenProvider.getAuthentication(accessToken);
+        Authentication authentication = tokenProvider.getAuthentication(tokenRequest.getAccessToken());
 
         String userName = authentication.getName();
 

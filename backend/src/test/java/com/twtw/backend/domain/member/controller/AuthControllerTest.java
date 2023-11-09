@@ -59,7 +59,7 @@ class AuthControllerTest extends RestDocsTest {
     void authorize() throws Exception {
         // given
         final TokenDto expected = new TokenDto("access.token.value", "refresh.token.value");
-        given(authService.refreshToken(any(), any())).willReturn(expected);
+        given(authService.refreshToken(any())).willReturn(expected);
 
         // when
         final ResultActions perform =
