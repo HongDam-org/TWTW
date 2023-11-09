@@ -2,6 +2,7 @@ package com.twtw.backend.domain.group.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -19,13 +20,15 @@ import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.support.docs.RestDocsTest;
-import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.UUID;
 
 @DisplayName("GroupController의")
 @WebMvcTest(GroupController.class)
@@ -113,8 +116,7 @@ class GroupControllerTest extends RestDocsTest {
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
 
         // then
-        perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.groupId").isString());
+        perform.andExpect(status().isOk()).andExpect(jsonPath("$.groupId").isString());
 
         // docs
         perform.andDo(print())
@@ -125,7 +127,9 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("그룹 초대 API가 수행되는가")
     void inviteGroup() throws Exception {
         // given
-        final GroupInfoResponse expected = new GroupInfoResponse(UUID.randomUUID(), UUID.randomUUID(), "홍담진", "http://someUrlToS3");
+        final GroupInfoResponse expected =
+                new GroupInfoResponse(
+                        UUID.randomUUID(), UUID.randomUUID(), "홍담진", "http://someUrlToS3");
         given(groupService.inviteGroup(any())).willReturn(expected);
 
         // when
@@ -133,7 +137,10 @@ class GroupControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         post("/group/invite")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(new InviteGroupRequest(UUID.randomUUID(), UUID.randomUUID())))
+                                .content(
+                                        toRequestBody(
+                                                new InviteGroupRequest(
+                                                        UUID.randomUUID(), UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -156,7 +163,10 @@ class GroupControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         post("/group/share/" + UUID.randomUUID())
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(new InviteGroupRequest(UUID.randomUUID(), UUID.randomUUID())))
+                                .content(
+                                        toRequestBody(
+                                                new InviteGroupRequest(
+                                                        UUID.randomUUID(), UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -173,7 +183,8 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("위치 공유 조회 API가 수행되는가")
     void getShare() throws Exception {
         // given
-        final ShareInfoResponse expected = new ShareInfoResponse(UUID.randomUUID(), UUID.randomUUID(), true);
+        final ShareInfoResponse expected =
+                new ShareInfoResponse(UUID.randomUUID(), UUID.randomUUID(), true);
         given(groupService.getShare(any())).willReturn(expected);
 
         // when
@@ -181,14 +192,16 @@ class GroupControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         get("/group/share/" + UUID.randomUUID())
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(new InviteGroupRequest(UUID.randomUUID(), UUID.randomUUID())))
+                                .content(
+                                        toRequestBody(
+                                                new InviteGroupRequest(
+                                                        UUID.randomUUID(), UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
 
         // then
-        perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.share").isBoolean());
+        perform.andExpect(status().isOk()).andExpect(jsonPath("$.share").isBoolean());
 
         // docs
         perform.andDo(print())

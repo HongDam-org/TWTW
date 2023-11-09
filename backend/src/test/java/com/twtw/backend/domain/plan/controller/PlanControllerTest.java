@@ -2,6 +2,7 @@ package com.twtw.backend.domain.plan.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -23,14 +24,16 @@ import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.service.PlanService;
 import com.twtw.backend.support.docs.RestDocsTest;
-import java.util.List;
-import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.List;
+import java.util.UUID;
 
 @DisplayName("PlanController의")
 @WebMvcTest(PlanController.class)
@@ -107,15 +110,20 @@ class PlanControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         post("/plans")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(new SavePlanRequest(UUID.randomUUID(), new PlaceDetails("카페 온마이마인드",
-                                        "345",
-                                        "https://place.map.kakao.com/1625295668",
-                                        "음식점 > 카페",
-                                        "경기 안성시 죽산면 죽산리 414",
-                                        "경기 안성시 죽산면 죽산초교길 36-4",
-                                        CategoryGroupCode.CE7,
-                                        "127.420430538256",
-                                        "37.0766874564297"))))
+                                .content(
+                                        toRequestBody(
+                                                new SavePlanRequest(
+                                                        UUID.randomUUID(),
+                                                        new PlaceDetails(
+                                                                "카페 온마이마인드",
+                                                                "345",
+                                                                "https://place.map.kakao.com/1625295668",
+                                                                "음식점 > 카페",
+                                                                "경기 안성시 죽산면 죽산리 414",
+                                                                "경기 안성시 죽산면 죽산초교길 36-4",
+                                                                CategoryGroupCode.CE7,
+                                                                "127.420430538256",
+                                                                "37.0766874564297"))))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -133,15 +141,23 @@ class PlanControllerTest extends RestDocsTest {
     @DisplayName("단건 조회 API가 수행되는가")
     void getPlanById() throws Exception {
         // given
-        final PlanInfoResponse expected = new PlanInfoResponse(UUID.randomUUID(), UUID.randomUUID(), new PlaceDetails("카페 온마이마인드",
-                "345",
-                "https://place.map.kakao.com/1625295668",
-                "음식점 > 카페",
-                "경기 안성시 죽산면 죽산리 414",
-                "경기 안성시 죽산면 죽산초교길 36-4",
-                CategoryGroupCode.CE7,
-                "127.420430538256",
-                "37.0766874564297"), new GroupInfoResponse(UUID.randomUUID(), UUID.randomUUID(), "홍담진", "http://someUrlToS3"), List.of(new MemberResponse(UUID.randomUUID(), "진호정")));
+        final PlanInfoResponse expected =
+                new PlanInfoResponse(
+                        UUID.randomUUID(),
+                        UUID.randomUUID(),
+                        new PlaceDetails(
+                                "카페 온마이마인드",
+                                "345",
+                                "https://place.map.kakao.com/1625295668",
+                                "음식점 > 카페",
+                                "경기 안성시 죽산면 죽산리 414",
+                                "경기 안성시 죽산면 죽산초교길 36-4",
+                                CategoryGroupCode.CE7,
+                                "127.420430538256",
+                                "37.0766874564297"),
+                        new GroupInfoResponse(
+                                UUID.randomUUID(), UUID.randomUUID(), "홍담진", "http://someUrlToS3"),
+                        List.of(new MemberResponse(UUID.randomUUID(), "진호정")));
         given(planService.getPlanById(any())).willReturn(expected);
 
         // when
@@ -193,16 +209,20 @@ class PlanControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         post("/plans/join")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(new SavePlanRequest(UUID.randomUUID(), new PlaceDetails(
-                                        "이디야커피 안성죽산점",
-                                        "435",
-                                        "http://place.map.kakao.com/1562566188",
-                                        "음식점 > 카페 > 커피전문점 > 이디야커피",
-                                        "경기 안성시 죽산면 죽산리 118-3",
-                                        "경기 안성시 죽산면 죽주로 287-1",
-                                        CategoryGroupCode.CE7,
-                                        "127.426865189637",
-                                        "37.0764635355795"))))
+                                .content(
+                                        toRequestBody(
+                                                new SavePlanRequest(
+                                                        UUID.randomUUID(),
+                                                        new PlaceDetails(
+                                                                "이디야커피 안성죽산점",
+                                                                "435",
+                                                                "http://place.map.kakao.com/1562566188",
+                                                                "음식점 > 카페 > 커피전문점 > 이디야커피",
+                                                                "경기 안성시 죽산면 죽산리 118-3",
+                                                                "경기 안성시 죽산면 죽주로 287-1",
+                                                                CategoryGroupCode.CE7,
+                                                                "127.426865189637",
+                                                                "37.0764635355795"))))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
