@@ -7,3 +7,18 @@
 == Plan
 === 검색어와 카테고리를 통한 장소 검색
 operation::get search plan destination[snippets='http-request,http-response']
+
+=== 계획 저장
+operation::post save plan[snippets='http-request,http-response']
+
+=== 계획 단건 조회
+operation::get plan[snippets='http-request,http-response']
+
+=== 계획 삭제
+operation::delete plan[snippets='http-request,http-response']
+
+=== 계획 참여
+operation::post join plan[snippets='http-request,http-response']
+
+=== 계획 탈퇴
+operation::post out plan[snippets='http-request,http-response']

@@ -27,7 +27,7 @@ public class GroupController {
         return ResponseEntity.ok(groupService.getGroupById(id));
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<GroupInfoResponse> makeGroup(
             @RequestBody MakeGroupRequest makeGroupRequest) {
         return ResponseEntity.ok(groupService.makeGroup(makeGroupRequest));
@@ -45,14 +45,14 @@ public class GroupController {
         return ResponseEntity.ok(groupService.inviteGroup(inviteGroupRequest));
     }
 
-    @PutMapping("/share/{id}")
+    @PostMapping("/share/{id}")
     public ResponseEntity<Void> changeShare(@PathVariable UUID id) {
         groupService.changeShare(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/share/{id}")
-    public ResponseEntity<ShareInfoResponse> getshare(@PathVariable UUID id) {
+    public ResponseEntity<ShareInfoResponse> getShare(@PathVariable UUID id) {
         return ResponseEntity.ok(groupService.getShare(id));
     }
 }

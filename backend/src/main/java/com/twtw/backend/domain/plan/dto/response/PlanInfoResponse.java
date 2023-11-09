@@ -19,5 +19,5 @@ public class PlanInfoResponse {
     private UUID placeId;
     private PlaceDetails placeDetail;
     private GroupInfoResponse groupInfoResponse;
-    private List<MemberResponse> memberList;
+    private List<MemberResponse> members;
 }
