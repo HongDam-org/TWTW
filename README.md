@@ -1,4 +1,55 @@
-# 🛣️ TWTW
-길치들을 위한 서비스
+# 길치들을 위한 앱 - 이길저길 🛣️
 
-![image](https://github.com/HongDam-org/TWTW/assets/89020004/0f85e114-b96a-4a0a-acaf-e01dbcd497cc)
+
+## 기능 소개
+
+### 👍 목적지 설정과 함께 약속 생성!
+
+- 목적지를 카테고리 별, 키워드 별 검색으로 손쉬운 설정이 가능합니다.
+- 목적지와 함께 약속을 생성해 미리 목적지 정보를 공유할 수 있답니다!
+
+### 🎯 약속장소 주변 핵심 스팟과 그룹원 중간지점 파악!
+
+- 약속장소와 가까운 핵심 스팟 정보를 통해 쉽게 장소를 찾아보세요.
+- 그룹원의 중간지점 또한 알 수 있어 쉽게 만날 수 있습니다!
+
+### 🛣️ 실시간 길찾기 정보를 지도로 한눈에!
+
+- 지도를 통해 목적지로 가는 길을 빠르게 알 수 있어요.
+- 실시간으로 제공되는 경로를 따라가다 보면 목적지가 보인답니다!
+
+### 🗺️ 그룹원들의 현재 이동 상태를 지도에서!
+
+- 약속에 포함된 친구들의 현재 위치를 한 번에 확인할 수 있어요.
+- 길을 잃은 친구를 바로 파악할 수 있답니다!
+
+### 📱 그룹 통화를 통해 빠르게 경로 정보 공유 가능!
+
+- 길을 찾기 어려운 경우 그룹 통화가 가능합니다.
+- 다 같이 경로에 대한 정보를 공유해 빠르게 모여보세요!
+
+
+## 시스템 아키텍처
+![](https://github.com/HongDam-org/TWTW/assets/89020004/0f85e114-b96a-4a0a-acaf-e01dbcd497cc)
+
+## 사용 기술
+|iOS|Backend|Infra/DevOps|Etc|
+|:---:|:---:|:---:|:---:|
+|<img src="https://img.shields.io/badge/swift-F05138?style=for-the-badge&logo=Swift&logoColor=white"><br><img src="https://img.shields.io/badge/uikit-2396F3?style=for-the-badge&logo=uikit&logoColor=white"><br><img src="https://img.shields.io/badge/apple_login-000000?style=for-the-badge&logo=apple&logoColor=white"><br><img src="https://img.shields.io/badge/KAKAO_MAP_SDK-FFCD00?style=for-the-badge&logo=kakao&logoColor=white"><br><img src="https://img.shields.io/badge/KAKAO_OAUTH-FFCD00?style=for-the-badge&logo=kakao&logoColor=white">|<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=OpenJDK&logoColor=white"><br><img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> <br><img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> <br><img src="https://img.shields.io/badge/hibernate-59666C?style=for-the-badge&logo=hibernate&logoColor=white"> <br> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"><br><img src="https://img.shields.io/badge/junit5-25A162?style=for-the-badge&logo=junit5&logoColor=white">|<img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"><br><img src="https://img.shields.io/badge/amazonec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"><br><img src="https://img.shields.io/badge/nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"><br><img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"><br><img src="https://img.shields.io/badge/rabbitmq-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white"><br><img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"><br><img src="https://img.shields.io/badge/githubactions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white">|<img src="https://img.shields.io/badge/kakao_api-FFCD00?style=for-the-badge&logo=kakao&logoColor=white"><br><img src="https://img.shields.io/badge/tmap_api-D40E14?style=for-the-badge&logo=tvtime&logoColor=white"><br><img src="https://img.shields.io/badge/naver_api-03C75A?style=for-the-badge&logo=naver&logoColor=white">|
+
+
+## 구현적 특징
+
+### Server
+1. 그룹원들간의 실시간 위치 공유를 위해 WebSocket과 RabbitMQ pub/sub를 사용했다.
+2. Naver와 T-MAP API를 사용하여 목적지에 대한 보행자와 자동차 경로를 제공한다.
+3. Kakao MAP API를 사용하여 목적지에 대한 정보를 제공한다.
+4. Spring Security를 사용하여 애플과 카카오 사용자에 대한 앱 서비스 인증 로직을 구현하였다.
+5. Jwt를 통해 데이터의 위변조를 방지하는 이점을 가져갔다.
+6. Naver, Kakao, T-MAP, Redis, RabbitMQ의 각각 다른 config를 환경 변수 Properties Object를 통해 관리하였다.
+
+## 멤버 소개
+|홍성민|정호진|박다미|진주원|김승진|
+|:----:|:----:|:----:|:----:|:----:|
+|iOS|iOS|iOS|Server, DevOps|Server, DevOps|
+|[@KKodiac](https://github.com/KKodiac)|[@HJ39](https://github.com/HJ39)|[@dami0806](https://github.com/dami0806)|[@jinjoo-lab](https://github.com/jinjoo-lab)|[@ohksj77](https://github.com/ohksj77)|
