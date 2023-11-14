@@ -1,4 +1,4 @@
-# 이길저길 🛣️
+![Group 36334](https://github.com/HongDam-org/TWTW/assets/89020004/4ce8b3d0-711f-4b95-ae4d-c494b0c173a4)
 
 ## 길치들을 위한 경로 제공 및 만남 관리 서비스 앱
 
@@ -57,3 +57,4 @@
 |:----:|:----:|:----:|:----:|:----:|
 |iOS|iOS|iOS|Server, DevOps|Server, DevOps|
 |[@KKodiac](https://github.com/KKodiac)|[@HJ39](https://github.com/HJ39)|[@dami0806](https://github.com/dami0806)|[@jinjoo-lab](https://github.com/jinjoo-lab)|[@ohksj77](https://github.com/ohksj77)|
+
