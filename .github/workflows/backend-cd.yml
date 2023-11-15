@@ -61,5 +61,4 @@ jobs:
       - name: Deploy to GCE with Docker Compose
         run: |
           gcloud compute scp docker-compose.yml twtw-server:~/twtw --zone=${{ secrets.GCP_ZONE }}
-          cd ~/twtw
-          gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="docker-compose up --build -d"
+          gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="docker-compose -f ~/twtw/docker-compose.yml up --build -d"
