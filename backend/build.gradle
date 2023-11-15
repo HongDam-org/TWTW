@@ -34,7 +34,8 @@ jib {
 				'NAVER_MAP_HEADER_ID': System.getenv('NAVER_MAP_HEADER_ID'),
 				'NAVER_MAP_HEADER_SECRET': System.getenv('NAVER_MAP_HEADER_SECRET'),
 				'TMAP_KEY': System.getenv('TMAP_KEY'),
-				'TMAP_URL': System.getenv('TMAP_URL')
+				'TMAP_URL': System.getenv('TMAP_URL'),
+				'SPRING_PROFILES_ACTIVE': 'prod'
 		]
 	}
 }
