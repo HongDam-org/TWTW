@@ -2,7 +2,7 @@ version: "3"
 
 services:
   backend:
-    image: ohksj77/twtw-backend
+    build: ./backend
     container_name: backend
     ports:
       - 8080:8080
@@ -10,8 +10,7 @@ services:
       - backend
     depends_on:
       - db
-    environment:
-      SPRING_PROFILES_ACTIVE: prod
+    env_file: .env
     restart: always
     tty: true
 
@@ -61,7 +60,7 @@ services:
     tty: true
   
   nginx:
-    image: ohksj77/twtw-nginx
+    build: ./nginx
     container_name: nginx
     ports:
       - 80:80

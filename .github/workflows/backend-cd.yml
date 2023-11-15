@@ -12,45 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v1
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Set environment variables
-        run: |
-          echo "MYSQL_HOST=${{ secrets.MYSQL_HOST }}" >> $GITHUB_ENV
-          echo "MYSQL_PORT=${{ secrets.MYSQL_PORT }}" >> $GITHUB_ENV
-          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> $GITHUB_ENV
-          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> $GITHUB_ENV
-          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> $GITHUB_ENV
-          echo "RABBITMQ_USERNAME=${{ secrets.RABBITMQ_USERNAME }}" >> $GITHUB_ENV
-          echo "RABBITMQ_PASSWORD=${{ secrets.RABBITMQ_PASSWORD }}" >> $GITHUB_ENV
-          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
-          echo "KAKAO_MAP_URL=${{ secrets.KAKAO_MAP_URL }}" >> $GITHUB_ENV
-          echo "KAKAO_MAP_KEY=${{ secrets.KAKAO_MAP_KEY }}" >> $GITHUB_ENV
-          echo "KAKAO_MAP_HEADER=${{ secrets.KAKAO_MAP_HEADER }}" >> $GITHUB_ENV
-          echo "NAVER_MAP_ID=${{ secrets.NAVER_MAP_ID }}" >> $GITHUB_ENV
-          echo "NAVER_MAP_SECRET=${{ secrets.NAVER_MAP_SECRET }}" >> $GITHUB_ENV
-          echo "NAVER_MAP_URL=${{ secrets.NAVER_MAP_URL }}" >> $GITHUB_ENV
-          echo "NAVER_MAP_HEADER_ID=${{ secrets.NAVER_MAP_HEADER_ID }}" >> $GITHUB_ENV
-          echo "NAVER_MAP_HEADER_SECRET=${{ secrets.NAVER_MAP_HEADER_SECRET }}" >> $GITHUB_ENV
-          echo "TMAP_KEY=${{ secrets.TMAP_KEY }}" >> $GITHUB_ENV
-          echo "TMAP_URL=${{ secrets.TMAP_URL }}" >> $GITHUB_ENV
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./backend/gradlew
-        shell: bash
-
-      - name: Build with jib
-        run: |
-          cd ./backend
-          ./gradlew jib \
-          -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
-          -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
-          cd ..
-
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.3.0
         with:
@@ -61,6 +22,4 @@ jobs:
       
       - name: Deploy to GCE with Docker Compose
         run: |
-          gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="mkdir -p ~/backend"
-          gcloud compute scp docker-compose.yml twtw-server:~/backend/ --zone=${{ secrets.GCP_ZONE }}
-          gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="cd ~/backend && sudo docker-compose down && sudo docker-compose up --build -d"
+          gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="cd ~/backend && git pull && sudo docker-compose down && sudo docker-compose up --build -d"
