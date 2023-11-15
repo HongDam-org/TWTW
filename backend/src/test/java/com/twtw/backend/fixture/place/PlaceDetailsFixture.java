@@ -1,6 +1,7 @@
 package com.twtw.backend.fixture.place;
 
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

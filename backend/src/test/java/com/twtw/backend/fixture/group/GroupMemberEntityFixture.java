@@ -5,6 +5,7 @@ import com.twtw.backend.domain.group.entity.GroupInviteCode;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

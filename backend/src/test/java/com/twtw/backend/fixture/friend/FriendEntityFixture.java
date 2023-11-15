@@ -3,6 +3,7 @@ package com.twtw.backend.fixture.friend;
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

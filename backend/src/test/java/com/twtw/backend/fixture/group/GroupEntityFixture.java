@@ -2,8 +2,9 @@ package com.twtw.backend.fixture.group;
 
 import com.twtw.backend.domain.group.entity.Group;
 
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public enum GroupEntityFixture {
