@@ -2,6 +2,7 @@ package com.twtw.backend.domain.plan.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;

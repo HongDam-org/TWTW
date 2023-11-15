@@ -18,11 +18,13 @@ import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.place.PlaceDetailsFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-import java.util.Optional;
-import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @DisplayName("PlanService의")
 class PlanServiceTest extends LoginTest {
@@ -35,7 +37,8 @@ class PlanServiceTest extends LoginTest {
     @DisplayName("목적지 검색이 수행되는가")
     void searchPlanDestination() {
         // given
-        final SearchDestinationRequest given = new SearchDestinationRequest("스타벅스", 123.321, 123.123, 1, CategoryGroupCode.CE7);
+        final SearchDestinationRequest given =
+                new SearchDestinationRequest("스타벅스", 123.321, 123.123, 1, CategoryGroupCode.CE7);
 
         // when
         final PlanDestinationResponse result = planService.searchPlanDestination(given);
@@ -52,7 +55,10 @@ class PlanServiceTest extends LoginTest {
         final UUID groupId = groupRepository.save(GroupEntityFixture.HDJ_GROUP.toEntity()).getId();
 
         // when
-        final PlanResponse planResponse = planService.savePlan(new SavePlanRequest(groupId, PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails()));
+        final PlanResponse planResponse =
+                planService.savePlan(
+                        new SavePlanRequest(
+                                groupId, PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails()));
 
         // then
         final Optional<Plan> result = planRepository.findById(planResponse.getPlanId());
