@@ -35,7 +35,8 @@ public class SecurityConfig {
                                                 "auth/save",
                                                 "auth/login",
                                                 "member/duplicate/**",
-                                                "plan/**")
+                                                "plan/**",
+                                                "/actuator/**")
                                         .permitAll())
                 .authorizeHttpRequests(
                         x -> x.requestMatchers("/test/**").permitAll().anyRequest().authenticated())
