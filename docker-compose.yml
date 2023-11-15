@@ -2,7 +2,8 @@ version: "3"
 
 services:
   backend:
-    container_name: ohksj77/twtw-backend
+    image: ohksj77/twtw-backend
+    container_name: backend
     ports:
       - 8080:8080
     networks:
