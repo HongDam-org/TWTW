@@ -2,9 +2,7 @@ version: "3"
 
 services:
   backend:
-    build:
-      context: ./backend
-    container_name: backend
+    container_name: ohksj77/twtw-backend
     ports:
       - 8080:8080
     networks:
@@ -12,12 +10,6 @@ services:
     depends_on:
       - db
     environment:
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_PORT: ${MYSQL_PORT}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       SPRING_PROFILES_ACTIVE: prod
     restart: always
     tty: true
@@ -27,9 +19,15 @@ services:
     container_name: db
     ports:
       - 3306:3306
-    env_file: .env
     environment:
       TZ: Asia/Seoul
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      SCHEMA: ${MYSQL_DATABASE}
     volumes:
       - data_db:/var/lib/mysql
     networks:
@@ -46,8 +44,8 @@ services:
         tail -f /dev/null
       "
     environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
     ports:
       - 5672:5672
       - 15672:15672

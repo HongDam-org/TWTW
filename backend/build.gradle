@@ -16,6 +16,26 @@ jib {
 	}
 	container {
 		jvmFlags = ["-Xms128m", "-Xmx128m"]
+		environment = [
+				'MYSQL_HOST': System.getenv('MYSQL_HOST'),
+				'MYSQL_PORT': System.getenv('MYSQL_PORT'),
+				'MYSQL_DATABASE': System.getenv('MYSQL_DATABASE'),
+				'MYSQL_USER': System.getenv('MYSQL_USER'),
+				'MYSQL_PASSWORD': System.getenv('MYSQL_PASSWORD'),
+				'RABBITMQ_USERNAME': System.getenv('RABBITMQ_USERNAME'),
+				'RABBITMQ_PASSWORD': System.getenv('RABBITMQ_PASSWORD'),
+				'JWT_SECRET': System.getenv('JWT_SECRET'),
+				'KAKAO_MAP_URL': System.getenv('KAKAO_MAP_URL'),
+				'KAKAO_MAP_KEY': System.getenv('KAKAO_MAP_KEY'),
+				'KAKAO_MAP_HEADER': System.getenv('KAKAO_MAP_HEADER'),
+				'NAVER_MAP_ID': System.getenv('NAVER_MAP_ID'),
+				'NAVER_MAP_SECRET': System.getenv('NAVER_MAP_SECRET'),
+				'NAVER_MAP_URL': System.getenv('NAVER_MAP_URL'),
+				'NAVER_MAP_HEADER_ID': System.getenv('NAVER_MAP_HEADER_ID'),
+				'NAVER_MAP_HEADER_SECRET': System.getenv('NAVER_MAP_HEADER_SECRET'),
+				'TMAP_KEY': System.getenv('TMAP_KEY'),
+				'TMAP_URL': System.getenv('TMAP_URL')
+		]
 	}
 }
 

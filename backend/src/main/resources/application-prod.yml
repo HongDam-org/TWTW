@@ -18,9 +18,6 @@ spring:
         auto_quote_keyword: true
   main:
     allow-bean-definition-overriding: true
-  config:
-    import:
-      - classpath:application-env.yml
   rabbitmq:
     host: rabbitmq
     port: 5672
@@ -32,3 +29,21 @@ spring:
     redis:
       host: redis
       port: 6379
+  rabbitmq:
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+jwt:
+  secret: ${JWT_SECRET}
+kakao-map:
+  url: ${KAKAO_MAP_URL}
+  key: ${KAKAO_MAP_KEY}
+  header-prefix: ${KAKAO_MAP_HEADER}
+naver-map:
+  id: ${NAVER_MAP_ID}
+  secret: ${NAVER_MAP_SECRET}
+  url: ${NAVER_MAP_URL}
+  header-client-id: ${NAVER_MAP_HEADER_ID}
+  header-client-secret: ${NAVER_MAP_HEADER_SECRET}
+tmap:
+  app-key: ${TMAP_KEY}
+  url: ${TMAP_URL}
