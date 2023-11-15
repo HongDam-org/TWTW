@@ -63,4 +63,4 @@ jobs:
         run: |
           gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="mkdir -p ~/backend"
           gcloud compute scp docker-compose.yml twtw-server:~/backend/ --zone=${{ secrets.GCP_ZONE }}
-          gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="cd ~/backend && sudo docker-compose up --build -d"
+          gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="cd ~/backend && sudo docker-compose down && sudo docker-compose up --build -d"
