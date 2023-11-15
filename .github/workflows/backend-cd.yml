@@ -44,9 +44,11 @@ jobs:
 
       - name: Build with jib
         run: |
-          ./backend/gradlew jib \
+          cd ./backend
+          ./gradlew jib \
           -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} \
           -Djib.to.auth.password=${{ secrets.DOCKERHUB_PASSWORD }}
+          cd ..
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.3.0
