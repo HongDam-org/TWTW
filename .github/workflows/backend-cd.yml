@@ -46,8 +46,8 @@ jobs:
         run: |
           cd ./backend
           ./gradlew jib \
-          -Djib.to.auth.username=${{ secrets.DOCKERHUB_USERNAME }} \
-          -Djib.to.auth.password=${{ secrets.DOCKERHUB_PASSWORD }}
+          -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
+          -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
           cd ..
 
       - name: Set up Google Cloud SDK
