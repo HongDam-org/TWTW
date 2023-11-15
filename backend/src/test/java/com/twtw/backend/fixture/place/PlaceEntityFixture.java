@@ -2,7 +2,9 @@ package com.twtw.backend.fixture.place;
 
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.place.entity.Place;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 public enum PlaceEntityFixture {
     FIRST_PLACE(
             "다미네집",
@@ -34,27 +36,6 @@ public enum PlaceEntityFixture {
     private final String roadAddressName;
     private final String x;
     private final String y;
-
-    PlaceEntityFixture(
-            final String placeName,
-            final Integer distance,
-            final String placeUrl,
-            final String categoryName,
-            final CategoryGroupCode categoryGroupCode,
-            final String addressName,
-            final String roadAddressName,
-            final String x,
-            final String y) {
-        this.placeName = placeName;
-        this.distance = distance;
-        this.placeUrl = placeUrl;
-        this.categoryName = categoryName;
-        this.categoryGroupCode = categoryGroupCode;
-        this.addressName = addressName;
-        this.roadAddressName = roadAddressName;
-        this.x = x;
-        this.y = y;
-    }
 
     public Place toEntity() {
         return new Place(
