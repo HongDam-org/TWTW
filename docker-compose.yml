@@ -20,15 +20,9 @@ services:
     container_name: db
     ports:
       - 3306:3306
+    env_file: .env
     environment:
       TZ: Asia/Seoul
-      MYSQL_HOST: ${MYSQL_HOST}
-      MYSQL_PORT: ${MYSQL_PORT}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      SCHEMA: ${MYSQL_DATABASE}
     volumes:
       - data_db:/var/lib/mysql
     networks:
@@ -44,9 +38,7 @@ services:
         sleep 10 && rabbitmq-plugins enable rabbitmq_web_stomp &
         tail -f /dev/null
       "
-    environment:
-      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USERNAME}
-      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    env_file: .env
     ports:
       - 5672:5672
       - 15672:15672
