@@ -3,10 +3,10 @@ package com.twtw.backend.domain.plan.entity;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.place.entity.Place;
+import com.twtw.backend.domain.plan.exception.InvalidPlanMemberException;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -19,17 +19,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.hibernate.annotations.Where;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Entity
@@ -72,15 +69,22 @@ public class Plan implements Auditable {
     }
 
     public void deleteMember(final Member member) {
-        this.planMembers.remove(member);
+        this.planMembers.remove(findPlanMember(member));
+    }
+
+    private PlanMember findPlanMember(final Member member) {
+        return this.planMembers.stream()
+                .filter(planMember -> planMember.hasSameMember(member))
+                .findAny()
+                .orElseThrow(InvalidPlanMemberException::new);
     }
 
     public void addPlace(final Place place) {
         this.place = place;
     }
 
-    public void addGroup(Group group) {
+    public void addGroup(final Group group) {
         this.group = group;
-        group.getGroupPlans().add(this);
+        this.group.addToGroup(this);
     }
 }

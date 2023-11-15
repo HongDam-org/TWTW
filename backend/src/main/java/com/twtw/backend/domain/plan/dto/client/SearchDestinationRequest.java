@@ -13,8 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SearchDestinationRequest {
     private String query;
-    private String x;
-    private String y;
+    private Double x;
+    private Double y;
     private Integer page;
     private CategoryGroupCode categoryGroupCode;
 }

@@ -60,4 +60,8 @@ public class Group implements Auditable {
         this.groupImage = groupImage;
         this.leaderId = leaderId;
     }
+
+    public void addToGroup(final Plan plan) {
+        this.groupPlans.add(plan);
+    }
 }

@@ -13,12 +13,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PlaceDetails {
     private String placeName;
-    private String distance;
+    private Integer distance;
     private String placeUrl;
     private String categoryName;
     private String addressName;
     private String roadAddressName;
     private CategoryGroupCode categoryGroupCode;
-    private String x;
-    private String y;
+    private Double x;
+    private Double y;
 }
