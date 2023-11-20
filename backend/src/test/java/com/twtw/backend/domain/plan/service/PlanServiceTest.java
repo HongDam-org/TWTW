@@ -50,7 +50,6 @@ class PlanServiceTest extends LoginTest {
     @DisplayName("계획 저장이 수행되는가")
     void savePlan() {
         // given
-        final Plan plan = PlanEntityFixture.FIRST_PLACE.toEntity(loginUser);
         final UUID groupId = groupRepository.save(GroupEntityFixture.HDJ_GROUP.toEntity()).getId();
 
         // when
