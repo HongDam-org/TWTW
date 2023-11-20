@@ -14,29 +14,35 @@ import com.twtw.backend.fixture.place.PlaceDetailsFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.support.service.LoginTest;
-import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.List;
+
 @DisplayName("PlaceService의")
 class PlaceServiceTest extends LoginTest {
 
     @Autowired private PlaceService placeService;
-    @MockBean private KakaoMapClient<SurroundPlaceRequest, SurroundPlaceResponse> surroundPlaceClient;
+
+    @MockBean
+    private KakaoMapClient<SurroundPlaceRequest, SurroundPlaceResponse> surroundPlaceClient;
 
     @Test
     @DisplayName("주변 장소 찾기가 수행되는가")
     void searchSurroundPlace() {
         // given
-        final SurroundPlaceResponse expected = new SurroundPlaceResponse(
-                new MetaDetails(true),
-                List.of(PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails()));
+        final SurroundPlaceResponse expected =
+                new SurroundPlaceResponse(
+                        new MetaDetails(true),
+                        List.of(PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails()));
         given(surroundPlaceClient.request(any())).willReturn(expected);
 
         // when
-        final PlaceResponse result = placeService.searchSurroundPlace(new SurroundPlaceRequest(1.1, 2.2, 1));
+        final PlaceResponse result =
+                placeService.searchSurroundPlace(new SurroundPlaceRequest(1.1, 2.2, 1));
 
         // then
         assertThat(result.getResults()).hasSameElementsAs(expected.getDocuments());

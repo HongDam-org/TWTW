@@ -19,11 +19,13 @@ import com.twtw.backend.fixture.place.PlaceDetailsFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-import java.util.Optional;
-import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @DisplayName("PlanService의")
 class PlanServiceTest extends LoginTest {
@@ -98,7 +100,14 @@ class PlanServiceTest extends LoginTest {
     @DisplayName("PK로 계획 조회가 수행되는가") // TODO Fixture 사용하여 저장시 에러 확인
     void getPlanById() {
         // given
-        final UUID planId = planRepository.save(new Plan(loginUser, PlaceEntityFixture.SECOND_PLACE.toEntity(), GroupEntityFixture.HDJ_GROUP.toEntity())).getId();
+        final UUID planId =
+                planRepository
+                        .save(
+                                new Plan(
+                                        loginUser,
+                                        PlaceEntityFixture.SECOND_PLACE.toEntity(),
+                                        GroupEntityFixture.HDJ_GROUP.toEntity()))
+                        .getId();
 
         // when
         final PlanInfoResponse result = planService.getPlanById(planId);
@@ -111,7 +120,14 @@ class PlanServiceTest extends LoginTest {
     @DisplayName("삭제가 수행되는가") // TODO Fixture 사용하여 저장시 에러 확인
     void deletePlan() {
         // given
-        final UUID planId = planRepository.save(new Plan(loginUser, PlaceEntityFixture.SECOND_PLACE.toEntity(), GroupEntityFixture.HDJ_GROUP.toEntity())).getId();
+        final UUID planId =
+                planRepository
+                        .save(
+                                new Plan(
+                                        loginUser,
+                                        PlaceEntityFixture.SECOND_PLACE.toEntity(),
+                                        GroupEntityFixture.HDJ_GROUP.toEntity()))
+                        .getId();
 
         // when
         planService.deletePlan(planId);
