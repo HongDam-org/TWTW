@@ -32,7 +32,7 @@ public class MemberRepositoryTest extends RepositoryTest {
         final Member result = memberRepository.findById(expected).orElseThrow();
 
         // then
-        assertThat(result.getId().equals(expected));
+        assertThat(result.getId()).isEqualTo(member.getId());
     }
 
     @Test
@@ -48,7 +48,7 @@ public class MemberRepositoryTest extends RepositoryTest {
         em.clear();
 
         // then
-        assertThat(memberRepository.findById(memberId).isEmpty());
+        assertThat(memberRepository.findById(memberId)).isEmpty();
     }
 
 }
