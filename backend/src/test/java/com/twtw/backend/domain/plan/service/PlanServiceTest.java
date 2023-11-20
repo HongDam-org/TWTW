@@ -16,15 +16,14 @@ import com.twtw.backend.domain.plan.repository.PlanRepository;
 import com.twtw.backend.fixture.group.GroupEntityFixture;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.place.PlaceDetailsFixture;
+import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-
+import java.util.Optional;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @DisplayName("PlanService의")
 class PlanServiceTest extends LoginTest {
@@ -70,9 +69,8 @@ class PlanServiceTest extends LoginTest {
     void joinPlan() {
         // given
         final Member member = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
-        final Plan plan = PlanEntityFixture.FIRST_PLACE.toEntity(member);
-        final Plan savedPlan = planRepository.save(plan);
-        final UUID planId = savedPlan.getId();
+        final Plan plan = planRepository.save(PlanEntityFixture.FIRST_PLACE.toEntity(member));
+        final UUID planId = plan.getId();
 
         // when
         planService.joinPlan(new PlanMemberRequest(planId));
@@ -98,11 +96,10 @@ class PlanServiceTest extends LoginTest {
     }
 
     @Test
-    @DisplayName("PK로 계획 조회가 수행되는가")
+    @DisplayName("PK로 계획 조회가 수행되는가") // TODO Fixture 사용하여 저장시 에러 확인
     void getPlanById() {
         // given
-        final Plan plan = PlanEntityFixture.FIRST_PLACE.toEntity(loginUser);
-        final UUID planId = planRepository.save(plan).getId();
+        final UUID planId = planRepository.save(new Plan(loginUser, PlaceEntityFixture.SECOND_PLACE.toEntity(), GroupEntityFixture.HDJ_GROUP.toEntity())).getId();
 
         // when
         final PlanInfoResponse result = planService.getPlanById(planId);
@@ -112,11 +109,10 @@ class PlanServiceTest extends LoginTest {
     }
 
     @Test
-    @DisplayName("삭제가 수행되는가")
+    @DisplayName("삭제가 수행되는가") // TODO Fixture 사용하여 저장시 에러 확인
     void deletePlan() {
         // given
-        final Plan plan = PlanEntityFixture.SECOND_PLACE.toEntity(loginUser);
-        final UUID planId = planRepository.save(plan).getId();
+        final UUID planId = planRepository.save(new Plan(loginUser, PlaceEntityFixture.SECOND_PLACE.toEntity(), GroupEntityFixture.HDJ_GROUP.toEntity())).getId();
 
         // when
         planService.deletePlan(planId);
