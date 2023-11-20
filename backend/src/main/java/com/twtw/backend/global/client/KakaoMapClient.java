@@ -41,8 +41,7 @@ public abstract class KakaoMapClient<T, R> implements MapClient<T, R> {
 
         return WebClient.builder()
                 .baseUrl(kakaoProperties.getUrl())
-                .defaultHeader(
-                        HttpHeaders.AUTHORIZATION, HEADER_PREFIX + kakaoProperties.getKey())
+                .defaultHeader(HttpHeaders.AUTHORIZATION, HEADER_PREFIX + kakaoProperties.getKey())
                 .exchangeStrategies(exchangeStrategies)
                 .build();
     }
