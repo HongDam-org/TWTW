@@ -17,6 +17,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public abstract class KakaoMapClient<T, R> implements MapClient<T, R> {
     private static final Integer NO_LIMIT = -1;
+    private static final String HEADER_PREFIX = "KakaoAK ";
     protected final KakaoProperties kakaoProperties;
 
     protected WebClient generateWebClient() {
@@ -41,8 +42,7 @@ public abstract class KakaoMapClient<T, R> implements MapClient<T, R> {
         return WebClient.builder()
                 .baseUrl(kakaoProperties.getUrl())
                 .defaultHeader(
-                        HttpHeaders.AUTHORIZATION,
-                        kakaoProperties.getHeaderPrefix() + kakaoProperties.getKey())
+                        HttpHeaders.AUTHORIZATION, HEADER_PREFIX + kakaoProperties.getKey())
                 .exchangeStrategies(exchangeStrategies)
                 .build();
     }
