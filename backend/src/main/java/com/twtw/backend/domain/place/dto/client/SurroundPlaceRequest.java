@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SurroundPlaceRequest {
-    private String x;
-    private String y;
+    private Double x;
+    private Double y;
     private Integer page;
 }
