@@ -50,11 +50,11 @@ public class SearchDestinationClient
                         .queryParam("size", MAX_SIZE_PER_REQUEST);
 
         final CategoryGroupCode categoryGroupCode = request.getCategoryGroupCode();
-        final String x = request.getX();
-        final String y = request.getY();
+        final Double x = request.getX();
+        final Double y = request.getY();
 
         if (x != null && y != null) {
-            builder.queryParam("x", x).queryParam("y", y);
+            builder.queryParam("x", Double.toString(x)).queryParam("y", Double.toString(y));
         }
         if (categoryGroupCode.isNone()) {
             return builder.build();

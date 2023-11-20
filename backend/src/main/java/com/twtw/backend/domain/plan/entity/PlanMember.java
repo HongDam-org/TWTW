@@ -54,4 +54,8 @@ public class PlanMember implements Auditable {
         this.plan = plan;
         this.member = member;
     }
+
+    public boolean hasSameMember(final Member member) {
+        return this.member.equals(member);
+    }
 }
