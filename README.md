@@ -34,7 +34,7 @@
 
 
 ## 시스템 아키텍처
-![](https://github.com/HongDam-org/TWTW/assets/89020004/0f85e114-b96a-4a0a-acaf-e01dbcd497cc)
+![image](https://github.com/HongDam-org/TWTW/assets/89020004/789ca2de-e360-4e63-8108-f18dfb1a1e60)
 
 ## 사용 기술
 |iOS|Backend|Infra/DevOps|Etc|
@@ -51,6 +51,8 @@
 4. Spring Security를 사용하여 애플과 카카오 사용자에 대한 앱 서비스 인증 로직을 구현하였다.
 5. Jwt를 통해 데이터의 위변조를 방지하는 이점을 가져갔다.
 6. Naver, Kakao, T-MAP, Redis, RabbitMQ의 각각 다른 config를 환경 변수 Properties Object를 통해 관리하였다.
+7. Github Actions를 통해 코드 포맷팅을 자동화하였고 CI/CD 파이프라인을 구축하였다.
+8. Spring Actuator와 함께 Prometheus 및 Grafana로 모니터링 시스템을 구축하였다.
 
 ## 멤버 소개
 |홍성민|정호진|박다미|진주원|김승진|
