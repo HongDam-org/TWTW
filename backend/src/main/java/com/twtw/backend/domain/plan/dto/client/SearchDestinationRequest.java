@@ -17,4 +17,8 @@ public class SearchDestinationRequest {
     private Double y;
     private Integer page;
     private CategoryGroupCode categoryGroupCode;
+
+    public SearchDestinationRequest toNoDirectionRequest() {
+        return new SearchDestinationRequest(query, null, null, page, categoryGroupCode);
+    }
 }

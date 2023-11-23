@@ -52,7 +52,11 @@ public class PlanService {
     }
 
     private SearchDestinationResponse requestMapClient(final SearchDestinationRequest request) {
-        return destinationClient.request(request);
+        final SearchDestinationResponse result = destinationClient.request(request);
+        if (result.getDocuments().isEmpty()) {
+            return destinationClient.request(request.toNoDirectionRequest());
+        }
+        return result;
     }
 
     public PlanResponse savePlan(final SavePlanRequest request) {

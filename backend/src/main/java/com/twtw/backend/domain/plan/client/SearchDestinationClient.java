@@ -4,16 +4,13 @@ import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.global.client.KakaoMapClient;
-import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.KakaoProperties;
-
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
-
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
 
 @Component
 public class SearchDestinationClient
@@ -37,7 +34,7 @@ public class SearchDestinationClient
                 .retrieve()
                 .bodyToMono(SearchDestinationResponse.class)
                 .blockOptional()
-                .orElseThrow(WebClientResponseException::new);
+                .orElseGet(SearchDestinationResponse::new);
     }
 
     private URI getUri(final SearchDestinationRequest request, final UriBuilder uriBuilder) {
@@ -45,7 +42,6 @@ public class SearchDestinationClient
                 uriBuilder
                         .path("search/keyword")
                         .queryParam("query", request.getQuery())
-                        .queryParam("radius", DEFAULT_DISTANCE_RADIUS)
                         .queryParam("page", request.getPage())
                         .queryParam("size", MAX_SIZE_PER_REQUEST);
 
@@ -54,7 +50,10 @@ public class SearchDestinationClient
         final Double y = request.getY();
 
         if (x != null && y != null) {
-            builder.queryParam("x", Double.toString(x)).queryParam("y", Double.toString(y));
+            builder
+                    .queryParam("x", Double.toString(x))
+                    .queryParam("y", Double.toString(y))
+                    .queryParam("radius", DEFAULT_DISTANCE_RADIUS);
         }
         if (categoryGroupCode.isNone()) {
             return builder.build();
