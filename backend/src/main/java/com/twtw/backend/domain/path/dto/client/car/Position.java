@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Position {
-    Double x;
-    Double y;
+    private Double x;
+    private Double y;
 }

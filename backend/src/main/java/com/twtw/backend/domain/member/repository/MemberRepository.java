@@ -5,6 +5,7 @@ import com.twtw.backend.domain.member.entity.Member;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -17,5 +18,6 @@ public interface MemberRepository extends JpaRepository<Member, UUID> {
     @Query(
             "SELECT m FROM Member m WHERE m.oauthInfo.clientId = :oAuthId AND"
                     + " m.oauthInfo.authType = :authType")
-    Optional<Member> findByOAuthIdAndAuthType(String oAuthId, AuthType authType);
+    Optional<Member> findByOAuthIdAndAuthType(
+            @Param("oAuthId") String oAuthId, @Param("authType") AuthType authType);
 }
