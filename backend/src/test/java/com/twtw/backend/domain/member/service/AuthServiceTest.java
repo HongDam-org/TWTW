@@ -10,6 +10,7 @@ import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.database.DatabaseTest;
+import com.twtw.backend.support.exclude.ExcludeTest;
 import org.junit.jupiter.api.DisplayName;
 
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DatabaseTest
 @DisplayName("AuthService의 ")
-public class AuthServiceTest {
+public class AuthServiceTest extends ExcludeTest {
 
     @Autowired private AuthService authService;
 
@@ -40,10 +41,12 @@ public class AuthServiceTest {
                        AuthType.KAKAO
                 )
         );
+
         // when
         AfterLoginResponse response = authService.saveMember(kakaoRequest);
+
         // then
-        assertThat(response.getStatus().equals(AuthStatus.SIGNIN));
+        assertThat(response.getStatus().equals(AuthStatus.SIGNIN)).isTrue();
     }
 
     @Test
@@ -58,10 +61,12 @@ public class AuthServiceTest {
                         AuthType.APPLE
                 )
         );
+
         // when
         AfterLoginResponse response = authService.saveMember(appleRequest);
+
         // then
-        assertThat(response.getStatus().equals(AuthStatus.SIGNIN));
+        assertThat(response.getStatus().equals(AuthStatus.SIGNIN)).isTrue();
     }
 
     @Test
@@ -79,6 +84,6 @@ public class AuthServiceTest {
         AfterLoginResponse response = authService.getTokenByOAuth(request);
 
         // then
-        assertThat(response.getStatus().equals(AuthStatus.SIGNIN));
+        assertThat(response.getStatus().equals(AuthStatus.SIGNIN)).isTrue();
     }
 }
