@@ -28,9 +28,9 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
                         .selectFrom(friend)
                         .where(
                                 (friend.toMember
-                                                .id
-                                                .eq(loginMemberId)
-                                                .and(friend.fromMember.id.eq(memberId))
+                                        .id
+                                        .eq(loginMemberId)
+                                        .and(friend.fromMember.id.eq(memberId))
                                         .or(
                                                 friend.fromMember
                                                         .id
@@ -43,8 +43,9 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
     public List<Friend> findByMember(final Member member) {
         return jpaQueryFactory
                 .selectFrom(friend)
-                .where((friend.toMember.eq(member).or(friend.fromMember.eq(member)))
-                        .and(friend.friendStatus.eq(FriendStatus.ACCEPTED)))
+                .where(
+                        (friend.toMember.eq(member).or(friend.fromMember.eq(member)))
+                                .and(friend.friendStatus.eq(FriendStatus.ACCEPTED)))
                 .fetch();
     }
 
@@ -63,12 +64,19 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
     public List<Friend> findByMemberAndMemberNickname(final Member member, final String nickname) {
         return jpaQueryFactory
                 .selectFrom(friend)
-                .where(friend.friendStatus.eq(FriendStatus.ACCEPTED)
-                        .and(friend.toMember.eq(member).and(friend.fromMember.nickname.eq(nickname))
-                                .or(
-                                        friend.fromMember
+                .where(
+                        friend.friendStatus
+                                .eq(FriendStatus.ACCEPTED)
+                                .and(
+                                        friend.toMember
                                                 .eq(member)
-                                                .and(friend.toMember.nickname.eq(nickname)))))
+                                                .and(friend.fromMember.nickname.eq(nickname))
+                                                .or(
+                                                        friend.fromMember
+                                                                .eq(member)
+                                                                .and(
+                                                                        friend.toMember.nickname.eq(
+                                                                                nickname)))))
                 .fetch();
     }
 }

@@ -19,11 +19,13 @@ import com.twtw.backend.fixture.place.PlaceDetailsFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-import java.util.Optional;
-import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @DisplayName("PlanService의")
 class PlanServiceTest extends LoginTest {
@@ -68,7 +70,12 @@ class PlanServiceTest extends LoginTest {
     void joinPlan() {
         // given
         final Member member = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
-        final Plan plan = planRepository.save(new Plan(member, PlaceEntityFixture.FIRST_PLACE.toEntity(), GroupEntityFixture.BTS_GROUP.toEntity()));
+        final Plan plan =
+                planRepository.save(
+                        new Plan(
+                                member,
+                                PlaceEntityFixture.FIRST_PLACE.toEntity(),
+                                GroupEntityFixture.BTS_GROUP.toEntity()));
         final UUID planId = plan.getId();
 
         // when
