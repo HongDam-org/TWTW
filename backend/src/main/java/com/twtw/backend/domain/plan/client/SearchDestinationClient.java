@@ -5,12 +5,14 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.global.properties.KakaoProperties;
-import java.net.URI;
-import java.nio.charset.StandardCharsets;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
+
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class SearchDestinationClient
@@ -50,8 +52,7 @@ public class SearchDestinationClient
         final Double y = request.getY();
 
         if (x != null && y != null) {
-            builder
-                    .queryParam("x", Double.toString(x))
+            builder.queryParam("x", Double.toString(x))
                     .queryParam("y", Double.toString(y))
                     .queryParam("radius", DEFAULT_DISTANCE_RADIUS);
         }
