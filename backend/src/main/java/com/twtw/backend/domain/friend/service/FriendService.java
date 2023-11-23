@@ -43,7 +43,7 @@ public class FriendService {
 
     private Friend getFriendById(final UUID loginMemberId, final UUID memberId) {
         return friendRepository
-                .findByTwoMemberId(memberId, loginMemberId)
+                .findByTwoMemberId(loginMemberId, memberId)
                 .orElseThrow(EntityNotFoundException::new);
     }
 

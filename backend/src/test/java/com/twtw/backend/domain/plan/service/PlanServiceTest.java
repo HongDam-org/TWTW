@@ -70,7 +70,12 @@ class PlanServiceTest extends LoginTest {
     void joinPlan() {
         // given
         final Member member = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
-        final Plan plan = planRepository.save(PlanEntityFixture.FIRST_PLACE.toEntity(member));
+        final Plan plan =
+                planRepository.save(
+                        new Plan(
+                                member,
+                                PlaceEntityFixture.FIRST_PLACE.toEntity(),
+                                GroupEntityFixture.BTS_GROUP.toEntity()));
         final UUID planId = plan.getId();
 
         // when
