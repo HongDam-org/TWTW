@@ -18,5 +18,6 @@ public interface MemberRepository extends JpaRepository<Member, UUID> {
     @Query(
             "SELECT m FROM Member m WHERE m.oauthInfo.clientId = :oAuthId AND"
                     + " m.oauthInfo.authType = :authType")
-    Optional<Member> findByOAuthIdAndAuthType(@Param("oAuthId") String oAuthId, @Param("authType") AuthType authType);
+    Optional<Member> findByOAuthIdAndAuthType(
+            @Param("oAuthId") String oAuthId, @Param("authType") AuthType authType);
 }
