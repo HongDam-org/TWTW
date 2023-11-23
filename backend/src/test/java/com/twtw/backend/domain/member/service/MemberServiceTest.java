@@ -55,4 +55,6 @@ class MemberServiceTest extends LoginTest {
         // then
         assertThat(memberResponse.getId()).isEqualTo(member.getId());
     }
+
+
 }
