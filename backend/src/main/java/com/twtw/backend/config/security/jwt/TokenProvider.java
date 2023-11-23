@@ -92,7 +92,7 @@ public class TokenProvider implements InitializingBean {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
-        } catch (ExpiredJwtException | UnsupportedJwtException | IllegalStateException e) {
+        } catch (ExpiredJwtException | UnsupportedJwtException | IllegalStateException | MalformedJwtException e) {
             return false;
         }
     }
