@@ -11,6 +11,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
+import java.util.UUID;
+
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface GroupMapper {
     @Mapping(target = "baseTime", ignore = true)
@@ -19,7 +21,10 @@ public interface GroupMapper {
     @Mapping(target = "baseTime", ignore = true)
     @Mapping(target = "groupMembers", ignore = true)
     @Mapping(target = "groupPlans", ignore = true)
-    Group toGroupEntity(MakeGroupRequest groupDto);
+    @Mapping(target = "name",source = "groupDto.name")
+    @Mapping(target = "groupImage", source = "groupDto.groupImage")
+    @Mapping(target = "leaderId", source = "leaderId")
+    Group toGroupEntity(MakeGroupRequest groupDto, UUID leaderId);
 
     @Mapping(target = "groupId", source = "id")
     GroupInfoResponse toGroupInfo(Group group);
