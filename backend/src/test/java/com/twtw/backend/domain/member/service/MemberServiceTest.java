@@ -19,6 +19,7 @@ class MemberServiceTest extends LoginTest {
     @Autowired private MemberService memberService;
     @Autowired private MemberRepository memberRepository;
 
+
     @Test
     @DisplayName("닉네임 중복 체크가 제대로 동작하는가")
     void checkNickname() {
