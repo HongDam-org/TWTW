@@ -81,9 +81,7 @@ class GroupControllerTest extends RestDocsTest {
                                         toRequestBody(
                                                 new MakeGroupRequest(
                                                         "HDJ",
-                                                        "GROUP-IMAGE",
-                                                        UUID.fromString(
-                                                                "550e8400-e29b-41d4-a716-446655440000"))))
+                                                        "GROUP-IMAGE")))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
