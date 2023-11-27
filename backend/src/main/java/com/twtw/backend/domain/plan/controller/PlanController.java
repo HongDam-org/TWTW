@@ -23,7 +23,11 @@ public class PlanController {
     private final PlanService planService;
 
     @GetMapping("search/destination")
-    @Cacheable(value = "planDestination", key = "{#request}", cacheManager = "cacheManager", unless = "result.body.results.size() <= 0")
+    @Cacheable(
+            value = "planDestination",
+            key = "{#request}",
+            cacheManager = "cacheManager",
+            unless = "result.body.results.size() <= 0")
     public ResponseEntity<PlanDestinationResponse> searchPlanDestination(
             @ModelAttribute final SearchDestinationRequest request) {
         return ResponseEntity.ok(planService.searchPlanDestination(request));

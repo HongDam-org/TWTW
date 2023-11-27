@@ -22,14 +22,22 @@ public class PathController {
     }
 
     @PostMapping("/search/car")
-    @Cacheable(value = "carPath", key = "{#request}", cacheManager = "cacheManager", unless = "result.body.code != 0")
+    @Cacheable(
+            value = "carPath",
+            key = "{#request}",
+            cacheManager = "cacheManager",
+            unless = "result.body.code != 0")
     public ResponseEntity<SearchCarPathResponse> searchCarPath(
             @RequestBody @Valid SearchCarPathRequest request) {
         return ResponseEntity.ok(pathService.searchCarPath(request));
     }
 
     @PostMapping("/search/ped")
-    @Cacheable(value = "pedPath", key = "{#request}", cacheManager = "cacheManager", unless = "result.body.features.size() <= 0")
+    @Cacheable(
+            value = "pedPath",
+            key = "{#request}",
+            cacheManager = "cacheManager",
+            unless = "result.body.features.size() <= 0")
     public ResponseEntity<SearchPedPathResponse> searchPedPath(
             @RequestBody @Valid SearchPedPathRequest request) {
         return ResponseEntity.ok(pathService.searchPedPath(request));

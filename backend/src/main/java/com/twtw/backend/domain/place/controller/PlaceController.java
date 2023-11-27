@@ -20,7 +20,11 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @GetMapping("surround")
-    @Cacheable(value = "surroundPlace", key = "{#surroundPlaceRequest}", cacheManager = "cacheManager", unless = "result.body.results.size() <= 0")
+    @Cacheable(
+            value = "surroundPlace",
+            key = "{#surroundPlaceRequest}",
+            cacheManager = "cacheManager",
+            unless = "result.body.results.size() <= 0")
     public ResponseEntity<PlaceResponse> searchSurroundPlace(
             @ModelAttribute final SurroundPlaceRequest surroundPlaceRequest) {
         return ResponseEntity.ok(placeService.searchSurroundPlace(surroundPlaceRequest));
