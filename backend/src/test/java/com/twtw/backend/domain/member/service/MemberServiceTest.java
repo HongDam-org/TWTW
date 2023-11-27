@@ -59,12 +59,13 @@ class MemberServiceTest extends LoginTest {
 
     @Test
     @DisplayName("Nickname을 통한 Member 검색이 수행되는가")
-    void searchMemberByNickname(){
+    void searchMemberByNickname() {
         // given
         final Member member = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 
         // when
-        final SearchMemberResponse response = memberService.getMemberByNickname(member.getNickname());
+        final SearchMemberResponse response =
+                memberService.getMemberByNickname(member.getNickname());
 
         // then
         assertThat(response.getMemberResponse().getId()).isEqualTo(member.getId());

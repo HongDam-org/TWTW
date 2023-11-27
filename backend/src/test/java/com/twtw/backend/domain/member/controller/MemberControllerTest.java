@@ -56,31 +56,25 @@ public class MemberControllerTest extends RestDocsTest {
 
     @Test
     @DisplayName("Member가 제대로 검색되는가")
-    void searchMemberByNickname() throws Exception{
+    void searchMemberByNickname() throws Exception {
         // given
         String expectedNickname = "JIN_JOO_ONE";
 
-        final MemberResponse memberResponse = new MemberResponse(
-                UUID.randomUUID(),
-                expectedNickname
-        );
+        final MemberResponse memberResponse =
+                new MemberResponse(UUID.randomUUID(), expectedNickname);
 
-        final SearchMemberResponse response = new SearchMemberResponse(
-                true,
-                memberResponse
-        );
+        final SearchMemberResponse response = new SearchMemberResponse(true, memberResponse);
         given(memberService.getMemberByNickname(expectedNickname)).willReturn(response);
 
         // when
         final ResultActions perform =
                 mockMvc.perform(
                         get("/member")
-                                .param("nickname",expectedNickname)
+                                .param("nickname", expectedNickname)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(
                                         "Authorization",
-                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh")
-                );
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
 
         // then
         perform.andExpect(status().isOk());
@@ -91,6 +85,5 @@ public class MemberControllerTest extends RestDocsTest {
                                 "get member nickname",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
-
     }
 }

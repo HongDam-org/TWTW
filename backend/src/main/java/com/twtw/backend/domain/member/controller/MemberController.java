@@ -1,7 +1,6 @@
 package com.twtw.backend.domain.member.controller;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
-import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
 import com.twtw.backend.domain.member.service.MemberService;
 
@@ -23,7 +22,8 @@ public class MemberController {
     }
 
     @GetMapping()
-    public ResponseEntity<SearchMemberResponse> searchMemberByNickname(@RequestParam(name = "nickname") String nickname){
+    public ResponseEntity<SearchMemberResponse> searchMemberByNickname(
+            @RequestParam(name = "nickname") String nickname) {
         return ResponseEntity.ok(memberService.getMemberByNickname(nickname));
     }
 }

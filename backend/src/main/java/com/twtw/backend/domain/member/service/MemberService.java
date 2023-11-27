@@ -40,17 +40,16 @@ public class MemberService {
         return member;
     }
 
-
-    public SearchMemberResponse getMemberByNickname(String nickname){
+    public SearchMemberResponse getMemberByNickname(String nickname) {
         Optional<Member> member = memberRepository.findByNickname(nickname);
 
-        if(member.isPresent()){
+        if (member.isPresent()) {
             Member findMember = member.get();
 
-            return new SearchMemberResponse(true,memberMapper.toMemberResponse(findMember));
+            return new SearchMemberResponse(true, memberMapper.toMemberResponse(findMember));
         }
 
-        return new SearchMemberResponse(false,null);
+        return new SearchMemberResponse(false, null);
     }
 
     public MemberResponse getResponseByMember(Member member) {
