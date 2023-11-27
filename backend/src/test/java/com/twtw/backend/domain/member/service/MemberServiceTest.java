@@ -55,4 +55,17 @@ class MemberServiceTest extends LoginTest {
         // then
         assertThat(memberResponse.getId()).isEqualTo(member.getId());
     }
+
+    @Test
+    @DisplayName("Nickname을 통한 Member 검색이 수행되는가")
+    void searchMemberByNickname(){
+        // given
+        final Member member = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
+
+        // when
+        final MemberResponse response = memberService.getMemberByNickname(member.getNickname());
+
+        // then
+        assertThat(response.getId()).isEqualTo(member.getId());
+    }
 }
