@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
+import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
@@ -63,9 +64,9 @@ class MemberServiceTest extends LoginTest {
         final Member member = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 
         // when
-        final MemberResponse response = memberService.getMemberByNickname(member.getNickname());
+        final SearchMemberResponse response = memberService.getMemberByNickname(member.getNickname());
 
         // then
-        assertThat(response.getId()).isEqualTo(member.getId());
+        assertThat(response.getMemberResponse().getId()).isEqualTo(member.getId());
     }
 }

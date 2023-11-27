@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
+import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.support.docs.RestDocsTest;
 
@@ -63,12 +64,18 @@ public class MemberControllerTest extends RestDocsTest {
                 UUID.randomUUID(),
                 expectedNickname
         );
-        given(memberService.getMemberByNickname(expectedNickname)).willReturn(memberResponse);
+
+        final SearchMemberResponse response = new SearchMemberResponse(
+                true,
+                memberResponse
+        );
+        given(memberService.getMemberByNickname(expectedNickname)).willReturn(response);
 
         // when
         final ResultActions perform =
                 mockMvc.perform(
-                        get("/member/{nickname}",expectedNickname)
+                        get("/member")
+                                .param("nickname",expectedNickname)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(
                                         "Authorization",
