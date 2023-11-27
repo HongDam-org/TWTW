@@ -21,7 +21,7 @@ public interface GroupMapper {
     @Mapping(target = "baseTime", ignore = true)
     @Mapping(target = "groupMembers", ignore = true)
     @Mapping(target = "groupPlans", ignore = true)
-    @Mapping(target = "name",source = "groupDto.name")
+    @Mapping(target = "name", source = "groupDto.name")
     @Mapping(target = "groupImage", source = "groupDto.groupImage")
     @Mapping(target = "leaderId", source = "leaderId")
     Group toGroupEntity(MakeGroupRequest groupDto, UUID leaderId);
