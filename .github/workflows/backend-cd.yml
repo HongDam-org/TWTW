@@ -1,6 +1,8 @@
 name: TWTW Backend CD
 on:
   workflow_run:
+    branches:
+      - "main"
     workflows: ["TWTW Backend CI"]
     types:
       - completed
