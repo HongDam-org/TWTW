@@ -8,6 +8,6 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class SearchMemberResponse {
-    private Boolean find;
+    private Boolean isExist;
     private MemberResponse memberResponse;
 }
