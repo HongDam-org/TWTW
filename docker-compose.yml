@@ -78,6 +78,7 @@ services:
       - backend
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - data-prometheus:/prometheus
 
   grafana:
     image: grafana/grafana
@@ -94,3 +95,4 @@ networks:
 volumes:
   data_rabbitmq: null
   data_db: null
+  data-prometheus: null
