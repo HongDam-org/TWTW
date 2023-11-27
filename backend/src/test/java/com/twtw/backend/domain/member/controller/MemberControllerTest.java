@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
+import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.support.docs.RestDocsTest;
 
@@ -21,6 +22,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.UUID;
 
 @DisplayName("MemberController의")
 @WebMvcTest(MemberController.class)
@@ -48,5 +51,39 @@ public class MemberControllerTest extends RestDocsTest {
                                 "get duplicate nickname",
                                 getDocumentRequest(),
                                 getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("Member가 제대로 검색되는가")
+    void searchMemberByNickname() throws Exception{
+        // given
+        String expectedNickname = "JIN_JOO_ONE";
+
+        final MemberResponse memberResponse = new MemberResponse(
+                UUID.randomUUID(),
+                expectedNickname
+        );
+        given(memberService.getMemberByNickname(expectedNickname)).willReturn(memberResponse);
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        get("/member/{nickname}",expectedNickname)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh")
+                );
+
+        // then
+        perform.andExpect(status().isOk());
+
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "get member nickname",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
+
     }
 }
