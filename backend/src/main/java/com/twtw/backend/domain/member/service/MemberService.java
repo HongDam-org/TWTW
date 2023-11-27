@@ -2,6 +2,7 @@ package com.twtw.backend.domain.member.service;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
+import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
@@ -37,6 +38,18 @@ public class MemberService {
         Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
         return member;
+    }
+
+    public SearchMemberResponse getMemberByNickname(String nickname) {
+        Optional<Member> member = memberRepository.findByNickname(nickname);
+
+        if (member.isPresent()) {
+            Member findMember = member.get();
+
+            return new SearchMemberResponse(true, memberMapper.toMemberResponse(findMember));
+        }
+
+        return new SearchMemberResponse(false, null);
     }
 
     public MemberResponse getResponseByMember(Member member) {
