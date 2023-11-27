@@ -39,6 +39,13 @@ public class MemberService {
         return member;
     }
 
+
+    public MemberResponse getMemberByNickname(String nickname){
+        Member member = memberRepository.findByNickname(nickname).orElseThrow(EntityNotFoundException::new);
+
+        return memberMapper.toMemberResponse(member);
+    }
+
     public MemberResponse getResponseByMember(Member member) {
         return memberMapper.toMemberResponse(member);
     }

@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.member.controller;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
+import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.service.MemberService;
 
 import org.springframework.http.ResponseEntity;
@@ -21,5 +22,10 @@ public class MemberController {
     @GetMapping("/duplicate/{name}")
     public ResponseEntity<DuplicateNicknameResponse> duplicateNickname(@PathVariable String name) {
         return ResponseEntity.ok(memberService.duplicateNickname(name));
+    }
+
+    @GetMapping("/search/{nickname}")
+    public ResponseEntity<MemberResponse> searchMemberByNickname(@PathVariable String nickname){
+        return ResponseEntity.ok(memberService.getMemberByNickname(nickname));
     }
 }
