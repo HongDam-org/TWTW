@@ -8,6 +8,7 @@ import com.twtw.backend.domain.path.service.PathService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +22,14 @@ public class PathController {
     }
 
     @PostMapping("/search/car")
+    @Cacheable(value = "carPath", key = "{#request}", cacheManager = "cacheManager", unless = "result.body.code != 0")
     public ResponseEntity<SearchCarPathResponse> searchCarPath(
             @RequestBody @Valid SearchCarPathRequest request) {
         return ResponseEntity.ok(pathService.searchCarPath(request));
     }
 
     @PostMapping("/search/ped")
+    @Cacheable(value = "pedPath", key = "{#request}", cacheManager = "cacheManager", unless = "result.body.features.size() <= 0")
     public ResponseEntity<SearchPedPathResponse> searchPedPath(
             @RequestBody @Valid SearchPedPathRequest request) {
         return ResponseEntity.ok(pathService.searchPedPath(request));
