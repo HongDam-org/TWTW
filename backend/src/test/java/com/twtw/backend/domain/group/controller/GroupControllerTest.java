@@ -77,13 +77,7 @@ class GroupControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         post("/group")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(
-                                        toRequestBody(
-                                                new MakeGroupRequest(
-                                                        "HDJ",
-                                                        "GROUP-IMAGE",
-                                                        UUID.fromString(
-                                                                "550e8400-e29b-41d4-a716-446655440000"))))
+                                .content(toRequestBody(new MakeGroupRequest("HDJ", "GROUP-IMAGE")))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));

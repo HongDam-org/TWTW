@@ -62,7 +62,7 @@ public class GroupService {
     @Transactional
     public GroupInfoResponse makeGroup(MakeGroupRequest groupDto) {
         Member member = authService.getMemberByJwt();
-        Group group = groupMapper.toGroupEntity(groupDto);
+        Group group = groupMapper.toGroupEntity(groupDto, member.getId());
         GroupMember groupMember = groupMapper.connectGroupMember(group, member);
         groupMember.changeGroupCode(GroupInviteCode.ACCEPTED);
 
