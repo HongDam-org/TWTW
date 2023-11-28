@@ -72,8 +72,8 @@ class PlanControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         get("/plans/search/destination")
                                 .queryParam("query", "이디야 안성")
-                                .queryParam("x", "127.426")
-                                .queryParam("y", "37.0764")
+                                .queryParam("longitude", "127.426")
+                                .queryParam("latitude", "37.0764")
                                 .queryParam("page", "1")
                                 .queryParam("categoryGroupCode", "CE7")
                                 .contentType(MediaType.APPLICATION_JSON)

@@ -10,6 +10,7 @@ services:
       - backend
     depends_on:
       - db
+      - rabbitmq
     env_file: .env
     restart: always
     tty: true
@@ -23,7 +24,7 @@ services:
     environment:
       TZ: Asia/Seoul
     volumes:
-      - data_db:/var/lib/mysql
+      - ./data:/var/lib/mysql
     networks:
       - backend
     restart: always
@@ -78,7 +79,7 @@ services:
       - backend
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - data-prometheus:/prometheus
+      - ./tmp/promtheus:/prometheus
 
   grafana:
     image: grafana/grafana
@@ -94,5 +95,4 @@ networks:
 
 volumes:
   data_rabbitmq: null
-  data_db: null
   data-prometheus: null

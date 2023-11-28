@@ -61,8 +61,8 @@ class PlaceControllerTest extends RestDocsTest {
         final ResultActions perform =
                 mockMvc.perform(
                         get("/places/surround")
-                                .queryParam("x", "127.426")
-                                .queryParam("y", "37.0764")
+                                .queryParam("longitude", "127.426")
+                                .queryParam("latitude", "37.0764")
                                 .queryParam("page", "1")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(
