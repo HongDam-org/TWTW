@@ -32,4 +32,5 @@ public interface GroupMapper {
     @Mapping(target = "groupId", source = "group.id")
     @Mapping(target = "memberId", source = "member.id")
     ShareInfoResponse toShareInfo(GroupMember groupMember);
+
 }

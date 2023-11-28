@@ -22,6 +22,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @DisplayName("GroupService의")
 public class GroupServiceTest extends LoginTest {
     @Autowired private GroupService groupService;
@@ -141,5 +143,32 @@ public class GroupServiceTest extends LoginTest {
 
         // then
         assertThat(result.getShare()).isFalse();
+    }
+
+    @Test
+    @DisplayName("자신이 소속된 Group정보들이 반환되는가")
+    void getMyGroups(){
+        // given
+        Member member = memberRepository.save(authService.getMemberByJwt());
+
+        Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
+
+        Group group1 = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader.getId());
+        Group group2 = new Group("BLACK_PINK", "YG_OFFICIAL_IMAGE", leader.getId());
+
+        GroupMember groupMember1 = new GroupMember(group1, leader);
+        GroupMember groupMember2 = new GroupMember(group1, member);
+
+        GroupMember groupMember3 = new GroupMember(group2, leader);
+        GroupMember groupMember4 = new GroupMember(group2, member);
+
+        Group saveGroup1 = groupRepository.save(group1);
+        Group saveGroup2 = groupRepository.save(group2);
+
+        // when
+        List<GroupInfoResponse> responses = groupService.getMyGroups();
+
+        // then
+        assertThat(responses.size()).isEqualTo(2);
     }
 }

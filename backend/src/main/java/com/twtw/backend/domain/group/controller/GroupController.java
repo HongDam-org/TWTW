@@ -11,6 +11,7 @@ import com.twtw.backend.domain.group.service.GroupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -54,5 +55,10 @@ public class GroupController {
     @GetMapping("/share/{id}")
     public ResponseEntity<ShareInfoResponse> getShare(@PathVariable UUID id) {
         return ResponseEntity.ok(groupService.getShare(id));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<GroupInfoResponse>> getMyGroups(){
+        return ResponseEntity.ok(groupService.getMyGroups());
     }
 }
