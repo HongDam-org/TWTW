@@ -22,3 +22,6 @@ operation::post change share[snippets='http-request,http-response']
 
 === 위치 공유 여부 조회
 operation::get share[snippets='http-request,http-response']
+
+=== 자신의 소속 그룹 정보 반환
+operation::get myGroups[snippets='http-request,http-response']

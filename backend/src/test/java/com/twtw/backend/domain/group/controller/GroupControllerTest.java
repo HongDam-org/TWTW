@@ -28,6 +28,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @DisplayName("GroupController의")
@@ -200,5 +202,38 @@ class GroupControllerTest extends RestDocsTest {
         // docs
         perform.andDo(print())
                 .andDo(document("get share", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("자신의 그룹 정보가 정상적으로 반환되는가")
+    void getMyGroups() throws Exception {
+        // given
+        final UUID leaderId = UUID.randomUUID();
+
+        List<GroupInfoResponse> responseList = new ArrayList<>();
+
+        GroupInfoResponse response1 =
+                new GroupInfoResponse(UUID.randomUUID(), leaderId, "BLACK_PINK", "I_LOVE_YOU_LOSE");
+        GroupInfoResponse response2 =
+                new GroupInfoResponse(UUID.randomUUID(), leaderId, "LE_SSERAFIM", "I_LOVE_YOU_채원");
+
+        responseList.add(response1);
+        responseList.add(response2);
+
+        given(groupService.getMyGroups()).willReturn(responseList);
+        // when
+
+        final ResultActions perform =
+                mockMvc.perform(
+                        get("/group")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isOk());
+
+        perform.andDo(print())
+                .andDo(document("get myGroups", getDocumentRequest(), getDocumentResponse()));
     }
 }
