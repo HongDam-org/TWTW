@@ -21,8 +21,6 @@ services:
     ports:
       - 3306:3306
     env_file: .env
-    environment:
-      TZ: Asia/Seoul
     volumes:
       - ./data:/var/lib/mysql
     networks:
@@ -35,7 +33,7 @@ services:
     entrypoint: >
       /bin/bash -c "
         rabbitmq-server &
-        sleep 10 && rabbitmq-plugins enable rabbitmq_web_stomp &
+        sleep 20 && rabbitmq-plugins enable rabbitmq_web_stomp &
         tail -f /dev/null
       "
     env_file: .env
@@ -73,6 +71,7 @@ services:
     image: prom/prometheus
     container_name: prometheus
     restart: on-failure
+    user: root
     ports:
       - 9090:9090
     networks:
@@ -95,4 +94,3 @@ networks:
 
 volumes:
   data_rabbitmq: null
-  data-prometheus: null
