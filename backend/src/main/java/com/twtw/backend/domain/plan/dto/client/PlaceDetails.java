@@ -18,7 +18,6 @@ public class PlaceDetails {
     private String categoryName;
     private String addressName;
     private String roadAddressName;
-    private CategoryGroupCode categoryGroupCode;
     private Double x;
     private Double y;
 }

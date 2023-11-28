@@ -53,7 +53,9 @@ public class PlanService {
 
     private SearchDestinationResponse requestMapClient(final SearchDestinationRequest request) {
         final SearchDestinationResponse result = destinationClient.request(request);
-        if (result.getDocuments().isEmpty()) {
+        final List<PlaceDetails> documents = result.getDocuments();
+
+        if (documents == null || documents.isEmpty()) {
             return destinationClient.request(request.toNoDirectionRequest());
         }
         return result;
