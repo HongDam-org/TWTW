@@ -105,7 +105,7 @@ public class GroupService {
     public GroupInfoResponse inviteGroup(InviteGroupRequest inviteGroupRequest) {
         Group group = getGroupEntity(inviteGroupRequest.getGroupId());
         Member friend = memberService.getMemberById(inviteGroupRequest.getFriendMemberId());
-        GroupMember connection = groupMapper.connectGroupMember(group, friend);
+        groupMapper.connectGroupMember(group, friend);
 
         return groupMapper.toGroupInfo(group);
     }
