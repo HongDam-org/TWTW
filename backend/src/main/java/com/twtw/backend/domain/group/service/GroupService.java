@@ -114,16 +114,8 @@ public class GroupService {
         return groupMapper.toGroupInfo(group);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<GroupInfoResponse> getMyGroups(){
-        List<GroupInfoResponse> responses = new ArrayList<>();
-
-        Member loginMember = authService.getMemberByJwt();
-
-        for(GroupMember groupMember : loginMember.getGroupMembers()){
-            responses.add(groupMapper.toGroupInfo(groupMember.getGroup()));
-        }
-
-        return responses;
+        return groupMapper.toMyGroupsInfo(authService.getMemberByJwt().getGroupMembers());
     }
 }
