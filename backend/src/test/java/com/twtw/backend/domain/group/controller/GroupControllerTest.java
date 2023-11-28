@@ -206,14 +206,16 @@ class GroupControllerTest extends RestDocsTest {
 
     @Test
     @DisplayName("자신의 그룹 정보가 정상적으로 반환되는가")
-    void getMyGroups() throws Exception{
+    void getMyGroups() throws Exception {
         // given
         final UUID leaderId = UUID.randomUUID();
 
         List<GroupInfoResponse> responseList = new ArrayList<>();
 
-        GroupInfoResponse response1 = new GroupInfoResponse(UUID.randomUUID(),leaderId,"BLACK_PINK","I_LOVE_YOU_LOSE");
-        GroupInfoResponse response2 = new GroupInfoResponse(UUID.randomUUID(),leaderId,"LE_SSERAFIM","I_LOVE_YOU_채원");
+        GroupInfoResponse response1 =
+                new GroupInfoResponse(UUID.randomUUID(), leaderId, "BLACK_PINK", "I_LOVE_YOU_LOSE");
+        GroupInfoResponse response2 =
+                new GroupInfoResponse(UUID.randomUUID(), leaderId, "LE_SSERAFIM", "I_LOVE_YOU_채원");
 
         responseList.add(response1);
         responseList.add(response2);
@@ -227,8 +229,7 @@ class GroupControllerTest extends RestDocsTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(
                                         "Authorization",
-                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh")
-                );
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
         // then
         perform.andExpect(status().isOk());
 

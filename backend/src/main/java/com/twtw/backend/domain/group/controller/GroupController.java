@@ -58,7 +58,7 @@ public class GroupController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<GroupInfoResponse>> getMyGroups(){
+    public ResponseEntity<List<GroupInfoResponse>> getMyGroups() {
         return ResponseEntity.ok(groupService.getMyGroups());
     }
 }

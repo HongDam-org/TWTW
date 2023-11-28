@@ -147,7 +147,7 @@ public class GroupServiceTest extends LoginTest {
 
     @Test
     @DisplayName("자신이 소속된 Group정보들이 반환되는가")
-    void getMyGroups(){
+    void getMyGroups() {
         // given
         Member member = memberRepository.save(authService.getMemberByJwt());
 
