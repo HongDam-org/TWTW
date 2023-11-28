@@ -6,10 +6,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
+@Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 public class SearchPedPathRequest {
     @NotNull private Double startX;
     @NotNull private Double startY;

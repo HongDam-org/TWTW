@@ -5,8 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
+import lombok.ToString;
 
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchCarPathResponse {
