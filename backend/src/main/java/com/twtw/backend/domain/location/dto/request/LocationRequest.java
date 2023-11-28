@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LocationRequest {
     private String nickname;
-    private Double x;
-    private Double y;
+    private Double longitude;
+    private Double latitude;
 }

@@ -15,8 +15,8 @@ public enum PlaceEntityFixture {
             CategoryGroupCode.AT4,
             "주소",
             "도로명주소",
-            "12.1",
-            "21.2"),
+            12.1,
+            21.2),
     SECOND_PLACE(
             "호진이네집",
             50,
@@ -25,8 +25,8 @@ public enum PlaceEntityFixture {
             CategoryGroupCode.AD5,
             "밥좀주소",
             "도로명주소!",
-            "123.123",
-            "77.7");
+            123.123,
+            77.7);
 
     private final String placeName;
     private final Integer distance;
@@ -35,8 +35,8 @@ public enum PlaceEntityFixture {
     private final CategoryGroupCode categoryGroupCode;
     private final String addressName;
     private final String roadAddressName;
-    private final String x;
-    private final String y;
+    private final Double longitude;
+    private final Double latitude;
 
     public Place toEntity() {
         return new Place(
@@ -47,7 +47,7 @@ public enum PlaceEntityFixture {
                 categoryGroupCode,
                 addressName,
                 roadAddressName,
-                x,
-                y);
+                longitude,
+                latitude);
     }
 }

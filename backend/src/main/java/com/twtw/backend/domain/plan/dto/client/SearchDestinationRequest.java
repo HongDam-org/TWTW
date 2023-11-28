@@ -15,8 +15,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class SearchDestinationRequest {
     private String query;
-    private Double x;
-    private Double y;
+    private Double longitude;
+    private Double latitude;
     private Integer page;
     private CategoryGroupCode categoryGroupCode;
 

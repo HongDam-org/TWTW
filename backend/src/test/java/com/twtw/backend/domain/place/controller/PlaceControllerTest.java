@@ -2,7 +2,6 @@ package com.twtw.backend.domain.place.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -12,19 +11,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.twtw.backend.domain.place.dto.response.PlaceResponse;
-import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.place.service.PlaceService;
 import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
 import com.twtw.backend.support.docs.RestDocsTest;
-
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.List;
 
 @DisplayName("PlaceController의")
 @WebMvcTest(PlaceController.class)
@@ -44,7 +40,6 @@ class PlaceControllerTest extends RestDocsTest {
                                         "음식점 > 카페 > 커피전문점 > 이디야커피",
                                         "경기 안성시 죽산면 죽산리 118-3",
                                         "경기 안성시 죽산면 죽주로 287-1",
-                                        CategoryGroupCode.CE7,
                                         127.426865189637,
                                         37.0764635355795),
                                 new PlaceDetails(
@@ -54,7 +49,6 @@ class PlaceControllerTest extends RestDocsTest {
                                         "음식점 > 카페",
                                         "경기 안성시 죽산면 죽산리 414",
                                         "경기 안성시 죽산면 죽산초교길 36-4",
-                                        CategoryGroupCode.CE7,
                                         127.420430538256,
                                         37.0766874564297)),
                         false);

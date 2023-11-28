@@ -17,6 +17,6 @@ public class PlaceDetails {
     private String categoryName;
     private String addressName;
     private String roadAddressName;
-    private Double x;
-    private Double y;
+    private Double longitude;
+    private Double latitude;
 }

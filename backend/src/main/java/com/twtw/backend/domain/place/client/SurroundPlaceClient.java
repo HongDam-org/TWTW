@@ -41,8 +41,8 @@ public class SurroundPlaceClient
     private URI getUri(final SurroundPlaceRequest request, final UriBuilder uriBuilder) {
         return uriBuilder
                 .path("search/category")
-                .queryParam("x", request.getX())
-                .queryParam("y", request.getY())
+                .queryParam("x", request.getLongitude())
+                .queryParam("y", request.getLatitude())
                 .queryParam("radius", DEFAULT_DISTANCE_RADIUS)
                 .queryParam("page", request.getPage())
                 .queryParam("size", MAX_SIZE_PER_REQUEST)

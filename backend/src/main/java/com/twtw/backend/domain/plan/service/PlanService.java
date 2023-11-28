@@ -25,6 +25,7 @@ import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,11 @@ public class PlanService {
 
     private final MapClient<SearchDestinationRequest, SearchDestinationResponse> destinationClient;
 
+    @Cacheable(
+            value = "planDestination",
+            key = "{#request}",
+            cacheManager = "cacheManager",
+            unless = "#result.results.size() <= 0")
     public PlanDestinationResponse searchPlanDestination(final SearchDestinationRequest request) {
         final SearchDestinationResponse response = requestMapClient(request);
         return new PlanDestinationResponse(response.getDocuments(), response.getMeta().getIsEnd());

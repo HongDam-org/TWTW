@@ -48,8 +48,8 @@ public class SearchDestinationClient
                         .queryParam("size", MAX_SIZE_PER_REQUEST);
 
         final CategoryGroupCode categoryGroupCode = request.getCategoryGroupCode();
-        final Double x = request.getX();
-        final Double y = request.getY();
+        final Double x = request.getLongitude();
+        final Double y = request.getLatitude();
 
         if (x != null && y != null) {
             builder.queryParam("x", Double.toString(x))

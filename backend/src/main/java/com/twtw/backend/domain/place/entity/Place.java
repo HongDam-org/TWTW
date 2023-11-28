@@ -61,14 +61,14 @@ public class Place implements Auditable {
             final CategoryGroupCode categoryGroupCode,
             final String addressName,
             final String roadAddressName,
-            final String x,
-            final String y) {
+            final Double longitude,
+            final Double latitude) {
         this.placeName = placeName;
         this.distance = distance;
         this.placeUrl = placeUrl;
         this.categoryName = categoryName;
         this.categoryGroupCode = categoryGroupCode;
         this.address = new Address(addressName, roadAddressName);
-        this.coordinate = new Coordinate(Double.valueOf(x), Double.valueOf(y));
+        this.coordinate = new Coordinate(longitude, latitude);
     }
 }

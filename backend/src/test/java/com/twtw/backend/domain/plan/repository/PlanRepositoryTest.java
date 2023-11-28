@@ -48,7 +48,7 @@ class PlanRepositoryTest extends RepositoryTest {
     void softDelete() {
         // given
         final Member member = MemberEntityFixture.LOGIN_MEMBER.toEntity();
-        final Place place = Place.builder().x("1.1").y("2.2").placeName("스타벅스").build();
+        final Place place = Place.builder().longitude(1.1).latitude(2.2).placeName("스타벅스").build();
 
         final UUID memberId = memberRepository.save(member).getId();
         em.persist(place);

@@ -6,6 +6,7 @@ import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathRequest;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
 import com.twtw.backend.global.client.MapClient;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,10 +21,20 @@ public class PathService {
         this.pedPathClient = pedPathClient;
     }
 
+    @Cacheable(
+            value = "carPath",
+            key = "{#request}",
+            cacheManager = "cacheManager",
+            unless = "#result.code != 0")
     public SearchCarPathResponse searchCarPath(final SearchCarPathRequest request) {
         return this.carPathClient.request(request);
     }
 
+    @Cacheable(
+            value = "pedPath",
+            key = "{#request}",
+            cacheManager = "cacheManager",
+            unless = "#result.features.size() <= 0")
     public SearchPedPathResponse searchPedPath(final SearchPedPathRequest request) {
         return this.pedPathClient.request(request);
     }

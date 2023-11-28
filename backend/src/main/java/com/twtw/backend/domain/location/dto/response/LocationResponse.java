@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LocationResponse {
     private String nickname;
-    private Double x;
-    private Double y;
+    private Double longitude;
+    private Double latitude;
     private LocalDateTime time;
 }

@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SurroundPlaceRequest {
-    private Double x;
-    private Double y;
+    private Double longitude;
+    private Double latitude;
     private Integer page;
 }

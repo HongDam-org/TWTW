@@ -7,9 +7,9 @@ import lombok.*;
 @Getter
 @Embeddable
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"x", "y"})
+@EqualsAndHashCode(of = {"longitude", "latitude"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Coordinate {
-    private Double x;
-    private Double y;
+    private Double longitude;
+    private Double latitude;
 }
