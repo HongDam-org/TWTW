@@ -11,10 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PlaceDetails {
     private String placeName;
-    private Integer distance;
     private String placeUrl;
-    private String categoryName;
-    private String addressName;
     private String roadAddressName;
     private Double longitude;
     private Double latitude;

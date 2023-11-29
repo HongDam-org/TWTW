@@ -6,12 +6,12 @@ import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
+import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
-import org.springframework.stereotype.Service;
-
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MemberService {
@@ -54,5 +54,9 @@ public class MemberService {
 
     public MemberResponse getResponseByMember(Member member) {
         return memberMapper.toMemberResponse(member);
+    }
+
+    public List<MemberResponse> getMemberResponses(final Plan plan) {
+        return memberMapper.toMemberResponses(plan.getPlanMembers());
     }
 }

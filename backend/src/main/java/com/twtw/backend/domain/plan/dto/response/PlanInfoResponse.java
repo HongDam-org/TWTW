@@ -17,7 +17,8 @@ import java.util.UUID;
 public class PlanInfoResponse {
     private UUID planId;
     private UUID placeId;
-    private PlaceDetails placeDetail;
-    private GroupInfoResponse groupInfoResponse;
+    private UUID planMakerId;
+    private PlaceDetails placeDetails;
+    private GroupInfoResponse groupInfo;
     private List<MemberResponse> members;
 }

@@ -15,6 +15,6 @@ public enum PlanMemberEntityFixture {
     private final Member member;
 
     public PlanMember toEntity(final Plan plan) {
-        return new PlanMember(plan, this.member);
+        return new PlanMember(plan, this.member, true);
     }
 }

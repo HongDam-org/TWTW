@@ -48,19 +48,13 @@ class PlanControllerTest extends RestDocsTest {
                         List.of(
                                 new PlaceDetails(
                                         "이디야커피 안성죽산점",
-                                        435,
                                         "http://place.map.kakao.com/1562566188",
-                                        "음식점 > 카페 > 커피전문점 > 이디야커피",
-                                        "경기 안성시 죽산면 죽산리 118-3",
                                         "경기 안성시 죽산면 죽주로 287-1",
                                         127.426865189637,
                                         37.0764635355795),
                                 new PlaceDetails(
                                         "카페 온마이마인드",
-                                        345,
                                         "https://place.map.kakao.com/1625295668",
-                                        "음식점 > 카페",
-                                        "경기 안성시 죽산면 죽산리 414",
                                         "경기 안성시 죽산면 죽산초교길 36-4",
                                         127.420430538256,
                                         37.0766874564297)),
@@ -113,10 +107,7 @@ class PlanControllerTest extends RestDocsTest {
                                                         UUID.randomUUID(),
                                                         new PlaceDetails(
                                                                 "카페 온마이마인드",
-                                                                345,
                                                                 "https://place.map.kakao.com/1625295668",
-                                                                "음식점 > 카페",
-                                                                "경기 안성시 죽산면 죽산리 414",
                                                                 "경기 안성시 죽산면 죽산초교길 36-4",
                                                                 127.420430538256,
                                                                 37.0766874564297))))
@@ -141,12 +132,10 @@ class PlanControllerTest extends RestDocsTest {
                 new PlanInfoResponse(
                         UUID.randomUUID(),
                         UUID.randomUUID(),
+                        UUID.randomUUID(),
                         new PlaceDetails(
                                 "카페 온마이마인드",
-                                345,
                                 "https://place.map.kakao.com/1625295668",
-                                "음식점 > 카페",
-                                "경기 안성시 죽산면 죽산리 414",
                                 "경기 안성시 죽산면 죽산초교길 36-4",
                                 127.420430538256,
                                 37.0766874564297),
@@ -210,10 +199,7 @@ class PlanControllerTest extends RestDocsTest {
                                                         UUID.randomUUID(),
                                                         new PlaceDetails(
                                                                 "이디야커피 안성죽산점",
-                                                                435,
                                                                 "http://place.map.kakao.com/1562566188",
-                                                                "음식점 > 카페 > 커피전문점 > 이디야커피",
-                                                                "경기 안성시 죽산면 죽산리 118-3",
                                                                 "경기 안성시 죽산면 죽주로 287-1",
                                                                 127.426865189637,
                                                                 37.0764635355795))))
