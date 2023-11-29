@@ -35,6 +35,7 @@ public class SecurityConfig {
                                                 "auth/save",
                                                 "auth/login",
                                                 "member/duplicate/**",
+                                                "plans/**",
                                                 "actuator/**")
                                         .permitAll())
                 .authorizeHttpRequests(
