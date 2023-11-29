@@ -13,11 +13,11 @@ import com.twtw.backend.support.repository.RepositoryTest;
 
 import jakarta.persistence.EntityManager;
 
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.UUID;
 
 @DisplayName("PlanRepository의")
@@ -71,14 +71,18 @@ class PlanRepositoryTest extends RepositoryTest {
     @DisplayName("멤버를 통한 계획 전체 조회가 수행되는가")
     void findAllPlanByMember() {
         // given
-        final Place firstPlace = Place.builder().longitude(1.1).latitude(2.2).placeName("스타벅스").build();
-        final Place secondPlace = Place.builder().longitude(1.1).latitude(2.2).placeName("star").build();
+        final Place firstPlace =
+                Place.builder().longitude(1.1).latitude(2.2).placeName("스타벅스").build();
+        final Place secondPlace =
+                Place.builder().longitude(1.1).latitude(2.2).placeName("star").build();
         em.persist(firstPlace);
         em.persist(secondPlace);
 
         final Member member = memberRepository.save(MemberEntityFixture.LOGIN_MEMBER.toEntity());
-        final Member firstMember = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
-        final Member secondMember = memberRepository.save(MemberEntityFixture.SECOND_MEMBER.toEntity());
+        final Member firstMember =
+                memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
+        final Member secondMember =
+                memberRepository.save(MemberEntityFixture.SECOND_MEMBER.toEntity());
 
         final Group group = new Group("그룹", "http://abcdefg", member.getId());
 
