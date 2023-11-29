@@ -22,3 +22,6 @@ operation::post join plan[snippets='http-request,http-response']
 
 === 계획 탈퇴
 operation::post out plan[snippets='http-request,http-response']
+
+=== 본인이 속한 계획 전체 조회
+operation::get all plans[snippets='http-request,http-response']

@@ -235,4 +235,23 @@ class PlanControllerTest extends RestDocsTest {
         perform.andDo(print())
                 .andDo(document("post out plan", getDocumentRequest(), getDocumentResponse()));
     }
+
+    @Test
+    @DisplayName("계획 전체 조회 API가 수행되는가")
+    void getPlans() throws Exception {
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        get("/plans")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isOk());
+
+        // docs
+        perform.andDo(print())
+                .andDo(document("get all plans", getDocumentRequest(), getDocumentResponse()));
+    }
 }
