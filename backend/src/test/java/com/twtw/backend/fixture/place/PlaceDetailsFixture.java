@@ -16,11 +16,6 @@ public enum PlaceDetailsFixture {
     private final Double latitude;
 
     public PlaceDetails toPlaceDetails() {
-        return new PlaceDetails(
-                placeName,
-                placeUrl,
-                roadAddressName,
-                longitude,
-                latitude);
+        return new PlaceDetails(placeName, placeUrl, roadAddressName, longitude, latitude);
     }
 }

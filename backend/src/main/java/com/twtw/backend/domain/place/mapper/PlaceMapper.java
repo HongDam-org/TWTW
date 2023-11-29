@@ -2,6 +2,7 @@ package com.twtw.backend.domain.place.mapper;
 
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 

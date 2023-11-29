@@ -7,20 +7,8 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum PlaceEntityFixture {
-    FIRST_PLACE(
-            "다미네집",
-            "http://everywhereIsMyHome",
-            CategoryGroupCode.AT4,
-            "도로명주소",
-            12.1,
-            21.2),
-    SECOND_PLACE(
-            "호진이네집",
-            "http://IDontKnow",
-            CategoryGroupCode.AD5,
-            "도로명주소!",
-            123.123,
-            77.7);
+    FIRST_PLACE("다미네집", "http://everywhereIsMyHome", CategoryGroupCode.AT4, "도로명주소", 12.1, 21.2),
+    SECOND_PLACE("호진이네집", "http://IDontKnow", CategoryGroupCode.AD5, "도로명주소!", 123.123, 77.7);
 
     private final String placeName;
     private final String placeUrl;
@@ -31,11 +19,6 @@ public enum PlaceEntityFixture {
 
     public Place toEntity() {
         return new Place(
-                placeName,
-                placeUrl,
-                categoryGroupCode,
-                roadAddressName,
-                longitude,
-                latitude);
+                placeName, placeUrl, categoryGroupCode, roadAddressName, longitude, latitude);
     }
 }

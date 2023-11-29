@@ -8,11 +8,13 @@ import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.entity.Plan;
-import java.util.List;
+
 import org.mapstruct.IterableMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+
+import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PlanMapper {
@@ -29,7 +31,11 @@ public interface PlanMapper {
     @Mapping(target = "planMakerId", source = "plan.planMakerId")
     @Mapping(target = "groupInfo", source = "groupInfoResponse")
     @Mapping(target = "members", source = "memberResponses")
-    PlanInfoResponse toPlanInfoResponse(Plan plan, PlaceDetails placeDetails, GroupInfoResponse groupInfoResponse, List<MemberResponse> memberResponses);
+    PlanInfoResponse toPlanInfoResponse(
+            Plan plan,
+            PlaceDetails placeDetails,
+            GroupInfoResponse groupInfoResponse,
+            List<MemberResponse> memberResponses);
 
     @IterableMapping(elementTargetType = PlanInfoResponse.class)
     List<PlanInfoResponse> toPlanInfoResponses(List<Plan> plans);
