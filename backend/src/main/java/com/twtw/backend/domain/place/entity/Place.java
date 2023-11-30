@@ -35,15 +35,11 @@ public class Place implements Auditable {
     @Column(nullable = false)
     private String placeName;
 
-    private Integer distance;
-
     private String placeUrl;
-
-    private String categoryName;
 
     private CategoryGroupCode categoryGroupCode;
 
-    @Embedded private Address address;
+    private String roadAddressName;
 
     @Embedded private Coordinate coordinate;
 
@@ -55,20 +51,15 @@ public class Place implements Auditable {
     @Builder
     public Place(
             final String placeName,
-            final Integer distance,
             final String placeUrl,
-            final String categoryName,
             final CategoryGroupCode categoryGroupCode,
-            final String addressName,
             final String roadAddressName,
             final Double longitude,
             final Double latitude) {
         this.placeName = placeName;
-        this.distance = distance;
         this.placeUrl = placeUrl;
-        this.categoryName = categoryName;
         this.categoryGroupCode = categoryGroupCode;
-        this.address = new Address(addressName, roadAddressName);
+        this.roadAddressName = roadAddressName;
         this.coordinate = new Coordinate(longitude, latitude);
     }
 }

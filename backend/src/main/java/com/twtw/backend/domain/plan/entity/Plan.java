@@ -4,6 +4,7 @@ import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.plan.exception.InvalidPlanMemberException;
+import com.twtw.backend.domain.plan.exception.PlanMakerNotExistsException;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
@@ -63,13 +64,13 @@ public class Plan implements Auditable {
     private BaseTime baseTime;
 
     public Plan(Member member, Place place, Group group) {
-        addMember(member);
+        this.planMembers.add(new PlanMember(this, member, true));
         addPlace(place);
         addGroup(group);
     }
 
     public void addMember(final Member member) {
-        this.planMembers.add(new PlanMember(this, member));
+        this.planMembers.add(new PlanMember(this, member, false));
     }
 
     public void deleteMember(final Member member) {
@@ -90,5 +91,13 @@ public class Plan implements Auditable {
     public void addGroup(final Group group) {
         this.group = group;
         this.group.addToGroup(this);
+    }
+
+    public UUID getPlanMakerId() {
+        return this.planMembers.stream()
+                .filter(PlanMember::getIsPlanMaker)
+                .findAny()
+                .orElseThrow(PlanMakerNotExistsException::new)
+                .getId();
     }
 }

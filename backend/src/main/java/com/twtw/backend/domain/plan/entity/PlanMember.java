@@ -44,15 +44,18 @@ public class PlanMember implements Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    private Boolean isPlanMaker;
+
     @Setter
     @Embedded
     @Column(nullable = false)
     private BaseTime baseTime;
 
     @Builder
-    public PlanMember(final Plan plan, final Member member) {
+    public PlanMember(final Plan plan, final Member member, final Boolean isPlanMaker) {
         this.plan = plan;
         this.member = member;
+        this.isPlanMaker = isPlanMaker;
     }
 
     public boolean hasSameMember(final Member member) {

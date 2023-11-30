@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -59,5 +60,10 @@ public class PlanController {
     public ResponseEntity<Void> outPlan(@RequestBody PlanMemberRequest request) {
         planService.outPlan(request);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<PlanInfoResponse>> getPlans() {
+        return ResponseEntity.ok(planService.getPlans());
     }
 }

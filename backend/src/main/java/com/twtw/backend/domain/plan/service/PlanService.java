@@ -53,18 +53,23 @@ public class PlanService {
             cacheManager = "cacheManager",
             unless = "#result.results.size() <= 0")
     public PlanDestinationResponse searchPlanDestination(final SearchDestinationRequest request) {
+
         final SearchDestinationResponse response = requestMapClient(request);
-        return new PlanDestinationResponse(response.getDocuments(), response.getMeta().getIsEnd());
+        return planMapper.toPlanDestinationResponse(response);
     }
 
     private SearchDestinationResponse requestMapClient(final SearchDestinationRequest request) {
         final SearchDestinationResponse result = destinationClient.request(request);
         final List<PlaceDetails> documents = result.getDocuments();
 
-        if (documents == null || documents.isEmpty()) {
+        if (hasNoSearchData(documents)) {
             return destinationClient.request(request.toNoDirectionRequest());
         }
         return result;
+    }
+
+    private boolean hasNoSearchData(final List<PlaceDetails> documents) {
+        return documents == null || documents.isEmpty();
     }
 
     public PlanResponse savePlan(final SavePlanRequest request) {
@@ -98,8 +103,7 @@ public class PlanService {
 
         List<MemberResponse> memberResponse = toMemberResponse(plan);
 
-        return new PlanInfoResponse(
-                plan.getId(), plan.getPlace().getId(), placeDetails, groupInfo, memberResponse);
+        return planMapper.toPlanInfoResponse(plan, placeDetails, groupInfo, memberResponse);
     }
 
     public void deletePlan(UUID id) {
@@ -107,12 +111,16 @@ public class PlanService {
     }
 
     private List<MemberResponse> toMemberResponse(Plan plan) {
-        return plan.getPlanMembers().stream()
-                .map(x -> memberService.getResponseByMember(x.getMember()))
-                .toList();
+        return memberService.getMemberResponses(plan);
     }
 
     private Plan getPlanEntity(UUID id) {
         return planRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<PlanInfoResponse> getPlans() {
+        final Member member = authService.getMemberByJwt();
+        final List<Plan> plans = planRepository.findAllByMember(member);
+        return planMapper.toPlanInfoResponses(plans);
     }
 }
