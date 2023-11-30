@@ -14,6 +14,6 @@ public interface PlanRepository extends JpaRepository<Plan, UUID> {
 
     @Query(
             "select p from Plan p join fetch p.planMembers pm join fetch pm.member m where m ="
-                + " :member")
+                    + " :member")
     List<Plan> findAllByMember(@Param("member") Member member);
 }
