@@ -61,4 +61,8 @@ public class MemberService {
     public List<MemberResponse> getMemberResponses(final Plan plan) {
         return memberMapper.toMemberResponses(plan.getPlanMembers());
     }
+
+    public List<Member> getMembersByIds(final List<UUID> friendMemberIds) {
+        return memberRepository.findAllById(friendMemberIds);
+    }
 }
