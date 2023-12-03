@@ -136,7 +136,8 @@ class GroupControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new InviteGroupRequest(
-                                                        List.of(UUID.randomUUID()), UUID.randomUUID())))
+                                                        List.of(UUID.randomUUID()),
+                                                        UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -162,7 +163,8 @@ class GroupControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new InviteGroupRequest(
-                                                        List.of(UUID.randomUUID()), UUID.randomUUID())))
+                                                        List.of(UUID.randomUUID()),
+                                                        UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -172,7 +174,11 @@ class GroupControllerTest extends RestDocsTest {
 
         // docs
         perform.andDo(print())
-                .andDo(document("post share location", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "post share location",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 
     @Test
@@ -186,7 +192,8 @@ class GroupControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new InviteGroupRequest(
-                                                        List.of(UUID.randomUUID()), UUID.randomUUID())))
+                                                        List.of(UUID.randomUUID()),
+                                                        UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -196,7 +203,11 @@ class GroupControllerTest extends RestDocsTest {
 
         // docs
         perform.andDo(print())
-                .andDo(document("post unshare location", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "post unshare location",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 
     @Test
@@ -215,7 +226,8 @@ class GroupControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new InviteGroupRequest(
-                                                        List.of(UUID.randomUUID()), UUID.randomUUID())))
+                                                        List.of(UUID.randomUUID()),
+                                                        UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));

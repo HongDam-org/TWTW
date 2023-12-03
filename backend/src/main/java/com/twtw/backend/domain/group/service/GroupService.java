@@ -15,11 +15,13 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.global.exception.EntityNotFoundException;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GroupService {
@@ -108,7 +110,8 @@ public class GroupService {
     @Transactional
     public GroupInfoResponse inviteGroup(InviteGroupRequest inviteGroupRequest) {
         Group group = getGroupEntity(inviteGroupRequest.getGroupId());
-        List<Member> friends = memberService.getMembersByIds(inviteGroupRequest.getFriendMemberIds());
+        List<Member> friends =
+                memberService.getMembersByIds(inviteGroupRequest.getFriendMemberIds());
         group.inviteAll(friends);
 
         return groupMapper.toGroupInfo(group);

@@ -15,10 +15,12 @@ import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @DisplayName("GroupService의")
 class GroupServiceTest extends LoginTest {
@@ -74,7 +76,8 @@ class GroupServiceTest extends LoginTest {
 
         Group saveGroup = groupRepository.save(group);
 
-        InviteGroupRequest request = new InviteGroupRequest(List.of(loginUser.getId()), saveGroup.getId());
+        InviteGroupRequest request =
+                new InviteGroupRequest(List.of(loginUser.getId()), saveGroup.getId());
         // when
         GroupInfoResponse response = groupService.inviteGroup(request);
 
@@ -93,7 +96,6 @@ class GroupServiceTest extends LoginTest {
         Group saveGroup = groupRepository.save(group);
 
         group.inviteAll(List.of(loginUser));
-
 
         // when
         ShareInfoResponse response = groupService.getShare(saveGroup.getId());

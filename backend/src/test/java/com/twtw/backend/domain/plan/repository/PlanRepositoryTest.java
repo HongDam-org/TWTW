@@ -35,7 +35,9 @@ class PlanRepositoryTest extends RepositoryTest {
     void saveAndFindById() {
         // given
         final Member member = memberRepository.save(MemberEntityFixture.LOGIN_MEMBER.toEntity());
-        final Plan plan = PlanEntityFixture.FIRST_PLACE.toEntity(member, GroupEntityFixture.BTS_GROUP.toEntity(member));
+        final Plan plan =
+                PlanEntityFixture.FIRST_PLACE.toEntity(
+                        member, GroupEntityFixture.BTS_GROUP.toEntity(member));
 
         // when
         final UUID expected = planRepository.save(plan).getId();

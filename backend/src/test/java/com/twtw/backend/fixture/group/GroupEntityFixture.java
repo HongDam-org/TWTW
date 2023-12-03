@@ -2,6 +2,7 @@ package com.twtw.backend.fixture.group;
 
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.member.entity.Member;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
