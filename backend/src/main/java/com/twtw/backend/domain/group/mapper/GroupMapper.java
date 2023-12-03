@@ -6,24 +6,18 @@ import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
-
-import org.mapstruct.*;
-
 import java.util.List;
-import java.util.UUID;
+import org.mapstruct.IterableMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface GroupMapper {
-    @Mapping(target = "baseTime", ignore = true)
-    GroupMember connectGroupMember(Group group, Member member);
-
-    @Mapping(target = "baseTime", ignore = true)
-    @Mapping(target = "groupMembers", ignore = true)
-    @Mapping(target = "groupPlans", ignore = true)
     @Mapping(target = "name", source = "groupDto.name")
     @Mapping(target = "groupImage", source = "groupDto.groupImage")
-    @Mapping(target = "leaderId", source = "leaderId")
-    Group toGroupEntity(MakeGroupRequest groupDto, UUID leaderId);
+    Group toGroupEntity(MakeGroupRequest groupDto, Member leader);
 
     @Mapping(target = "groupId", source = "id")
     GroupInfoResponse toGroupInfo(Group group);

@@ -13,6 +13,7 @@ import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.support.repository.RepositoryTest;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,9 @@ class GroupRepositoryTest extends RepositoryTest {
         Member member1 = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
         Member member2 = memberRepository.save(MemberEntityFixture.SECOND_MEMBER.toEntity());
 
-        Group group = GroupEntityFixture.BTS_GROUP.toEntity();
+        Group group = GroupEntityFixture.BTS_GROUP.toEntity(member1);
 
-        GroupMember groupMember1 = new GroupMember(group, member1);
-        GroupMember groupMember2 = new GroupMember(group, member2);
+        group.inviteAll(List.of(member2));
 
         Place place = PlaceEntityFixture.FIRST_PLACE.toEntity();
 
@@ -47,7 +47,7 @@ class GroupRepositoryTest extends RepositoryTest {
         final Group saveGroup = groupRepository.save(group);
 
         // then
-        assertThat(saveGroup.getGroupMembers().size()).isEqualTo(2);
+        assertThat(saveGroup.getGroupMembers()).hasSize(2);
     }
 
     @Test
@@ -57,9 +57,8 @@ class GroupRepositoryTest extends RepositoryTest {
         Member member1 = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
         Member member2 = memberRepository.save(MemberEntityFixture.SECOND_MEMBER.toEntity());
 
-        Group group = GroupEntityFixture.BTS_GROUP.toEntity();
+        Group group = GroupEntityFixture.BTS_GROUP.toEntity(member1);
 
-        GroupMember groupMember1 = new GroupMember(group, member1);
         GroupMember groupMember2 = new GroupMember(group, member2);
 
         final Group saveGroup = groupRepository.save(group);
@@ -80,9 +79,8 @@ class GroupRepositoryTest extends RepositoryTest {
         Member member1 = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
         Member member2 = memberRepository.save(MemberEntityFixture.SECOND_MEMBER.toEntity());
 
-        Group group = GroupEntityFixture.BTS_GROUP.toEntity();
+        Group group = GroupEntityFixture.BTS_GROUP.toEntity(member1);
 
-        GroupMember groupMember1 = new GroupMember(group, member1);
         GroupMember groupMember2 = new GroupMember(group, member2);
 
         Place place = PlaceEntityFixture.FIRST_PLACE.toEntity();
@@ -94,6 +92,6 @@ class GroupRepositoryTest extends RepositoryTest {
         final Group saveGroup = groupRepository.save(group);
 
         // then
-        assertThat(group.getGroupPlans().size()).isEqualTo(1);
+        assertThat(saveGroup.getGroupPlans()).hasSize(1);
     }
 }

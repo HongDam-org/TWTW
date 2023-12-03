@@ -51,7 +51,7 @@ class PlanServiceTest extends LoginTest {
     @DisplayName("계획 저장이 수행되는가")
     void savePlan() {
         // given
-        final UUID groupId = groupRepository.save(GroupEntityFixture.HDJ_GROUP.toEntity()).getId();
+        final UUID groupId = groupRepository.save(GroupEntityFixture.HDJ_GROUP.toEntity(loginUser)).getId();
 
         // when
         final PlanResponse planResponse =
@@ -74,7 +74,7 @@ class PlanServiceTest extends LoginTest {
                         new Plan(
                                 member,
                                 PlaceEntityFixture.FIRST_PLACE.toEntity(),
-                                GroupEntityFixture.BTS_GROUP.toEntity()));
+                                GroupEntityFixture.BTS_GROUP.toEntity(loginUser)));
         final UUID planId = plan.getId();
 
         // when
@@ -89,7 +89,7 @@ class PlanServiceTest extends LoginTest {
     @DisplayName("계획 나가기가 수행되는가") // TODO: 계획에 1명 있는데 나가는 경우 생각해보기
     void outPlan() {
         // given
-        final Plan plan = PlanEntityFixture.SECOND_PLACE.toEntity(loginUser);
+        final Plan plan = PlanEntityFixture.SECOND_PLACE.toEntity(loginUser, GroupEntityFixture.HDJ_GROUP.toEntity(loginUser));
         final UUID planId = planRepository.save(plan).getId();
 
         // when
@@ -110,7 +110,7 @@ class PlanServiceTest extends LoginTest {
                                 new Plan(
                                         loginUser,
                                         PlaceEntityFixture.SECOND_PLACE.toEntity(),
-                                        GroupEntityFixture.HDJ_GROUP.toEntity()))
+                                        GroupEntityFixture.HDJ_GROUP.toEntity(loginUser)))
                         .getId();
 
         // when
@@ -130,7 +130,7 @@ class PlanServiceTest extends LoginTest {
                                 new Plan(
                                         loginUser,
                                         PlaceEntityFixture.SECOND_PLACE.toEntity(),
-                                        GroupEntityFixture.HDJ_GROUP.toEntity()))
+                                        GroupEntityFixture.HDJ_GROUP.toEntity(loginUser)))
                         .getId();
 
         // when

@@ -7,6 +7,7 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.plan.entity.Plan;
+import com.twtw.backend.fixture.group.GroupEntityFixture;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.repository.RepositoryTest;
@@ -34,7 +35,7 @@ class PlanRepositoryTest extends RepositoryTest {
     void saveAndFindById() {
         // given
         final Member member = memberRepository.save(MemberEntityFixture.LOGIN_MEMBER.toEntity());
-        final Plan plan = PlanEntityFixture.FIRST_PLACE.toEntity(member);
+        final Plan plan = PlanEntityFixture.FIRST_PLACE.toEntity(member, GroupEntityFixture.BTS_GROUP.toEntity(member));
 
         // when
         final UUID expected = planRepository.save(plan).getId();
@@ -48,13 +49,12 @@ class PlanRepositoryTest extends RepositoryTest {
     @DisplayName("soft delete가 수행되는가")
     void softDelete() {
         // given
-        final Member member = MemberEntityFixture.LOGIN_MEMBER.toEntity();
         final Place place = Place.builder().longitude(1.1).latitude(2.2).placeName("스타벅스").build();
 
-        final UUID memberId = memberRepository.save(member).getId();
+        final Member member = memberRepository.save(MemberEntityFixture.LOGIN_MEMBER.toEntity());
         em.persist(place);
 
-        final Group group = new Group("그룹", "http://abcdefg", memberId);
+        final Group group = new Group("그룹", "http://abcdefg", member);
 
         final UUID planId = planRepository.save(new Plan(member, place, group)).getId();
 
@@ -84,10 +84,10 @@ class PlanRepositoryTest extends RepositoryTest {
         final Member secondMember =
                 memberRepository.save(MemberEntityFixture.SECOND_MEMBER.toEntity());
 
-        final Group group = new Group("그룹", "http://abcdefg", member.getId());
+        final Group group = new Group("그룹", "http://abcdefg", member);
 
         final Plan plan = planRepository.save(new Plan(member, firstPlace, group));
-        planRepository.save(new Plan(member, secondPlace, new Group("1", "2", member.getId())));
+        planRepository.save(new Plan(member, secondPlace, new Group("1", "2", member)));
         plan.addMember(firstMember);
         plan.addMember(secondMember);
 

@@ -84,13 +84,13 @@ public class Plan implements Auditable {
                 .orElseThrow(InvalidPlanMemberException::new);
     }
 
-    public void addPlace(final Place place) {
+    private void addPlace(final Place place) {
         this.place = place;
     }
 
     public void addGroup(final Group group) {
         this.group = group;
-        this.group.addToGroup(this);
+        this.group.addPlan(this);
     }
 
     public UUID getPlanMakerId() {

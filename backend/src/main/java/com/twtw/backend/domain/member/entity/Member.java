@@ -62,4 +62,12 @@ public class Member implements Auditable {
         this.role = Role.ROLE_USER;
         this.oauthInfo = oauthInfo;
     }
+
+    public void addGroupMember(final GroupMember groupMember) {
+        this.groupMembers.add(groupMember);
+    }
+
+    public boolean hasNoGroupMember() {
+        return this.groupMembers.isEmpty();
+    }
 }

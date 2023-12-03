@@ -17,8 +17,11 @@ operation::post join group[snippets='http-request,http-response']
 === 그룹 초대
 operation::post invite group[snippets='http-request,http-response']
 
-=== 위치 공유 여부 수정
-operation::post change share[snippets='http-request,http-response']
+=== 위치 공유 ON
+operation::post share location[snippets='http-request,http-response']
+
+=== 위치 공유 OFF
+operation::post unshare location[snippets='http-request,http-response']
 
 === 위치 공유 여부 조회
 operation::get share[snippets='http-request,http-response']

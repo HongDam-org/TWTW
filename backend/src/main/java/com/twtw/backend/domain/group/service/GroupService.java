@@ -7,7 +7,6 @@ import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.entity.Group;
-import com.twtw.backend.domain.group.entity.GroupInviteCode;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.group.mapper.GroupMapper;
 import com.twtw.backend.domain.group.repository.GroupMemberRepository;
@@ -16,12 +15,11 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class GroupService {
@@ -63,9 +61,7 @@ public class GroupService {
     @Transactional
     public GroupInfoResponse makeGroup(MakeGroupRequest groupDto) {
         Member member = authService.getMemberByJwt();
-        Group group = groupMapper.toGroupEntity(groupDto, member.getId());
-        GroupMember groupMember = groupMapper.connectGroupMember(group, member);
-        groupMember.changeGroupCode(GroupInviteCode.ACCEPTED);
+        Group group = groupMapper.toGroupEntity(groupDto, member);
 
         return groupMapper.toGroupInfo(groupRepository.save(group));
     }
@@ -76,18 +72,27 @@ public class GroupService {
         GroupMember groupMember =
                 getGroupMemberEntity(joinGroupRequest.getGroupId(), member.getId());
 
-        groupMember.changeGroupCode(GroupInviteCode.ACCEPTED);
+        groupMember.changeGroupCode();
 
-        return new SimpleGroupInfoResponse(groupMember.getGroup().getId());
+        return new SimpleGroupInfoResponse(groupMember.getGroupId());
     }
 
     @Transactional
-    public void changeShare(UUID id) {
+    public void shareLocation(final UUID id) {
+        changeShare(GroupMember::share, id);
+    }
+
+    @Transactional
+    public void unShareLocation(final UUID id) {
+        changeShare(GroupMember::unShare, id);
+    }
+
+    private void changeShare(final Consumer<GroupMember> changeShare, final UUID id) {
         Member member = this.authService.getMemberByJwt();
         GroupInfoResponse groupInfo = getGroupById(id);
 
         GroupMember groupMember = getGroupMemberEntity(groupInfo.getGroupId(), member.getId());
-        groupMember.changeShare();
+        changeShare.accept(groupMember);
     }
 
     @Transactional
@@ -103,8 +108,8 @@ public class GroupService {
     @Transactional
     public GroupInfoResponse inviteGroup(InviteGroupRequest inviteGroupRequest) {
         Group group = getGroupEntity(inviteGroupRequest.getGroupId());
-        Member friend = memberService.getMemberById(inviteGroupRequest.getFriendMemberId());
-        groupMapper.connectGroupMember(group, friend);
+        List<Member> friends = memberService.getMembersByIds(inviteGroupRequest.getFriendMemberIds());
+        group.inviteAll(friends);
 
         return groupMapper.toGroupInfo(group);
     }
@@ -117,7 +122,7 @@ public class GroupService {
     public List<GroupInfoResponse> getMyGroups() {
         Member loginMember = authService.getMemberByJwt();
 
-        if (loginMember.getGroupMembers().isEmpty()) {
+        if (loginMember.hasNoGroupMember()) {
             return List.of();
         }
 

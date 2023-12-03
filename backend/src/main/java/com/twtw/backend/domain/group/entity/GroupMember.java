@@ -58,16 +58,23 @@ public class GroupMember implements Auditable {
         this.group = group;
         this.member = member;
         this.share = true;
-        group.getGroupMembers().add(this);
-        member.getGroupMembers().add(this);
+        member.addGroupMember(this);
         this.groupInviteCode = GroupInviteCode.REQUESTED;
     }
 
-    public void changeShare() {
-        this.share = !this.share;
+    public void share() {
+        this.share = true;
     }
 
-    public void changeGroupCode(GroupInviteCode groupInviteCode) {
-        this.groupInviteCode = groupInviteCode;
+    public void unShare() {
+        this.share = false;
+    }
+
+    public void changeGroupCode() {
+        this.groupInviteCode = GroupInviteCode.ACCEPTED;
+    }
+
+    public UUID getGroupId() {
+        return this.group.getId();
     }
 }
