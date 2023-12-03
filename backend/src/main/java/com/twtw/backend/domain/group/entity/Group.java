@@ -61,7 +61,7 @@ public class Group implements Auditable {
 
         final GroupMember groupMember = new GroupMember(this, leader);
         this.groupMembers.add(groupMember);
-        groupMember.changeGroupCode();
+        groupMember.acceptInvite();
     }
 
     public void addPlan(final Plan plan) {

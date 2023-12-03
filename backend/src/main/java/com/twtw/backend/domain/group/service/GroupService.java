@@ -74,7 +74,7 @@ public class GroupService {
         GroupMember groupMember =
                 getGroupMemberEntity(joinGroupRequest.getGroupId(), member.getId());
 
-        groupMember.changeGroupCode();
+        groupMember.acceptInvite();
 
         return new SimpleGroupInfoResponse(groupMember.getGroupId());
     }

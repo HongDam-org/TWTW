@@ -70,7 +70,7 @@ public class GroupMember implements Auditable {
         this.share = false;
     }
 
-    public void changeGroupCode() {
+    public void acceptInvite() {
         this.groupInviteCode = GroupInviteCode.ACCEPTED;
     }
 
