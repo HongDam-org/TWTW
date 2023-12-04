@@ -9,21 +9,20 @@ import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.RefreshToken;
+import com.twtw.backend.domain.member.exception.NicknameExistsException;
 import com.twtw.backend.domain.member.exception.RefreshTokenInfoMismatchException;
 import com.twtw.backend.domain.member.exception.RefreshTokenValidationException;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
+import java.util.Optional;
+import java.util.UUID;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -53,6 +52,8 @@ public class AuthService {
 
     @Transactional
     public AfterLoginResponse saveMember(MemberSaveRequest request) {
+        validateNickname(request);
+
         Member member = memberMapper.toMemberEntity(request);
 
         memberRepository.save(member);
@@ -61,6 +62,12 @@ public class AuthService {
         TokenDto tokenDto = saveRefreshToken(credit, member.getId().toString());
 
         return new AfterLoginResponse(AuthStatus.SIGNIN, tokenDto);
+    }
+
+    private void validateNickname(final MemberSaveRequest request) {
+        if (memberRepository.existsByNickname(request.getNickname())) {
+            throw new NicknameExistsException();
+        }
     }
 
     /*

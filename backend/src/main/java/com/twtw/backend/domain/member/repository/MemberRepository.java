@@ -20,4 +20,6 @@ public interface MemberRepository extends JpaRepository<Member, UUID> {
                     + " m.oauthInfo.authType = :authType")
     Optional<Member> findByOAuthIdAndAuthType(
             @Param("oAuthId") String oAuthId, @Param("authType") AuthType authType);
+
+    boolean existsByNickname(String nickname);
 }

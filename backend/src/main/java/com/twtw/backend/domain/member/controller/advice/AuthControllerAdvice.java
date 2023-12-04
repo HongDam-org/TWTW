@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.member.controller.advice;
 
+import com.twtw.backend.domain.member.exception.NicknameExistsException;
 import com.twtw.backend.domain.member.exception.RefreshTokenInfoMismatchException;
 import com.twtw.backend.domain.member.exception.RefreshTokenValidationException;
 import com.twtw.backend.global.advice.ErrorResponse;
@@ -22,6 +23,13 @@ public class AuthControllerAdvice {
     @ExceptionHandler(RefreshTokenValidationException.class)
     public ResponseEntity<ErrorResponse> refreshTokenValidation(
             final RefreshTokenValidationException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(NicknameExistsException.class)
+    public ResponseEntity<ErrorResponse> nicknameExists(
+            final NicknameExistsException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(e.getMessage()));
     }
