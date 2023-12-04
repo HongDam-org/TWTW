@@ -28,8 +28,7 @@ public class AuthControllerAdvice {
     }
 
     @ExceptionHandler(NicknameExistsException.class)
-    public ResponseEntity<ErrorResponse> nicknameExists(
-            final NicknameExistsException e) {
+    public ResponseEntity<ErrorResponse> nicknameExists(final NicknameExistsException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponse(e.getMessage()));
     }

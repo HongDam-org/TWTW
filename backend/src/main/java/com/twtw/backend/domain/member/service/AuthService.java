@@ -16,13 +16,15 @@ import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-import java.util.Optional;
-import java.util.UUID;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthService {
