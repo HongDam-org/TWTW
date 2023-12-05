@@ -4,21 +4,18 @@ import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.plan.entity.Plan;
-import com.twtw.backend.fixture.group.GroupEntityFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public enum PlanEntityFixture {
-    FIRST_PLACE(PlaceEntityFixture.FIRST_PLACE.toEntity(), GroupEntityFixture.HDJ_GROUP.toEntity()),
-    SECOND_PLACE(
-            PlaceEntityFixture.SECOND_PLACE.toEntity(), GroupEntityFixture.HDJ_GROUP.toEntity());
+    FIRST_PLACE(PlaceEntityFixture.FIRST_PLACE.toEntity()),
+    SECOND_PLACE(PlaceEntityFixture.SECOND_PLACE.toEntity());
 
     private final Place place;
-    private final Group group;
 
-    public Plan toEntity(final Member member) {
+    public Plan toEntity(final Member member, final Group group) {
         return new Plan(member, place, group);
     }
 }

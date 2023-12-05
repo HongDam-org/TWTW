@@ -136,7 +136,8 @@ class GroupControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new InviteGroupRequest(
-                                                        UUID.randomUUID(), UUID.randomUUID())))
+                                                        List.of(UUID.randomUUID()),
+                                                        UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -153,7 +154,7 @@ class GroupControllerTest extends RestDocsTest {
 
     @Test
     @DisplayName("위치 공유 수정 API가 수행되는가")
-    void changeShare() throws Exception {
+    void shareLocation() throws Exception {
         // when
         final ResultActions perform =
                 mockMvc.perform(
@@ -162,7 +163,8 @@ class GroupControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new InviteGroupRequest(
-                                                        UUID.randomUUID(), UUID.randomUUID())))
+                                                        List.of(UUID.randomUUID()),
+                                                        UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -172,7 +174,40 @@ class GroupControllerTest extends RestDocsTest {
 
         // docs
         perform.andDo(print())
-                .andDo(document("post change share", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "post share location",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("위치 공유 수정 API가 수행되는가")
+    void unShareLocation() throws Exception {
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/group/unshare/" + UUID.randomUUID())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        toRequestBody(
+                                                new InviteGroupRequest(
+                                                        List.of(UUID.randomUUID()),
+                                                        UUID.randomUUID())))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+
+        // then
+        perform.andExpect(status().isNoContent());
+
+        // docs
+        perform.andDo(print())
+                .andDo(
+                        document(
+                                "post unshare location",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 
     @Test
@@ -191,7 +226,8 @@ class GroupControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new InviteGroupRequest(
-                                                        UUID.randomUUID(), UUID.randomUUID())))
+                                                        List.of(UUID.randomUUID()),
+                                                        UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));

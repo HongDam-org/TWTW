@@ -13,8 +13,6 @@ import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.group.repository.GroupMemberRepository;
 import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
-import com.twtw.backend.domain.member.repository.MemberRepository;
-import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
 
@@ -25,14 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 @DisplayName("GroupService의")
-public class GroupServiceTest extends LoginTest {
+class GroupServiceTest extends LoginTest {
     @Autowired private GroupService groupService;
 
-    @Autowired private AuthService authService;
-
     @Autowired private GroupRepository groupRepository;
-
-    @Autowired private MemberRepository memberRepository;
 
     @Autowired private GroupMemberRepository groupMemberRepository;
 
@@ -55,17 +49,14 @@ public class GroupServiceTest extends LoginTest {
     @DisplayName("Group에 Join할 수 있는가")
     void joinGroup() {
         // given
-        Member member = memberRepository.save(authService.getMemberByJwt());
-
         Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 
-        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader.getId());
-
-        GroupMember groupMember1 = new GroupMember(group, leader);
-
-        GroupMember groupMember2 = new GroupMember(group, member);
+        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
 
         Group saveGroup = groupRepository.save(group);
+
+        saveGroup.inviteAll(List.of(loginUser));
+
         // when
         JoinGroupRequest request = new JoinGroupRequest(saveGroup.getId());
 
@@ -79,17 +70,14 @@ public class GroupServiceTest extends LoginTest {
     @DisplayName("Group에 초대할 수 있는가")
     void inviteGroup() {
         // given
-        Member member = memberRepository.save(authService.getMemberByJwt());
-
         Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 
-        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader.getId());
-
-        GroupMember groupMember1 = new GroupMember(group, leader);
+        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
 
         Group saveGroup = groupRepository.save(group);
 
-        InviteGroupRequest request = new InviteGroupRequest(member.getId(), saveGroup.getId());
+        InviteGroupRequest request =
+                new InviteGroupRequest(List.of(loginUser.getId()), saveGroup.getId());
         // when
         GroupInfoResponse response = groupService.inviteGroup(request);
 
@@ -101,16 +89,13 @@ public class GroupServiceTest extends LoginTest {
     @DisplayName("위치 공유 정보가 반환되는가")
     void getShare() {
         // given
-        Member member = memberRepository.save(authService.getMemberByJwt());
-
         Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 
-        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader.getId());
-
-        GroupMember groupMember1 = new GroupMember(group, leader);
-        GroupMember groupMember2 = new GroupMember(group, member);
+        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
 
         Group saveGroup = groupRepository.save(group);
+
+        group.inviteAll(List.of(loginUser));
 
         // when
         ShareInfoResponse response = groupService.getShare(saveGroup.getId());
@@ -123,22 +108,19 @@ public class GroupServiceTest extends LoginTest {
     @DisplayName("위치 공유를 공개 -> 비공개 변경이 가능한가")
     void changeShare() {
         // given
-        Member member = memberRepository.save(authService.getMemberByJwt());
-
         Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 
-        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader.getId());
-
-        GroupMember groupMember1 = new GroupMember(group, leader);
-        GroupMember groupMember2 = new GroupMember(group, member);
+        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
 
         Group saveGroup = groupRepository.save(group);
 
+        group.inviteAll(List.of(loginUser));
+
         // when
-        groupService.changeShare(saveGroup.getId());
+        groupService.unShareLocation(saveGroup.getId());
         GroupMember result =
                 groupMemberRepository
-                        .findByGroupIdAndMemberId(saveGroup.getId(), member.getId())
+                        .findByGroupIdAndMemberId(saveGroup.getId(), loginUser.getId())
                         .orElseThrow();
 
         // then
@@ -149,18 +131,14 @@ public class GroupServiceTest extends LoginTest {
     @DisplayName("자신이 소속된 Group정보들이 반환되는가")
     void getMyGroups() {
         // given
-        Member member = memberRepository.save(authService.getMemberByJwt());
-
         Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 
-        Group group1 = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader.getId());
-        Group group2 = new Group("BLACK_PINK", "YG_OFFICIAL_IMAGE", leader.getId());
+        Group group1 = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
+        Group group2 = new Group("BLACK_PINK", "YG_OFFICIAL_IMAGE", leader);
 
-        GroupMember groupMember1 = new GroupMember(group1, leader);
-        GroupMember groupMember2 = new GroupMember(group1, member);
+        GroupMember groupMember1 = new GroupMember(group1, loginUser);
 
-        GroupMember groupMember3 = new GroupMember(group2, leader);
-        GroupMember groupMember4 = new GroupMember(group2, member);
+        GroupMember groupMember2 = new GroupMember(group2, loginUser);
 
         Group saveGroup1 = groupRepository.save(group1);
         Group saveGroup2 = groupRepository.save(group2);
@@ -169,6 +147,6 @@ public class GroupServiceTest extends LoginTest {
         List<GroupInfoResponse> responses = groupService.getMyGroups();
 
         // then
-        assertThat(responses.size()).isEqualTo(2);
+        assertThat(responses).hasSize(2);
     }
 }

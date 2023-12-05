@@ -47,8 +47,14 @@ public class GroupController {
     }
 
     @PostMapping("/share/{id}")
-    public ResponseEntity<Void> changeShare(@PathVariable UUID id) {
-        groupService.changeShare(id);
+    public ResponseEntity<Void> shareLocation(@PathVariable UUID id) {
+        groupService.shareLocation(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/unshare/{id}")
+    public ResponseEntity<Void> unShareLocation(@PathVariable UUID id) {
+        groupService.unShareLocation(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -57,7 +63,7 @@ public class GroupController {
         return ResponseEntity.ok(groupService.getShare(id));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<GroupInfoResponse>> getMyGroups() {
         return ResponseEntity.ok(groupService.getMyGroups());
     }
