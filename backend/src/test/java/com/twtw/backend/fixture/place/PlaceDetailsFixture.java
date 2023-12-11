@@ -2,6 +2,7 @@ package com.twtw.backend.fixture.place;
 
 import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

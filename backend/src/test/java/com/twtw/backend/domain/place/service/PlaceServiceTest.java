@@ -14,11 +14,13 @@ import com.twtw.backend.fixture.place.PlaceDetailsFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.support.service.LoginTest;
-import java.util.List;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import java.util.List;
 
 @DisplayName("PlaceService의")
 class PlaceServiceTest extends LoginTest {
