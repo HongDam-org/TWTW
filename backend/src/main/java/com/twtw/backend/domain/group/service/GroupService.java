@@ -138,7 +138,8 @@ public class GroupService {
     public void updateLocation(final UpdateLocationRequest updateLocationRequest) {
         final Member member = authService.getMemberByJwt();
         final Group group = getGroupEntity(updateLocationRequest.getGroupId());
-        group.updateMemberLocation(member, updateLocationRequest.getLongitude(), updateLocationRequest.getLatitude());
+        group.updateMemberLocation(
+                member, updateLocationRequest.getLongitude(), updateLocationRequest.getLatitude());
     }
 
     @Transactional

@@ -8,11 +8,14 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.domain.plan.service.PlanService;
-import java.time.LocalDateTime;
-import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -27,9 +30,11 @@ public class LocationService {
     public LocationResponse addInfo(final UUID planId, final LocationRequest locationRequest) {
         final Member member = authService.getMemberByJwt();
         final Plan plan = planService.getPlanEntity(planId);
-        plan.updateMemberLocation(member, locationRequest.getLongitude(), locationRequest.getLatitude());
+        plan.updateMemberLocation(
+                member, locationRequest.getLongitude(), locationRequest.getLatitude());
 
-        final AverageCoordinate averageCoordinate = geoService.saveLocation(plan, member, locationRequest);
+        final AverageCoordinate averageCoordinate =
+                geoService.saveLocation(plan, member, locationRequest);
 
         return locationMapper.toResponse(locationRequest, averageCoordinate, LocalDateTime.now());
     }

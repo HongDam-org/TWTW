@@ -77,7 +77,8 @@ public class Group implements Auditable {
         return this.groupMembers.add(groupMember);
     }
 
-    public void updateMemberLocation(final Member member, final Double longitude, final Double latitude) {
+    public void updateMemberLocation(
+            final Member member, final Double longitude, final Double latitude) {
         final GroupMember groupMember = getGroupMember(member);
         groupMember.updateCoordinate(longitude, latitude);
     }

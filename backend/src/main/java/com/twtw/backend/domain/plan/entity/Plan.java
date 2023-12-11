@@ -7,6 +7,7 @@ import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -19,14 +20,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.hibernate.annotations.Where;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Entity
@@ -96,10 +100,12 @@ public class Plan implements Auditable {
             final String roadAddressName,
             final Double longitude,
             final Double latitude) {
-        this.place.update(placeName, placeUrl, categoryGroupCode, roadAddressName, longitude, latitude);
+        this.place.update(
+                placeName, placeUrl, categoryGroupCode, roadAddressName, longitude, latitude);
     }
 
-    public void updateMemberLocation(final Member member, final Double longitude, final Double latitude) {
+    public void updateMemberLocation(
+            final Member member, final Double longitude, final Double latitude) {
         this.group.updateMemberLocation(member, longitude, latitude);
     }
 }

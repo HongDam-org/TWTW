@@ -2,6 +2,7 @@ package com.twtw.backend.domain.group.controller.advice;
 
 import com.twtw.backend.domain.group.exception.IllegalGroupMemberException;
 import com.twtw.backend.global.advice.ErrorResponse;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

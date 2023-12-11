@@ -4,8 +4,9 @@ import com.twtw.backend.domain.location.dto.request.LocationRequest;
 import com.twtw.backend.domain.location.dto.response.AverageCoordinate;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.plan.entity.Plan;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.geo.Circle;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.GeoResult;
@@ -16,29 +17,41 @@ import org.springframework.data.redis.connection.RedisGeoCommands.GeoLocation;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GeoService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    public AverageCoordinate saveLocation(final Plan plan, final Member member, final LocationRequest locationRequest) {
+    public AverageCoordinate saveLocation(
+            final Plan plan, final Member member, final LocationRequest locationRequest) {
         final String planId = plan.getId().toString();
 
-        redisTemplate.opsForGeo().add(
-                planId,
-                new Point(locationRequest.getLongitude(), locationRequest.getLatitude()),
-                member.getId().toString());
+        redisTemplate
+                .opsForGeo()
+                .add(
+                        planId,
+                        new Point(locationRequest.getLongitude(), locationRequest.getLatitude()),
+                        member.getId().toString());
 
         return calculate(planId, locationRequest);
     }
 
-    private AverageCoordinate calculate(final String planId, final LocationRequest locationRequest) {
+    private AverageCoordinate calculate(
+            final String planId, final LocationRequest locationRequest) {
         final Double userLongitude = locationRequest.getLongitude();
         final Double userLatitude = locationRequest.getLatitude();
 
-        GeoResults<GeoLocation<String>> geoResults = redisTemplate.opsForGeo()
-                .radius(planId, new Circle(new Point(userLongitude, userLatitude), new Distance(0, Metrics.KILOMETERS)));
+        GeoResults<GeoLocation<String>> geoResults =
+                redisTemplate
+                        .opsForGeo()
+                        .radius(
+                                planId,
+                                new Circle(
+                                        new Point(userLongitude, userLatitude),
+                                        new Distance(0, Metrics.KILOMETERS)));
 
         if (geoResults == null) {
             return new AverageCoordinate();
@@ -76,15 +89,19 @@ public class GeoService {
         return new AverageCoordinate(avgLongitude, avgLatitude, distance);
     }
 
-    private Double distance(final Double lat1, final Double lon1, final Double lat2, final Double lon2) {
+    private Double distance(
+            final Double lat1, final Double lon1, final Double lat2, final Double lon2) {
         int radius = 6371;
 
         double dLat = Math.toRadians(lat2 - lat1);
         double dLon = Math.toRadians(lon2 - lon1);
 
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                        + Math.cos(Math.toRadians(lat1))
+                                * Math.cos(Math.toRadians(lat2))
+                                * Math.sin(dLon / 2)
+                                * Math.sin(dLon / 2);
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
