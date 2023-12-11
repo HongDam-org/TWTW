@@ -1,6 +1,6 @@
 package com.twtw.backend.domain.place.dto.response;
 
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +14,6 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 public class PlaceResponse {
-    private List<PlaceDetails> results;
+    private List<PlaceClientDetails> results;
     private Boolean isLast;
 }

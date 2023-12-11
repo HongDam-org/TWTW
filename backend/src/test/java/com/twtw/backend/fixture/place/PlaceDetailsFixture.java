@@ -1,6 +1,7 @@
 package com.twtw.backend.fixture.place;
 
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
+import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,5 +18,9 @@ public enum PlaceDetailsFixture {
 
     public PlaceDetails toPlaceDetails() {
         return new PlaceDetails(placeName, placeUrl, roadAddressName, longitude, latitude);
+    }
+
+    public PlaceClientDetails toPlaceClientDetails() {
+        return new PlaceClientDetails(placeName, placeUrl, roadAddressName, longitude, latitude);
     }
 }

@@ -17,10 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
-import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
+import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;

@@ -11,5 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class SearchDestinationResponse {
     private MetaDetails meta;
-    private List<PlaceDetails> documents;
+    private List<PlaceClientDetails> documents;
 }

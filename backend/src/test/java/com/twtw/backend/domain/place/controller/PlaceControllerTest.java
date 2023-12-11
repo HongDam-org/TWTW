@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.twtw.backend.domain.place.dto.response.PlaceResponse;
 import com.twtw.backend.domain.place.service.PlaceService;
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 import com.twtw.backend.support.docs.RestDocsTest;
 
 import org.junit.jupiter.api.DisplayName;
@@ -36,13 +36,13 @@ class PlaceControllerTest extends RestDocsTest {
         final PlaceResponse expected =
                 new PlaceResponse(
                         List.of(
-                                new PlaceDetails(
+                                new PlaceClientDetails(
                                         "이디야커피 안성죽산점",
                                         "http://place.map.kakao.com/1562566188",
                                         "경기 안성시 죽산면 죽주로 287-1",
                                         127.426865189637,
                                         37.0764635355795),
-                                new PlaceDetails(
+                                new PlaceClientDetails(
                                         "카페 온마이마인드",
                                         "https://place.map.kakao.com/1625295668",
                                         "경기 안성시 죽산면 죽산초교길 36-4",
