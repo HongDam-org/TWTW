@@ -9,7 +9,7 @@ import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.place.service.PlaceService;
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
@@ -60,7 +60,7 @@ public class PlanService {
 
     private SearchDestinationResponse requestMapClient(final SearchDestinationRequest request) {
         final SearchDestinationResponse result = destinationClient.request(request);
-        final List<PlaceDetails> documents = result.getDocuments();
+        final List<PlaceClientDetails> documents = result.getDocuments();
 
         if (hasNoSearchData(documents)) {
             return destinationClient.request(request.toNoDirectionRequest());
@@ -68,7 +68,7 @@ public class PlanService {
         return result;
     }
 
-    private boolean hasNoSearchData(final List<PlaceDetails> documents) {
+    private boolean hasNoSearchData(final List<PlaceClientDetails> documents) {
         return documents == null || documents.isEmpty();
     }
 
@@ -99,7 +99,7 @@ public class PlanService {
         Plan plan = getPlanEntity(id);
 
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
-        PlaceDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
+        PlaceClientDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
 
         List<MemberResponse> memberResponse = toMemberResponse(plan);
 

@@ -5,11 +5,10 @@ import com.twtw.backend.domain.place.dto.client.SurroundPlaceResponse;
 import com.twtw.backend.domain.place.dto.response.PlaceResponse;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.place.mapper.PlaceMapper;
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
+import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.global.client.KakaoMapClient;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +28,7 @@ public class PlaceService {
         return new PlaceResponse(response.getDocuments(), response.getMeta().getIsEnd());
     }
 
-    public PlaceDetails getPlaceDetails(Place place) {
+    public PlaceClientDetails getPlaceDetails(Place place) {
         return placeMapper.toPlaceResponse(place);
     }
 

@@ -8,18 +8,17 @@ import com.twtw.backend.domain.place.dto.client.SurroundPlaceRequest;
 import com.twtw.backend.domain.place.dto.client.SurroundPlaceResponse;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.plan.dto.client.MetaDetails;
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
+import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.fixture.place.PlaceDetailsFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.support.service.LoginTest;
-
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import java.util.List;
 
 @DisplayName("PlaceService의")
 class PlaceServiceTest extends LoginTest {
@@ -36,7 +35,7 @@ class PlaceServiceTest extends LoginTest {
         final SurroundPlaceResponse expected =
                 new SurroundPlaceResponse(
                         new MetaDetails(true),
-                        List.of(PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails()));
+                        List.of(PlaceDetailsFixture.FIRST_PLACE.toPlaceClientDetails()));
         given(surroundPlaceClient.request(any())).willReturn(expected);
 
         // when
@@ -55,7 +54,7 @@ class PlaceServiceTest extends LoginTest {
         final Place place = PlaceEntityFixture.FIRST_PLACE.toEntity();
 
         // when
-        final PlaceDetails placeDetails = placeService.getPlaceDetails(place);
+        final PlaceClientDetails placeDetails = placeService.getPlaceDetails(place);
 
         // then
         assertThat(placeDetails.getPlaceName()).isEqualTo(place.getPlaceName());

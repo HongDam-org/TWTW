@@ -1,7 +1,7 @@
 package com.twtw.backend.domain.place.dto.client;
 
 import com.twtw.backend.domain.plan.dto.client.MetaDetails;
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class SurroundPlaceResponse {
     private MetaDetails meta;
-    private List<PlaceDetails> documents;
+    private List<PlaceClientDetails> documents;
 }

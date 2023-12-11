@@ -2,7 +2,6 @@ package com.twtw.backend.domain.plan.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -15,24 +14,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
+import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.service.PlanService;
 import com.twtw.backend.support.docs.RestDocsTest;
-
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.List;
-import java.util.UUID;
 
 @DisplayName("PlanController의")
 @WebMvcTest(PlanController.class)

@@ -2,8 +2,9 @@ package com.twtw.backend.domain.plan.mapper;
 
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
-import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
+import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
+import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
@@ -15,6 +16,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 import java.util.List;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PlanMapper {
@@ -33,10 +35,18 @@ public interface PlanMapper {
     @Mapping(target = "members", source = "memberResponses")
     PlanInfoResponse toPlanInfoResponse(
             Plan plan,
-            PlaceDetails placeDetails,
+            PlaceClientDetails placeDetails,
             GroupInfoResponse groupInfoResponse,
             List<MemberResponse> memberResponses);
 
     @IterableMapping(elementTargetType = PlanInfoResponse.class)
     List<PlanInfoResponse> toPlanInfoResponses(List<Plan> plans);
+
+    @IterableMapping(qualifiedByName = "toPlaceDetails")
+    List<PlaceDetails> toPlaceDetails(List<PlaceClientDetails> placeClientDetails);
+
+    @Named("toPlaceDetails")
+    @Mapping(target = "longitude", source = "x")
+    @Mapping(target = "latitude", source = "y")
+    PlaceDetails toPlaceDetails(PlaceClientDetails placeClientDetails);
 }
