@@ -13,7 +13,7 @@ public interface PlaceMapper {
 
     Place toEntity(PlaceDetails detail);
 
-    @Mapping(target = "longitude", source = "coordinate.longitude")
-    @Mapping(target = "latitude", source = "coordinate.latitude")
+    @Mapping(target = "x", source = "coordinate.longitude")
+    @Mapping(target = "y", source = "coordinate.latitude")
     PlaceClientDetails toPlaceResponse(Place place);
 }
