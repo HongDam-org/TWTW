@@ -2,6 +2,7 @@ package com.twtw.backend.domain.group.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -22,15 +23,17 @@ import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.support.docs.RestDocsTest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @DisplayName("GroupController의")
 @WebMvcTest(GroupController.class)
@@ -284,7 +287,10 @@ class GroupControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         post("/group/location")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(toRequestBody(new UpdateLocationRequest(UUID.randomUUID(), 0.0, 0.0)))
+                                .content(
+                                        toRequestBody(
+                                                new UpdateLocationRequest(
+                                                        UUID.randomUUID(), 0.0, 0.0)))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -292,7 +298,11 @@ class GroupControllerTest extends RestDocsTest {
         perform.andExpect(status().isNoContent());
 
         perform.andDo(print())
-                .andDo(document("post update group member location", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "post update group member location",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 
     @Test
