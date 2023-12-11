@@ -27,6 +27,8 @@ public class LocationController {
             @DestinationVariable final UUID planId,
             @Payload final LocationRequest locationRequest) {
         rabbitTemplate.convertAndSend(
-                EXCHANGE_NAME, ROUTING_KEY + planId, locationService.addInfo(locationRequest));
+                EXCHANGE_NAME,
+                ROUTING_KEY + planId,
+                locationService.addInfo(planId, locationRequest));
     }
 }

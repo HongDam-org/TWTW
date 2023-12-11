@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.group.entity;
 
+import com.twtw.backend.domain.group.exception.IllegalGroupMemberException;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.audit.AuditListener;
@@ -74,5 +75,29 @@ public class Group implements Auditable {
 
     private boolean addGroupMember(final GroupMember groupMember) {
         return this.groupMembers.add(groupMember);
+    }
+
+    public void updateMemberLocation(
+            final Member member, final Double longitude, final Double latitude) {
+        final GroupMember groupMember = getGroupMember(member);
+        groupMember.updateCoordinate(longitude, latitude);
+    }
+
+    private GroupMember getGroupMember(final Member member) {
+        return this.groupMembers.stream()
+                .filter(groupMember -> groupMember.isSameMember(member))
+                .findAny()
+                .orElseThrow(IllegalGroupMemberException::new);
+    }
+
+    public void outGroup(final Member member) {
+        this.groupMembers.removeIf(groupMember -> groupMember.isSameMember(member));
+        if (hasNoLeader()) {
+            this.leaderId = this.groupMembers.get(0).getMember().getId();
+        }
+    }
+
+    private boolean hasNoLeader() {
+        return this.groupMembers.stream().noneMatch(GroupMember::isLeader);
     }
 }

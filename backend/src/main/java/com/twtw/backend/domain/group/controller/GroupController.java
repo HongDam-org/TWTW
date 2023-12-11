@@ -3,13 +3,20 @@ package com.twtw.backend.domain.group.controller;
 import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
+import com.twtw.backend.domain.group.dto.request.OutGroupRequest;
+import com.twtw.backend.domain.group.dto.request.UpdateLocationRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
@@ -66,5 +73,18 @@ public class GroupController {
     @GetMapping
     public ResponseEntity<List<GroupInfoResponse>> getMyGroups() {
         return ResponseEntity.ok(groupService.getMyGroups());
+    }
+
+    @PostMapping("location")
+    public ResponseEntity<Void> updateLocation(
+            @RequestBody final UpdateLocationRequest updateLocationRequest) {
+        groupService.updateLocation(updateLocationRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("out")
+    public ResponseEntity<Void> outGroup(@RequestBody final OutGroupRequest outGroupRequest) {
+        groupService.outGroup(outGroupRequest);
+        return ResponseEntity.noContent().build();
     }
 }

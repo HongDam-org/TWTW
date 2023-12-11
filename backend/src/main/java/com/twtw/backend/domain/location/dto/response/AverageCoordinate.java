@@ -3,16 +3,14 @@ package com.twtw.backend.domain.location.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDateTime;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
-public class LocationResponse {
-    private String nickname;
+public class AverageCoordinate {
     private Double longitude;
     private Double latitude;
-    private AverageCoordinate averageCoordinate;
-    private LocalDateTime time;
+    private Double distance;
 }

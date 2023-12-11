@@ -5,6 +5,7 @@ import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
@@ -12,5 +13,7 @@ public interface PlaceMapper {
 
     Place toEntity(PlaceDetails detail);
 
+    @Mapping(target = "x", source = "coordinate.longitude")
+    @Mapping(target = "y", source = "coordinate.latitude")
     PlaceClientDetails toPlaceResponse(Place place);
 }

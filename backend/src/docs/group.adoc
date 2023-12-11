@@ -28,3 +28,9 @@ operation::get share[snippets='http-request,http-response']
 
 === 자신의 소속 그룹 정보 반환
 operation::get myGroups[snippets='http-request,http-response']
+
+=== 그룹 자신 위치 수정
+operation::post update group member location[snippets='http-request,http-response']
+
+=== 그룹 탈퇴
+operation::post out group[snippets='http-request,http-response']

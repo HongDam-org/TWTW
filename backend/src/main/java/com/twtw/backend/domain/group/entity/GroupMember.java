@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.group.entity;
 
 import com.twtw.backend.domain.member.entity.Member;
+import com.twtw.backend.domain.place.entity.Coordinate;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
@@ -31,6 +32,7 @@ import java.util.UUID;
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GroupMember implements Auditable {
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
@@ -43,6 +45,8 @@ public class GroupMember implements Auditable {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Embedded private Coordinate coordinate;
 
     private Boolean share;
 
@@ -76,5 +80,26 @@ public class GroupMember implements Auditable {
 
     public UUID getGroupId() {
         return this.group.getId();
+    }
+
+    public Coordinate getCoordinate() {
+        if (share) {
+            return coordinate;
+        }
+        return Coordinate.empty();
+    }
+
+    public void updateCoordinate(final Double longitude, final Double latitude) {
+        if (share) {
+            this.coordinate = new Coordinate(longitude, latitude);
+        }
+    }
+
+    public boolean isSameMember(final Member member) {
+        return this.member.getId().equals(member.getId());
+    }
+
+    public boolean isLeader() {
+        return this.group.getLeaderId().equals(this.member.getId());
     }
 }

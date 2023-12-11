@@ -3,6 +3,7 @@ package com.twtw.backend.domain.plan.controller;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
+import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
@@ -65,5 +66,11 @@ public class PlanController {
     @GetMapping
     public ResponseEntity<List<PlanInfoResponse>> getPlans() {
         return ResponseEntity.ok(planService.getPlans());
+    }
+
+    @PostMapping("update")
+    public ResponseEntity<Void> updatePlan(@RequestBody final UpdatePlanRequest updatePlanRequest) {
+        planService.updatePlan(updatePlanRequest);
+        return ResponseEntity.noContent().build();
     }
 }
