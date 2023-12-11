@@ -2,13 +2,11 @@ package com.twtw.backend.domain.plan.entity;
 
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.member.entity.Member;
+import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.place.entity.Place;
-import com.twtw.backend.domain.plan.exception.InvalidPlanMemberException;
-import com.twtw.backend.domain.plan.exception.PlanMakerNotExistsException;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -21,17 +19,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
-
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.hibernate.annotations.Where;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Entity
@@ -65,8 +60,8 @@ public class Plan implements Auditable {
 
     public Plan(Member member, Place place, Group group) {
         this.planMembers.add(new PlanMember(this, member, true));
-        addPlace(place);
-        addGroup(group);
+        organizePlace(place);
+        organizeGroup(group);
     }
 
     public void addMember(final Member member) {
@@ -74,30 +69,37 @@ public class Plan implements Auditable {
     }
 
     public void deleteMember(final Member member) {
-        this.planMembers.remove(findPlanMember(member));
+        this.planMembers.removeIf(planMember -> planMember.hasSameMember(member));
+
+        if (hasNoPlanMaker()) {
+            this.planMembers.stream().findFirst().ifPresent(PlanMember::updateToPlanMaker);
+        }
     }
 
-    private PlanMember findPlanMember(final Member member) {
-        return this.planMembers.stream()
-                .filter(planMember -> planMember.hasSameMember(member))
-                .findAny()
-                .orElseThrow(InvalidPlanMemberException::new);
+    private boolean hasNoPlanMaker() {
+        return this.planMembers.stream().noneMatch(PlanMember::getIsPlanMaker);
     }
 
-    private void addPlace(final Place place) {
+    private void organizePlace(final Place place) {
         this.place = place;
     }
 
-    public void addGroup(final Group group) {
+    public void organizeGroup(final Group group) {
         this.group = group;
         this.group.addPlan(this);
     }
 
-    public UUID getPlanMakerId() {
-        return this.planMembers.stream()
-                .filter(PlanMember::getIsPlanMaker)
-                .findAny()
-                .orElseThrow(PlanMakerNotExistsException::new)
-                .getId();
+    public void updatePlace(
+            final String placeName,
+            final String placeUrl,
+            final CategoryGroupCode categoryGroupCode,
+            final String roadAddressName,
+            final Double longitude,
+            final Double latitude) {
+        this.place.update(placeName, placeUrl, categoryGroupCode, roadAddressName, longitude, latitude);
+    }
+
+    public void updateMemberLocation(final Member member, final Double longitude, final Double latitude) {
+        this.group.updateMemberLocation(member, longitude, latitude);
     }
 }

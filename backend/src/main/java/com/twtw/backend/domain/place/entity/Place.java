@@ -62,4 +62,18 @@ public class Place implements Auditable {
         this.roadAddressName = roadAddressName;
         this.coordinate = new Coordinate(longitude, latitude);
     }
+
+    public void update(
+            final String placeName,
+            final String placeUrl,
+            final CategoryGroupCode categoryGroupCode,
+            final String roadAddressName,
+            final Double longitude,
+            final Double latitude) {
+        this.placeName = placeName;
+        this.placeUrl = placeUrl;
+        this.categoryGroupCode = categoryGroupCode;
+        this.roadAddressName = roadAddressName;
+        this.coordinate = new Coordinate(longitude, latitude);
+    }
 }

@@ -14,6 +14,7 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
+import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
@@ -114,7 +115,7 @@ public class PlanService {
         return memberService.getMemberResponses(plan);
     }
 
-    private Plan getPlanEntity(UUID id) {
+    public Plan getPlanEntity(UUID id) {
         return planRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -122,5 +123,17 @@ public class PlanService {
         final Member member = authService.getMemberByJwt();
         final List<Plan> plans = planRepository.findAllByMember(member);
         return planMapper.toPlanInfoResponses(plans);
+    }
+
+    public void updatePlan(final UpdatePlanRequest updatePlanRequest) {
+        final Plan plan = getPlanEntity(updatePlanRequest.getPlanId());
+
+        plan.updatePlace(
+                updatePlanRequest.getPlaceName(),
+                updatePlanRequest.getPlaceUrl(),
+                updatePlanRequest.getCategoryGroupCode(),
+                updatePlanRequest.getRoadAddressName(),
+                updatePlanRequest.getLongitude(),
+                updatePlanRequest.getLatitude());
     }
 }

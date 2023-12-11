@@ -3,6 +3,8 @@ package com.twtw.backend.domain.group.service;
 import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
+import com.twtw.backend.domain.group.dto.request.OutGroupRequest;
+import com.twtw.backend.domain.group.dto.request.UpdateLocationRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
@@ -130,5 +132,19 @@ public class GroupService {
         }
 
         return groupMapper.toMyGroupsInfo(loginMember.getGroupMembers());
+    }
+
+    @Transactional
+    public void updateLocation(final UpdateLocationRequest updateLocationRequest) {
+        final Member member = authService.getMemberByJwt();
+        final Group group = getGroupEntity(updateLocationRequest.getGroupId());
+        group.updateMemberLocation(member, updateLocationRequest.getLongitude(), updateLocationRequest.getLatitude());
+    }
+
+    @Transactional
+    public void outGroup(final OutGroupRequest outGroupRequest) {
+        final Member member = authService.getMemberByJwt();
+        final Group group = getGroupEntity(outGroupRequest.getGroupId());
+        group.outGroup(member);
     }
 }
