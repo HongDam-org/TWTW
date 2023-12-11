@@ -4,6 +4,7 @@ import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.place.entity.Place;
+import com.twtw.backend.domain.plan.exception.PlanMakerNotExistsException;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
@@ -107,5 +108,14 @@ public class Plan implements Auditable {
     public void updateMemberLocation(
             final Member member, final Double longitude, final Double latitude) {
         this.group.updateMemberLocation(member, longitude, latitude);
+    }
+
+    public UUID getPlanMakerId() {
+        return this.planMembers.stream()
+                .filter(PlanMember::getIsPlanMaker)
+                .findFirst()
+                .orElseThrow(PlanMakerNotExistsException::new)
+                .getMember()
+                .getId();
     }
 }
