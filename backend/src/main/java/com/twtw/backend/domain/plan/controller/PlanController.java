@@ -41,12 +41,6 @@ public class PlanController {
         return ResponseEntity.ok(planService.savePlan(request));
     }
 
-    @PostMapping("update")
-    public ResponseEntity<Void> updatePlan(@RequestBody UpdatePlanRequest updatePlanRequest) {
-        planService.updatePlan(updatePlanRequest);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<PlanInfoResponse> getPlanById(@PathVariable UUID id) {
         return ResponseEntity.ok(planService.getPlanById(id));
@@ -72,5 +66,11 @@ public class PlanController {
     @GetMapping
     public ResponseEntity<List<PlanInfoResponse>> getPlans() {
         return ResponseEntity.ok(planService.getPlans());
+    }
+
+    @PostMapping("update")
+    public ResponseEntity<Void> updatePlan(@RequestBody final UpdatePlanRequest updatePlanRequest) {
+        planService.updatePlan(updatePlanRequest);
+        return ResponseEntity.noContent().build();
     }
 }

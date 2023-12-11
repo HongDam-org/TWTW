@@ -2,9 +2,9 @@ package com.twtw.backend.domain.plan.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -15,24 +15,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
+import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.plan.dto.client.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
+import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.service.PlanService;
 import com.twtw.backend.support.docs.RestDocsTest;
-
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.List;
-import java.util.UUID;
 
 @DisplayName("PlanController의")
 @WebMvcTest(PlanController.class)
@@ -253,5 +253,28 @@ class PlanControllerTest extends RestDocsTest {
         // docs
         perform.andDo(print())
                 .andDo(document("get all plans", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("계획 장소 업데이트 API가 수행되는가")
+    void updatePlan() throws Exception {
+        // given
+        willDoNothing().given(planService).updatePlan(any());
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/plans/update")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(new UpdatePlanRequest(UUID.randomUUID(), "별다방", "http://place.map.kakao.com/1562566188", CategoryGroupCode.CE7, "경기 안성시 죽산면 죽주로 287-1", 127.426865189637, 37.0764635355795)))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isNoContent());
+
+        // docs
+        perform.andDo(print())
+                .andDo(document("post update plan", getDocumentRequest(), getDocumentResponse()));
     }
 }

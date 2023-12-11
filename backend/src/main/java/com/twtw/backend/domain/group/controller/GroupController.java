@@ -75,7 +75,7 @@ public class GroupController {
         return ResponseEntity.ok(groupService.getMyGroups());
     }
 
-    @PostMapping("/location")
+    @PostMapping("location")
     public ResponseEntity<Void> updateLocation(
             @RequestBody final UpdateLocationRequest updateLocationRequest) {
         groupService.updateLocation(updateLocationRequest);

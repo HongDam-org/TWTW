@@ -2,9 +2,9 @@ package com.twtw.backend.domain.group.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -15,22 +15,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
+import com.twtw.backend.domain.group.dto.request.OutGroupRequest;
+import com.twtw.backend.domain.group.dto.request.UpdateLocationRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.support.docs.RestDocsTest;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 @DisplayName("GroupController의")
 @WebMvcTest(GroupController.class)
@@ -271,5 +271,49 @@ class GroupControllerTest extends RestDocsTest {
 
         perform.andDo(print())
                 .andDo(document("get myGroups", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("자신의 위치가 정상적으로 수정되는가")
+    void updateLocation() throws Exception {
+        // given
+        willDoNothing().given(groupService).updateLocation(any());
+
+        // when`
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/group/location")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(new UpdateLocationRequest(UUID.randomUUID(), 0.0, 0.0)))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isNoContent());
+
+        perform.andDo(print())
+                .andDo(document("post update group member location", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("그룹 탈퇴가 수행되는가")
+    void outGroup() throws Exception {
+        // given
+        willDoNothing().given(groupService).outGroup(any());
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/group/out")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(new OutGroupRequest(UUID.randomUUID())))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isNoContent());
+
+        perform.andDo(print())
+                .andDo(document("post out group", getDocumentRequest(), getDocumentResponse()));
     }
 }
