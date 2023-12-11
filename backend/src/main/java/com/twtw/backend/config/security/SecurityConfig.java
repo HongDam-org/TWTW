@@ -36,7 +36,9 @@ public class SecurityConfig {
                                                 "auth/login",
                                                 "member/duplicate/**",
                                                 "actuator/**")
-                                        .permitAll())
+                                        .permitAll()
+                                        .anyRequest()
+                                        .authenticated())
                 .sessionManagement(x -> x.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(
