@@ -2,6 +2,7 @@ package com.twtw.backend.domain.image.controller;
 
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -13,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.twtw.backend.domain.image.dto.ImageResponse;
 import com.twtw.backend.domain.image.service.ImageService;
 import com.twtw.backend.support.docs.RestDocsTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,7 +32,8 @@ class ImageControllerTest extends RestDocsTest {
     @DisplayName("이미지 업로드 API가 수행되는가")
     void uploadImage() throws Exception {
         // given
-        final ImageResponse expected = new ImageResponse("https://storage.googleapis.com/bucket-name/some-file-id");
+        final ImageResponse expected =
+                new ImageResponse("https://storage.googleapis.com/bucket-name/some-file-id");
         given(imageService.uploadImage(any())).willReturn(expected);
 
         // when
@@ -44,8 +47,7 @@ class ImageControllerTest extends RestDocsTest {
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
 
         // then
-        perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.imageUrl").isString());
+        perform.andExpect(status().isOk()).andExpect(jsonPath("$.imageUrl").isString());
 
         // docs
         perform.andDo(print())
