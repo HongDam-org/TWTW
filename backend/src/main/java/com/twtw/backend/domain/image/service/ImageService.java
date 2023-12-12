@@ -7,11 +7,14 @@ import com.twtw.backend.domain.image.exception.InvalidFileTypeException;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.global.properties.StorageProperties;
-import java.io.IOException;
-import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +43,8 @@ public class ImageService {
         return storageProperties.getStorageUrl() + uuid;
     }
 
-    private void upload(final MultipartFile image, final String contentType, final String uuid) throws IOException {
+    private void upload(final MultipartFile image, final String contentType, final String uuid)
+            throws IOException {
         storage.create(
                 BlobInfo.newBuilder(storageProperties.getBucket(), uuid)
                         .setContentType(contentType)
