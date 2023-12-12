@@ -71,4 +71,8 @@ public class Member implements Auditable {
     public boolean hasNoGroupMember() {
         return this.groupMembers.isEmpty();
     }
+
+    public void updateProfileImage(final String profileImage) {
+        this.profileImage = profileImage;
+    }
 }
