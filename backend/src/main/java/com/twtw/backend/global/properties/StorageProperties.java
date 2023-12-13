@@ -10,6 +10,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "spring.cloud.gcp.storage")
 public class StorageProperties {
     private final String bucket;
-    private final String credentialsFile;
     private final String storageUrl;
 }
