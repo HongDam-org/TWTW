@@ -39,14 +39,11 @@ public interface PlanMapper {
             GroupInfoResponse groupInfoResponse,
             List<MemberResponse> memberResponses);
 
-    @IterableMapping(elementTargetType = PlanInfoResponse.class)
-    List<PlanInfoResponse> toPlanInfoResponses(List<Plan> plans);
-
-    @IterableMapping(qualifiedByName = "toPlaceDetails")
+    @IterableMapping(qualifiedByName = "toPlaceDetail")
     List<PlaceDetails> toPlaceDetails(List<PlaceClientDetails> placeClientDetails);
 
-    @Named("toPlaceDetails")
+    @Named("toPlaceDetail")
     @Mapping(target = "longitude", source = "x")
     @Mapping(target = "latitude", source = "y")
-    PlaceDetails toPlaceDetails(PlaceClientDetails placeClientDetails);
+    PlaceDetails toPlaceDetail(PlaceClientDetails placeClientDetails);
 }

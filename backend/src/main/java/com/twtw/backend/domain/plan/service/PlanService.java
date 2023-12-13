@@ -99,6 +99,10 @@ public class PlanService {
     public PlanInfoResponse getPlanById(UUID id) {
         Plan plan = getPlanEntity(id);
 
+        return getPlanInfoResponse(plan);
+    }
+
+    private PlanInfoResponse getPlanInfoResponse(final Plan plan) {
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
         PlaceClientDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
 
@@ -122,7 +126,7 @@ public class PlanService {
     public List<PlanInfoResponse> getPlans() {
         final Member member = authService.getMemberByJwt();
         final List<Plan> plans = planRepository.findAllByMember(member);
-        return planMapper.toPlanInfoResponses(plans);
+        return plans.stream().map(this::getPlanInfoResponse).toList();
     }
 
     public void updatePlan(final UpdatePlanRequest updatePlanRequest) {
