@@ -30,6 +30,7 @@ public class LocationService {
     public LocationResponse addInfo(final UUID planId, final LocationRequest locationRequest) {
         final Member member = authService.getMemberByJwt();
         final Plan plan = planService.getPlanEntity(planId);
+
         plan.updateMemberLocation(
                 member, locationRequest.getLongitude(), locationRequest.getLatitude());
 
