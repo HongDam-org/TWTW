@@ -26,5 +26,5 @@ operation::post out plan[snippets='http-request,http-response']
 === 본인이 속한 계획 전체 조회
 operation::get all plans[snippets='http-request,http-response']
 
-=== 본인이 속한 계획 전체 조회
+=== 계획 수정
 operation::post update plan[snippets='http-request,http-response']
