@@ -65,7 +65,7 @@ public class PlanController {
     }
 
     @PostMapping("/day")
-    public ResponseEntity<Void> updatePlanDay(@RequestBody final UpdatePlanDayRequest request){
+    public ResponseEntity<Void> updatePlanDay(@RequestBody final UpdatePlanDayRequest request) {
         planService.updatePlanDay(request);
         return ResponseEntity.noContent().build();
     }

@@ -114,7 +114,7 @@ public class Plan implements Auditable {
         this.group.updateMemberLocation(member, longitude, latitude);
     }
 
-    public void updatePlanDay(LocalDateTime changeDay){
+    public void updatePlanDay(LocalDateTime changeDay) {
         this.planDay = changeDay;
     }
 

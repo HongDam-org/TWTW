@@ -333,9 +333,8 @@ class PlanControllerTest extends RestDocsTest {
                                 .content(
                                         toRequestBody(
                                                 new UpdatePlanDayRequest(
-                                                      UUID.randomUUID(),
-                                                      LocalDateTime.of(2023,12,25,13,30)
-                                                )))
+                                                        UUID.randomUUID(),
+                                                        LocalDateTime.of(2023, 12, 25, 13, 30))))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -344,7 +343,11 @@ class PlanControllerTest extends RestDocsTest {
 
         // docs
         perform.andDo(print())
-                .andDo(document("post update plan day", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "post update plan day",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 
     @Test

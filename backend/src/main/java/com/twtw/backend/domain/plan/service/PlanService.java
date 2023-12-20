@@ -92,7 +92,6 @@ public class PlanService {
         return planMapper.toPlanResponse(plan);
     }
 
-
     public void outPlan(PlanMemberRequest request) {
         Member member = authService.getMemberByJwt();
         Plan plan = getPlanEntity(request.getPlanId());
@@ -146,7 +145,7 @@ public class PlanService {
     }
 
     @Transactional
-    public void updatePlanDay(final UpdatePlanDayRequest request){
+    public void updatePlanDay(final UpdatePlanDayRequest request) {
         final Plan plan = getPlanEntity(request.getPlanId());
         plan.updatePlanDay(request.getChangeDay());
     }
