@@ -29,6 +29,7 @@ import lombok.Setter;
 
 import org.hibernate.annotations.Where;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -63,10 +64,13 @@ public class Plan implements Auditable {
     @Column(nullable = false)
     private BaseTime baseTime;
 
-    public Plan(Member member, Place place, Group group) {
+    private LocalDateTime planDay;
+
+    public Plan(Member member, Place place, Group group, LocalDateTime planDay) {
         this.planMembers.add(new PlanMember(this, member, true));
         organizePlace(place);
         organizeGroup(group);
+        this.planDay = planDay;
     }
 
     public void addMember(final Member member) {

@@ -32,6 +32,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -106,6 +107,7 @@ class PlanControllerTest extends RestDocsTest {
                                         toRequestBody(
                                                 new SavePlanRequest(
                                                         UUID.randomUUID(),
+                                                        LocalDateTime.of(2023, 12, 25, 15, 30),
                                                         new PlaceDetails(
                                                                 "카페 온마이마인드",
                                                                 "https://place.map.kakao.com/1625295668",
@@ -134,6 +136,7 @@ class PlanControllerTest extends RestDocsTest {
                         UUID.randomUUID(),
                         UUID.randomUUID(),
                         UUID.randomUUID(),
+                        "2023-12-25 15:30",
                         new PlaceDetails(
                                 "카페 온마이마인드",
                                 "https://place.map.kakao.com/1625295668",
@@ -207,6 +210,7 @@ class PlanControllerTest extends RestDocsTest {
                                         toRequestBody(
                                                 new SavePlanRequest(
                                                         UUID.randomUUID(),
+                                                        LocalDateTime.of(2023, 12, 25, 13, 30),
                                                         new PlaceDetails(
                                                                 "이디야커피 안성죽산점",
                                                                 "http://place.map.kakao.com/1562566188",
@@ -259,6 +263,7 @@ class PlanControllerTest extends RestDocsTest {
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
+                                "2023-12-25 15:30",
                                 new PlaceDetails(
                                         "카페 온마이마인드",
                                         "https://place.map.kakao.com/1625295668",
@@ -278,6 +283,7 @@ class PlanControllerTest extends RestDocsTest {
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
                                 UUID.randomUUID(),
+                                "2023-12-26 15:30",
                                 new PlaceDetails(
                                         "카페 온유어마인드",
                                         "https://place.map.kakao.com/1625295669",
