@@ -11,6 +11,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.twtw.backend.domain.path.dto.client.car.*;
+import com.twtw.backend.domain.path.dto.client.ped.Feature;
+import com.twtw.backend.domain.path.dto.client.ped.Geometry;
+import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathRequest;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
 import com.twtw.backend.domain.path.service.PathService;
 import com.twtw.backend.support.docs.RestDocsTest;
@@ -82,23 +85,38 @@ class PathControllerTest extends RestDocsTest {
     @DisplayName("보행자 경로 검색 API가 수행되는가")
     void searchPedPath() throws Exception {
         // given
-        final SearchPedPathResponse expected = new SearchPedPathResponse("", List.of());
+        final SearchPedPathResponse expected = new SearchPedPathResponse("FeatureCollection", List.of(
+                new Feature(
+                        "Feature",
+                        new Geometry(
+                               "Point",
+                                new Double[][]{{126.92364104902308,37.556759264185274}}
+                        )
+                ),
+
+                new Feature(
+                        "Feature",
+                        new Geometry(
+                                "LineString",
+                                new Double[][]{{126.92364104902308,37.556759264185274},{126.92359383142113,37.55672315696065}}
+                        )
+                )
+        ));
 
         given(pathService.searchPedPath(any())).willReturn(expected);
 
         // when
         final ResultActions perform =
                 mockMvc.perform(
-                        post("/paths/search/car")
+                        post("/paths/search/ped")
                                 .content(
                                         toRequestBody(
-                                                new SearchCarPathRequest(
-                                                        "37.636040,126.827507",
-                                                        "37.644998,126.832659",
-                                                        "",
-                                                        SearchPathOption.TRAFAST,
-                                                        SearchPathFuel.DIESEL,
-                                                        1)))
+                                                new SearchPedPathRequest(
+                                                        37.636040,126.827507,
+                                                        37.644998,126.832659,
+                                                        "startPoint",
+                                                        "endPoint"
+                                                )))
                                 .contentType(MediaType.APPLICATION_JSON));
 
         // then
