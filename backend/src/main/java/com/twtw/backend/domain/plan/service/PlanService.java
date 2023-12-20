@@ -14,6 +14,7 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
+import com.twtw.backend.domain.plan.dto.request.UpdatePlanDayRequest;
 import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
@@ -91,6 +92,7 @@ public class PlanService {
         return planMapper.toPlanResponse(plan);
     }
 
+
     public void outPlan(PlanMemberRequest request) {
         Member member = authService.getMemberByJwt();
         Plan plan = getPlanEntity(request.getPlanId());
@@ -141,5 +143,11 @@ public class PlanService {
                 updatePlanRequest.getRoadAddressName(),
                 updatePlanRequest.getLongitude(),
                 updatePlanRequest.getLatitude());
+    }
+
+    @Transactional
+    public void updatePlanDay(final UpdatePlanDayRequest request){
+        final Plan plan = getPlanEntity(request.getPlanId());
+        plan.updatePlanDay(request.getChangeDay());
     }
 }

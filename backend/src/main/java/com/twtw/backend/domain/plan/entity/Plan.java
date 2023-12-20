@@ -114,6 +114,10 @@ public class Plan implements Auditable {
         this.group.updateMemberLocation(member, longitude, latitude);
     }
 
+    public void updatePlanDay(LocalDateTime changeDay){
+        this.planDay = changeDay;
+    }
+
     public UUID getPlanMakerId() {
         return this.planMembers.stream()
                 .filter(PlanMember::getIsPlanMaker)

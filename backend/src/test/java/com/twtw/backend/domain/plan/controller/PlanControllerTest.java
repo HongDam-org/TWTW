@@ -17,6 +17,7 @@ import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
+import com.twtw.backend.domain.plan.dto.request.UpdatePlanDayRequest;
 import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
 import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
@@ -316,6 +317,34 @@ class PlanControllerTest extends RestDocsTest {
         // docs
         perform.andDo(print())
                 .andDo(document("get all plans", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("계획 날짜 업데이트 API가 수행되는가")
+    void updatePlanDay() throws Exception {
+        // given
+        willDoNothing().given(planService).updatePlanDay(any());
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/plans/day")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        toRequestBody(
+                                                new UpdatePlanDayRequest(
+                                                      UUID.randomUUID(),
+                                                      LocalDateTime.of(2023,12,25,13,30)
+                                                )))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isNoContent());
+
+        // docs
+        perform.andDo(print())
+                .andDo(document("post update plan day", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test
