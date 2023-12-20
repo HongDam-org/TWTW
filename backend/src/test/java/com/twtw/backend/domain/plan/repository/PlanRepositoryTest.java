@@ -38,7 +38,9 @@ class PlanRepositoryTest extends RepositoryTest {
         final Member member = memberRepository.save(MemberEntityFixture.LOGIN_MEMBER.toEntity());
         final Plan plan =
                 PlanEntityFixture.FIRST_PLACE.toEntity(
-                        member, GroupEntityFixture.BTS_GROUP.toEntity(member), LocalDateTime.of(2023,12,25,13,30));
+                        member,
+                        GroupEntityFixture.BTS_GROUP.toEntity(member),
+                        LocalDateTime.of(2023, 12, 25, 13, 30));
 
         // when
         final UUID expected = planRepository.save(plan).getId();
@@ -59,7 +61,15 @@ class PlanRepositoryTest extends RepositoryTest {
 
         final Group group = new Group("그룹", "http://abcdefg", member);
 
-        final UUID planId = planRepository.save(new Plan(member, place, group,LocalDateTime.of(2023,12,25,13,30))).getId();
+        final UUID planId =
+                planRepository
+                        .save(
+                                new Plan(
+                                        member,
+                                        place,
+                                        group,
+                                        LocalDateTime.of(2023, 12, 25, 13, 30)))
+                        .getId();
 
         // when
         planRepository.deleteById(planId);
@@ -89,8 +99,16 @@ class PlanRepositoryTest extends RepositoryTest {
 
         final Group group = new Group("그룹", "http://abcdefg", member);
 
-        final Plan plan = planRepository.save(new Plan(member, firstPlace, group,LocalDateTime.of(2023,12,25,13,30)));
-        planRepository.save(new Plan(member, secondPlace, new Group("1", "2", member),LocalDateTime.of(2023,12,26,13,30)));
+        final Plan plan =
+                planRepository.save(
+                        new Plan(
+                                member, firstPlace, group, LocalDateTime.of(2023, 12, 25, 13, 30)));
+        planRepository.save(
+                new Plan(
+                        member,
+                        secondPlace,
+                        new Group("1", "2", member),
+                        LocalDateTime.of(2023, 12, 26, 13, 30)));
         plan.addMember(firstMember);
         plan.addMember(secondMember);
 

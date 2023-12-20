@@ -42,7 +42,7 @@ class GroupRepositoryTest extends RepositoryTest {
 
         Place place = PlaceEntityFixture.FIRST_PLACE.toEntity();
 
-        Plan plan = new Plan(member1, place, group, LocalDateTime.of(2023,12,25,13,30));
+        Plan plan = new Plan(member1, place, group, LocalDateTime.of(2023, 12, 25, 13, 30));
         plan.addMember(member2);
 
         // when
@@ -87,7 +87,7 @@ class GroupRepositoryTest extends RepositoryTest {
 
         Place place = PlaceEntityFixture.FIRST_PLACE.toEntity();
 
-        Plan plan = new Plan(member1, place, group,LocalDateTime.of(2023,12,25,13,30));
+        Plan plan = new Plan(member1, place, group, LocalDateTime.of(2023, 12, 25, 13, 30));
         plan.addMember(member2);
 
         // when

@@ -107,7 +107,7 @@ class PlanControllerTest extends RestDocsTest {
                                         toRequestBody(
                                                 new SavePlanRequest(
                                                         UUID.randomUUID(),
-                                                        LocalDateTime.of(2023,12,25,15,30),
+                                                        LocalDateTime.of(2023, 12, 25, 15, 30),
                                                         new PlaceDetails(
                                                                 "카페 온마이마인드",
                                                                 "https://place.map.kakao.com/1625295668",
@@ -210,7 +210,7 @@ class PlanControllerTest extends RestDocsTest {
                                         toRequestBody(
                                                 new SavePlanRequest(
                                                         UUID.randomUUID(),
-                                                        LocalDateTime.of(2023,12,25,13,30),
+                                                        LocalDateTime.of(2023, 12, 25, 13, 30),
                                                         new PlaceDetails(
                                                                 "이디야커피 안성죽산점",
                                                                 "http://place.map.kakao.com/1562566188",

@@ -33,7 +33,7 @@ public interface PlanMapper {
     @Mapping(target = "planMakerId", source = "plan.planMakerId")
     @Mapping(target = "groupInfo", source = "groupInfoResponse")
     @Mapping(target = "members", source = "memberResponses")
-    @Mapping(target = "planDay",source = "planDay")
+    @Mapping(target = "planDay", source = "planDay")
     PlanInfoResponse toPlanInfoResponse(
             Plan plan,
             PlaceClientDetails placeDetails,

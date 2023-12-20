@@ -15,7 +15,12 @@ import java.util.UUID;
 @AllArgsConstructor
 public class SavePlanRequest {
     private UUID groupId;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm", timezone = "Asia/Seoul")
+
+    @JsonFormat(
+            shape = JsonFormat.Shape.STRING,
+            pattern = "yyyy-MM-dd HH:mm",
+            timezone = "Asia/Seoul")
     private LocalDateTime planDay;
+
     private PlaceDetails placeDetails;
 }

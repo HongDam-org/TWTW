@@ -59,7 +59,9 @@ class PlanServiceTest extends LoginTest {
         final PlanResponse planResponse =
                 planService.savePlan(
                         new SavePlanRequest(
-                                groupId, LocalDateTime.of(2023,12,25,15,30), PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails()));
+                                groupId,
+                                LocalDateTime.of(2023, 12, 25, 15, 30),
+                                PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails()));
 
         // then
         final Optional<Plan> result = planRepository.findById(planResponse.getPlanId());
@@ -77,7 +79,7 @@ class PlanServiceTest extends LoginTest {
                                 member,
                                 PlaceEntityFixture.FIRST_PLACE.toEntity(),
                                 GroupEntityFixture.BTS_GROUP.toEntity(loginUser),
-                                LocalDateTime.of(2023,12,25,15,30)));
+                                LocalDateTime.of(2023, 12, 25, 15, 30)));
         final UUID planId = plan.getId();
 
         // when
@@ -94,7 +96,9 @@ class PlanServiceTest extends LoginTest {
         // given
         final Plan plan =
                 PlanEntityFixture.SECOND_PLACE.toEntity(
-                        loginUser, GroupEntityFixture.HDJ_GROUP.toEntity(loginUser),LocalDateTime.of(2023,12,25,13,30));
+                        loginUser,
+                        GroupEntityFixture.HDJ_GROUP.toEntity(loginUser),
+                        LocalDateTime.of(2023, 12, 25, 13, 30));
         final UUID planId = planRepository.save(plan).getId();
 
         // when
@@ -116,7 +120,7 @@ class PlanServiceTest extends LoginTest {
                                         loginUser,
                                         PlaceEntityFixture.SECOND_PLACE.toEntity(),
                                         GroupEntityFixture.HDJ_GROUP.toEntity(loginUser),
-                                        LocalDateTime.of(2023,12,25,15,30)))
+                                        LocalDateTime.of(2023, 12, 25, 15, 30)))
                         .getId();
 
         // when
@@ -137,7 +141,7 @@ class PlanServiceTest extends LoginTest {
                                         loginUser,
                                         PlaceEntityFixture.SECOND_PLACE.toEntity(),
                                         GroupEntityFixture.HDJ_GROUP.toEntity(loginUser),
-                                        LocalDateTime.of(2023,12,25,15,30)))
+                                        LocalDateTime.of(2023, 12, 25, 15, 30)))
                         .getId();
 
         // when

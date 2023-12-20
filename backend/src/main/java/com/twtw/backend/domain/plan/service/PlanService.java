@@ -78,7 +78,7 @@ public class PlanService {
         Member member = authService.getMemberByJwt();
         Group group = groupService.getGroupEntity(request.getGroupId());
         Place place = placeService.getEntityByDetail(request.getPlaceDetails());
-        Plan plan = new Plan(member, place, group,request.getPlanDay());
+        Plan plan = new Plan(member, place, group, request.getPlanDay());
 
         return planMapper.toPlanResponse(planRepository.save(plan));
     }
@@ -109,7 +109,8 @@ public class PlanService {
         String planDay = plan.getPlanDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         List<MemberResponse> memberResponse = toMemberResponse(plan);
 
-        return planMapper.toPlanInfoResponse(plan, placeDetails, planDay, groupInfo, memberResponse);
+        return planMapper.toPlanInfoResponse(
+                plan, placeDetails, planDay, groupInfo, memberResponse);
     }
 
     public void deletePlan(UUID id) {
