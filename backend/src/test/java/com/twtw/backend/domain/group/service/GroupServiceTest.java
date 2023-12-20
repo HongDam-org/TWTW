@@ -149,4 +149,25 @@ class GroupServiceTest extends LoginTest {
         // then
         assertThat(responses).hasSize(2);
     }
+
+    @Test
+    @DisplayName("GroupId를 통한 Group 조회가 성공적인가")
+    void getGroupById(){
+        // given
+        Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
+
+        Group group1 = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
+
+        GroupMember groupMember1 = new GroupMember(group1, loginUser);
+
+        group1.getGroupMembers().add(groupMember1);
+
+        Group saveGroup1 = groupRepository.save(group1);
+        // when
+
+        GroupInfoResponse response = groupService.getGroupById(saveGroup1.getId());
+
+        // then
+        assertThat(response.getGroupMembers()).hasSize(2);
+    }
 }
