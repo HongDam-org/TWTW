@@ -30,6 +30,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
@@ -77,7 +78,7 @@ public class PlanService {
         Member member = authService.getMemberByJwt();
         Group group = groupService.getGroupEntity(request.getGroupId());
         Place place = placeService.getEntityByDetail(request.getPlaceDetails());
-        Plan plan = new Plan(member, place, group);
+        Plan plan = new Plan(member, place, group,request.getPlanDay());
 
         return planMapper.toPlanResponse(planRepository.save(plan));
     }
@@ -105,10 +106,10 @@ public class PlanService {
     private PlanInfoResponse getPlanInfoResponse(final Plan plan) {
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
         PlaceClientDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
-
+        String planDay = plan.getPlanDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
         List<MemberResponse> memberResponse = toMemberResponse(plan);
 
-        return planMapper.toPlanInfoResponse(plan, placeDetails, groupInfo, memberResponse);
+        return planMapper.toPlanInfoResponse(plan, placeDetails, planDay, groupInfo, memberResponse);
     }
 
     public void deletePlan(UUID id) {

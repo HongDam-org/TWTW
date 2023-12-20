@@ -8,6 +8,8 @@ import com.twtw.backend.fixture.place.PlaceEntityFixture;
 
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @RequiredArgsConstructor
 public enum PlanEntityFixture {
     FIRST_PLACE(PlaceEntityFixture.FIRST_PLACE.toEntity()),
@@ -15,7 +17,7 @@ public enum PlanEntityFixture {
 
     private final Place place;
 
-    public Plan toEntity(final Member member, final Group group) {
-        return new Plan(member, place, group);
+    public Plan toEntity(final Member member, final Group group, final LocalDateTime planDay) {
+        return new Plan(member, place, group, planDay);
     }
 }
