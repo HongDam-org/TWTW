@@ -141,7 +141,13 @@ class PlanControllerTest extends RestDocsTest {
                                 127.420430538256,
                                 37.0766874564297),
                         new GroupInfoResponse(
-                                UUID.randomUUID(), UUID.randomUUID(), "홍담진", "http://someUrlToS3"),
+                                UUID.randomUUID(),
+                                UUID.randomUUID(),
+                                "홍담진",
+                                "http://someUrlToS3",
+                                List.of(
+                                        new MemberResponse(UUID.randomUUID(), "카즈하"),
+                                        new MemberResponse(UUID.randomUUID(), "사쿠라"))),
                         List.of(new MemberResponse(UUID.randomUUID(), "진호정")));
         given(planService.getPlanById(any())).willReturn(expected);
 
@@ -263,7 +269,10 @@ class PlanControllerTest extends RestDocsTest {
                                         UUID.randomUUID(),
                                         UUID.randomUUID(),
                                         "홍담진",
-                                        "http://someUrlToS3"),
+                                        "http://someUrlToS3",
+                                        List.of(
+                                                new MemberResponse(UUID.randomUUID(), "카즈하"),
+                                                new MemberResponse(UUID.randomUUID(), "사쿠라"))),
                                 List.of(new MemberResponse(UUID.randomUUID(), "진호정"))),
                         new PlanInfoResponse(
                                 UUID.randomUUID(),
@@ -279,7 +288,10 @@ class PlanControllerTest extends RestDocsTest {
                                         UUID.randomUUID(),
                                         UUID.randomUUID(),
                                         "HongDamJin",
-                                        "http://someUrlToS3"),
+                                        "http://someUrlToS3",
+                                        List.of(
+                                                new MemberResponse(UUID.randomUUID(), "카즈하"),
+                                                new MemberResponse(UUID.randomUUID(), "사쿠라"))),
                                 List.of(new MemberResponse(UUID.randomUUID(), "JinHoJeong"))));
 
         given(planService.getPlans()).willReturn(expected);

@@ -5,6 +5,7 @@ import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
+import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 
 import org.mapstruct.IterableMapping;
@@ -21,7 +22,17 @@ public interface GroupMapper {
     @Mapping(target = "groupImage", source = "groupDto.groupImage")
     Group toGroupEntity(MakeGroupRequest groupDto, Member leader);
 
+    @Named("groupMemberToMemberResponse")
+    @Mapping(target = "id", source = "groupMember.member.id")
+    @Mapping(target = "nickname", source = "groupMember.member.nickname")
+    MemberResponse toGroupMemberResponse(GroupMember groupMember);
+
+    @Named("groupMemberToMemberResponseList")
+    @IterableMapping(qualifiedByName = "groupMemberToMemberResponse")
+    List<MemberResponse> toGroupMemberResponseList(List<GroupMember> groupMemberList);
+
     @Mapping(target = "groupId", source = "id")
+    @Mapping(target = "groupMembers", qualifiedByName = "groupMemberToMemberResponseList")
     GroupInfoResponse toGroupInfo(Group group);
 
     @Mapping(target = "groupId", source = "group.id")
