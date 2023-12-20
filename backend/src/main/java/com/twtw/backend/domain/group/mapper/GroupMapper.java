@@ -23,8 +23,8 @@ public interface GroupMapper {
     Group toGroupEntity(MakeGroupRequest groupDto, Member leader);
 
     @Named("groupMemberToMemberResponse")
-    @Mapping(target = "id",source = "groupMember.member.id")
-    @Mapping(target = "nickname",source = "groupMember.member.nickname")
+    @Mapping(target = "id", source = "groupMember.member.id")
+    @Mapping(target = "nickname", source = "groupMember.member.nickname")
     MemberResponse toGroupMemberResponse(GroupMember groupMember);
 
     @Named("groupMemberToMemberResponseList")

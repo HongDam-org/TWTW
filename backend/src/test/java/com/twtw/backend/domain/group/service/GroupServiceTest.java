@@ -152,7 +152,7 @@ class GroupServiceTest extends LoginTest {
 
     @Test
     @DisplayName("GroupId를 통한 Group 조회가 성공적인가")
-    void getGroupById(){
+    void getGroupById() {
         // given
         Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 

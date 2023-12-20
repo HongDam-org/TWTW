@@ -52,10 +52,8 @@ class GroupControllerTest extends RestDocsTest {
                         "HDJ",
                         "GROUP-IMAGE",
                         List.of(
-                                new MemberResponse(UUID.randomUUID(),"DEAN"),
-                                new MemberResponse(UUID.randomUUID(),"ZION-T")
-                        )
-                        );
+                                new MemberResponse(UUID.randomUUID(), "DEAN"),
+                                new MemberResponse(UUID.randomUUID(), "ZION-T")));
         given(groupService.getGroupById(UUID.fromString("550e8400-e29b-41d4-a716-446655440000")))
                 .willReturn(expected);
 
@@ -83,9 +81,8 @@ class GroupControllerTest extends RestDocsTest {
                         "HDJ",
                         "GROUP-IMAGE",
                         List.of(
-                                new MemberResponse(UUID.randomUUID(),"DEAN"),
-                                new MemberResponse(UUID.randomUUID(),"ZION-T")
-                        ));
+                                new MemberResponse(UUID.randomUUID(), "DEAN"),
+                                new MemberResponse(UUID.randomUUID(), "ZION-T")));
         given(groupService.makeGroup(any())).willReturn(expected);
 
         final ResultActions perform =
@@ -138,10 +135,13 @@ class GroupControllerTest extends RestDocsTest {
         // given
         final GroupInfoResponse expected =
                 new GroupInfoResponse(
-                        UUID.randomUUID(), UUID.randomUUID(), "홍담진", "http://someUrlToS3",List.of(
-                        new MemberResponse(UUID.randomUUID(),"DEAN"),
-                        new MemberResponse(UUID.randomUUID(),"ZION-T")
-                ));
+                        UUID.randomUUID(),
+                        UUID.randomUUID(),
+                        "홍담진",
+                        "http://someUrlToS3",
+                        List.of(
+                                new MemberResponse(UUID.randomUUID(), "DEAN"),
+                                new MemberResponse(UUID.randomUUID(), "ZION-T")));
         given(groupService.inviteGroup(any())).willReturn(expected);
 
         // when
@@ -265,15 +265,23 @@ class GroupControllerTest extends RestDocsTest {
         List<GroupInfoResponse> responseList = new ArrayList<>();
 
         GroupInfoResponse response1 =
-                new GroupInfoResponse(UUID.randomUUID(), leaderId, "BLACK_PINK", "I_LOVE_YOU_LOSE",List.of(
-                        new MemberResponse(UUID.randomUUID(),"LISA"),
-                        new MemberResponse(UUID.randomUUID(),"제니")
-                ));
+                new GroupInfoResponse(
+                        UUID.randomUUID(),
+                        leaderId,
+                        "BLACK_PINK",
+                        "I_LOVE_YOU_LOSE",
+                        List.of(
+                                new MemberResponse(UUID.randomUUID(), "LISA"),
+                                new MemberResponse(UUID.randomUUID(), "제니")));
         GroupInfoResponse response2 =
-                new GroupInfoResponse(UUID.randomUUID(), leaderId, "LE_SSERAFIM", "I_LOVE_YOU_채원",List.of(
-                        new MemberResponse(UUID.randomUUID(),"카즈하"),
-                        new MemberResponse(UUID.randomUUID(),"사쿠라")
-                ));
+                new GroupInfoResponse(
+                        UUID.randomUUID(),
+                        leaderId,
+                        "LE_SSERAFIM",
+                        "I_LOVE_YOU_채원",
+                        List.of(
+                                new MemberResponse(UUID.randomUUID(), "카즈하"),
+                                new MemberResponse(UUID.randomUUID(), "사쿠라")));
 
         responseList.add(response1);
         responseList.add(response2);
