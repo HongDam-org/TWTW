@@ -12,21 +12,21 @@ import java.io.IOException;
 
 @Configuration
 public class FcmConfig {
-    private final ClassPathResource firebaseResource = new ClassPathResource(
+    private static final ClassPathResource FIREBASE_RESOURCE = new ClassPathResource(
             "backend/src/main/resources/firebase/twtw_firebase_key.json"
     );
 
     @Bean
-    FirebaseApp firebaseApp() throws IOException {
+    public FirebaseApp firebaseApp() throws IOException {
         FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(firebaseResource.getInputStream()))
+                .setCredentials(GoogleCredentials.fromStream(FIREBASE_RESOURCE.getInputStream()))
                 .build();
 
         return FirebaseApp.initializeApp(options);
     }
 
     @Bean
-    FirebaseMessaging firebaseMessaging() throws IOException {
+    public FirebaseMessaging firebaseMessaging() throws IOException {
         return FirebaseMessaging.getInstance(firebaseApp());
     }
 }
