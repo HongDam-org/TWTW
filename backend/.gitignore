@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 .env
 backend/src/main/resources/application-oauth.yml
-
+backend/src/main/resources/firebase/twtw_firebase_key.json
 ### STS ###
 .apt_generated
 .classpath

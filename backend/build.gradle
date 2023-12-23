@@ -58,6 +58,7 @@ dependencies {
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	implementation 'org.springframework.cloud:spring-cloud-gcp-starter:1.2.5.RELEASE'
 	implementation 'org.springframework.cloud:spring-cloud-gcp-storage:1.2.5.RELEASE'
+	implementation 'com.google.firebase:firebase-admin:6.8.1'
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
