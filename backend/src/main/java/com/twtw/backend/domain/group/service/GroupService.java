@@ -16,6 +16,7 @@ import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
+import com.twtw.backend.domain.notification.service.FcmService;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
@@ -34,17 +35,21 @@ public class GroupService {
     private final MemberService memberService;
     private final GroupMapper groupMapper;
 
+    private final FcmService fcmService;
+
     public GroupService(
             GroupRepository groupRepository,
             GroupMemberRepository groupMemberRepository,
             AuthService authService,
             MemberService memberService,
-            GroupMapper groupMapper) {
+            GroupMapper groupMapper,
+            FcmService fcmService) {
         this.groupRepository = groupRepository;
         this.groupMemberRepository = groupMemberRepository;
         this.authService = authService;
         this.memberService = memberService;
         this.groupMapper = groupMapper;
+        this.fcmService = fcmService;
     }
 
     public GroupInfoResponse getGroupById(UUID groupId) {
@@ -115,6 +120,8 @@ public class GroupService {
         List<Member> friends =
                 memberService.getMembersByIds(inviteGroupRequest.getFriendMemberIds());
         group.inviteAll(friends);
+
+        // invite push Alert
 
         return groupMapper.toGroupInfo(group);
     }

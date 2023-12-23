@@ -26,12 +26,11 @@ public class PathServiceTest extends LoginTest {
                         SearchPathOption.TRAFAST,
                         SearchPathFuel.DIESEL,
                         1);
-        // when
 
+        // when
         // SearchCarPathResponse response = pathService.searchCarPath(request);
 
         // then
-
         // assertThat(response.getCode()).isEqualTo(0);
     }
 
