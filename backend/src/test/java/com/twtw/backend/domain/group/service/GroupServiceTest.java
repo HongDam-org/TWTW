@@ -1,5 +1,7 @@
 package com.twtw.backend.domain.group.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
@@ -13,13 +15,12 @@ import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("GroupService의")
 class GroupServiceTest extends LoginTest {

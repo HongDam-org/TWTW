@@ -85,7 +85,9 @@ public class Group implements Auditable {
     }
 
     private boolean hasSameMember(final GroupMember groupMember) {
-        return this.groupMembers.stream().map(GroupMember::getMember).anyMatch(groupMember::isSameMember);
+        return this.groupMembers.stream()
+                .map(GroupMember::getMember)
+                .anyMatch(groupMember::isSameMember);
     }
 
     public void updateMemberLocation(
