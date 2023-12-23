@@ -11,15 +11,16 @@ import org.springframework.stereotype.Service;
 public class FcmService {
     private final FirebaseMessaging firebaseMessaging;
 
-    public FcmService(FirebaseMessaging firebaseMessaging){
+    public FcmService(FirebaseMessaging firebaseMessaging) {
         this.firebaseMessaging = firebaseMessaging;
     }
 
     public void sendNotification(NotificationRequest request) throws FirebaseMessagingException {
-        Message message = Message.builder()
-                .setToken(request.getDeviceToken())
-                .setNotification(request.toNotification())
-                .build();
+        Message message =
+                Message.builder()
+                        .setToken(request.getDeviceToken())
+                        .setNotification(request.toNotification())
+                        .build();
 
         firebaseMessaging.send(message);
     }

@@ -37,7 +37,6 @@ public class GroupService {
 
     private final FcmService fcmService;
 
-
     public GroupService(
             GroupRepository groupRepository,
             GroupMemberRepository groupMemberRepository,
