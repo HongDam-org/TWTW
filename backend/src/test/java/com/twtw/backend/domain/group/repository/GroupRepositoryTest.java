@@ -1,7 +1,5 @@
 package com.twtw.backend.domain.group.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
@@ -12,13 +10,14 @@ import com.twtw.backend.fixture.group.GroupEntityFixture;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.support.repository.RepositoryTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("GroupRepository의")
 class GroupRepositoryTest extends RepositoryTest {
@@ -49,7 +48,7 @@ class GroupRepositoryTest extends RepositoryTest {
         final Group saveGroup = groupRepository.save(group);
 
         // then
-        assertThat(saveGroup.getGroupMembers()).hasSize(2);
+        assertThat(saveGroup.getGroupMembers()).hasSize(1);
     }
 
     @Test

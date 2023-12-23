@@ -53,9 +53,21 @@ public class PlanController {
         return ResponseEntity.noContent().build();
     }
 
+    @PostMapping("/invite")
+    public ResponseEntity<PlanResponse> invitePlan(@RequestBody PlanMemberRequest request) {
+        return ResponseEntity.ok(planService.invitePlan(request));
+    }
+
+    @DeleteMapping("/invite")
+    public ResponseEntity<Void> deleteInvite(@RequestBody PlanMemberRequest request) {
+        planService.deleteInvite(request);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping("/join")
-    public ResponseEntity<PlanResponse> joinPlan(@RequestBody PlanMemberRequest request) {
-        return ResponseEntity.ok(planService.joinPlan(request));
+    public ResponseEntity<Void> joinPlan(@RequestBody PlanMemberRequest request) {
+        planService.joinPlan(request);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/out")

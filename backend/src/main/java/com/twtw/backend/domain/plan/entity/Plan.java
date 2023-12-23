@@ -8,31 +8,18 @@ import com.twtw.backend.domain.plan.exception.PlanMakerNotExistsException;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Getter
 @Entity
@@ -74,11 +61,22 @@ public class Plan implements Auditable {
     }
 
     public void addMember(final Member member) {
+        if (hasSameMember(member)) {
+            return;
+        }
         this.planMembers.add(new PlanMember(this, member, false));
     }
 
+    private boolean hasSameMember(final Member member) {
+        return this.planMembers.stream().anyMatch(planMember -> planMember.isSameMember(member));
+    }
+
+    public Set<PlanMember> getPlanMembers() {
+        return this.planMembers.stream().filter(PlanMember::isAccepted).collect(Collectors.toSet());
+    }
+
     public void deleteMember(final Member member) {
-        this.planMembers.removeIf(planMember -> planMember.hasSameMember(member));
+        this.planMembers.removeIf(planMember -> planMember.isSameMember(member));
 
         if (hasNoPlanMaker()) {
             this.planMembers.stream().findFirst().ifPresent(PlanMember::updateToPlanMaker);
@@ -125,5 +123,16 @@ public class Plan implements Auditable {
                 .orElseThrow(PlanMakerNotExistsException::new)
                 .getMember()
                 .getId();
+    }
+
+    public void acceptInvite(final Member member) {
+        this.planMembers.stream()
+                .filter(planMember -> planMember.isSameMember(member))
+                .findFirst()
+                .ifPresent(PlanMember::acceptInvite);
+    }
+
+    public void deleteInvite(final Member member) {
+        this.planMembers.removeIf(planMember -> planMember.isSameMember(member));
     }
 }

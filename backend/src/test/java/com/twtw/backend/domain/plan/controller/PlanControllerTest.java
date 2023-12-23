@@ -1,17 +1,5 @@
 package com.twtw.backend.domain.plan.controller;
 
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
@@ -25,7 +13,6 @@ import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.service.PlanService;
 import com.twtw.backend.support.docs.RestDocsTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -36,6 +23,17 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("PlanController의")
 @WebMvcTest(PlanController.class)
@@ -196,11 +194,10 @@ class PlanControllerTest extends RestDocsTest {
     }
 
     @Test
-    @DisplayName("계획 참여 API가 수행되는가")
+    @DisplayName("계획 초대 API가 수행되는가")
     void joinPlan() throws Exception {
         // given
-        final PlanResponse expected = new PlanResponse(UUID.randomUUID(), UUID.randomUUID());
-        given(planService.joinPlan(any())).willReturn(expected);
+        willDoNothing().given(planService).joinPlan(any());
 
         // when
         final ResultActions perform =
@@ -209,26 +206,67 @@ class PlanControllerTest extends RestDocsTest {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(
                                         toRequestBody(
-                                                new SavePlanRequest(
-                                                        UUID.randomUUID(),
-                                                        LocalDateTime.of(2023, 12, 25, 13, 30),
-                                                        new PlaceDetails(
-                                                                "이디야커피 안성죽산점",
-                                                                "http://place.map.kakao.com/1562566188",
-                                                                "경기 안성시 죽산면 죽주로 287-1",
-                                                                127.426865189637,
-                                                                37.0764635355795))))
+                                                new PlanMemberRequest(UUID.randomUUID())))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
         // then
-        perform.andExpect(status().isOk())
-                .andExpect(jsonPath("$.planId").isString())
-                .andExpect(jsonPath("$.groupId").isString());
+        perform.andExpect(status().isNoContent());
 
         // docs
         perform.andDo(print())
                 .andDo(document("post join plan", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("계획 참여 API가 수행되는가")
+    void invitePlan() throws Exception {
+        // given
+        final PlanResponse expected = new PlanResponse(UUID.randomUUID(), UUID.randomUUID());
+        given(planService.invitePlan(any())).willReturn(expected);
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/plans/invite")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        toRequestBody(
+                                                new PlanMemberRequest(UUID.randomUUID())))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isOk());
+
+        // docs
+        perform.andDo(print())
+                .andDo(document("post invite plan", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("계획 초대 삭제 API가 수행되는가")
+    void deleteInvite() throws Exception {
+        // given
+        willDoNothing().given(planService).deletePlan(any());
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        delete("/plans/invite")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        toRequestBody(
+                                                new PlanMemberRequest(UUID.randomUUID())))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+        // then
+        perform.andExpect(status().isNoContent());
+
+        // docs
+        perform.andDo(print())
+                .andDo(document("delete plan invite", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test

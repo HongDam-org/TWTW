@@ -1,7 +1,5 @@
 package com.twtw.backend.domain.group.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
@@ -15,12 +13,13 @@ import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("GroupService의")
 class GroupServiceTest extends LoginTest {
@@ -158,9 +157,7 @@ class GroupServiceTest extends LoginTest {
 
         Group group1 = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
 
-        GroupMember groupMember1 = new GroupMember(group1, loginUser);
-
-        group1.getGroupMembers().add(groupMember1);
+        group1.inviteAll(List.of(loginUser));
 
         Group saveGroup1 = groupRepository.save(group1);
         // when
@@ -168,6 +165,6 @@ class GroupServiceTest extends LoginTest {
         GroupInfoResponse response = groupService.getGroupById(saveGroup1.getId());
 
         // then
-        assertThat(response.getGroupMembers()).hasSize(2);
+        assertThat(response.getGroupMembers()).hasSize(1);
     }
 }

@@ -1,30 +1,12 @@
 package com.twtw.backend.domain.group.controller;
 
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
-import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
-import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
-import com.twtw.backend.domain.group.dto.request.OutGroupRequest;
-import com.twtw.backend.domain.group.dto.request.UpdateLocationRequest;
+import com.twtw.backend.domain.group.dto.request.*;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.support.docs.RestDocsTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -35,6 +17,17 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("GroupController의")
 @WebMvcTest(GroupController.class)
@@ -166,6 +159,30 @@ class GroupControllerTest extends RestDocsTest {
         // docs
         perform.andDo(print())
                 .andDo(document("post invite group", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("그룹 초대 삭제 API가 수행되는가")
+    void deleteInvite() throws Exception {
+        // given
+        willDoNothing().given(groupService).deleteInvite(any());
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        delete("/group/invite")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(toRequestBody(new DeleteGroupInviteRequest(UUID.randomUUID())))
+                                .header(
+                                        "Authorization",
+                                        "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
+
+        // then
+        perform.andExpect(status().isNoContent());
+
+        // docs
+        perform.andDo(print())
+                .andDo(document("delete group invite", getDocumentRequest(), getDocumentResponse()));
     }
 
     @Test

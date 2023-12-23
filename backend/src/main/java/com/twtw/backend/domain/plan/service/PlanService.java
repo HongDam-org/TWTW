@@ -84,7 +84,8 @@ public class PlanService {
         return planMapper.toPlanResponse(planRepository.save(plan));
     }
 
-    public PlanResponse joinPlan(PlanMemberRequest request) {
+    @Transactional
+    public PlanResponse invitePlan(PlanMemberRequest request) {
         Member member = authService.getMemberByJwt();
         Plan plan = getPlanEntity(request.getPlanId());
         plan.addMember(member);
@@ -148,5 +149,19 @@ public class PlanService {
     public void updatePlanDay(final UpdatePlanDayRequest request) {
         final Plan plan = getPlanEntity(request.getPlanId());
         plan.updatePlanDay(request.getChangeDay());
+    }
+
+    @Transactional
+    public void joinPlan(final PlanMemberRequest request) {
+        Member member = authService.getMemberByJwt();
+        Plan plan = getPlanEntity(request.getPlanId());
+        plan.acceptInvite(member);
+    }
+
+    @Transactional
+    public void deleteInvite(final PlanMemberRequest request) {
+        Member member = authService.getMemberByJwt();
+        Plan plan = getPlanEntity(request.getPlanId());
+        plan.deleteInvite(member);
     }
 }

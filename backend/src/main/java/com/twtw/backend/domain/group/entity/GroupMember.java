@@ -102,4 +102,8 @@ public class GroupMember implements Auditable {
     public boolean isLeader() {
         return this.group.getLeaderId().equals(this.member.getId());
     }
+
+    public boolean isAccepted() {
+        return this.groupInviteCode == GroupInviteCode.ACCEPTED;
+    }
 }
