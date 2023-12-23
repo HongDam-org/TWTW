@@ -5,7 +5,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.twtw.backend.global.properties.FirebaseProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -20,12 +22,13 @@ public class FcmConfig {
 
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
-        FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(
-                        GoogleCredentials.fromStream(
-                                new ClassPathResource(firebaseProperties.getLocation())
-                                        .getInputStream()))
-                .build();
+        FirebaseOptions options =
+                new FirebaseOptions.Builder()
+                        .setCredentials(
+                                GoogleCredentials.fromStream(
+                                        new ClassPathResource(firebaseProperties.getLocation())
+                                                .getInputStream()))
+                        .build();
 
         if (FirebaseApp.getApps().isEmpty()) {
             return FirebaseApp.initializeApp(options);
