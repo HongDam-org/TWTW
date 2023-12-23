@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
     TmapProperties.class,
     RabbitMQProperties.class,
     RedisProperties.class,
-    StorageProperties.class
+    StorageProperties.class,
+    FirebaseProperties.class
 })
 public class PropertiesConfig {}
