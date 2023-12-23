@@ -1,10 +1,6 @@
 package com.twtw.backend.domain.group.service;
 
-import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
-import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
-import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
-import com.twtw.backend.domain.group.dto.request.OutGroupRequest;
-import com.twtw.backend.domain.group.dto.request.UpdateLocationRequest;
+import com.twtw.backend.domain.group.dto.request.*;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
@@ -154,5 +150,12 @@ public class GroupService {
         final Member member = authService.getMemberByJwt();
         final Group group = getGroupEntity(outGroupRequest.getGroupId());
         group.outGroup(member);
+    }
+
+    @Transactional
+    public void deleteInvite(final DeleteGroupInviteRequest deleteGroupInviteRequest) {
+        final Member member = authService.getMemberByJwt();
+        final Group group = getGroupEntity(deleteGroupInviteRequest.getGroupId());
+        group.deleteInvite(member);
     }
 }

@@ -17,8 +17,14 @@ operation::get plan[snippets='http-request,http-response']
 === 계획 삭제
 operation::delete plan[snippets='http-request,http-response']
 
+=== 계획 초대
+operation::post invite plan[snippets='http-request,http-response']
+
 === 계획 참여
 operation::post join plan[snippets='http-request,http-response']
+
+=== 계획 초대 삭제
+operation::delete plan invite[snippets='http-request,http-response']
 
 === 계획 탈퇴
 operation::post out plan[snippets='http-request,http-response']

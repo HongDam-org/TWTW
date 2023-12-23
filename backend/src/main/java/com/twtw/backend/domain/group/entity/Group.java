@@ -73,8 +73,21 @@ public class Group implements Auditable {
         friends.forEach(friend -> addGroupMember(new GroupMember(this, friend)));
     }
 
-    private boolean addGroupMember(final GroupMember groupMember) {
-        return this.groupMembers.add(groupMember);
+    public List<GroupMember> getGroupMembers() {
+        return this.groupMembers.stream().filter(GroupMember::isAccepted).toList();
+    }
+
+    private void addGroupMember(final GroupMember groupMember) {
+        if (hasSameMember(groupMember)) {
+            return;
+        }
+        this.groupMembers.add(groupMember);
+    }
+
+    private boolean hasSameMember(final GroupMember groupMember) {
+        return this.groupMembers.stream()
+                .map(GroupMember::getMember)
+                .anyMatch(groupMember::isSameMember);
     }
 
     public void updateMemberLocation(
@@ -99,5 +112,9 @@ public class Group implements Auditable {
 
     private boolean hasNoLeader() {
         return this.groupMembers.stream().noneMatch(GroupMember::isLeader);
+    }
+
+    public void deleteInvite(final Member member) {
+        this.groupMembers.removeIf(groupMember -> groupMember.isSameMember(member));
     }
 }

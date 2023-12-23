@@ -158,9 +158,7 @@ class GroupServiceTest extends LoginTest {
 
         Group group1 = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
 
-        GroupMember groupMember1 = new GroupMember(group1, loginUser);
-
-        group1.getGroupMembers().add(groupMember1);
+        group1.inviteAll(List.of(loginUser));
 
         Group saveGroup1 = groupRepository.save(group1);
         // when
@@ -168,6 +166,6 @@ class GroupServiceTest extends LoginTest {
         GroupInfoResponse response = groupService.getGroupById(saveGroup1.getId());
 
         // then
-        assertThat(response.getGroupMembers()).hasSize(2);
+        assertThat(response.getGroupMembers()).hasSize(1);
     }
 }

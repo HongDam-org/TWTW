@@ -83,7 +83,9 @@ class PlanServiceTest extends LoginTest {
         final UUID planId = plan.getId();
 
         // when
-        planService.joinPlan(new PlanMemberRequest(planId));
+        planService.invitePlan(new PlanMemberRequest(planId));
+        plan.acceptInvite(loginUser);
+        plan.acceptInvite(member);
 
         // then
         final Plan result = planRepository.findById(planId).orElseThrow();

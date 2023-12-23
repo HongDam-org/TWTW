@@ -5,15 +5,7 @@ import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -44,6 +36,9 @@ public class PlanMember implements Auditable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @Enumerated(EnumType.STRING)
+    private PlanInviteCode planInviteCode;
+
     private Boolean isPlanMaker;
 
     @Setter
@@ -56,13 +51,22 @@ public class PlanMember implements Auditable {
         this.plan = plan;
         this.member = member;
         this.isPlanMaker = isPlanMaker;
+        this.planInviteCode = PlanInviteCode.REQUESTED;
     }
 
-    public boolean hasSameMember(final Member member) {
+    public boolean isSameMember(final Member member) {
         return this.member.equals(member);
     }
 
     public void updateToPlanMaker() {
         this.isPlanMaker = true;
+    }
+
+    public boolean isAccepted() {
+        return this.planInviteCode == PlanInviteCode.ACCEPTED;
+    }
+
+    public void acceptInvite() {
+        this.planInviteCode = PlanInviteCode.ACCEPTED;
     }
 }

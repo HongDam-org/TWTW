@@ -49,7 +49,7 @@ class GroupRepositoryTest extends RepositoryTest {
         final Group saveGroup = groupRepository.save(group);
 
         // then
-        assertThat(saveGroup.getGroupMembers()).hasSize(2);
+        assertThat(saveGroup.getGroupMembers()).hasSize(1);
     }
 
     @Test
