@@ -13,6 +13,8 @@ spring:
 
   main:
     allow-bean-definition-overriding: true
+  jackson:
+    default-property-inclusion: non_null
 
   datasource:
     driver-class-name: org.h2.Driver

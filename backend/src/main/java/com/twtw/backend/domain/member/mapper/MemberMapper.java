@@ -24,6 +24,10 @@ public interface MemberMapper {
 
     MemberResponse toMemberResponse(Member member);
 
+    default List<MemberResponse> toMemberResponses(List<Member> members) {
+        return members.stream().map(this::toMemberResponse).toList();
+    }
+
     @Named("convertOauth")
     default OAuth2Info convertOauth(OAuthRequest request) {
         return new OAuth2Info(request.getToken(), request.getAuthType());
