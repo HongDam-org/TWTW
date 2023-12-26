@@ -20,5 +20,6 @@ public interface FriendMapper {
 
     @Mapping(target = "memberId", source = "fromMember.id")
     @Mapping(target = "nickname", source = "fromMember.nickname")
+    @Mapping(target = "profileImage", source = "fromMember.profileImage")
     FriendResponse toResponse(Friend friend);
 }

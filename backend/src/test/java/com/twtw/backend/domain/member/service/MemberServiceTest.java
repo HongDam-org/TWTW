@@ -54,7 +54,7 @@ class MemberServiceTest extends LoginTest {
         MemberResponse memberResponse = memberService.getResponseByMember(member);
 
         // then
-        assertThat(memberResponse.getId()).isEqualTo(member.getId());
+        assertThat(memberResponse.getMemberId()).isEqualTo(member.getId());
     }
 
     @Test
@@ -68,6 +68,6 @@ class MemberServiceTest extends LoginTest {
                 memberService.getMemberByNickname(member.getNickname());
 
         // then
-        assertThat(response.getMemberResponse().getId()).isEqualTo(member.getId());
+        assertThat(response.getMemberResponse().getMemberId()).isEqualTo(member.getId());
     }
 }

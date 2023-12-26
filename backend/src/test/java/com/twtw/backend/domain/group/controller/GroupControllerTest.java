@@ -1,17 +1,5 @@
 package com.twtw.backend.domain.group.controller;
 
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.twtw.backend.domain.group.dto.request.*;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
@@ -19,7 +7,6 @@ import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.support.docs.RestDocsTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,6 +17,17 @@ import org.springframework.test.web.servlet.ResultActions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("GroupController의")
 @WebMvcTest(GroupController.class)
@@ -47,8 +45,8 @@ class GroupControllerTest extends RestDocsTest {
                         "HDJ",
                         "GROUP-IMAGE",
                         List.of(
-                                new MemberResponse(UUID.randomUUID(), "DEAN"),
-                                new MemberResponse(UUID.randomUUID(), "ZION-T")));
+                                new MemberResponse(UUID.randomUUID(), "DEAN", "http://hojiniSelfie"),
+                                new MemberResponse(UUID.randomUUID(), "ZION-T", "http://hojiniSelfie")));
         given(groupService.getGroupById(UUID.fromString("550e8400-e29b-41d4-a716-446655440000")))
                 .willReturn(expected);
 
@@ -76,8 +74,8 @@ class GroupControllerTest extends RestDocsTest {
                         "HDJ",
                         "GROUP-IMAGE",
                         List.of(
-                                new MemberResponse(UUID.randomUUID(), "DEAN"),
-                                new MemberResponse(UUID.randomUUID(), "ZION-T")));
+                                new MemberResponse(UUID.randomUUID(), "DEAN", "http://hojiniSelfie"),
+                                new MemberResponse(UUID.randomUUID(), "ZION-T", "http://hojiniSelfie")));
         given(groupService.makeGroup(any())).willReturn(expected);
 
         final ResultActions perform =
@@ -135,8 +133,8 @@ class GroupControllerTest extends RestDocsTest {
                         "홍담진",
                         "http://someUrlToS3",
                         List.of(
-                                new MemberResponse(UUID.randomUUID(), "DEAN"),
-                                new MemberResponse(UUID.randomUUID(), "ZION-T")));
+                                new MemberResponse(UUID.randomUUID(), "DEAN", "http://hojiniSelfie"),
+                                new MemberResponse(UUID.randomUUID(), "ZION-T", "http://hojiniSelfie")));
         given(groupService.inviteGroup(any())).willReturn(expected);
 
         // when
@@ -296,8 +294,8 @@ class GroupControllerTest extends RestDocsTest {
                         "BLACK_PINK",
                         "I_LOVE_YOU_LOSE",
                         List.of(
-                                new MemberResponse(UUID.randomUUID(), "LISA"),
-                                new MemberResponse(UUID.randomUUID(), "제니")));
+                                new MemberResponse(UUID.randomUUID(), "LISA", "http://hojiniSelfieWow"),
+                                new MemberResponse(UUID.randomUUID(), "제니", "http://hojiniSelfieAwesome")));
         GroupInfoResponse response2 =
                 new GroupInfoResponse(
                         UUID.randomUUID(),
@@ -305,8 +303,8 @@ class GroupControllerTest extends RestDocsTest {
                         "LE_SSERAFIM",
                         "I_LOVE_YOU_채원",
                         List.of(
-                                new MemberResponse(UUID.randomUUID(), "카즈하"),
-                                new MemberResponse(UUID.randomUUID(), "사쿠라")));
+                                new MemberResponse(UUID.randomUUID(), "카즈하", "http://hojiniSelfieGreat"),
+                                new MemberResponse(UUID.randomUUID(), "사쿠라", "http://hojiniSelfieGoat")));
 
         responseList.add(response1);
         responseList.add(response2);

@@ -10,6 +10,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 public class MemberResponse {
-    private UUID id;
+    private UUID memberId;
     private String nickname;
+    private String profileImage;
 }

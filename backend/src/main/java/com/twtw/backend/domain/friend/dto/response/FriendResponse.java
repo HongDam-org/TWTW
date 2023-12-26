@@ -12,4 +12,5 @@ import java.util.UUID;
 public class FriendResponse {
     private UUID memberId;
     private String nickname;
+    private String profileImage;
 }

@@ -22,6 +22,9 @@ public interface MemberMapper {
     @Mapping(target = "oauthInfo", source = "oauthRequest", qualifiedByName = "convertOauth")
     Member toMemberEntity(MemberSaveRequest request);
 
+    @Mapping(target = "memberId", source = "member.id")
+    @Mapping(target = "nickname", source = "member.nickname")
+    @Mapping(target = "profileImage", source = "member.profileImage")
     MemberResponse toMemberResponse(Member member);
 
     default List<MemberResponse> toMemberResponses(List<Member> members) {
@@ -36,7 +39,8 @@ public interface MemberMapper {
     @IterableMapping(elementTargetType = MemberResponse.class)
     List<MemberResponse> toMemberResponses(Set<PlanMember> planMembers);
 
-    @Mapping(target = "id", source = "planMember.member.id")
+    @Mapping(target = "memberId", source = "planMember.member.id")
     @Mapping(target = "nickname", source = "planMember.member.nickname")
+    @Mapping(target = "profileImage", source = "planMember.member.profileImage")
     MemberResponse toMemberResponse(PlanMember planMember);
 }
