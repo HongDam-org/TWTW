@@ -17,8 +17,10 @@ public class PlanInfoResponse {
     private UUID planId;
     private UUID placeId;
     private UUID planMakerId;
+    private String name;
     private String planDay;
     private PlaceDetails placeDetails;
     private GroupInfoResponse groupInfo;
     private List<MemberResponse> members;
+    private List<MemberResponse> notJoinedMembers;
 }

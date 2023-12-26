@@ -24,6 +24,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -59,9 +60,11 @@ class PlanServiceTest extends LoginTest {
         final PlanResponse planResponse =
                 planService.savePlan(
                         new SavePlanRequest(
+                                "모임명",
                                 groupId,
                                 LocalDateTime.of(2023, 12, 25, 15, 30),
-                                PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails()));
+                                PlaceDetailsFixture.FIRST_PLACE.toPlaceDetails(),
+                                List.of(UUID.randomUUID())));
 
         // then
         final Optional<Plan> result = planRepository.findById(planResponse.getPlanId());
@@ -76,6 +79,7 @@ class PlanServiceTest extends LoginTest {
         final Plan plan =
                 planRepository.save(
                         new Plan(
+                                "모임명",
                                 member,
                                 PlaceEntityFixture.FIRST_PLACE.toEntity(),
                                 GroupEntityFixture.BTS_GROUP.toEntity(loginUser),
@@ -119,6 +123,7 @@ class PlanServiceTest extends LoginTest {
                 planRepository
                         .save(
                                 new Plan(
+                                        "모임명",
                                         loginUser,
                                         PlaceEntityFixture.SECOND_PLACE.toEntity(),
                                         GroupEntityFixture.HDJ_GROUP.toEntity(loginUser),
@@ -140,6 +145,7 @@ class PlanServiceTest extends LoginTest {
                 planRepository
                         .save(
                                 new Plan(
+                                        "모임명",
                                         loginUser,
                                         PlaceEntityFixture.SECOND_PLACE.toEntity(),
                                         GroupEntityFixture.HDJ_GROUP.toEntity(loginUser),

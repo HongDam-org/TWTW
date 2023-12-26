@@ -39,6 +39,8 @@ import java.util.UUID;
 @Transactional
 @RequiredArgsConstructor
 public class PlanService {
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final PlanRepository planRepository;
     private final GroupService groupService;
 
@@ -75,13 +77,19 @@ public class PlanService {
         return documents == null || documents.isEmpty();
     }
 
+    @Transactional
     public PlanResponse savePlan(final SavePlanRequest request) {
         Member member = authService.getMemberByJwt();
         Group group = groupService.getGroupEntity(request.getGroupId());
         Place place = placeService.getEntityByDetail(request.getPlaceDetails());
-        Plan plan = new Plan(member, place, group, request.getPlanDay());
 
-        return planMapper.toPlanResponse(planRepository.save(plan));
+        final Plan plan =
+                planRepository.save(
+                        planMapper.toEntity(
+                                request.getName(), member, place, group, request.getPlanDay()));
+        plan.addMembers(memberService.getMembersByIds(request.getMemberIds()));
+
+        return planMapper.toPlanResponse(plan);
     }
 
     @Transactional
@@ -102,17 +110,29 @@ public class PlanService {
     public PlanInfoResponse getPlanById(UUID id) {
         Plan plan = getPlanEntity(id);
 
-        return getPlanInfoResponse(plan);
+        return getPlanInfoResponseWithNotJoinedMembers(plan);
+    }
+
+    private PlanInfoResponse getPlanInfoResponseWithNotJoinedMembers(final Plan plan) {
+        GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
+        PlaceClientDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
+        List<MemberResponse> notJoinedMembers =
+                memberService.getResponsesByMembers(plan.getNotJoinedMembers());
+        String planDay = plan.getPlanDay().format(DATE_TIME_FORMATTER);
+        List<MemberResponse> memberResponses = toMemberResponse(plan);
+
+        return planMapper.toPlanInfoResponse(
+                plan, placeDetails, planDay, groupInfo, memberResponses, notJoinedMembers);
     }
 
     private PlanInfoResponse getPlanInfoResponse(final Plan plan) {
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
         PlaceClientDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
-        String planDay = plan.getPlanDay().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-        List<MemberResponse> memberResponse = toMemberResponse(plan);
+        String planDay = plan.getPlanDay().format(DATE_TIME_FORMATTER);
+        List<MemberResponse> memberResponses = toMemberResponse(plan);
 
         return planMapper.toPlanInfoResponse(
-                plan, placeDetails, planDay, groupInfo, memberResponse);
+                plan, placeDetails, planDay, groupInfo, memberResponses);
     }
 
     public void deletePlan(UUID id) {
@@ -133,16 +153,21 @@ public class PlanService {
         return plans.stream().map(this::getPlanInfoResponse).toList();
     }
 
+    @Transactional
     public void updatePlan(final UpdatePlanRequest updatePlanRequest) {
         final Plan plan = getPlanEntity(updatePlanRequest.getPlanId());
 
         plan.updatePlace(
+                updatePlanRequest.getName(),
+                updatePlanRequest.getPlanDay(),
                 updatePlanRequest.getPlaceName(),
                 updatePlanRequest.getPlaceUrl(),
                 updatePlanRequest.getCategoryGroupCode(),
                 updatePlanRequest.getRoadAddressName(),
                 updatePlanRequest.getLongitude(),
                 updatePlanRequest.getLatitude());
+
+        plan.addMembers(memberService.getMembersByIds(updatePlanRequest.getMemberIds()));
     }
 
     @Transactional

@@ -61,7 +61,7 @@ public class MemberControllerTest extends RestDocsTest {
         String expectedNickname = "JIN_JOO_ONE";
 
         final MemberResponse memberResponse =
-                new MemberResponse(UUID.randomUUID(), expectedNickname);
+                new MemberResponse(UUID.randomUUID(), expectedNickname, "http://HJ39");
 
         final SearchMemberResponse response = new SearchMemberResponse(true, memberResponse);
         given(memberService.getMemberByNickname(expectedNickname)).willReturn(response);

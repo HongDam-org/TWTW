@@ -31,6 +31,8 @@ spring:
     redis:
       host: redis
       port: 6379
+  jackson:
+    default-property-inclusion: non_null
 management:
   endpoints:
     web:

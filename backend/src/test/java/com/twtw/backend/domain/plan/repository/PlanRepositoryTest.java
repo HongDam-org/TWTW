@@ -65,6 +65,7 @@ class PlanRepositoryTest extends RepositoryTest {
                 planRepository
                         .save(
                                 new Plan(
+                                        "모임명",
                                         member,
                                         place,
                                         group,
@@ -102,9 +103,14 @@ class PlanRepositoryTest extends RepositoryTest {
         final Plan plan =
                 planRepository.save(
                         new Plan(
-                                member, firstPlace, group, LocalDateTime.of(2023, 12, 25, 13, 30)));
+                                "모임명",
+                                member,
+                                firstPlace,
+                                group,
+                                LocalDateTime.of(2023, 12, 25, 13, 30)));
         planRepository.save(
                 new Plan(
+                        "모임명",
                         member,
                         secondPlace,
                         new Group("1", "2", member),

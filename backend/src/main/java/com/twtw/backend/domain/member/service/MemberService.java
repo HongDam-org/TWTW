@@ -58,6 +58,10 @@ public class MemberService {
         return memberMapper.toMemberResponse(member);
     }
 
+    public List<MemberResponse> getResponsesByMembers(final List<Member> members) {
+        return memberMapper.toMemberResponses(members);
+    }
+
     public List<MemberResponse> getMemberResponses(final Plan plan) {
         return memberMapper.toMemberResponses(plan.getPlanMembers());
     }

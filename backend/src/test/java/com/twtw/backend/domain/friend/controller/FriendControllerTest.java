@@ -41,8 +41,8 @@ class FriendControllerTest extends RestDocsTest {
         // given
         final List<FriendResponse> expected =
                 List.of(
-                        new FriendResponse(UUID.randomUUID(), "정해진"),
-                        new FriendResponse(UUID.randomUUID(), "주어진"));
+                        new FriendResponse(UUID.randomUUID(), "정해진", "http://hojiniSelfie"),
+                        new FriendResponse(UUID.randomUUID(), "주어진", "http://hojiniSelfCamera"));
         given(friendService.getFriends()).willReturn(expected);
 
         // when
@@ -68,8 +68,8 @@ class FriendControllerTest extends RestDocsTest {
         // given
         final List<FriendResponse> expected =
                 List.of(
-                        new FriendResponse(UUID.randomUUID(), "호전"),
-                        new FriendResponse(UUID.randomUUID(), "후진"));
+                        new FriendResponse(UUID.randomUUID(), "호전", "http://HJ39Selfie"),
+                        new FriendResponse(UUID.randomUUID(), "후진", "http://HJ39SelfCamera"));
         given(friendService.getFriendsByStatus(any())).willReturn(expected);
 
         // when
@@ -158,8 +158,8 @@ class FriendControllerTest extends RestDocsTest {
         // given
         final List<FriendResponse> expected =
                 List.of(
-                        new FriendResponse(UUID.randomUUID(), "호진정"),
-                        new FriendResponse(UUID.randomUUID(), "진정해"));
+                        new FriendResponse(UUID.randomUUID(), "호진정", "http://hojiniSelfie"),
+                        new FriendResponse(UUID.randomUUID(), "진정해", "http://hojiniSelfCamera"));
         given(friendService.getFriendByNickname(any())).willReturn(expected);
 
         // when
