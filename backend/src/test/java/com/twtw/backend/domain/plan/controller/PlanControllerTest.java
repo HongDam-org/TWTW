@@ -1,5 +1,17 @@
 package com.twtw.backend.domain.plan.controller;
 
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
@@ -13,6 +25,7 @@ import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.service.PlanService;
 import com.twtw.backend.support.docs.RestDocsTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -25,22 +38,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @DisplayName("PlanController의")
 @WebMvcTest(PlanController.class)
 class PlanControllerTest extends RestDocsTest {
-    @MockBean
-    private PlanService planService;
+    @MockBean private PlanService planService;
 
     @Test
     @DisplayName("키워드와 카테고리 기반 검색 API가 수행되는가")
@@ -116,7 +117,9 @@ class PlanControllerTest extends RestDocsTest {
                                                                 "경기 안성시 죽산면 죽산초교길 36-4",
                                                                 127.420430538256,
                                                                 37.0766874564297),
-                                                        List.of(UUID.randomUUID(), UUID.randomUUID()))))
+                                                        List.of(
+                                                                UUID.randomUUID(),
+                                                                UUID.randomUUID()))))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));
@@ -301,51 +304,57 @@ class PlanControllerTest extends RestDocsTest {
                         PlanInfoResponse.builder()
                                 .planId(UUID.randomUUID())
                                 .planMakerId(UUID.randomUUID())
-                                .placeId(
-                                        UUID.randomUUID())
+                                .placeId(UUID.randomUUID())
                                 .name("약속1")
                                 .planDay("2023-12-25 15:30")
-                                .placeDetails(new PlaceDetails(
-                                        "카페 온마이마인드",
-                                        "https://place.map.kakao.com/1625295668",
-                                        "경기 안성시 죽산면 죽산초교길 36-4",
-                                        127.420430538256,
-                                        37.0766874564297))
-                                .groupInfo(new GroupInfoResponse(
-                                        UUID.randomUUID(),
-                                        UUID.randomUUID(),
-                                        "홍담진",
-                                        "http://someUrlToS3",
-                                        List.of(
-                                                new MemberResponse(UUID.randomUUID(), "카즈하"),
-                                                new MemberResponse(UUID.randomUUID(), "사쿠라"))))
-                                .members(
-                                        List.of(new MemberResponse(UUID.randomUUID(), "진호정")))
+                                .placeDetails(
+                                        new PlaceDetails(
+                                                "카페 온마이마인드",
+                                                "https://place.map.kakao.com/1625295668",
+                                                "경기 안성시 죽산면 죽산초교길 36-4",
+                                                127.420430538256,
+                                                37.0766874564297))
+                                .groupInfo(
+                                        new GroupInfoResponse(
+                                                UUID.randomUUID(),
+                                                UUID.randomUUID(),
+                                                "홍담진",
+                                                "http://someUrlToS3",
+                                                List.of(
+                                                        new MemberResponse(
+                                                                UUID.randomUUID(), "카즈하"),
+                                                        new MemberResponse(
+                                                                UUID.randomUUID(), "사쿠라"))))
+                                .members(List.of(new MemberResponse(UUID.randomUUID(), "진호정")))
                                 .build(),
-
                         PlanInfoResponse.builder()
                                 .planId(UUID.randomUUID())
                                 .planMakerId(UUID.randomUUID())
-                                .placeId(
-                                        UUID.randomUUID())
+                                .placeId(UUID.randomUUID())
                                 .name("약속2")
                                 .planDay("2023-12-25 15:30")
-                                .placeDetails(new PlaceDetails(
-                                        "카페 온마이마인드",
-                                        "https://place.map.kakao.com/1625295668",
-                                        "경기 안성시 죽산면 죽산초교길 36-4",
-                                        127.420430538256,
-                                        37.0766874564297))
-                                .groupInfo(new GroupInfoResponse(
-                                        UUID.randomUUID(),
-                                        UUID.randomUUID(),
-                                        "HongDamJin",
-                                        "http://someUrlToS3",
-                                        List.of(
-                                                new MemberResponse(UUID.randomUUID(), "카즈하"),
-                                                new MemberResponse(UUID.randomUUID(), "사쿠라"))))
+                                .placeDetails(
+                                        new PlaceDetails(
+                                                "카페 온마이마인드",
+                                                "https://place.map.kakao.com/1625295668",
+                                                "경기 안성시 죽산면 죽산초교길 36-4",
+                                                127.420430538256,
+                                                37.0766874564297))
+                                .groupInfo(
+                                        new GroupInfoResponse(
+                                                UUID.randomUUID(),
+                                                UUID.randomUUID(),
+                                                "HongDamJin",
+                                                "http://someUrlToS3",
+                                                List.of(
+                                                        new MemberResponse(
+                                                                UUID.randomUUID(), "카즈하"),
+                                                        new MemberResponse(
+                                                                UUID.randomUUID(), "사쿠라"))))
                                 .members(
-                                        List.of(new MemberResponse(UUID.randomUUID(), "JinHoJeong")))
+                                        List.of(
+                                                new MemberResponse(
+                                                        UUID.randomUUID(), "JinHoJeong")))
                                 .build());
 
         given(planService.getPlans()).willReturn(expected);
@@ -413,7 +422,10 @@ class PlanControllerTest extends RestDocsTest {
                                         toRequestBody(
                                                 new UpdatePlanRequest(
                                                         UUID.randomUUID(),
-                                                        LocalDateTime.parse(LocalDateTime.now().format(formatter), formatter),
+                                                        LocalDateTime.parse(
+                                                                LocalDateTime.now()
+                                                                        .format(formatter),
+                                                                formatter),
                                                         "약속명",
                                                         "별다방",
                                                         "http://place.map.kakao.com/1562566188",
@@ -421,7 +433,9 @@ class PlanControllerTest extends RestDocsTest {
                                                         "경기 안성시 죽산면 죽주로 287-1",
                                                         127.426865189637,
                                                         37.0764635355795,
-                                                        List.of(UUID.randomUUID(), UUID.randomUUID()))))
+                                                        List.of(
+                                                                UUID.randomUUID(),
+                                                                UUID.randomUUID()))))
                                 .header(
                                         "Authorization",
                                         "Bearer wefa3fsdczf32.gaoiuergf92.gb5hsa2jgh"));

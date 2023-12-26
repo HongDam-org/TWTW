@@ -2,6 +2,7 @@ package com.twtw.backend.domain.plan.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -39,7 +39,8 @@ import java.util.UUID;
 @Transactional
 @RequiredArgsConstructor
 public class PlanService {
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final PlanRepository planRepository;
     private final GroupService groupService;
 
@@ -82,7 +83,10 @@ public class PlanService {
         Group group = groupService.getGroupEntity(request.getGroupId());
         Place place = placeService.getEntityByDetail(request.getPlaceDetails());
 
-        final Plan plan = planRepository.save(planMapper.toEntity(request.getName(), member, place, group, request.getPlanDay()));
+        final Plan plan =
+                planRepository.save(
+                        planMapper.toEntity(
+                                request.getName(), member, place, group, request.getPlanDay()));
         plan.addMembers(memberService.getMembersByIds(request.getMemberIds()));
 
         return planMapper.toPlanResponse(plan);
@@ -112,7 +116,8 @@ public class PlanService {
     private PlanInfoResponse getPlanInfoResponseWithNotJoinedMembers(final Plan plan) {
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
         PlaceClientDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
-        List<MemberResponse> notJoinedMembers = memberService.getResponsesByMembers(plan.getNotJoinedMembers());
+        List<MemberResponse> notJoinedMembers =
+                memberService.getResponsesByMembers(plan.getNotJoinedMembers());
         String planDay = plan.getPlanDay().format(DATE_TIME_FORMATTER);
         List<MemberResponse> memberResponses = toMemberResponse(plan);
 
