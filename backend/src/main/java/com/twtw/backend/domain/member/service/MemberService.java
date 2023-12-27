@@ -1,15 +1,18 @@
 package com.twtw.backend.domain.member.service;
 
+import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
+import com.twtw.backend.domain.member.repository.DeviceTokenRepository;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

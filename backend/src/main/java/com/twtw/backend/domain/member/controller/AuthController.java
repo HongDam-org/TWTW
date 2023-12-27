@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.member.controller;
 
+import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.request.TokenRequest;
@@ -43,4 +44,11 @@ public class AuthController {
             @RequestBody @Valid OAuthRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.getTokenByOAuth(request));
     }
+
+    @PostMapping("/device")
+    public ResponseEntity<Void> saveDeviceToken(@RequestBody DeviceTokenRequest request){
+        authService.saveDeviceToken(request);
+        return ResponseEntity.noContent().build();
+    }
+
 }

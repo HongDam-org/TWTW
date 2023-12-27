@@ -2,11 +2,13 @@ package com.twtw.backend.domain.member.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
 import com.twtw.backend.domain.member.entity.AuthStatus;
 import com.twtw.backend.domain.member.entity.AuthType;
+import com.twtw.backend.domain.member.entity.DeviceToken;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
@@ -27,6 +29,7 @@ public class AuthServiceTest extends ExcludeTest {
     @Autowired private MemberRepository memberRepository;
 
     @Autowired private RefreshTokenRepository refreshTokenRepository;
+
 
     @Test
     @DisplayName("Kakao 회원 가입이 수행되는가")
@@ -78,4 +81,5 @@ public class AuthServiceTest extends ExcludeTest {
         // then
         assertThat(response.getStatus().equals(AuthStatus.SIGNIN)).isTrue();
     }
+
 }

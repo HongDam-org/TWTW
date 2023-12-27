@@ -1,18 +1,21 @@
 package com.twtw.backend.domain.member.service;
 
 import com.twtw.backend.config.security.jwt.TokenProvider;
+import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.request.TokenRequest;
 import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
+import com.twtw.backend.domain.member.entity.DeviceToken;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.RefreshToken;
 import com.twtw.backend.domain.member.exception.NicknameExistsException;
 import com.twtw.backend.domain.member.exception.RefreshTokenInfoMismatchException;
 import com.twtw.backend.domain.member.exception.RefreshTokenValidationException;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
+import com.twtw.backend.domain.member.repository.DeviceTokenRepository;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.global.exception.EntityNotFoundException;
@@ -30,16 +33,20 @@ import java.util.UUID;
 public class AuthService {
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+
+    private final DeviceTokenRepository deviceTokenRepository;
     private final TokenProvider tokenProvider;
     private final MemberMapper memberMapper;
 
     public AuthService(
             MemberRepository memberRepository,
             RefreshTokenRepository refreshTokenRepository,
+            DeviceTokenRepository deviceTokenRepository,
             TokenProvider tokenProvider,
             MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
         this.refreshTokenRepository = refreshTokenRepository;
+        this.deviceTokenRepository = deviceTokenRepository;
         this.tokenProvider = tokenProvider;
         this.memberMapper = memberMapper;
     }
@@ -65,6 +72,7 @@ public class AuthService {
 
         return new AfterLoginResponse(AuthStatus.SIGNIN, tokenDto);
     }
+
 
     private void validateNickname(final MemberSaveRequest request) {
         if (memberRepository.existsByNickname(request.getNickname())) {
@@ -141,5 +149,14 @@ public class AuthService {
         }
 
         throw new EntityNotFoundException();
+    }
+
+
+    @Transactional
+    public void saveDeviceToken(DeviceTokenRequest request){
+        Member member = getMemberByJwt();
+        DeviceToken deviceToken = new DeviceToken(request.getDeviceToken());
+        member.updateDeviceToken(deviceToken);
+        deviceTokenRepository.save(deviceToken);
     }
 }

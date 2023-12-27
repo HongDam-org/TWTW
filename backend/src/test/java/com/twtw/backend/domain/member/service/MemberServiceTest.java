@@ -3,9 +3,11 @@ package com.twtw.backend.domain.member.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
+import com.twtw.backend.domain.member.entity.DeviceToken;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
@@ -19,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 class MemberServiceTest extends LoginTest {
     @Autowired private MemberService memberService;
     @Autowired private MemberRepository memberRepository;
+
 
     @Test
     @DisplayName("닉네임 중복 체크가 제대로 동작하는가")
@@ -70,4 +73,5 @@ class MemberServiceTest extends LoginTest {
         // then
         assertThat(response.getMemberResponse().getMemberId()).isEqualTo(member.getId());
     }
+
 }

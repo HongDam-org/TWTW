@@ -2,6 +2,8 @@ package com.twtw.backend.domain.member.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
+import com.twtw.backend.domain.member.entity.DeviceToken;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.repository.RepositoryTest;
@@ -18,6 +20,8 @@ import java.util.UUID;
 public class MemberRepositoryTest extends RepositoryTest {
 
     @Autowired private MemberRepository memberRepository;
+
+    @Autowired private DeviceTokenRepository deviceTokenRepository;
 
     @Autowired private EntityManager em;
 
@@ -49,5 +53,21 @@ public class MemberRepositoryTest extends RepositoryTest {
 
         // then
         assertThat(memberRepository.findById(memberId)).isEmpty();
+    }
+
+    @Test
+    @DisplayName("DeviceToken이 정상적으로 저장되는가")
+    void saveDeivceToken() {
+        // given
+        final Member member = memberRepository.save(MemberEntityFixture.LOGIN_MEMBER.toEntity());
+        final DeviceTokenRequest deviceTokenRequest = new DeviceTokenRequest("THIS_IS_TEST_TOKEN");
+
+        // when
+        DeviceToken deviceToken = new DeviceToken(deviceTokenRequest.getDeviceToken());
+        member.updateDeviceToken(deviceToken);
+        deviceTokenRepository.save(deviceToken);
+
+        // then
+        assertThat(member.getDeviceToken().getDeviceToken().equals("THIS_IS_TEST_TOKEN"));
     }
 }
