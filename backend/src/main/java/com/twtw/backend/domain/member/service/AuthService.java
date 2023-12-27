@@ -73,7 +73,6 @@ public class AuthService {
         return new AfterLoginResponse(AuthStatus.SIGNIN, tokenDto);
     }
 
-
     private void validateNickname(final MemberSaveRequest request) {
         if (memberRepository.existsByNickname(request.getNickname())) {
             throw new NicknameExistsException();
@@ -151,9 +150,8 @@ public class AuthService {
         throw new EntityNotFoundException();
     }
 
-
     @Transactional
-    public void saveDeviceToken(DeviceTokenRequest request){
+    public void saveDeviceToken(DeviceTokenRequest request) {
         Member member = getMemberByJwt();
         DeviceToken deviceToken = new DeviceToken(request.getDeviceToken());
         member.updateDeviceToken(deviceToken);

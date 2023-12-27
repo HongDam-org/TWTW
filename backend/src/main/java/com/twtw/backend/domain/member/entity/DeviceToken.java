@@ -3,11 +3,14 @@ package com.twtw.backend.domain.member.entity;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
+
 import jakarta.persistence.*;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import org.hibernate.annotations.Where;
 
 import java.util.UUID;
@@ -34,10 +37,11 @@ public class DeviceToken implements Auditable {
     @Column(nullable = false)
     private BaseTime baseTime;
 
-    public DeviceToken(String deviceToken){
+    public DeviceToken(String deviceToken) {
         this.deviceToken = deviceToken;
     }
 
-    public void setMember(Member member){this.member = member;}
-
+    public void setMember(Member member) {
+        this.member = member;
+    }
 }

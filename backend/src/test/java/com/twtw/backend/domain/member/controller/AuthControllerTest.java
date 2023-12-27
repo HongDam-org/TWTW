@@ -160,8 +160,7 @@ class AuthControllerTest extends RestDocsTest {
                 mockMvc.perform(
                         post("/auth/device")
                                 .content(
-                                        toRequestBody(
-                                                new DeviceTokenRequest("THIS_IS_TEST_TOKEN")))
+                                        toRequestBody(new DeviceTokenRequest("THIS_IS_TEST_TOKEN")))
                                 .contentType(MediaType.APPLICATION_JSON));
 
         // then

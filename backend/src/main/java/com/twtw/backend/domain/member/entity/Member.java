@@ -72,7 +72,7 @@ public class Member implements Auditable {
         this.profileImage = profileImage;
     }
 
-    public void updateDeviceToken(final DeviceToken deviceToken){
+    public void updateDeviceToken(final DeviceToken deviceToken) {
         this.deviceToken = deviceToken;
         deviceToken.setMember(this);
     }
