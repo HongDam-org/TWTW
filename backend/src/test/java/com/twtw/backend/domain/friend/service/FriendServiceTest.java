@@ -1,7 +1,5 @@
 package com.twtw.backend.domain.friend.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.twtw.backend.domain.friend.dto.request.FriendRequest;
 import com.twtw.backend.domain.friend.dto.request.FriendUpdateRequest;
 import com.twtw.backend.domain.friend.dto.response.FriendResponse;
@@ -12,13 +10,14 @@ import com.twtw.backend.domain.member.entity.AuthType;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.OAuth2Info;
 import com.twtw.backend.support.service.LoginTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("FriendService의")
 class FriendServiceTest extends LoginTest {
@@ -32,7 +31,7 @@ class FriendServiceTest extends LoginTest {
         // given
         final UUID id =
                 memberRepository
-                        .save(new Member("1", "12", new OAuth2Info("123", AuthType.APPLE)))
+                        .save(new Member("1", "12", new OAuth2Info("123", AuthType.APPLE), "deviceToken"))
                         .getId();
 
         // when
@@ -49,7 +48,7 @@ class FriendServiceTest extends LoginTest {
     void updateStatus() {
         // given
         final Member toMember =
-                memberRepository.save(new Member("1", "12", new OAuth2Info("123", AuthType.APPLE)));
+                memberRepository.save(new Member("1", "12", new OAuth2Info("123", AuthType.APPLE), "deviceToken"));
         final Friend friend = friendRepository.save(new Friend(loginUser, toMember));
 
         // when
@@ -66,7 +65,7 @@ class FriendServiceTest extends LoginTest {
     void getFriends() {
         // given
         final Member toMember =
-                memberRepository.save(new Member("1", "12", new OAuth2Info("123", AuthType.APPLE)));
+                memberRepository.save(new Member("1", "12", new OAuth2Info("123", AuthType.APPLE), "deviceToken"));
         friendRepository.save(new Friend(loginUser, toMember));
         friendService.updateStatus(
                 new FriendUpdateRequest(toMember.getId(), FriendStatus.ACCEPTED));
@@ -83,7 +82,7 @@ class FriendServiceTest extends LoginTest {
     void getFriendsByStatus() {
         // given
         final Member toMember =
-                memberRepository.save(new Member("1", "12", new OAuth2Info("123", AuthType.APPLE)));
+                memberRepository.save(new Member("1", "12", new OAuth2Info("123", AuthType.APPLE), "deviceToken"));
         friendRepository.save(new Friend(loginUser, toMember));
 
         // when
@@ -101,7 +100,7 @@ class FriendServiceTest extends LoginTest {
         final String nickname = "1";
         final Member toMember =
                 memberRepository.save(
-                        new Member(nickname, "12", new OAuth2Info("123", AuthType.APPLE)));
+                        new Member(nickname, "12", new OAuth2Info("123", AuthType.APPLE), "deviceToken"));
         final Friend expected = friendRepository.save(new Friend(loginUser, toMember));
         expected.updateStatus(FriendStatus.ACCEPTED);
 

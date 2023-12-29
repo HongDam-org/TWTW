@@ -1,7 +1,5 @@
 package com.twtw.backend.domain.member.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
@@ -13,10 +11,11 @@ import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.database.DatabaseTest;
 import com.twtw.backend.support.exclude.ExcludeTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DatabaseTest
 @DisplayName("AuthService의 ")
@@ -36,6 +35,7 @@ public class AuthServiceTest extends ExcludeTest {
                 new MemberSaveRequest(
                         "JinJooWon_Kakao",
                         "TEST_PROFILE_IMAGE",
+                        "deviceToken",
                         new OAuthRequest("TEST_KAKAO_TOKEN", AuthType.KAKAO));
 
         // when
@@ -53,13 +53,14 @@ public class AuthServiceTest extends ExcludeTest {
                 new MemberSaveRequest(
                         "JinJooWon_Apple",
                         "TEST_PROFILE_IMAGE",
+                        "deviceToken",
                         new OAuthRequest("TEST_APPLE_TOKEN", AuthType.APPLE));
 
         // when
         AfterLoginResponse response = authService.saveMember(appleRequest);
 
         // then
-        assertThat(response.getStatus().equals(AuthStatus.SIGNIN)).isTrue();
+        assertThat(response.getStatus()).isEqualTo(AuthStatus.SIGNIN);
     }
 
     @Test
@@ -76,6 +77,6 @@ public class AuthServiceTest extends ExcludeTest {
         AfterLoginResponse response = authService.getTokenByOAuth(request);
 
         // then
-        assertThat(response.getStatus().equals(AuthStatus.SIGNIN)).isTrue();
+        assertThat(response.getStatus()).isEqualTo(AuthStatus.SIGNIN);
     }
 }
