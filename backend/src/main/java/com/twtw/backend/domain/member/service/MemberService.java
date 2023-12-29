@@ -29,17 +29,11 @@ public class MemberService {
     public DuplicateNicknameResponse duplicateNickname(String nickName) {
         Optional<Member> member = memberRepository.findByNickname(nickName);
 
-        if (member.isPresent()) {
-            return new DuplicateNicknameResponse(true);
-        }
-
-        return new DuplicateNicknameResponse(false);
+        return new DuplicateNicknameResponse(member.isPresent());
     }
 
     public Member getMemberById(UUID id) {
-        Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-
-        return member;
+        return memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public SearchMemberResponse getMemberByNickname(String nickname) {

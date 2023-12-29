@@ -2,6 +2,7 @@ package com.twtw.backend.domain.location.controller;
 
 import com.twtw.backend.domain.location.dto.request.LocationRequest;
 import com.twtw.backend.domain.location.service.LocationService;
+import com.twtw.backend.global.constant.RabbitMQConstant;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,8 +18,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LocationController {
 
-    private static final String EXCHANGE_NAME = "map";
-    private static final String ROUTING_KEY = "plan.";
     private final RabbitTemplate rabbitTemplate;
     private final LocationService locationService;
 
@@ -27,8 +26,8 @@ public class LocationController {
             @DestinationVariable final UUID planId,
             @Payload final LocationRequest locationRequest) {
         rabbitTemplate.convertAndSend(
-                EXCHANGE_NAME,
-                ROUTING_KEY + planId,
+                RabbitMQConstant.LOCATION_EXCHANGE.getName(),
+                RabbitMQConstant.LOCATION_ROUTING_KEY_PREFIX.getName() + planId,
                 locationService.addInfo(planId, locationRequest));
     }
 }

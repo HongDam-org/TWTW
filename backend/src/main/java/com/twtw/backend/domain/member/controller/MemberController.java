@@ -21,7 +21,7 @@ public class MemberController {
         return ResponseEntity.ok(memberService.duplicateNickname(name));
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<SearchMemberResponse> searchMemberByNickname(
             @RequestParam(name = "nickname") String nickname) {
         return ResponseEntity.ok(memberService.getMemberByNickname(nickname));

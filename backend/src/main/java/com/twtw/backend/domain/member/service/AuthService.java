@@ -1,12 +1,14 @@
 package com.twtw.backend.domain.member.service;
 
 import com.twtw.backend.config.security.jwt.TokenProvider;
+import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.request.TokenRequest;
 import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.AuthStatus;
+import com.twtw.backend.domain.member.entity.DeviceToken;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.RefreshToken;
 import com.twtw.backend.domain.member.exception.NicknameExistsException;
@@ -30,6 +32,7 @@ import java.util.UUID;
 public class AuthService {
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+
     private final TokenProvider tokenProvider;
     private final MemberMapper memberMapper;
 
@@ -134,12 +137,13 @@ public class AuthService {
 
         UUID id = UUID.fromString(authentication.getName());
 
-        Optional<Member> member = memberRepository.findById(id);
+        return memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
 
-        if (member.isPresent()) {
-            return member.get();
-        }
-
-        throw new EntityNotFoundException();
+    @Transactional
+    public void updateDeviceToken(DeviceTokenRequest request) {
+        Member member = getMemberByJwt();
+        DeviceToken deviceToken = new DeviceToken(request.getDeviceToken());
+        member.updateDeviceToken(deviceToken);
     }
 }

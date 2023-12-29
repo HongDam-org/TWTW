@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.request.TokenRequest;
@@ -101,6 +102,7 @@ class AuthControllerTest extends RestDocsTest {
                                                 new MemberSaveRequest(
                                                         "정해진",
                                                         "http://some-url-to-profile-image",
+                                                        "DEVICE_TOKEN",
                                                         new OAuthRequest(
                                                                 "client-id", AuthType.APPLE))))
                                 .contentType(MediaType.APPLICATION_JSON));
@@ -142,5 +144,31 @@ class AuthControllerTest extends RestDocsTest {
         // docs
         perform.andDo(print())
                 .andDo(document("post login", getDocumentRequest(), getDocumentResponse()));
+    }
+
+    @Test
+    @DisplayName("멤버의 DeviceToken이 저장되는가")
+    void saveDeviceToken() throws Exception {
+        // given
+        final AfterLoginResponse expected =
+                new AfterLoginResponse(
+                        AuthStatus.SIGNIN,
+                        new TokenDto("access.token.value", "refresh.token.value"));
+        given(authService.getTokenByOAuth(any())).willReturn(expected);
+
+        // when
+        final ResultActions perform =
+                mockMvc.perform(
+                        post("/auth/device")
+                                .content(
+                                        toRequestBody(new DeviceTokenRequest("THIS_IS_TEST_TOKEN")))
+                                .contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        perform.andExpect(status().isNoContent());
+
+        // docs
+        perform.andDo(print())
+                .andDo(document("post device token", getDocumentRequest(), getDocumentResponse()));
     }
 }

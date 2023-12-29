@@ -69,4 +69,8 @@ public class PlanMember implements Auditable {
     public void acceptInvite() {
         this.planInviteCode = PlanInviteCode.ACCEPTED;
     }
+
+    public String getDeviceTokenValue() {
+        return this.member.getDeviceTokenValue();
+    }
 }

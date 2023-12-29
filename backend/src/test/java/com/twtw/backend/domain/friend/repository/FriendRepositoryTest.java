@@ -29,10 +29,11 @@ class FriendRepositoryTest extends RepositoryTest {
         // given
         final Member from =
                 memberRepository.save(
-                        new Member("1", "123", new OAuth2Info("321", AuthType.APPLE)));
+                        new Member("1", "123", new OAuth2Info("321", AuthType.APPLE), "test"));
         final Member to =
                 memberRepository.save(
-                        new Member("2", "1234", new OAuth2Info("123", AuthType.KAKAO)));
+                        new Member(
+                                "2", "1234", new OAuth2Info("123", AuthType.KAKAO), "deviceToken"));
         final Friend friend = new Friend(from, to);
 
         // when
@@ -48,10 +49,15 @@ class FriendRepositoryTest extends RepositoryTest {
         // given
         final Member from =
                 memberRepository.save(
-                        new Member("1", "123", new OAuth2Info("321", AuthType.APPLE)));
+                        new Member(
+                                "1", "123", new OAuth2Info("321", AuthType.APPLE), "deviceToken1"));
         final Member to =
                 memberRepository.save(
-                        new Member("2", "1234", new OAuth2Info("123", AuthType.KAKAO)));
+                        new Member(
+                                "2",
+                                "1234",
+                                new OAuth2Info("123", AuthType.KAKAO),
+                                "deviceToken2"));
         final Friend friend = new Friend(from, to);
         final Friend expected = friendRepository.save(friend);
 
@@ -69,10 +75,15 @@ class FriendRepositoryTest extends RepositoryTest {
         // given
         final Member from =
                 memberRepository.save(
-                        new Member("1", "123", new OAuth2Info("321", AuthType.APPLE)));
+                        new Member(
+                                "1", "123", new OAuth2Info("321", AuthType.APPLE), "deviceToken1"));
         final Member to =
                 memberRepository.save(
-                        new Member("2", "1234", new OAuth2Info("123", AuthType.KAKAO)));
+                        new Member(
+                                "2",
+                                "1234",
+                                new OAuth2Info("123", AuthType.KAKAO),
+                                "deviceToken2"));
         final Friend friend = new Friend(from, to);
         final Friend expected = friendRepository.save(friend);
         expected.updateStatus(FriendStatus.ACCEPTED);
@@ -90,10 +101,15 @@ class FriendRepositoryTest extends RepositoryTest {
         // given
         final Member from =
                 memberRepository.save(
-                        new Member("1", "123", new OAuth2Info("321", AuthType.APPLE)));
+                        new Member(
+                                "1", "123", new OAuth2Info("321", AuthType.APPLE), "deviceToken1"));
         final Member to =
                 memberRepository.save(
-                        new Member("2", "1234", new OAuth2Info("123", AuthType.KAKAO)));
+                        new Member(
+                                "2",
+                                "1234",
+                                new OAuth2Info("123", AuthType.KAKAO),
+                                "deviceToken2"));
         final Friend friend = new Friend(from, to);
         friendRepository.save(friend);
 
@@ -111,11 +127,16 @@ class FriendRepositoryTest extends RepositoryTest {
         // given
         final Member from =
                 memberRepository.save(
-                        new Member("1", "123", new OAuth2Info("321", AuthType.APPLE)));
+                        new Member(
+                                "1", "123", new OAuth2Info("321", AuthType.APPLE), "deviceToken1"));
         final String friendNickname = "2";
         final Member to =
                 memberRepository.save(
-                        new Member(friendNickname, "1234", new OAuth2Info("123", AuthType.KAKAO)));
+                        new Member(
+                                friendNickname,
+                                "1234",
+                                new OAuth2Info("123", AuthType.KAKAO),
+                                "deviceToken2"));
         final Friend friend = new Friend(from, to);
         final Friend expected = friendRepository.save(friend);
         expected.updateStatus(FriendStatus.ACCEPTED);

@@ -5,15 +5,7 @@ import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -51,17 +43,22 @@ public class Member implements Auditable {
     @OneToMany(mappedBy = "member")
     private List<GroupMember> groupMembers = new ArrayList<>();
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn
+    private DeviceToken deviceToken;
+
     @Setter
     @Embedded
     @Column(nullable = false)
     private BaseTime baseTime;
 
     @Builder
-    public Member(String nickname, String profileImage, OAuth2Info oauthInfo) {
+    public Member(String nickname, String profileImage, OAuth2Info oauthInfo, String deviceToken) {
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.role = Role.ROLE_USER;
         this.oauthInfo = oauthInfo;
+        updateDeviceToken(new DeviceToken(deviceToken));
     }
 
     public void addGroupMember(final GroupMember groupMember) {
@@ -74,5 +71,14 @@ public class Member implements Auditable {
 
     public void updateProfileImage(final String profileImage) {
         this.profileImage = profileImage;
+    }
+
+    public void updateDeviceToken(final DeviceToken deviceToken) {
+        this.deviceToken = deviceToken;
+        deviceToken.organizeMember(this);
+    }
+
+    public String getDeviceTokenValue() {
+        return this.deviceToken.getDeviceToken();
     }
 }

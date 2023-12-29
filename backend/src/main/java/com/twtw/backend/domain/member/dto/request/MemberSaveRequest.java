@@ -1,7 +1,6 @@
 package com.twtw.backend.domain.member.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MemberSaveRequest {
     @NotBlank private String nickname;
-    @NotNull private String profileImage;
-
+    @NotBlank private String profileImage;
+    @NotBlank private String deviceToken;
     private OAuthRequest oauthRequest;
 }
