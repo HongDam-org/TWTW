@@ -1,18 +1,20 @@
 package com.twtw.backend.domain.member.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.twtw.backend.domain.member.dto.request.DeviceTokenRequest;
 import com.twtw.backend.domain.member.entity.DeviceToken;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.repository.RepositoryTest;
+
 import jakarta.persistence.EntityManager;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("MemberRepository의")
 class MemberRepositoryTest extends RepositoryTest {

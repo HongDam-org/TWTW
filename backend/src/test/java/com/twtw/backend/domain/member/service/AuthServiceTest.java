@@ -1,5 +1,7 @@
 package com.twtw.backend.domain.member.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
@@ -11,11 +13,10 @@ import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.database.DatabaseTest;
 import com.twtw.backend.support.exclude.ExcludeTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DatabaseTest
 @DisplayName("AuthService의 ")

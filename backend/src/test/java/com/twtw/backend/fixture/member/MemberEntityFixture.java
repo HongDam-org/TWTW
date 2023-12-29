@@ -3,6 +3,7 @@ package com.twtw.backend.fixture.member;
 import com.twtw.backend.domain.member.entity.AuthType;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.OAuth2Info;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
