@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum RabbitMQConstant {
-
     LOCATION_QUEUE("map.queue"),
     LOCATION_EXCHANGE("map"),
     LOCATION_ROUTING_KEY("plan.*"),

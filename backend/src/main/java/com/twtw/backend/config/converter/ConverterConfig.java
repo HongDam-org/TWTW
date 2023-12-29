@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class ConverterConfig {
 
     @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter(){
+    public Jackson2JsonMessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
 }

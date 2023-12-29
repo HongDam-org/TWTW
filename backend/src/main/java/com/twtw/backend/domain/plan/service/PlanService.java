@@ -182,15 +182,21 @@ public class PlanService {
 
         plan.addMembers(memberService.getMembersByIds(updatePlanRequest.getMemberIds()));
 
-        plan.getPlanMembers().forEach(planMember -> sendDestinationNotification(planMember.getDeviceTokenValue(), placeName));
+        plan.getPlanMembers()
+                .forEach(
+                        planMember ->
+                                sendDestinationNotification(
+                                        planMember.getDeviceTokenValue(), placeName));
     }
 
-    private void sendDestinationNotification(final String deviceToken, final String destinationName) {
+    private void sendDestinationNotification(
+            final String deviceToken, final String destinationName) {
         fcmProducer.sendNotification(
                 new NotificationRequest(
                         deviceToken,
                         NotificationTitle.DESTINATION_CHANGE_TITLE.getName(),
-                        NotificationBody.DESTINATION_CHANGE_BODY.toNotificationBody(destinationName)));
+                        NotificationBody.DESTINATION_CHANGE_BODY.toNotificationBody(
+                                destinationName)));
     }
 
     @Transactional

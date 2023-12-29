@@ -2,6 +2,7 @@ package com.twtw.backend.domain.notification.dto;
 
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,7 @@ public class NotificationRequest {
     private String body;
 
     public Message toMessage() {
-        return Message.builder()
-                .setToken(deviceToken)
-                .setNotification(toNotification())
-                .build();
+        return Message.builder().setToken(deviceToken).setNotification(toNotification()).build();
     }
 
     private Notification toNotification() {

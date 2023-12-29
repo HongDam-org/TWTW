@@ -39,7 +39,8 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding locationBinding() {
-        return BindingBuilder.bind(locationQueue()).to(locationTopicExchange())
+        return BindingBuilder.bind(locationQueue())
+                .to(locationTopicExchange())
                 .with(RabbitMQConstant.LOCATION_ROUTING_KEY.getName());
     }
 
@@ -55,7 +56,8 @@ public class RabbitMQConfig {
 
     @Bean
     public Binding notificationBinding() {
-        return BindingBuilder.bind(notificationQueue()).to(notificationTopicExchange())
+        return BindingBuilder.bind(notificationQueue())
+                .to(notificationTopicExchange())
                 .with(RabbitMQConstant.NOTIFICATION_ROUTING_KEY.getName());
     }
 
@@ -82,8 +84,7 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public RabbitAdmin rabbitAdmin(
-            final ConnectionFactory connectionFactory) {
+    public RabbitAdmin rabbitAdmin(final ConnectionFactory connectionFactory) {
         final RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
 
         rabbitAdmin.declareQueue(locationQueue());

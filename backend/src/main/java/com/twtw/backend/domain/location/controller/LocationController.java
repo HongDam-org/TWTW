@@ -2,8 +2,8 @@ package com.twtw.backend.domain.location.controller;
 
 import com.twtw.backend.domain.location.dto.request.LocationRequest;
 import com.twtw.backend.domain.location.service.LocationService;
-
 import com.twtw.backend.global.constant.RabbitMQConstant;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

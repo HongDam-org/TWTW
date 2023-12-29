@@ -2,7 +2,9 @@ package com.twtw.backend.domain.notification.messagequeue;
 
 import com.twtw.backend.domain.notification.dto.NotificationRequest;
 import com.twtw.backend.global.constant.RabbitMQConstant;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Component;
 
