@@ -17,5 +17,5 @@ operation::post save member[snippets='http-request,http-response']
 === 저장된 멤버 로그인
 operation::post login[snippets='http-request,http-response']
 
-=== 디바이스 토큰 저장
+=== 디바이스 토큰 업데이트
 operation::post device token[snippets='http-request,http-response']
