@@ -1,24 +1,30 @@
 package com.twtw.backend.domain.notification.dto;
 
+import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
-
-import jakarta.validation.constraints.NotBlank;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class NotificationRequest {
-    @NotBlank private String deviceToken;
 
+    private String deviceToken;
     private String title;
-
     private String body;
 
-    public Notification toNotification() {
+    public Message toMessage() {
+        return Message.builder()
+                .setToken(deviceToken)
+                .setNotification(toNotification())
+                .build();
+    }
+
+    private Notification toNotification() {
         return new Notification(title, body);
     }
 }

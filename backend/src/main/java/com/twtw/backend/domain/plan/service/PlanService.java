@@ -7,6 +7,8 @@ import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
+import com.twtw.backend.domain.notification.dto.NotificationRequest;
+import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.place.service.PlaceService;
 import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
@@ -23,6 +25,8 @@ import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.domain.plan.mapper.PlanMapper;
 import com.twtw.backend.domain.plan.repository.PlanRepository;
 import com.twtw.backend.global.client.MapClient;
+import com.twtw.backend.global.constant.NotificationBody;
+import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -43,13 +47,11 @@ public class PlanService {
             DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private final PlanRepository planRepository;
     private final GroupService groupService;
-
     private final MemberService memberService;
-
     private final PlaceService placeService;
     private final AuthService authService;
     private final PlanMapper planMapper;
-
+    private final FcmProducer fcmProducer;
     private final MapClient<SearchDestinationRequest, SearchDestinationResponse> destinationClient;
 
     @Cacheable(
@@ -98,7 +100,17 @@ public class PlanService {
         Plan plan = getPlanEntity(request.getPlanId());
         plan.addMember(member);
 
+        sendRequestNotification(member.getDeviceTokenValue(), plan.getName());
+
         return planMapper.toPlanResponse(plan);
+    }
+
+    private void sendRequestNotification(final String deviceToken, final String planName) {
+        fcmProducer.sendNotification(
+                new NotificationRequest(
+                        deviceToken,
+                        NotificationTitle.PLAN_REQUEST_TITLE.getName(),
+                        NotificationBody.PLAN_REQUEST_BODY.toNotificationBody(planName)));
     }
 
     public void outPlan(PlanMemberRequest request) {
@@ -157,10 +169,11 @@ public class PlanService {
     public void updatePlan(final UpdatePlanRequest updatePlanRequest) {
         final Plan plan = getPlanEntity(updatePlanRequest.getPlanId());
 
+        final String placeName = updatePlanRequest.getPlaceName();
         plan.updatePlace(
                 updatePlanRequest.getName(),
                 updatePlanRequest.getPlanDay(),
-                updatePlanRequest.getPlaceName(),
+                placeName,
                 updatePlanRequest.getPlaceUrl(),
                 updatePlanRequest.getCategoryGroupCode(),
                 updatePlanRequest.getRoadAddressName(),
@@ -168,6 +181,16 @@ public class PlanService {
                 updatePlanRequest.getLatitude());
 
         plan.addMembers(memberService.getMembersByIds(updatePlanRequest.getMemberIds()));
+
+        plan.getPlanMembers().forEach(planMember -> sendDestinationNotification(planMember.getDeviceTokenValue(), placeName));
+    }
+
+    private void sendDestinationNotification(final String deviceToken, final String destinationName) {
+        fcmProducer.sendNotification(
+                new NotificationRequest(
+                        deviceToken,
+                        NotificationTitle.DESTINATION_CHANGE_TITLE.getName(),
+                        NotificationBody.DESTINATION_CHANGE_BODY.toNotificationBody(destinationName)));
     }
 
     @Transactional

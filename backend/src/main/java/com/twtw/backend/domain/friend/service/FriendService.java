@@ -10,10 +10,12 @@ import com.twtw.backend.domain.friend.repository.FriendRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
+import com.twtw.backend.domain.notification.dto.NotificationRequest;
+import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
+import com.twtw.backend.global.constant.NotificationBody;
+import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +29,22 @@ public class FriendService {
     private final FriendMapper friendMapper;
     private final MemberService memberService;
     private final AuthService authService;
+    private final FcmProducer fcmProducer;
 
     public void addRequest(final FriendRequest friendRequest) {
         final Member loginMember = authService.getMemberByJwt();
         final Member member = memberService.getMemberById(friendRequest.getMemberId());
         friendRepository.save(friendMapper.toEntity(loginMember, member));
+
+        sendNotification(member.getDeviceTokenValue(), loginMember.getNickname());
+    }
+
+    private void sendNotification(final String deviceToken, final String nickname) {
+        fcmProducer.sendNotification(
+                new NotificationRequest(
+                        deviceToken,
+                        NotificationTitle.FRIEND_REQUEST_TITLE.getName(),
+                        NotificationBody.FRIEND_REQUEST_BODY.toNotificationBody(nickname)));
     }
 
     @Transactional

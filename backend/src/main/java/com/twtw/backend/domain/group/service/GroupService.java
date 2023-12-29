@@ -12,9 +12,11 @@ import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
-import com.twtw.backend.domain.notification.service.FcmService;
+import com.twtw.backend.domain.notification.dto.NotificationRequest;
+import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
+import com.twtw.backend.global.constant.NotificationBody;
+import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +29,9 @@ public class GroupService {
     private final GroupRepository groupRepository;
     private final GroupMemberRepository groupMemberRepository;
     private final AuthService authService;
-
     private final MemberService memberService;
     private final GroupMapper groupMapper;
-
-    private final FcmService fcmService;
+    private final FcmProducer fcmProducer;
 
     public GroupService(
             GroupRepository groupRepository,
@@ -39,13 +39,13 @@ public class GroupService {
             AuthService authService,
             MemberService memberService,
             GroupMapper groupMapper,
-            FcmService fcmService) {
+            FcmProducer fcmProducer) {
         this.groupRepository = groupRepository;
         this.groupMemberRepository = groupMemberRepository;
         this.authService = authService;
         this.memberService = memberService;
         this.groupMapper = groupMapper;
-        this.fcmService = fcmService;
+        this.fcmProducer = fcmProducer;
     }
 
     public GroupInfoResponse getGroupById(UUID groupId) {
@@ -117,9 +117,18 @@ public class GroupService {
                 memberService.getMembersByIds(inviteGroupRequest.getFriendMemberIds());
         group.inviteAll(friends);
 
-        // invite push Alert
+        String groupName = group.getName();
+        friends.forEach(friend -> sendNotification(friend.getDeviceTokenValue(), groupName));
 
         return groupMapper.toGroupInfo(group);
+    }
+
+    private void sendNotification(final String deviceToken, final String groupName) {
+        fcmProducer.sendNotification(
+                new NotificationRequest(
+                        deviceToken,
+                        NotificationTitle.GROUP_REQUEST_TITLE.getName(),
+                        NotificationBody.GROUP_REQUEST_BODY.toNotificationBody(groupName)));
     }
 
     public GroupInfoResponse getGroupInfoResponse(Group group) {

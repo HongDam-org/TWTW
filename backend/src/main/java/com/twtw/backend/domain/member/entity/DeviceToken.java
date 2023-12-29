@@ -41,7 +41,7 @@ public class DeviceToken implements Auditable {
         this.deviceToken = deviceToken;
     }
 
-    public void setMember(Member member) {
+    public void organizeMember(Member member) {
         this.member = member;
     }
 }

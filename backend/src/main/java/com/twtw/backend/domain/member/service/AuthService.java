@@ -15,11 +15,9 @@ import com.twtw.backend.domain.member.exception.NicknameExistsException;
 import com.twtw.backend.domain.member.exception.RefreshTokenInfoMismatchException;
 import com.twtw.backend.domain.member.exception.RefreshTokenValidationException;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
-import com.twtw.backend.domain.member.repository.DeviceTokenRepository;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,19 +32,16 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    private final DeviceTokenRepository deviceTokenRepository;
     private final TokenProvider tokenProvider;
     private final MemberMapper memberMapper;
 
     public AuthService(
             MemberRepository memberRepository,
             RefreshTokenRepository refreshTokenRepository,
-            DeviceTokenRepository deviceTokenRepository,
             TokenProvider tokenProvider,
             MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
         this.refreshTokenRepository = refreshTokenRepository;
-        this.deviceTokenRepository = deviceTokenRepository;
         this.tokenProvider = tokenProvider;
         this.memberMapper = memberMapper;
     }
@@ -141,20 +136,13 @@ public class AuthService {
 
         UUID id = UUID.fromString(authentication.getName());
 
-        Optional<Member> member = memberRepository.findById(id);
-
-        if (member.isPresent()) {
-            return member.get();
-        }
-
-        throw new EntityNotFoundException();
+        return memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Transactional
-    public void saveDeviceToken(DeviceTokenRequest request) {
+    public void updateDeviceToken(DeviceTokenRequest request) {
         Member member = getMemberByJwt();
         DeviceToken deviceToken = new DeviceToken(request.getDeviceToken());
         member.updateDeviceToken(deviceToken);
-        deviceTokenRepository.save(deviceToken);
     }
 }

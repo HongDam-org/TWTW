@@ -46,8 +46,8 @@ public class AuthController {
     }
 
     @PostMapping("/device")
-    public ResponseEntity<Void> saveDeviceToken(@RequestBody DeviceTokenRequest request) {
-        authService.saveDeviceToken(request);
+    public ResponseEntity<Void> updateDeviceToken(@RequestBody DeviceTokenRequest request) {
+        authService.updateDeviceToken(request);
         return ResponseEntity.noContent().build();
     }
 }

@@ -43,8 +43,8 @@ public class Member implements Auditable {
     @OneToMany(mappedBy = "member")
     private List<GroupMember> groupMembers = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "device_token")
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn
     private DeviceToken deviceToken;
 
     @Setter
@@ -53,11 +53,12 @@ public class Member implements Auditable {
     private BaseTime baseTime;
 
     @Builder
-    public Member(String nickname, String profileImage, OAuth2Info oauthInfo) {
+    public Member(String nickname, String profileImage, OAuth2Info oauthInfo, String deviceToken) {
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.role = Role.ROLE_USER;
         this.oauthInfo = oauthInfo;
+        updateDeviceToken(new DeviceToken(deviceToken));
     }
 
     public void addGroupMember(final GroupMember groupMember) {
@@ -74,6 +75,10 @@ public class Member implements Auditable {
 
     public void updateDeviceToken(final DeviceToken deviceToken) {
         this.deviceToken = deviceToken;
-        deviceToken.setMember(this);
+        deviceToken.organizeMember(this);
+    }
+
+    public String getDeviceTokenValue() {
+        return this.deviceToken.getDeviceToken();
     }
 }
