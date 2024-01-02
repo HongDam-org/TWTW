@@ -1,19 +1,19 @@
 package com.twtw.backend.domain.member.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
-import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DisplayName("MemberService의")
 class MemberServiceTest extends LoginTest {
@@ -64,10 +64,9 @@ class MemberServiceTest extends LoginTest {
         final Member member = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
 
         // when
-        final SearchMemberResponse response =
-                memberService.getMemberByNickname(member.getNickname());
+        final List<MemberResponse> responses = memberService.getMemberByNickname(member.getNickname());
 
         // then
-        assertThat(response.getMemberResponse().getMemberId()).isEqualTo(member.getId());
+        assertThat(responses.get(0).getMemberId()).isEqualTo(member.getId());
     }
 }

@@ -2,17 +2,14 @@ package com.twtw.backend.domain.member.service;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
-import com.twtw.backend.domain.member.dto.response.SearchMemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,26 +23,18 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
 
-    public DuplicateNicknameResponse duplicateNickname(String nickName) {
-        Optional<Member> member = memberRepository.findByNickname(nickName);
+    public DuplicateNicknameResponse duplicateNickname(String nickname) {
 
-        return new DuplicateNicknameResponse(member.isPresent());
+        return new DuplicateNicknameResponse(memberRepository.existsByNickname(nickname));
     }
 
     public Member getMemberById(UUID id) {
         return memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public SearchMemberResponse getMemberByNickname(String nickname) {
-        Optional<Member> member = memberRepository.findByNickname(nickname);
-
-        if (member.isPresent()) {
-            Member findMember = member.get();
-
-            return new SearchMemberResponse(true, memberMapper.toMemberResponse(findMember));
-        }
-
-        return new SearchMemberResponse(false, null);
+    public List<MemberResponse> getMemberByNickname(String nickname) {
+        final List<Member> members = memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
+        return getResponsesByMembers(members);
     }
 
     public MemberResponse getResponseByMember(Member member) {

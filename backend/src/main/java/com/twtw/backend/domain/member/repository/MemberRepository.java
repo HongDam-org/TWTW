@@ -7,13 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface MemberRepository extends JpaRepository<Member, UUID> {
-    Optional<Member> findById(UUID uuid);
 
-    Optional<Member> findByNickname(String nickName);
+    @Query(value = "SELECT m FROM Member m WHERE upper(m.nickname) LIKE upper(concat('%', :nickname, '%'))")
+    List<Member> findAllByNicknameContainingIgnoreCase(@Param("nickname") String nickname);
 
     @Query(
             "SELECT m FROM Member m WHERE m.oauthInfo.clientId = :oAuthId AND"
