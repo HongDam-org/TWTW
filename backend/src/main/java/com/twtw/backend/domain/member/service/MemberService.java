@@ -7,6 +7,7 @@ import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,7 +34,8 @@ public class MemberService {
     }
 
     public List<MemberResponse> getMemberByNickname(String nickname) {
-        final List<Member> members = memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
+        final List<Member> members =
+                memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
         return getResponsesByMembers(members);
     }
 

@@ -13,7 +13,10 @@ import java.util.UUID;
 
 public interface MemberRepository extends JpaRepository<Member, UUID> {
 
-    @Query(value = "SELECT m FROM Member m WHERE upper(m.nickname) LIKE upper(concat('%', :nickname, '%'))")
+    @Query(
+            value =
+                    "SELECT m FROM Member m WHERE upper(m.nickname) LIKE upper(concat('%',"
+                        + " :nickname, '%'))")
     List<Member> findAllByNicknameContainingIgnoreCase(@Param("nickname") String nickname);
 
     @Query(
