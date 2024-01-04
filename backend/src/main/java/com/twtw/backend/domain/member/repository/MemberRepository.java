@@ -16,7 +16,7 @@ public interface MemberRepository extends JpaRepository<Member, UUID> {
     @Query(
             value =
                     "SELECT m FROM Member m WHERE upper(m.nickname) LIKE upper(concat('%',"
-                        + " :nickname, '%'))")
+                            + " :nickname, '%'))")
     List<Member> findAllByNicknameContainingIgnoreCase(@Param("nickname") String nickname);
 
     @Query(
