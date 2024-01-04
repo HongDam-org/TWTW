@@ -18,7 +18,7 @@ public class NotificationRequest {
 
     private static final ApnsConfig APNS_CONFIG =
             ApnsConfig.builder()
-                    .putHeader("apns-priority", "10")
+                    .putHeader("apns-priority", "5")
                     .setAps(Aps.builder().setBadge(1).build())
                     .build();
 
