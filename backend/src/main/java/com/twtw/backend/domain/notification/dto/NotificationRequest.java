@@ -4,6 +4,7 @@ import com.google.firebase.messaging.ApnsConfig;
 import com.google.firebase.messaging.Aps;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,11 @@ import lombok.ToString;
 @AllArgsConstructor
 public class NotificationRequest {
 
-    private static final ApnsConfig APNS_CONFIG = ApnsConfig.builder()
-            .putHeader("apns-priority", "10")
-                .setAps(Aps.builder()
-                        .setBadge(1)
-                        .build()).build();
+    private static final ApnsConfig APNS_CONFIG =
+            ApnsConfig.builder()
+                    .putHeader("apns-priority", "10")
+                    .setAps(Aps.builder().setBadge(1).build())
+                    .build();
 
     private String deviceToken;
     private String title;
