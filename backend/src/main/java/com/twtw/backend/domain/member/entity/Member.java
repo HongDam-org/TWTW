@@ -30,7 +30,7 @@ public class Member implements Auditable {
     @Column(name = "id", columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String nickname;
 
     private String profileImage;
