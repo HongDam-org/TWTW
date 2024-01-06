@@ -38,7 +38,8 @@ public class FriendService {
         final Member member = memberService.getMemberById(friendRequest.getMemberId());
         friendRepository.save(friendMapper.toEntity(loginMember, member));
 
-        sendNotification(member.getDeviceTokenValue(), loginMember.getNickname(), loginMember.getId());
+        sendNotification(
+                member.getDeviceTokenValue(), loginMember.getNickname(), loginMember.getId());
     }
 
     private void sendNotification(final String deviceToken, final String nickname, final UUID id) {

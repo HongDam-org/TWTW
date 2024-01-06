@@ -105,7 +105,8 @@ public class PlanService {
         return planMapper.toPlanResponse(plan);
     }
 
-    private void sendRequestNotification(final String deviceToken, final String planName, final UUID id) {
+    private void sendRequestNotification(
+            final String deviceToken, final String planName, final UUID id) {
         fcmProducer.sendNotification(
                 new NotificationRequest(
                         deviceToken,
