@@ -100,17 +100,18 @@ public class PlanService {
         Plan plan = getPlanEntity(request.getPlanId());
         plan.addMember(member);
 
-        sendRequestNotification(member.getDeviceTokenValue(), plan.getName());
+        sendRequestNotification(member.getDeviceTokenValue(), plan.getName(), plan.getId());
 
         return planMapper.toPlanResponse(plan);
     }
 
-    private void sendRequestNotification(final String deviceToken, final String planName) {
+    private void sendRequestNotification(final String deviceToken, final String planName, final UUID id) {
         fcmProducer.sendNotification(
                 new NotificationRequest(
                         deviceToken,
                         NotificationTitle.PLAN_REQUEST_TITLE.getName(),
-                        NotificationBody.PLAN_REQUEST_BODY.toNotificationBody(planName)));
+                        NotificationBody.PLAN_REQUEST_BODY.toNotificationBody(planName),
+                        id));
     }
 
     public void outPlan(PlanMemberRequest request) {
@@ -186,17 +187,18 @@ public class PlanService {
                 .forEach(
                         planMember ->
                                 sendDestinationNotification(
-                                        planMember.getDeviceTokenValue(), placeName));
+                                        planMember.getDeviceTokenValue(), placeName, plan.getId()));
     }
 
     private void sendDestinationNotification(
-            final String deviceToken, final String destinationName) {
+            final String deviceToken, final String destinationName, final UUID id) {
         fcmProducer.sendNotification(
                 new NotificationRequest(
                         deviceToken,
                         NotificationTitle.DESTINATION_CHANGE_TITLE.getName(),
                         NotificationBody.DESTINATION_CHANGE_BODY.toNotificationBody(
-                                destinationName)));
+                                destinationName),
+                        id));
     }
 
     @Transactional

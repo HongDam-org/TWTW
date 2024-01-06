@@ -119,17 +119,19 @@ public class GroupService {
         group.inviteAll(friends);
 
         String groupName = group.getName();
-        friends.forEach(friend -> sendNotification(friend.getDeviceTokenValue(), groupName));
+        final UUID id = group.getId();
+        friends.forEach(friend -> sendNotification(friend.getDeviceTokenValue(), groupName, id));
 
         return groupMapper.toGroupInfo(group);
     }
 
-    private void sendNotification(final String deviceToken, final String groupName) {
+    private void sendNotification(final String deviceToken, final String groupName, final UUID id) {
         fcmProducer.sendNotification(
                 new NotificationRequest(
                         deviceToken,
                         NotificationTitle.GROUP_REQUEST_TITLE.getName(),
-                        NotificationBody.GROUP_REQUEST_BODY.toNotificationBody(groupName)));
+                        NotificationBody.GROUP_REQUEST_BODY.toNotificationBody(groupName),
+                        id));
     }
 
     public GroupInfoResponse getGroupInfoResponse(Group group) {
