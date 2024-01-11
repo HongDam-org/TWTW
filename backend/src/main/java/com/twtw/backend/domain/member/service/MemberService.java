@@ -9,6 +9,7 @@ import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,6 +25,7 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
 
+    @Transactional(readOnly = true)
     public DuplicateNicknameResponse duplicateNickname(String nickname) {
 
         return new DuplicateNicknameResponse(memberRepository.existsByNickname(nickname));
@@ -33,6 +35,7 @@ public class MemberService {
         return memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<MemberResponse> getMemberByNickname(String nickname) {
         final List<Member> members =
                 memberRepository.findAllByNicknameContainingIgnoreCase(nickname);

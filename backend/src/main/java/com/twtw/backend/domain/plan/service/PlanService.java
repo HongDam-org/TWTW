@@ -121,6 +121,7 @@ public class PlanService {
         plan.deleteMember(member);
     }
 
+    @Transactional(readOnly = true)
     public PlanInfoResponse getPlanById(UUID id) {
         Plan plan = getPlanEntity(id);
 
@@ -161,6 +162,7 @@ public class PlanService {
         return planRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<PlanInfoResponse> getPlans() {
         final Member member = authService.getMemberByJwt();
         final List<Plan> plans = planRepository.findAllByMember(member);

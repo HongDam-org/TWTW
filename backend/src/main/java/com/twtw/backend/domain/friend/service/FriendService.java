@@ -64,12 +64,14 @@ public class FriendService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    @Transactional(readOnly = true)
     public List<FriendResponse> getFriends() {
         final Member loginMember = authService.getMemberByJwt();
         final List<Friend> friends = friendRepository.findByMember(loginMember);
         return friendMapper.toResponses(friends);
     }
 
+    @Transactional(readOnly = true)
     public List<FriendResponse> getFriendsByStatus(final FriendStatus friendStatus) {
         final Member loginMember = authService.getMemberByJwt();
         final List<Friend> friends =
@@ -77,6 +79,7 @@ public class FriendService {
         return friendMapper.toResponses(friends);
     }
 
+    @Transactional(readOnly = true)
     public List<FriendResponse> getFriendByNickname(final String nickname) {
         final Member loginMember = authService.getMemberByJwt();
         final List<Friend> friends =
