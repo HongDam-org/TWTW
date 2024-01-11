@@ -67,9 +67,10 @@ public class FriendService {
     @Transactional(readOnly = true)
     public List<FriendResponse> getFriends() {
         final Member loginMember = authService.getMemberByJwt();
-        final List<Member> friends = friendRepository.findByMember(loginMember).stream()
-                .map(friend -> friend.getFriendMember(loginMember))
-                .toList();
+        final List<Member> friends =
+                friendRepository.findByMember(loginMember).stream()
+                        .map(friend -> friend.getFriendMember(loginMember))
+                        .toList();
         return friendMapper.toResponses(friends);
     }
 
@@ -87,8 +88,7 @@ public class FriendService {
     public List<FriendResponse> getFriendByNickname(final String nickname) {
         final Member loginMember = authService.getMemberByJwt();
         final List<Member> friends =
-                friendRepository.findByMemberAndMemberNickname(loginMember, nickname)
-                        .stream()
+                friendRepository.findByMemberAndMemberNickname(loginMember, nickname).stream()
                         .map(friend -> friend.getFriendMember(loginMember))
                         .toList();
         return friendMapper.toResponses(friends);

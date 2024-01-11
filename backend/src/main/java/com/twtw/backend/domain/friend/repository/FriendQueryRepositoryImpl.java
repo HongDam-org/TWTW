@@ -1,17 +1,19 @@
 package com.twtw.backend.domain.friend.repository;
 
+import static com.twtw.backend.domain.friend.entity.QFriend.friend;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.entity.FriendStatus;
 import com.twtw.backend.domain.member.entity.Member;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static com.twtw.backend.domain.friend.entity.QFriend.friend;
 
 @Repository
 @RequiredArgsConstructor
@@ -68,13 +70,16 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
                                 .and(
                                         friend.toMember
                                                 .eq(member)
-                                                .and(friend.fromMember.nickname.containsIgnoreCase(nickname))
+                                                .and(
+                                                        friend.fromMember.nickname
+                                                                .containsIgnoreCase(nickname))
                                                 .or(
                                                         friend.fromMember
                                                                 .eq(member)
                                                                 .and(
-                                                                        friend.toMember.nickname.containsIgnoreCase(
-                                                                                nickname)))))
+                                                                        friend.toMember.nickname
+                                                                                .containsIgnoreCase(
+                                                                                        nickname)))))
                 .fetch();
     }
 }
