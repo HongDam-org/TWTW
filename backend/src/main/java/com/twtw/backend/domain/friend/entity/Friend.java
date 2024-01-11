@@ -34,6 +34,7 @@ import java.util.UUID;
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Friend implements Auditable {
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @Column(name = "id", columnDefinition = "BINARY(16)")
@@ -71,5 +72,16 @@ public class Friend implements Auditable {
 
     public void updateStatus(final FriendStatus friendStatus) {
         this.friendStatus = friendStatus;
+    }
+
+    public Member getFriendMember(final Member loginMember) {
+        if (isFromMember(loginMember)) {
+            return this.toMember;
+        }
+        return this.fromMember;
+    }
+
+    private boolean isFromMember(final Member member) {
+        return this.fromMember.getId().equals(member.getId());
     }
 }

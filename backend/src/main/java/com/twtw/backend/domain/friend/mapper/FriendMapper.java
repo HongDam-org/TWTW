@@ -16,10 +16,10 @@ public interface FriendMapper {
     Friend toEntity(Member fromMember, Member toMember);
 
     @IterableMapping(elementTargetType = FriendResponse.class)
-    List<FriendResponse> toResponses(List<Friend> friends);
+    List<FriendResponse> toResponses(List<Member> friends);
 
-    @Mapping(target = "memberId", source = "fromMember.id")
-    @Mapping(target = "nickname", source = "fromMember.nickname")
-    @Mapping(target = "profileImage", source = "fromMember.profileImage")
-    FriendResponse toResponse(Friend friend);
+    @Mapping(target = "memberId", source = "id")
+    @Mapping(target = "nickname", source = "nickname")
+    @Mapping(target = "profileImage", source = "profileImage")
+    FriendResponse toResponse(Member member);
 }
