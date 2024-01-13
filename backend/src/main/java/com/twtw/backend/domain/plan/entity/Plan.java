@@ -68,7 +68,7 @@ public class Plan implements Auditable {
     }
 
     public void addMember(final Member member) {
-        if (hasSameMember(member)) {
+        if (hasSameMember(member) || !this.group.hasMember(member)) {
             return;
         }
         this.planMembers.add(new PlanMember(this, member, false));
@@ -143,15 +143,16 @@ public class Plan implements Auditable {
         this.planMembers.removeIf(planMember -> planMember.isSameMember(member));
     }
 
-    public List<Member> getNotJoinedMembers() {
+    public List<Member> getNotJoinedMembers(final Member member) {
         return this.group.getGroupMembers().stream()
+                .filter(groupMember -> !groupMember.isSameMember(member))
                 .filter(GroupMember::isAccepted)
                 .map(GroupMember::getMember)
                 .filter(this::isNotJoined)
                 .toList();
     }
 
-    private boolean isNotJoined(Member member) {
+    private boolean isNotJoined(final Member member) {
         return this.planMembers.stream()
                 .noneMatch(
                         planMember -> planMember.isSameMember(member) && planMember.isAccepted());

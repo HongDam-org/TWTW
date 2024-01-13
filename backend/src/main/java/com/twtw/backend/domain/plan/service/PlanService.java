@@ -133,7 +133,7 @@ public class PlanService {
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
         PlaceDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
         List<MemberResponse> notJoinedMembers =
-                memberService.getResponsesByMembers(plan.getNotJoinedMembers());
+                memberService.getResponsesByMembers(plan.getNotJoinedMembers(authService.getMemberByJwt()));
         String planDay = plan.getPlanDay().format(DATE_TIME_FORMATTER);
         List<MemberResponse> memberResponses = memberService.getMemberResponses(plan);
 

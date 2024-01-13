@@ -51,6 +51,14 @@ public class PlanMember implements Auditable {
         this.plan = plan;
         this.member = member;
         this.isPlanMaker = isPlanMaker;
+        initializeIsPlanMaker(isPlanMaker);
+    }
+
+    private void initializeIsPlanMaker(final Boolean isPlanMaker) {
+        if (isPlanMaker) {
+            this.planInviteCode = PlanInviteCode.ACCEPTED;
+            return;
+        }
         this.planInviteCode = PlanInviteCode.REQUESTED;
     }
 
