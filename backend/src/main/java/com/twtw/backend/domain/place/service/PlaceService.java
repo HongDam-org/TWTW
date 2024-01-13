@@ -30,7 +30,7 @@ public class PlaceService {
         return new PlaceResponse(response.getDocuments(), response.getMeta().getIsEnd());
     }
 
-    public PlaceClientDetails getPlaceDetails(Place place) {
+    public PlaceDetails getPlaceDetails(Place place) {
         return placeMapper.toPlaceResponse(place);
     }
 

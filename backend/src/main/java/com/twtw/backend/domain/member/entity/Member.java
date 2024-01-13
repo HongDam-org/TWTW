@@ -7,11 +7,7 @@ import com.twtw.backend.global.audit.BaseTime;
 
 import jakarta.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import org.hibernate.annotations.Where;
 
@@ -21,6 +17,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
+@EqualsAndHashCode(of = "nickname")
 @Where(clause = "deleted_at is null")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

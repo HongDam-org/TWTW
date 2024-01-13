@@ -18,6 +18,7 @@ import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
 import com.twtw.backend.domain.plan.dto.request.UpdatePlanDayRequest;
 import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
+import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
@@ -28,9 +29,7 @@ import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -125,37 +124,23 @@ public class PlanService {
     public PlanInfoResponse getPlanById(UUID id) {
         Plan plan = getPlanEntity(id);
 
-        return getPlanInfoResponseWithNotJoinedMembers(plan);
+        return getPlanInfoResponse(plan);
     }
 
-    private PlanInfoResponse getPlanInfoResponseWithNotJoinedMembers(final Plan plan) {
+    private PlanInfoResponse getPlanInfoResponse(final Plan plan) {
         GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
-        PlaceClientDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
+        PlaceDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
         List<MemberResponse> notJoinedMembers =
                 memberService.getResponsesByMembers(plan.getNotJoinedMembers());
         String planDay = plan.getPlanDay().format(DATE_TIME_FORMATTER);
-        List<MemberResponse> memberResponses = toMemberResponse(plan);
+        List<MemberResponse> memberResponses = memberService.getMemberResponses(plan);
 
         return planMapper.toPlanInfoResponse(
                 plan, placeDetails, planDay, groupInfo, memberResponses, notJoinedMembers);
     }
 
-    private PlanInfoResponse getPlanInfoResponse(final Plan plan) {
-        GroupInfoResponse groupInfo = groupService.getGroupInfoResponse(plan.getGroup());
-        PlaceClientDetails placeDetails = placeService.getPlaceDetails(plan.getPlace());
-        String planDay = plan.getPlanDay().format(DATE_TIME_FORMATTER);
-        List<MemberResponse> memberResponses = toMemberResponse(plan);
-
-        return planMapper.toPlanInfoResponse(
-                plan, placeDetails, planDay, groupInfo, memberResponses);
-    }
-
     public void deletePlan(UUID id) {
         planRepository.deleteById(id);
-    }
-
-    private List<MemberResponse> toMemberResponse(Plan plan) {
-        return memberService.getMemberResponses(plan);
     }
 
     public Plan getPlanEntity(UUID id) {

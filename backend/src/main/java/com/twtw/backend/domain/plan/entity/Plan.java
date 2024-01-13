@@ -145,9 +145,14 @@ public class Plan implements Auditable {
 
     public List<Member> getNotJoinedMembers() {
         return this.group.getGroupMembers().stream()
+                .filter(GroupMember::isAccepted)
                 .map(GroupMember::getMember)
-                .filter(member -> !hasSameMember(member))
+                .filter(this::isNotJoined)
                 .toList();
+    }
+
+    private boolean isNotJoined(Member member) {
+        return this.planMembers.stream().noneMatch(planMember -> planMember.isSameMember(member) && planMember.isAccepted());
     }
 
     public void addMembers(final List<Member> membersByIds) {

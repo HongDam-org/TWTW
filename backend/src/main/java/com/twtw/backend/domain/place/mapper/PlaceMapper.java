@@ -1,9 +1,7 @@
 package com.twtw.backend.domain.place.mapper;
 
 import com.twtw.backend.domain.place.entity.Place;
-import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -13,7 +11,7 @@ public interface PlaceMapper {
 
     Place toEntity(PlaceDetails detail);
 
-    @Mapping(target = "x", source = "coordinate.longitude")
-    @Mapping(target = "y", source = "coordinate.latitude")
-    PlaceClientDetails toPlaceResponse(Place place);
+    @Mapping(target = "longitude", source = "coordinate.longitude")
+    @Mapping(target = "latitude", source = "coordinate.latitude")
+    PlaceDetails toPlaceResponse(Place place);
 }

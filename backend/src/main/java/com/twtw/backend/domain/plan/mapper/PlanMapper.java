@@ -42,25 +42,11 @@ public interface PlanMapper {
     @Mapping(target = "planDay", source = "planDay")
     PlanInfoResponse toPlanInfoResponse(
             Plan plan,
-            PlaceClientDetails placeDetails,
+            PlaceDetails placeDetails,
             String planDay,
             GroupInfoResponse groupInfoResponse,
             List<MemberResponse> memberResponses,
             List<MemberResponse> notJoinedMembers);
-
-    @Mapping(target = "planId", source = "plan.id")
-    @Mapping(target = "name", source = "plan.name")
-    @Mapping(target = "placeId", source = "plan.place.id")
-    @Mapping(target = "planMakerId", source = "plan.planMakerId")
-    @Mapping(target = "groupInfo", source = "groupInfoResponse")
-    @Mapping(target = "members", source = "memberResponses")
-    @Mapping(target = "planDay", source = "planDay")
-    PlanInfoResponse toPlanInfoResponse(
-            Plan plan,
-            PlaceClientDetails placeDetails,
-            String planDay,
-            GroupInfoResponse groupInfoResponse,
-            List<MemberResponse> memberResponses);
 
     @IterableMapping(qualifiedByName = "toPlaceDetail")
     List<PlaceDetails> toPlaceDetails(List<PlaceClientDetails> placeClientDetails);
