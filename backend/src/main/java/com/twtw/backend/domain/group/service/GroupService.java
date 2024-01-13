@@ -95,7 +95,7 @@ public class GroupService {
     }
 
     private void changeShare(final Consumer<GroupMember> changeShare, final UUID id) {
-        Member member = this.authService.getMemberByJwt();
+        Member member = authService.getMemberByJwt();
         GroupInfoResponse groupInfo = getGroupById(id);
 
         GroupMember groupMember = getGroupMemberEntity(groupInfo.getGroupId(), member.getId());
@@ -104,7 +104,7 @@ public class GroupService {
 
     @Transactional
     public ShareInfoResponse getShare(UUID id) {
-        Member member = this.authService.getMemberByJwt();
+        Member member = authService.getMemberByJwt();
         GroupInfoResponse groupInfo = getGroupById(id);
 
         GroupMember groupMember = getGroupMemberEntity(groupInfo.getGroupId(), member.getId());

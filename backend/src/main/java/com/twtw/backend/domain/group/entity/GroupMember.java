@@ -24,11 +24,12 @@ import lombok.Setter;
 
 import org.hibernate.annotations.Where;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Getter
-@Where(clause = "deleted_at is null")
+@Where(clause = "deleted_at is null and group_invite_code != 'EXPIRED'")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class GroupMember implements Auditable {
@@ -75,7 +76,17 @@ public class GroupMember implements Auditable {
     }
 
     public void acceptInvite() {
-        this.groupInviteCode = GroupInviteCode.ACCEPTED;
+        if (isRequestNotExpired()) {
+            this.groupInviteCode = GroupInviteCode.ACCEPTED;
+            return;
+        }
+        remove();
+    }
+
+    private void remove() {
+        this.groupInviteCode = GroupInviteCode.EXPIRED;
+        this.member.removeGroupMember(this);
+        this.group.removeMember(this);
     }
 
     public UUID getGroupId() {
@@ -105,5 +116,16 @@ public class GroupMember implements Auditable {
 
     public boolean isAccepted() {
         return this.groupInviteCode == GroupInviteCode.ACCEPTED;
+    }
+
+    public void checkExpire() {
+        if (isRequestNotExpired()) {
+            return;
+        }
+        remove();
+    }
+
+    private boolean isRequestNotExpired() {
+        return this.groupInviteCode == GroupInviteCode.REQUESTED && this.baseTime.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(30L));
     }
 }

@@ -74,7 +74,12 @@ public class Group implements Auditable {
     }
 
     public List<GroupMember> getGroupMembers() {
-        return this.groupMembers.stream().filter(GroupMember::isAccepted).toList();
+        return this.groupMembers.stream().filter(this::isAcceptedMember).toList();
+    }
+
+    private boolean isAcceptedMember(final GroupMember groupMember) {
+        groupMember.checkExpire();
+        return groupMember.isAccepted();
     }
 
     private void addGroupMember(final GroupMember groupMember) {
@@ -85,9 +90,14 @@ public class Group implements Auditable {
     }
 
     private boolean hasSameMember(final GroupMember groupMember) {
+        checkExpireAll();
         return this.groupMembers.stream()
                 .map(GroupMember::getMember)
                 .anyMatch(groupMember::isSameMember);
+    }
+
+    private void checkExpireAll() {
+        this.groupMembers.forEach(GroupMember::checkExpire);
     }
 
     public void updateMemberLocation(
@@ -97,6 +107,7 @@ public class Group implements Auditable {
     }
 
     private GroupMember getGroupMember(final Member member) {
+        checkExpireAll();
         return this.groupMembers.stream()
                 .filter(groupMember -> groupMember.isSameMember(member))
                 .findAny()
@@ -120,5 +131,9 @@ public class Group implements Auditable {
 
     public boolean hasMember(final Member member) {
         return this.groupMembers.stream().anyMatch(groupMember -> groupMember.isSameMember(member));
+    }
+
+    public void removeMember(final GroupMember groupMember) {
+        this.groupMembers.remove(groupMember);
     }
 }

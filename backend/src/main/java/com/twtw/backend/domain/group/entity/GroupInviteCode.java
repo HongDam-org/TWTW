@@ -7,7 +7,8 @@ public enum GroupInviteCode {
     REQUESTED("요청"),
     ACCEPTED("승인"),
     DENIED("거절"),
-    BLOCKED("차단");
+    BLOCKED("차단"),
+    EXPIRED("만료");
 
     private final String toKorean;
 }

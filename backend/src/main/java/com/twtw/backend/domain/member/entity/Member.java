@@ -78,4 +78,12 @@ public class Member implements Auditable {
     public String getDeviceTokenValue() {
         return this.deviceToken.getDeviceToken();
     }
+
+    public List<GroupMember> getGroupMembers() {
+        return this.groupMembers.stream().filter(GroupMember::isAccepted).toList();
+    }
+
+    public void removeGroupMember(final GroupMember groupMember) {
+        this.groupMembers.remove(groupMember);
+    }
 }
