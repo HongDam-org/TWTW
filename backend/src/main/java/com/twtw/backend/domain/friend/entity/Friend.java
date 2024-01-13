@@ -98,7 +98,7 @@ public class Friend implements Auditable {
     }
 
     private boolean isRequestNotExpired() {
-        return this.friendStatus == FriendStatus.REQUESTED
-                && this.baseTime.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(30L));
+        return this.baseTime == null || (this.friendStatus == FriendStatus.REQUESTED
+                && this.baseTime.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(30L)));
     }
 }
