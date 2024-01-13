@@ -37,3 +37,6 @@ operation::post update plan[snippets='http-request,http-response']
 
 === 계획 날짜 수정
 operation::post update plan day[snippets='http-request,http-response']
+
+=== 그룹 내부의 계획 전체 조회
+operation::get all plans by group[snippets='http-request,http-response']

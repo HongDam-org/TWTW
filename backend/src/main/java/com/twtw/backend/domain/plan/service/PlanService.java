@@ -211,4 +211,10 @@ public class PlanService {
         Plan plan = getPlanEntity(request.getPlanId());
         plan.deleteInvite(member);
     }
+
+    public List<PlanInfoResponse> getPlansByGroupId(final UUID groupId) {
+        final Group group = groupService.getGroupEntity(groupId);
+        final List<Plan> plans = group.getGroupPlans();
+        return plans.stream().map(this::getPlanInfoResponse).toList();
+    }
 }

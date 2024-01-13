@@ -87,6 +87,11 @@ public class PlanController {
         return ResponseEntity.ok(planService.getPlans());
     }
 
+    @GetMapping("group/{groupId}")
+    public ResponseEntity<List<PlanInfoResponse>> getPlansByGroupId(@PathVariable final UUID groupId) {
+        return ResponseEntity.ok(planService.getPlansByGroupId(groupId));
+    }
+
     @PostMapping("update")
     public ResponseEntity<Void> updatePlan(@RequestBody final UpdatePlanRequest updatePlanRequest) {
         planService.updatePlan(updatePlanRequest);
