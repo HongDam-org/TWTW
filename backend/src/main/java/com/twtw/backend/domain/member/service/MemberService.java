@@ -17,11 +17,12 @@ import java.util.UUID;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
-
+    private final AuthService authService;
     private final MemberMapper memberMapper;
 
-    public MemberService(MemberRepository memberRepository, MemberMapper memberMapper) {
+    public MemberService(MemberRepository memberRepository, AuthService authService, MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
+        this.authService = authService;
         this.memberMapper = memberMapper;
     }
 
@@ -36,9 +37,10 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public List<MemberResponse> getMemberByNickname(String nickname) {
+    public List<MemberResponse> getMemberByNickname(final String nickname) {
         final List<Member> members =
                 memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
+        members.removeIf(authService.getMemberByJwt()::equals);
         return getResponsesByMembers(members);
     }
 
