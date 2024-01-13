@@ -20,7 +20,8 @@ public class MemberService {
     private final AuthService authService;
     private final MemberMapper memberMapper;
 
-    public MemberService(MemberRepository memberRepository, AuthService authService, MemberMapper memberMapper) {
+    public MemberService(
+            MemberRepository memberRepository, AuthService authService, MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
         this.authService = authService;
         this.memberMapper = memberMapper;
