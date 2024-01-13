@@ -133,15 +133,10 @@ public class Plan implements Auditable {
     }
 
     public void acceptInvite(final Member member) {
-        checkExpireAll();
         this.planMembers.stream()
                 .filter(planMember -> planMember.isSameMember(member))
                 .findFirst()
                 .ifPresent(PlanMember::acceptInvite);
-    }
-
-    private void checkExpireAll() {
-        this.planMembers.forEach(PlanMember::checkExpire);
     }
 
     public void deleteInvite(final Member member) {

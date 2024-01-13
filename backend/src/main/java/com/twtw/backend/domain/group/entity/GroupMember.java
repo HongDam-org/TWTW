@@ -118,13 +118,6 @@ public class GroupMember implements Auditable {
         return this.groupInviteCode == GroupInviteCode.ACCEPTED;
     }
 
-    public void checkExpire() {
-        if (isRequestNotExpired()) {
-            return;
-        }
-        remove();
-    }
-
     private boolean isRequestNotExpired() {
         return this.baseTime == null
                 || (this.groupInviteCode == GroupInviteCode.REQUESTED
