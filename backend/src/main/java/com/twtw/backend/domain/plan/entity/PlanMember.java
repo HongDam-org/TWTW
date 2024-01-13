@@ -100,7 +100,10 @@ public class PlanMember implements Auditable {
     }
 
     private boolean isRequestNotExpired() {
-        return this.baseTime == null ||
-                (this.planInviteCode == PlanInviteCode.REQUESTED && this.baseTime.getCreatedAt().isAfter(LocalDateTime.now().minusMinutes(30L)));
+        return this.baseTime == null
+                || (this.planInviteCode == PlanInviteCode.REQUESTED
+                        && this.baseTime
+                                .getCreatedAt()
+                                .isAfter(LocalDateTime.now().minusMinutes(30L)));
     }
 }
