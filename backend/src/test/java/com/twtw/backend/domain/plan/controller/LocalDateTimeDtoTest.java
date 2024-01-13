@@ -34,22 +34,22 @@ class LocalDateTimeDtoTest extends RestDocsTest {
                         post("/plans")
                                 .content(
                                         "{\n"
-                                            + "  \"name\": \"name_c195e577132b\",\n"
-                                            + "  \"groupId\":"
-                                            + " \"63fcf33b-55a7-49fc-b8e7-97c993e43632\",\n"
-                                            + "  \"planDay\": \"2024-01-13 20:22\",\n"
-                                            + "  \"placeDetails\": {\n"
-                                            + "    \"placeName\": \"placeName_2bd877f5726b\",\n"
-                                            + "    \"placeUrl\": \"placeUrl_fd39b3850bfe\",\n"
-                                            + "    \"roadAddressName\":"
-                                            + " \"roadAddressName_d020d911090a\",\n"
-                                            + "    \"longitude\": 0.00,\n"
-                                            + "    \"latitude\": 0.00\n"
-                                            + "  },\n"
-                                            + "  \"memberIds\": [\n"
-                                            + "    \"6fc8d409-7010-42b9-8c6f-e807f4028242\"\n"
-                                            + "  ]\n"
-                                            + "}")
+                                                + "  \"name\": \"name_c195e577132b\",\n"
+                                                + "  \"groupId\":"
+                                                + " \"63fcf33b-55a7-49fc-b8e7-97c993e43632\",\n"
+                                                + "  \"planDay\": \"2024-01-13 20:22\",\n"
+                                                + "  \"placeDetails\": {\n"
+                                                + "    \"placeName\": \"placeName_2bd877f5726b\",\n"
+                                                + "    \"placeUrl\": \"placeUrl_fd39b3850bfe\",\n"
+                                                + "    \"roadAddressName\":"
+                                                + " \"roadAddressName_d020d911090a\",\n"
+                                                + "    \"longitude\": 0.00,\n"
+                                                + "    \"latitude\": 0.00\n"
+                                                + "  },\n"
+                                                + "  \"memberIds\": [\n"
+                                                + "    \"6fc8d409-7010-42b9-8c6f-e807f4028242\"\n"
+                                                + "  ]\n"
+                                                + "}")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .header(
                                         "Authorization",

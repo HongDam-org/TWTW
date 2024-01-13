@@ -152,7 +152,9 @@ public class Plan implements Auditable {
     }
 
     private boolean isNotJoined(Member member) {
-        return this.planMembers.stream().noneMatch(planMember -> planMember.isSameMember(member) && planMember.isAccepted());
+        return this.planMembers.stream()
+                .noneMatch(
+                        planMember -> planMember.isSameMember(member) && planMember.isAccepted());
     }
 
     public void addMembers(final List<Member> membersByIds) {

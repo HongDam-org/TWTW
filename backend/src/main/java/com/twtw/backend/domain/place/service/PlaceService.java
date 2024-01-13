@@ -5,7 +5,6 @@ import com.twtw.backend.domain.place.dto.client.SurroundPlaceResponse;
 import com.twtw.backend.domain.place.dto.response.PlaceResponse;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.place.mapper.PlaceMapper;
-import com.twtw.backend.domain.plan.dto.client.PlaceClientDetails;
 import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.global.client.KakaoMapClient;
 
