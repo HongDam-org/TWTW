@@ -131,7 +131,7 @@ public class GroupService {
                         deviceToken,
                         NotificationTitle.GROUP_REQUEST_TITLE.getName(),
                         NotificationBody.GROUP_REQUEST_BODY.toNotificationBody(groupName),
-                        id));
+                        id.toString()));
     }
 
     public GroupInfoResponse getGroupInfoResponse(Group group) {

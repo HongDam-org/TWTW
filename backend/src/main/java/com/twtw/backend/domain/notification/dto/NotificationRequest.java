@@ -28,14 +28,14 @@ public class NotificationRequest {
     private String deviceToken;
     private String title;
     private String body;
-    private UUID id;
+    private String id;
 
     public Message toMessage() {
         return Message.builder()
                 .setApnsConfig(APNS_CONFIG)
                 .setToken(deviceToken)
                 .setNotification(toNotification())
-                .putData(ID, id.toString())
+                .putData(ID, id)
                 .build();
     }
 

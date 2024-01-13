@@ -113,7 +113,7 @@ public class PlanService {
                         deviceToken,
                         NotificationTitle.PLAN_REQUEST_TITLE.getName(),
                         NotificationBody.PLAN_REQUEST_BODY.toNotificationBody(planName),
-                        id));
+                        id.toString()));
     }
 
     public void outPlan(PlanMemberRequest request) {
@@ -188,7 +188,7 @@ public class PlanService {
                         NotificationTitle.DESTINATION_CHANGE_TITLE.getName(),
                         NotificationBody.DESTINATION_CHANGE_BODY.toNotificationBody(
                                 destinationName),
-                        id));
+                        id.toString()));
     }
 
     @Transactional

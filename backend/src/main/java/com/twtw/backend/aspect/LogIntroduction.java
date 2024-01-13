@@ -28,6 +28,12 @@ public class LogIntroduction {
     @Pointcut("execution(* com.twtw.backend..*Client*.*(..))")
     public void allClient() {}
 
+    @Pointcut("execution(* com.twtw.backend..*Producer*.*(..))")
+    public void allProducer() {}
+
+    @Pointcut("execution(* com.twtw.backend..*Consumer*.*(..))")
+    public void allConsumer() {}
+
     @Before("allController()")
     public void controllerLog(final JoinPoint joinPoint) {
         logging(joinPoint, log::info);
@@ -38,7 +44,7 @@ public class LogIntroduction {
         logging(joinPoint, log::info);
     }
 
-    @Before("allClient()")
+    @Before("allClient() || allProducer() || allConsumer()")
     public void clientLog(final JoinPoint joinPoint) {
         logging(joinPoint, log::info);
     }

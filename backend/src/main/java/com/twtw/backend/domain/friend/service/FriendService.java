@@ -48,7 +48,7 @@ public class FriendService {
                         deviceToken,
                         NotificationTitle.FRIEND_REQUEST_TITLE.getName(),
                         NotificationBody.FRIEND_REQUEST_BODY.toNotificationBody(nickname),
-                        id));
+                        id.toString()));
     }
 
     @Transactional
