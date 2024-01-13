@@ -74,12 +74,8 @@ public class Group implements Auditable {
     }
 
     public List<GroupMember> getGroupMembers() {
-        return this.groupMembers.stream().filter(this::isAcceptedMember).toList();
-    }
-
-    private boolean isAcceptedMember(final GroupMember groupMember) {
-        groupMember.checkExpire();
-        return groupMember.isAccepted();
+        checkExpireAll();
+        return this.groupMembers.stream().filter(GroupMember::isAccepted).toList();
     }
 
     private void addGroupMember(final GroupMember groupMember) {
