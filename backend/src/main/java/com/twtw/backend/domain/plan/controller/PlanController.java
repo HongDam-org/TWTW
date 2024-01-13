@@ -88,7 +88,8 @@ public class PlanController {
     }
 
     @GetMapping("group/{groupId}")
-    public ResponseEntity<List<PlanInfoResponse>> getPlansByGroupId(@PathVariable final UUID groupId) {
+    public ResponseEntity<List<PlanInfoResponse>> getPlansByGroupId(
+            @PathVariable final UUID groupId) {
         return ResponseEntity.ok(planService.getPlansByGroupId(groupId));
     }
 
