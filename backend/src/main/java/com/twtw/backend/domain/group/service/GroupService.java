@@ -49,6 +49,7 @@ public class GroupService {
         this.fcmProducer = fcmProducer;
     }
 
+    @Transactional(readOnly = true)
     public GroupInfoResponse getGroupById(UUID groupId) {
         return groupMapper.toGroupInfo(
                 groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new));
@@ -58,7 +59,7 @@ public class GroupService {
         return groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
     }
 
-    public GroupMember getGroupMemberEntity(UUID groupId, UUID memberId) {
+    private GroupMember getGroupMemberEntity(UUID groupId, UUID memberId) {
         return groupMemberRepository
                 .findByGroupIdAndMemberId(groupId, memberId)
                 .orElseThrow(EntityNotFoundException::new);
