@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.member.service;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
+import com.twtw.backend.domain.member.dto.response.IdResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
@@ -59,5 +60,9 @@ public class MemberService {
 
     public List<Member> getMembersByIds(final List<UUID> friendMemberIds) {
         return memberRepository.findAllById(friendMemberIds);
+    }
+
+    public IdResponse getMemberId() {
+        return new IdResponse(authService.getMemberByJwt().getId());
     }
 }
