@@ -1,7 +1,9 @@
 package com.twtw.backend.config.socket;
 
 import com.twtw.backend.config.security.jwt.TokenProvider;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.messaging.Message;
@@ -28,21 +30,26 @@ public class StompHandler implements ChannelInterceptor {
         final StompHeaderAccessor acessor = StompHeaderAccessor.wrap(message);
 
         if (StompCommand.CONNECT == acessor.getCommand()) {
-            final Optional<String> headerValue = Optional.ofNullable(acessor.getFirstNativeHeader(AUTHORIZATION_HEADER));
-            resolveToken(headerValue).ifPresent(header -> {
-                tokenProvider.validateToken(header);
-                SecurityContextHolder.getContext().setAuthentication(tokenProvider.getAuthentication(header));
-            });
+            final Optional<String> headerValue =
+                    Optional.ofNullable(acessor.getFirstNativeHeader(AUTHORIZATION_HEADER));
+            resolveToken(headerValue)
+                    .ifPresent(
+                            header -> {
+                                tokenProvider.validateToken(header);
+                                SecurityContextHolder.getContext()
+                                        .setAuthentication(tokenProvider.getAuthentication(header));
+                            });
         }
         return message;
     }
 
     private Optional<String> resolveToken(final Optional<String> headerValue) {
-        return headerValue.map(header -> {
-            if (header.startsWith(BEARER_PREFIX)) {
-                return header.substring(7);
-            }
-            return header;
-        });
+        return headerValue.map(
+                header -> {
+                    if (header.startsWith(BEARER_PREFIX)) {
+                        return header.substring(7);
+                    }
+                    return header;
+                });
     }
 }
