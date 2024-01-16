@@ -48,9 +48,7 @@ public class GeoService {
             final MemberDistances memberDistances, final String groupId, final String memberId) {
 
         final Point averagePoint = memberDistances.getAveragePoint();
-        redisTemplate
-                .opsForGeo()
-                .add(groupId, averagePoint, groupId);
+        redisTemplate.opsForGeo().add(groupId, averagePoint, groupId);
 
         final Distance distance = distance(groupId, memberId);
 
