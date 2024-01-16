@@ -1,7 +1,6 @@
 package com.twtw.backend.domain.member.controller;
 
 import com.twtw.backend.domain.member.dto.response.DuplicateNicknameResponse;
-import com.twtw.backend.domain.member.dto.response.IdResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.service.MemberService;
 
