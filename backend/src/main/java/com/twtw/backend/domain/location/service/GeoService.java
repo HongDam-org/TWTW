@@ -1,13 +1,11 @@
 package com.twtw.backend.domain.location.service;
 
+import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.location.dto.collection.MemberDistances;
 import com.twtw.backend.domain.location.dto.request.LocationRequest;
 import com.twtw.backend.domain.location.dto.response.AverageCoordinate;
 import com.twtw.backend.domain.member.entity.Member;
-import com.twtw.backend.domain.plan.entity.Plan;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -23,8 +21,8 @@ public class GeoService {
     private final RedisTemplate<String, String> redisTemplate;
 
     public AverageCoordinate saveLocation(
-            final Plan plan, final Member member, final LocationRequest locationRequest) {
-        final String planId = plan.getId().toString();
+            final Group group, final Member member, final LocationRequest locationRequest) {
+        final String planId = group.getId().toString();
         final String memberId = member.getId().toString();
 
         redisTemplate

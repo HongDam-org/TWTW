@@ -21,13 +21,13 @@ public class LocationController {
     private final RabbitTemplate rabbitTemplate;
     private final LocationService locationService;
 
-    @MessageMapping("map.share.{planId}")
+    @MessageMapping("map.share.{groupId}")
     public void share(
-            @DestinationVariable final UUID planId,
+            @DestinationVariable final UUID groupId,
             @Payload final LocationRequest locationRequest) {
         rabbitTemplate.convertAndSend(
                 RabbitMQConstant.LOCATION_EXCHANGE.getName(),
-                RabbitMQConstant.LOCATION_ROUTING_KEY_PREFIX.getName() + planId,
-                locationService.addInfo(planId, locationRequest));
+                RabbitMQConstant.LOCATION_ROUTING_KEY_PREFIX.getName() + groupId,
+                locationService.addInfo(groupId, locationRequest));
     }
 }
