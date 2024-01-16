@@ -5,7 +5,9 @@ import com.twtw.backend.domain.location.dto.collection.MemberDistances;
 import com.twtw.backend.domain.location.dto.request.LocationRequest;
 import com.twtw.backend.domain.location.dto.response.AverageCoordinate;
 import com.twtw.backend.domain.member.entity.Member;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
@@ -37,7 +39,8 @@ public class GeoService {
     }
 
     private MemberDistances collectMemberDistances(final String groupId, final Group group) {
-        final List<Point> points = redisTemplate.opsForGeo().position(groupId, group.getMemberIds());
+        final List<Point> points =
+                redisTemplate.opsForGeo().position(groupId, group.getMemberIds());
         return new MemberDistances(points);
     }
 
@@ -47,7 +50,9 @@ public class GeoService {
         final double averageLongitude = memberDistances.averageLongitude();
         final double averageLatitude = memberDistances.averageLatitude();
 
-        redisTemplate.opsForGeo().add(groupId, new Point(averageLongitude, averageLatitude), groupId);
+        redisTemplate
+                .opsForGeo()
+                .add(groupId, new Point(averageLongitude, averageLatitude), groupId);
 
         final Distance distance = distance(groupId, memberId);
 
@@ -55,9 +60,8 @@ public class GeoService {
     }
 
     private Distance distance(final String groupId, final String memberId) {
-        final Distance distance = redisTemplate
-                .opsForGeo()
-                .distance(groupId, memberId, groupId, Metrics.KILOMETERS);
+        final Distance distance =
+                redisTemplate.opsForGeo().distance(groupId, memberId, groupId, Metrics.KILOMETERS);
 
         if (distance == null) {
             return DEFAULT_DISTANCE;
