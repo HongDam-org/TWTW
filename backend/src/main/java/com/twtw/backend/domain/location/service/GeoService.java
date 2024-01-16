@@ -47,16 +47,14 @@ public class GeoService {
     private AverageCoordinate calculateAverage(
             final MemberDistances memberDistances, final String groupId, final String memberId) {
 
-        final double averageLongitude = memberDistances.averageLongitude();
-        final double averageLatitude = memberDistances.averageLatitude();
-
+        final Point averagePoint = memberDistances.getAveragePoint();
         redisTemplate
                 .opsForGeo()
-                .add(groupId, new Point(averageLongitude, averageLatitude), groupId);
+                .add(groupId, averagePoint, groupId);
 
         final Distance distance = distance(groupId, memberId);
 
-        return new AverageCoordinate(averageLongitude, averageLatitude, distance.getValue());
+        return new AverageCoordinate(averagePoint.getX(), averagePoint.getY(), distance.getValue());
     }
 
     private Distance distance(final String groupId, final String memberId) {

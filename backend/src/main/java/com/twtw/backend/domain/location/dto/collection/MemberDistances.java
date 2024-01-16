@@ -13,11 +13,19 @@ public class MemberDistances {
 
     private final List<Point> points;
 
-    public double averageLongitude() {
+    private double averageLongitude() {
         return points.stream().mapToDouble(Point::getX).average().orElse(DEFAULT_VALUE);
     }
 
-    public double averageLatitude() {
+    private double averageLatitude() {
         return points.stream().mapToDouble(Point::getY).average().orElse(DEFAULT_VALUE);
+    }
+
+    public Point getAveragePoint() {
+        try {
+            return new Point(averageLongitude(), averageLatitude());
+        } catch (NullPointerException e) {
+            return new Point(DEFAULT_VALUE, DEFAULT_VALUE);
+        }
     }
 }
