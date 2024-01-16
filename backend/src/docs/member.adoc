@@ -11,5 +11,5 @@ operation::get duplicate nickname[snippets='http-request,http-response']
 === 닉네임으로 멤버 검색
 operation::get member nickname[snippets='http-request,http-response']
 
-=== 닉네임으로 멤버 검색
+=== 멤버 개인 id 조회
 operation::get member id[snippets='http-request,http-response']
