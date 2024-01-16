@@ -125,4 +125,10 @@ public class Group implements Auditable {
     public void removeMember(final GroupMember groupMember) {
         this.groupMembers.remove(groupMember);
     }
+
+    public String[] getMemberIds() {
+        return this.groupMembers.stream()
+                .map(groupMember -> groupMember.getMember().getId().toString())
+                .toArray(String[]::new);
+    }
 }
