@@ -31,7 +31,7 @@ public class MemberController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<IdResponse> getMemberByJwt() {
+    public ResponseEntity<MemberResponse> getMemberByJwt() {
         return ResponseEntity.ok(memberService.getMemberId());
     }
 }

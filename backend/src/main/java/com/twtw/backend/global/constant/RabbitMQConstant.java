@@ -8,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum RabbitMQConstant {
     LOCATION_QUEUE("map.queue"),
     LOCATION_EXCHANGE("map"),
-    LOCATION_ROUTING_KEY("plan.*"),
-    LOCATION_ROUTING_KEY_PREFIX("plan."),
+    LOCATION_ROUTING_KEY("location.*"),
+    LOCATION_ROUTING_KEY_PREFIX("location."),
     NOTIFICATION_QUEUE("notification.queue"),
     NOTIFICATION_EXCHANGE("notification"),
     NOTIFICATION_ROUTING_KEY("notification");
