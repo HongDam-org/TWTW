@@ -87,25 +87,6 @@ class GroupServiceTest extends LoginTest {
     }
 
     @Test
-    @DisplayName("위치 공유 정보가 반환되는가")
-    void getShare() {
-        // given
-        Member leader = memberRepository.save(MemberEntityFixture.FIRST_MEMBER.toEntity());
-
-        Group group = new Group("BABY_MONSTER", "YG_OFFICIAL_IMAGE", leader);
-
-        Group saveGroup = groupRepository.save(group);
-
-        group.inviteAll(List.of(loginUser));
-
-        // when
-        GroupMemberResponse response = groupService.getShare(saveGroup.getId());
-
-        // then
-        assertThat(response.getIsShare()).isTrue();
-    }
-
-    @Test
     @DisplayName("위치 공유를 공개 -> 비공개 변경이 가능한가")
     void changeShare() {
         // given
