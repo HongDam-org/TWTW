@@ -62,7 +62,7 @@ public class GroupMember implements Auditable {
     public GroupMember(Group group, Member member) {
         this.group = group;
         this.member = member;
-        this.isShare = true;
+        this.isShare = false;
         member.addGroupMember(this);
         this.groupInviteCode = GroupInviteCode.REQUESTED;
     }

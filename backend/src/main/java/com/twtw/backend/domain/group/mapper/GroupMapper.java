@@ -17,18 +17,17 @@ public interface GroupMapper {
     @Mapping(target = "groupImage", source = "groupDto.groupImage")
     Group toGroupEntity(MakeGroupRequest groupDto, Member leader);
 
-    @Named("groupMemberToMemberResponse")
     @Mapping(target = "memberId", source = "groupMember.member.id")
     @Mapping(target = "nickname", source = "groupMember.member.nickname")
     @Mapping(target = "profileImage", source = "groupMember.member.profileImage")
     @Mapping(target = "isShare", source = "groupMember.isShare")
     GroupMemberResponse toGroupMemberResponse(GroupMember groupMember);
 
-    @Named("groupMemberToMemberResponseList")
-    @IterableMapping(qualifiedByName = "groupMemberToMemberResponse")
+    @IterableMapping(elementTargetType = GroupMemberResponse.class)
     List<GroupMemberResponse> toGroupMemberResponseList(List<GroupMember> groupMemberList);
 
     @Mapping(target = "groupId", source = "group.id")
+    @Mapping(target = "groupMembers", source = "groupMembers")
     GroupInfoResponse toGroupInfo(Group group, List<GroupMemberResponse> groupMembers);
 
     @Named("groupMemberToGroupInfoResponse")
