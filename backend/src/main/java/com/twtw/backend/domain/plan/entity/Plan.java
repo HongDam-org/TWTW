@@ -8,8 +8,11 @@ import com.twtw.backend.domain.plan.exception.PlanMakerNotExistsException;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
+
 import jakarta.persistence.*;
+
 import lombok.*;
+
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
@@ -105,8 +108,7 @@ public class Plan implements Auditable {
             final Double latitude) {
         this.name = name;
         this.planDay = planDay;
-        this.place.update(
-                placeName, placeUrl, roadAddressName, longitude, latitude);
+        this.place.update(placeName, placeUrl, roadAddressName, longitude, latitude);
     }
 
     public void updateMemberLocation(

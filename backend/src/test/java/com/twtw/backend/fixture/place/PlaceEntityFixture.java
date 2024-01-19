@@ -1,6 +1,7 @@
 package com.twtw.backend.fixture.place;
 
 import com.twtw.backend.domain.place.entity.Place;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -15,7 +16,6 @@ public enum PlaceEntityFixture {
     private final Double latitude;
 
     public Place toEntity() {
-        return new Place(
-                placeName, placeUrl, roadAddressName, longitude, latitude);
+        return new Place(placeName, placeUrl, roadAddressName, longitude, latitude);
     }
 }
