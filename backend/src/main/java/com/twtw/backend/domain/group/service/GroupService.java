@@ -3,6 +3,7 @@ package com.twtw.backend.domain.group.service;
 import com.twtw.backend.domain.group.dto.request.*;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
+import com.twtw.backend.domain.group.dto.response.GroupResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.group.mapper.GroupMapper;
@@ -15,7 +16,6 @@ import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -127,14 +127,14 @@ public class GroupService {
     }
 
     @Transactional(readOnly = true)
-    public List<GroupInfoResponse> getMyGroups() {
+    public List<GroupResponse> getMyGroups() {
         Member loginMember = authService.getMemberByJwt();
 
         if (loginMember.hasNoGroupMember()) {
             return List.of();
         }
 
-        return groupMapper.toMyGroupsInfo(loginMember.getGroupMembers());
+        return groupMapper.toGroupResponses(loginMember.getGroupMembers());
     }
 
     @Transactional

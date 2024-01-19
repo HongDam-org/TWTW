@@ -3,10 +3,10 @@ package com.twtw.backend.domain.group.mapper;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
+import com.twtw.backend.domain.group.dto.response.GroupResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
-
 import org.mapstruct.*;
 
 import java.util.List;
@@ -30,13 +30,13 @@ public interface GroupMapper {
     @Mapping(target = "groupMembers", source = "groupMembers")
     GroupInfoResponse toGroupInfo(Group group, List<GroupMemberResponse> groupMembers);
 
-    @Named("groupMemberToGroupInfoResponse")
+    @Named("groupMemberToGroupResponse")
     @Mapping(target = "groupId", source = "groupMember.group.id")
     @Mapping(target = "leaderId", source = "groupMember.group.leaderId")
     @Mapping(target = "name", source = "groupMember.group.name")
     @Mapping(target = "groupImage", source = "groupMember.group.groupImage")
-    GroupInfoResponse toGroupInfoResponse(GroupMember groupMember);
+    GroupResponse toGroupResponse(GroupMember groupMember);
 
-    @IterableMapping(qualifiedByName = "groupMemberToGroupInfoResponse")
-    List<GroupInfoResponse> toMyGroupsInfo(List<GroupMember> groupMembers);
+    @IterableMapping(qualifiedByName = "groupMemberToGroupResponse")
+    List<GroupResponse> toGroupResponses(List<GroupMember> groupMembers);
 }

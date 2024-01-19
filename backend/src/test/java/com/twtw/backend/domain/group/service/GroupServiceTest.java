@@ -1,11 +1,10 @@
 package com.twtw.backend.domain.group.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
+import com.twtw.backend.domain.group.dto.response.GroupResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.group.repository.GroupMemberRepository;
@@ -13,12 +12,13 @@ import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("GroupService의")
 class GroupServiceTest extends LoginTest {
@@ -124,11 +124,11 @@ class GroupServiceTest extends LoginTest {
         groupMember1.acceptInvite();
         groupMember2.acceptInvite();
 
-        Group saveGroup1 = groupRepository.save(group1);
-        Group saveGroup2 = groupRepository.save(group2);
+        groupRepository.save(group1);
+        groupRepository.save(group2);
 
         // when
-        List<GroupInfoResponse> responses = groupService.getMyGroups();
+        List<GroupResponse> responses = groupService.getMyGroups();
 
         // then
         assertThat(responses).hasSize(2);

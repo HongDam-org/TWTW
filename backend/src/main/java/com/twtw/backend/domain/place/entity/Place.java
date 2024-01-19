@@ -37,8 +37,6 @@ public class Place implements Auditable {
 
     private String placeUrl;
 
-    private CategoryGroupCode categoryGroupCode;
-
     private String roadAddressName;
 
     @Embedded private Coordinate coordinate;
@@ -52,13 +50,11 @@ public class Place implements Auditable {
     public Place(
             final String placeName,
             final String placeUrl,
-            final CategoryGroupCode categoryGroupCode,
             final String roadAddressName,
             final Double longitude,
             final Double latitude) {
         this.placeName = placeName;
         this.placeUrl = placeUrl;
-        this.categoryGroupCode = categoryGroupCode;
         this.roadAddressName = roadAddressName;
         this.coordinate = new Coordinate(longitude, latitude);
     }
@@ -66,13 +62,11 @@ public class Place implements Auditable {
     public void update(
             final String placeName,
             final String placeUrl,
-            final CategoryGroupCode categoryGroupCode,
             final String roadAddressName,
             final Double longitude,
             final Double latitude) {
         this.placeName = placeName;
         this.placeUrl = placeUrl;
-        this.categoryGroupCode = categoryGroupCode;
         this.roadAddressName = roadAddressName;
         this.coordinate = new Coordinate(longitude, latitude);
     }

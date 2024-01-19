@@ -16,7 +16,6 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
-import com.twtw.backend.domain.plan.dto.request.UpdatePlanDayRequest;
 import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
 import com.twtw.backend.domain.plan.dto.response.PlaceDetails;
 import com.twtw.backend.domain.plan.dto.response.PlanDestinationResponse;
@@ -29,9 +28,7 @@ import com.twtw.backend.global.client.MapClient;
 import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -167,7 +164,6 @@ public class PlanService {
                 updatePlanRequest.getPlanDay(),
                 placeName,
                 updatePlanRequest.getPlaceUrl(),
-                updatePlanRequest.getCategoryGroupCode(),
                 updatePlanRequest.getRoadAddressName(),
                 updatePlanRequest.getLongitude(),
                 updatePlanRequest.getLatitude());
@@ -190,12 +186,6 @@ public class PlanService {
                         NotificationBody.DESTINATION_CHANGE_BODY.toNotificationBody(
                                 destinationName),
                         id.toString()));
-    }
-
-    @Transactional
-    public void updatePlanDay(final UpdatePlanDayRequest request) {
-        final Plan plan = getPlanEntity(request.getPlanId());
-        plan.updatePlanDay(request.getChangeDay());
     }
 
     @Transactional
