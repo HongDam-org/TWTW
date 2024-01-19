@@ -94,6 +94,6 @@ class GroupRepositoryTest extends RepositoryTest {
         final Group saveGroup = groupRepository.save(group);
 
         // then
-        assertThat(saveGroup.getGroupPlans()).hasSize(1);
+        assertThat(saveGroup.getPlans()).hasSize(1);
     }
 }

@@ -1,13 +1,12 @@
 package com.twtw.backend.domain.plan.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
 import com.twtw.backend.domain.plan.dto.request.SavePlanRequest;
+import com.twtw.backend.domain.plan.dto.request.UpdatePlanRequest;
 import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.entity.Plan;
@@ -18,7 +17,6 @@ import com.twtw.backend.fixture.place.PlaceDetailsFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +25,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("PlanService의")
 class PlanServiceTest extends LoginTest {
@@ -138,7 +138,7 @@ class PlanServiceTest extends LoginTest {
     }
 
     @Test
-    @DisplayName("삭제가 수행되는가") // TODO Fixture 사용하여 저장시 에러 확인
+    @DisplayName("삭제가 수행되는가")
     void deletePlan() {
         // given
         final UUID planId =
@@ -157,5 +157,29 @@ class PlanServiceTest extends LoginTest {
 
         // then
         assertThat(planRepository.findById(planId)).isEmpty();
+    }
+
+    @Test
+    @DisplayName("수정이 수행되는가")
+    void updatePlan() {
+        // given
+        final UUID planId =
+                planRepository
+                        .save(
+                                new Plan(
+                                        "모임명",
+                                        loginUser,
+                                        PlaceEntityFixture.SECOND_PLACE.toEntity(),
+                                        GroupEntityFixture.HDJ_GROUP.toEntity(loginUser),
+                                        LocalDateTime.of(2023, 12, 25, 15, 30)))
+                        .getId();
+
+        // when
+        final String placeName = "placeName";
+        planService.updatePlan(new UpdatePlanRequest(planId, LocalDateTime.now(), "모임", placeName, "url", CategoryGroupCode.CE7, "도로명주소", 1.0, 2.0, List.of()));
+
+        // then
+        final Plan plan = planRepository.findById(planId).orElseThrow();
+        assertThat(plan.getPlace().getPlaceName()).isEqualTo(placeName);
     }
 }

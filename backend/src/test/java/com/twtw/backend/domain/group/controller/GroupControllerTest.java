@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.twtw.backend.domain.group.dto.request.*;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
-import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
+import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
@@ -107,8 +107,7 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("그룹 가입 API가 수행되는가")
     void joinGroup() throws Exception {
         // given
-        final SimpleGroupInfoResponse expected = new SimpleGroupInfoResponse(UUID.randomUUID());
-        given(groupService.joinGroup(any())).willReturn(expected);
+        willDoNothing().given(groupService).joinGroup(any());
 
         // when
         final ResultActions perform =
@@ -251,8 +250,8 @@ class GroupControllerTest extends RestDocsTest {
     @DisplayName("위치 공유 조회 API가 수행되는가")
     void getShare() throws Exception {
         // given
-        final ShareInfoResponse expected =
-                new ShareInfoResponse(UUID.randomUUID(), UUID.randomUUID(), true);
+        final GroupMemberResponse expected =
+                new GroupMemberResponse(UUID.randomUUID(), UUID.randomUUID(), true);
         given(groupService.getShare(any())).willReturn(expected);
 
         // when

@@ -6,7 +6,7 @@ import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
-import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
+import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
 import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
@@ -60,10 +60,12 @@ class GroupServiceTest extends LoginTest {
         // when
         JoinGroupRequest request = new JoinGroupRequest(saveGroup.getId());
 
-        SimpleGroupInfoResponse response = groupService.joinGroup(request);
+        groupService.joinGroup(request);
+
+        final Group result = groupRepository.findById(group.getId()).orElseThrow();
 
         // then
-        assertThat(response.getGroupId()).isEqualTo(saveGroup.getId());
+        assertThat(result.getId()).isEqualTo(saveGroup.getId());
     }
 
     @Test
@@ -98,10 +100,10 @@ class GroupServiceTest extends LoginTest {
         group.inviteAll(List.of(loginUser));
 
         // when
-        ShareInfoResponse response = groupService.getShare(saveGroup.getId());
+        GroupMemberResponse response = groupService.getShare(saveGroup.getId());
 
         // then
-        assertThat(response.getShare()).isTrue();
+        assertThat(response.getIsShare()).isTrue();
     }
 
     @Test
@@ -124,7 +126,7 @@ class GroupServiceTest extends LoginTest {
                         .orElseThrow();
 
         // then
-        assertThat(result.getShare()).isFalse();
+        assertThat(result.getIsShare()).isFalse();
     }
 
     @Test

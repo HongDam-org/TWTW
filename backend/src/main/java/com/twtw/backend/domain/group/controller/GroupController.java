@@ -1,12 +1,8 @@
 package com.twtw.backend.domain.group.controller;
 
 import com.twtw.backend.domain.group.dto.request.*;
-import com.twtw.backend.domain.group.dto.request.DeleteGroupInviteRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
-import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
-import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,9 +30,10 @@ public class GroupController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<SimpleGroupInfoResponse> joinGroup(
+    public ResponseEntity<Void> joinGroup(
             @RequestBody JoinGroupRequest joinGroupRequest) {
-        return ResponseEntity.ok(groupService.joinGroup(joinGroupRequest));
+        groupService.joinGroup(joinGroupRequest);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/invite")
@@ -62,11 +59,6 @@ public class GroupController {
     public ResponseEntity<Void> unShareLocation(@PathVariable UUID id) {
         groupService.unShareLocation(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/share/{id}")
-    public ResponseEntity<ShareInfoResponse> getShare(@PathVariable UUID id) {
-        return ResponseEntity.ok(groupService.getShare(id));
     }
 
     @GetMapping

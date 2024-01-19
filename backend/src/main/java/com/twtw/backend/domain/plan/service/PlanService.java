@@ -146,7 +146,7 @@ public class PlanService {
         planRepository.deleteById(id);
     }
 
-    public Plan getPlanEntity(UUID id) {
+    private Plan getPlanEntity(UUID id) {
         return planRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
@@ -214,7 +214,7 @@ public class PlanService {
 
     public List<PlanInfoResponse> getPlansByGroupId(final UUID groupId) {
         final Group group = groupService.getGroupEntity(groupId);
-        final List<Plan> plans = group.getGroupPlans();
+        final List<Plan> plans = group.getPlans();
         return plans.stream().map(this::getPlanInfoResponse).toList();
     }
 }

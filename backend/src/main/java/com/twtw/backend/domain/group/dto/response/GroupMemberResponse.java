@@ -9,8 +9,9 @@ import java.util.UUID;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ShareInfoResponse {
-    private UUID groupId;
+public class GroupMemberResponse {
     private UUID memberId;
-    private Boolean share;
+    private String nickname;
+    private String profileImage;
+    private Boolean isShare;
 }

@@ -2,17 +2,11 @@ package com.twtw.backend.domain.group.mapper;
 
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
-import com.twtw.backend.domain.group.dto.response.ShareInfoResponse;
+import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
-import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.domain.member.entity.Member;
-
-import org.mapstruct.IterableMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.Named;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -26,19 +20,15 @@ public interface GroupMapper {
     @Mapping(target = "memberId", source = "groupMember.member.id")
     @Mapping(target = "nickname", source = "groupMember.member.nickname")
     @Mapping(target = "profileImage", source = "groupMember.member.profileImage")
-    MemberResponse toGroupMemberResponse(GroupMember groupMember);
+    @Mapping(target = "isShare", source = "groupMember.isShare")
+    GroupMemberResponse toGroupMemberResponse(GroupMember groupMember);
 
     @Named("groupMemberToMemberResponseList")
     @IterableMapping(qualifiedByName = "groupMemberToMemberResponse")
-    List<MemberResponse> toGroupMemberResponseList(List<GroupMember> groupMemberList);
-
-    @Mapping(target = "groupId", source = "id")
-    @Mapping(target = "groupMembers", qualifiedByName = "groupMemberToMemberResponseList")
-    GroupInfoResponse toGroupInfo(Group group);
+    List<GroupMemberResponse> toGroupMemberResponseList(List<GroupMember> groupMemberList);
 
     @Mapping(target = "groupId", source = "group.id")
-    @Mapping(target = "memberId", source = "member.id")
-    ShareInfoResponse toShareInfo(GroupMember groupMember);
+    GroupInfoResponse toGroupInfo(Group group, List<GroupMemberResponse> groupMembers);
 
     @Named("groupMemberToGroupInfoResponse")
     @Mapping(target = "groupId", source = "groupMember.group.id")
