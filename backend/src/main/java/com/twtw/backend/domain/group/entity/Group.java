@@ -128,6 +128,7 @@ public class Group implements Auditable {
 
     public String[] getMemberIds() {
         return this.groupMembers.stream()
+                .filter(GroupMember::getIsSharedOnce)
                 .map(groupMember -> groupMember.getMember().getId().toString())
                 .toArray(String[]::new);
     }
@@ -143,5 +144,9 @@ public class Group implements Auditable {
                 .filter(groupMember -> groupMember.isSameMember(member))
                 .findAny()
                 .orElseThrow(IllegalGroupMemberException::new);
+    }
+
+    public void shareOnce(final Member member) {
+        getSameMember(member).shareOnce();
     }
 }

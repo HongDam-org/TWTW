@@ -30,6 +30,7 @@ public class LocationService {
     public LocationResponse addInfo(final UUID groupId, final LocationRequest locationRequest) {
         final Member member = memberService.getMemberById(locationRequest.getMemberId());
         final Group group = groupService.getGroupEntity(groupId);
+        group.shareOnce(member);
 
         group.updateMemberLocation(
                 member, locationRequest.getLongitude(), locationRequest.getLatitude());

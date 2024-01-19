@@ -51,6 +51,8 @@ public class GroupMember implements Auditable {
 
     private Boolean isShare;
 
+    private Boolean isSharedOnce;
+
     @Enumerated(EnumType.STRING)
     private GroupInviteCode groupInviteCode;
 
@@ -63,6 +65,7 @@ public class GroupMember implements Auditable {
         this.group = group;
         this.member = member;
         this.isShare = false;
+        this.isSharedOnce = false;
         member.addGroupMember(this);
         this.groupInviteCode = GroupInviteCode.REQUESTED;
     }
@@ -73,6 +76,10 @@ public class GroupMember implements Auditable {
 
     public void unShare() {
         this.isShare = false;
+    }
+
+    public void shareOnce() {
+        this.isSharedOnce = true;
     }
 
     public void acceptInvite() {
