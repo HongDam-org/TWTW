@@ -1,5 +1,17 @@
 package com.twtw.backend.domain.plan.controller;
 
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
+import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
@@ -14,6 +26,7 @@ import com.twtw.backend.domain.plan.dto.response.PlanInfoResponse;
 import com.twtw.backend.domain.plan.dto.response.PlanResponse;
 import com.twtw.backend.domain.plan.service.PlanService;
 import com.twtw.backend.support.docs.RestDocsTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -25,17 +38,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
-
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
-import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("PlanController의")
 @WebMvcTest(PlanController.class)
@@ -156,9 +158,15 @@ class PlanControllerTest extends RestDocsTest {
                                 "http://someUrlToS3",
                                 List.of(
                                         new GroupMemberResponse(
-                                                UUID.randomUUID(), "카즈하", "http://HJ39FaceCamera", true),
+                                                UUID.randomUUID(),
+                                                "카즈하",
+                                                "http://HJ39FaceCamera",
+                                                true),
                                         new GroupMemberResponse(
-                                                UUID.randomUUID(), "사쿠라", "http://HJ39FaceCam", false))),
+                                                UUID.randomUUID(),
+                                                "사쿠라",
+                                                "http://HJ39FaceCam",
+                                                false))),
                         List.of(new MemberResponse(UUID.randomUUID(), "진호정", "http://HJ39Face")),
                         List.of(
                                 new MemberResponse(
@@ -325,9 +333,15 @@ class PlanControllerTest extends RestDocsTest {
                                                 "http://someUrlToS3",
                                                 List.of(
                                                         new GroupMemberResponse(
-                                                                UUID.randomUUID(), "카즈하", "http://HJ39FaceCamera", true),
+                                                                UUID.randomUUID(),
+                                                                "카즈하",
+                                                                "http://HJ39FaceCamera",
+                                                                true),
                                                         new GroupMemberResponse(
-                                                                UUID.randomUUID(), "사쿠라", "http://HJ39FaceCam", false))))
+                                                                UUID.randomUUID(),
+                                                                "사쿠라",
+                                                                "http://HJ39FaceCam",
+                                                                false))))
                                 .members(
                                         List.of(
                                                 new MemberResponse(
@@ -356,9 +370,15 @@ class PlanControllerTest extends RestDocsTest {
                                                 "http://someUrlToS3",
                                                 List.of(
                                                         new GroupMemberResponse(
-                                                                UUID.randomUUID(), "카즈하", "http://HJ39FaceCamera", true),
+                                                                UUID.randomUUID(),
+                                                                "카즈하",
+                                                                "http://HJ39FaceCamera",
+                                                                true),
                                                         new GroupMemberResponse(
-                                                                UUID.randomUUID(), "사쿠라", "http://HJ39FaceCam", false))))
+                                                                UUID.randomUUID(),
+                                                                "사쿠라",
+                                                                "http://HJ39FaceCam",
+                                                                false))))
                                 .members(
                                         List.of(
                                                 new MemberResponse(
@@ -484,9 +504,15 @@ class PlanControllerTest extends RestDocsTest {
                                                 "http://someUrlToS3",
                                                 List.of(
                                                         new GroupMemberResponse(
-                                                                UUID.randomUUID(), "카즈하", "http://HJ39FaceCamera", true),
+                                                                UUID.randomUUID(),
+                                                                "카즈하",
+                                                                "http://HJ39FaceCamera",
+                                                                true),
                                                         new GroupMemberResponse(
-                                                                UUID.randomUUID(), "사쿠라", "http://HJ39FaceCam", false))))
+                                                                UUID.randomUUID(),
+                                                                "사쿠라",
+                                                                "http://HJ39FaceCam",
+                                                                false))))
                                 .members(
                                         List.of(
                                                 new MemberResponse(
@@ -515,9 +541,15 @@ class PlanControllerTest extends RestDocsTest {
                                                 "http://someUrlToS3",
                                                 List.of(
                                                         new GroupMemberResponse(
-                                                                UUID.randomUUID(), "카즈하", "http://HJ39FaceCamera", true),
+                                                                UUID.randomUUID(),
+                                                                "카즈하",
+                                                                "http://HJ39FaceCamera",
+                                                                true),
                                                         new GroupMemberResponse(
-                                                                UUID.randomUUID(), "사쿠라", "http://HJ39FaceCam", false))))
+                                                                UUID.randomUUID(),
+                                                                "사쿠라",
+                                                                "http://HJ39FaceCam",
+                                                                false))))
                                 .members(
                                         List.of(
                                                 new MemberResponse(
