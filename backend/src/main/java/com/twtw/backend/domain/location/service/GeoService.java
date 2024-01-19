@@ -30,12 +30,7 @@ public class GeoService {
         final String groupId = group.getId().toString();
         final String memberId = member.getId().toString();
 
-        redisTemplate
-                .opsForGeo()
-                .add(
-                        groupId,
-                        locationRequest.toPoint(),
-                        memberId);
+        redisTemplate.opsForGeo().add(groupId, locationRequest.toPoint(), memberId);
 
         return calculateAverage(collectMemberDistances(groupId, group), groupId, memberId);
     }

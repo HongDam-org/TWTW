@@ -2,9 +2,11 @@ package com.twtw.backend.domain.location.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import org.springframework.data.geo.Point;
 
 import java.util.UUID;
