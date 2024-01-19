@@ -7,7 +7,6 @@ import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
-import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.group.repository.GroupMemberRepository;

@@ -3,6 +3,7 @@ package com.twtw.backend.domain.group.controller;
 import com.twtw.backend.domain.group.dto.request.*;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +31,7 @@ public class GroupController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<Void> joinGroup(
-            @RequestBody JoinGroupRequest joinGroupRequest) {
+    public ResponseEntity<Void> joinGroup(@RequestBody JoinGroupRequest joinGroupRequest) {
         groupService.joinGroup(joinGroupRequest);
         return ResponseEntity.noContent().build();
     }

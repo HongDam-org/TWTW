@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.twtw.backend.domain.group.dto.request.*;
 import com.twtw.backend.domain.group.dto.response.GroupInfoResponse;
 import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
-import com.twtw.backend.domain.group.dto.response.SimpleGroupInfoResponse;
 import com.twtw.backend.domain.group.service.GroupService;
 import com.twtw.backend.domain.member.dto.response.MemberResponse;
 import com.twtw.backend.support.docs.RestDocsTest;

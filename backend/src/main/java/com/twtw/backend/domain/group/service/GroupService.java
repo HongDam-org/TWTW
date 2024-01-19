@@ -15,6 +15,7 @@ import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,8 +46,10 @@ public class GroupService {
 
     @Transactional(readOnly = true)
     public GroupInfoResponse getGroupById(UUID groupId) {
-        final Group group = groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
-        return groupMapper.toGroupInfo(group, groupMapper.toGroupMemberResponseList(group.getGroupMembers()));
+        final Group group =
+                groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
+        return groupMapper.toGroupInfo(
+                group, groupMapper.toGroupMemberResponseList(group.getGroupMembers()));
     }
 
     public Group getGroupEntity(UUID groupId) {
@@ -57,7 +60,8 @@ public class GroupService {
     public GroupInfoResponse makeGroup(MakeGroupRequest groupDto) {
         final Member member = authService.getMemberByJwt();
         final Group group = groupRepository.save(groupMapper.toGroupEntity(groupDto, member));
-        final List<GroupMemberResponse> groupMemberResponses = groupMapper.toGroupMemberResponseList(group.getGroupMembers());
+        final List<GroupMemberResponse> groupMemberResponses =
+                groupMapper.toGroupMemberResponseList(group.getGroupMembers());
 
         return groupMapper.toGroupInfo(group, groupMemberResponses);
     }
@@ -101,7 +105,8 @@ public class GroupService {
         final UUID id = group.getId();
         friends.forEach(friend -> sendNotification(friend.getDeviceTokenValue(), groupName, id));
 
-        final List<GroupMemberResponse> groupMemberResponses = groupMapper.toGroupMemberResponseList(group.getGroupMembers());
+        final List<GroupMemberResponse> groupMemberResponses =
+                groupMapper.toGroupMemberResponseList(group.getGroupMembers());
 
         return groupMapper.toGroupInfo(group, groupMemberResponses);
     }
@@ -116,7 +121,8 @@ public class GroupService {
     }
 
     public GroupInfoResponse getGroupInfoResponse(Group group) {
-        final List<GroupMemberResponse> groupMemberResponses = groupMapper.toGroupMemberResponseList(group.getGroupMembers());
+        final List<GroupMemberResponse> groupMemberResponses =
+                groupMapper.toGroupMemberResponseList(group.getGroupMembers());
         return groupMapper.toGroupInfo(group, groupMemberResponses);
     }
 

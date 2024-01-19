@@ -6,6 +6,7 @@ import com.twtw.backend.domain.group.dto.response.GroupMemberResponse;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
+
 import org.mapstruct.*;
 
 import java.util.List;
