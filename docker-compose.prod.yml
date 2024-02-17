@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  backend:
+    image: ohksj77/twtw-backend:latest
+    container_name: backend
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    env_file: .env
+    restart: always
+    tty: true
+  
+  nginx:
+    build: ./nginx
+    container_name: nginx
+    ports:
+      - 80:80
+    restart: always
+    networks:
+      - backend
+
+networks:
+  backend:

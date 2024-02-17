@@ -6,22 +6,19 @@ on:
     workflows: ["TWTW Backend CI"]
     types:
       - completed
+
 jobs:
-  build:
+  server-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.3.0
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
         with:
-          version: '455.0.0'
-          project_id: ${{ secrets.GCP_PROJECT }}
-          service_account_key: ${{ secrets.GCP_KEY }}
-          export_default_credentials: true
-      
-      - name: Deploy to GCE with Docker Compose
-        run: |
-          gcloud compute ssh twtw-server --zone=${{ secrets.GCP_ZONE }} --command="cd ~/TWTW && sudo git pull && sudo docker-compose down && sudo docker-compose up --build -d"
+          host: ${{ secrets.AWS_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/TWTW
+            sudo git pull
+            sudo docker-compose -f docker-compose.prod.yml down
+            sudo docker-compose -f docker-compose.prod.yml up --build -d
