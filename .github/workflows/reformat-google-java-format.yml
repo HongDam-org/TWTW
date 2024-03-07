@@ -1,6 +1,8 @@
 name: TWTW Backend Reformat
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - '**.java'
 permissions:

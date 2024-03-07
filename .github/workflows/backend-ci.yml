@@ -1,6 +1,8 @@
 name: TWTW Backend CI
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - '**.java'
   pull_request:
