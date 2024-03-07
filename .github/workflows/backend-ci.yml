@@ -27,6 +27,12 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
+    - name: Apply Environment Variables
+      run: |
+        mkdir -p src/test/resources
+        echo "${{ secrets.ENVIRONMENT }}" | base64 --decode > src/main/resources/application-env.yml
+        find src
+
     - run: chmod +x gradlew
     - run: ./gradlew build -x test
     - run: ./gradlew jib

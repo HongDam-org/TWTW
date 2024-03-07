@@ -13,7 +13,7 @@ services:
     tty: true
   
   nginx:
-    build: ./nginx
+    image: ohksj77/twtw-nginx:latest
     container_name: nginx
     ports:
       - 80:80

@@ -43,3 +43,4 @@ out/
 /src/main/resources/*.json
 
 *.html
+application-env.yml
