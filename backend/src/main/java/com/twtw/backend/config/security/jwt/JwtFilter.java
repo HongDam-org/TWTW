@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -25,24 +26,29 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws ServletException, IOException {
-        String jwt = resolveToken(request);
+        Optional<String> jwt = resolveToken(request);
 
-        if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
-            Authentication authentication = tokenProvider.getAuthentication(jwt);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        }
+        jwt.ifPresent(this::setAuthentication);
+
         filterChain.doFilter(request, response);
     }
 
-    private String resolveToken(HttpServletRequest request) {
+    private void setAuthentication(final String token) {
+        if (tokenProvider.validateToken(token)) {
+            Optional<Authentication> authentication = tokenProvider.getAuthentication(token);
+            authentication.ifPresent(SecurityContextHolder.getContext()::setAuthentication);
+        }
+    }
+
+    private Optional<String> resolveToken(final HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
-            return bearerToken.substring(7);
+            return Optional.of(bearerToken.substring(BEARER_PREFIX.length()));
         }
 
-        return null;
+        return Optional.empty();
     }
 }

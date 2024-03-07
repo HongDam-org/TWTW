@@ -2,14 +2,10 @@ package com.twtw.backend.config.security.jwt;
 
 import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.Member;
+import com.twtw.backend.domain.member.entity.Role;
 import com.twtw.backend.global.exception.AuthorityException;
-
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,30 +13,17 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class TokenProvider implements InitializingBean {
+@RequiredArgsConstructor
+public class TokenProvider {
 
-    private Key key;
-    private final String secretKey;
+    private final Key key;
     private static final String AUTHORITIES_KEY = "auth";
     private static final Long ACCESS_TOKEN_EXPIRE_LENGTH = 60L * 60 * 24 * 1000; // 1 Day
     private static final Long REFRESH_TOKEN_EXPIRE_LENGTH = 60L * 60 * 24 * 14 * 1000; // 14 Days
-
-    public TokenProvider(@Value("${jwt.secret}") String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
-    }
 
     public TokenDto createToken(Authentication authentication) {
         String authorities =
@@ -69,23 +52,30 @@ public class TokenProvider implements InitializingBean {
         return new TokenDto(accessToken, refreshToken);
     }
 
-    public Authentication getAuthentication(String accessToken) {
+    public Optional<Authentication> getAuthentication(String accessToken) {
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get(AUTHORITIES_KEY) == null) {
-            throw new AuthorityException();
+        return Optional.ofNullable(claims.get(AUTHORITIES_KEY))
+                .map(
+                        auth -> {
+                            Collection<GrantedAuthority> authorities = new ArrayList<>();
+                            String role = claims.get(AUTHORITIES_KEY).toString();
+
+                            addRole(role, authorities);
+
+                            return new UsernamePasswordAuthenticationToken(claims.getSubject(), "", authorities);
+                        }
+                );
+    }
+
+    private void addRole(final String role, final Collection<GrantedAuthority> authorities) {
+        if (role.equals(Role.ROLE_ADMIN.name())) {
+            authorities.add(new SimpleGrantedAuthority(Role.ROLE_ADMIN.name()));
+            return;
         }
-
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        String role = claims.get(AUTHORITIES_KEY).toString();
-
-        if (role.equals("ROLE_ADMIN")) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-        } else if (role.equals("ROLE_USER")) {
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if (role.equals(Role.ROLE_USER.name())) {
+            authorities.add(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
         }
-
-        return new UsernamePasswordAuthenticationToken(claims.getSubject(), "", authorities);
     }
 
     public boolean validateToken(String token) {
@@ -102,24 +92,19 @@ public class TokenProvider implements InitializingBean {
 
     private Claims parseClaims(String accessToken) {
         try {
-            Claims claims =
-                    Jwts.parserBuilder()
+            return Jwts.parserBuilder()
                             .setSigningKey(key)
                             .build()
                             .parseClaimsJws(accessToken)
                             .getBody();
-            return claims;
         } catch (ExpiredJwtException e) {
-            return e.getClaims();
+            throw new AuthorityException();
         }
     }
 
     public UsernamePasswordAuthenticationToken makeCredit(Member member) {
-        List<GrantedAuthority> role = new ArrayList<>();
-        role.add(new SimpleGrantedAuthority(member.getRole().toString()));
-        UsernamePasswordAuthenticationToken credit =
-                new UsernamePasswordAuthenticationToken(member.getId().toString(), "", role);
+        List<GrantedAuthority> role = List.of(new SimpleGrantedAuthority(member.getRole().toString()));
 
-        return credit;
+        return new UsernamePasswordAuthenticationToken(member.getId().toString(), "", role);
     }
 }
