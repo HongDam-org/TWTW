@@ -24,7 +24,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         auto_quote_keyword: true
@@ -32,26 +32,13 @@ spring:
         storage_engine: innodb
         format_sql: true
     show-sql: true
-    generate-ddl: true
   h2:
     console:
       enabled: true
-  rabbitmq:
-    listener:
-      simple:
-        auto-startup: false
-      direct:
-        auto-startup: false
-      stream:
-        auto-startup: false
-    port: 5672
-    host: localhost
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration
-      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
-      - org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration
-  data:
-    redis:
-      host: redis
-      port: 6379
+  flyway:
+    url: jdbc:h2:mem:test;DATABASE_TO_UPPER=FALSE;MODE=MySQL;
+    baseline-on-migrate: true
+    enabled: true
+    user: sa
+    password:
+    clean-disabled: false

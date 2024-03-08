@@ -1,11 +1,11 @@
 name: TWTW Backend CD
-on:
-  workflow_run:
-    branches:
-      - "master"
-    workflows: ["TWTW Backend CI", "TWTW Nginx Build"]
-    types:
-      - completed
+# on:
+#   workflow_run:
+#     branches:
+#      - "master"
+#     workflows: ["TWTW Backend CI", "TWTW Nginx Build"]
+#     types:
+#      - completed
 
 jobs:
   server-deploy:

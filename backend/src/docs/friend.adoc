@@ -14,8 +14,17 @@ operation::post update friend status[snippets='http-request,http-response']
 === 친구 검색
 operation::get search friend[snippets='http-request,http-response']
 
+=== 친구 검색 cache
+operation::get search friend with cache[snippets='http-request,http-response']
+
 === 친구 전체 조회
 operation::get all friends[snippets='http-request,http-response']
 
+=== 친구 전체 조회 cache
+operation::get all friends with cache[snippets='http-request,http-response']
+
 === 친구 상태별 조회
 operation::get friends by status[snippets='http-request,http-response']
+
+=== 친구 상태별 조회 cache
+operation::get friends by status with cache[snippets='http-request,http-response']
