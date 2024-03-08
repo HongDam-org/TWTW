@@ -6,38 +6,35 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.twtw.backend.global.properties.FirebaseProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+
+import java.io.IOException;
 
 @Configuration
 @RequiredArgsConstructor
 public class FcmConfig {
 
     private final FirebaseProperties firebaseProperties;
+    private final ApplicationContext context;
 
     @Bean
-    public FirebaseApp firebaseApp() {
-        try {
-            final FirebaseOptions options =
-                    new FirebaseOptions.Builder()
-                            .setCredentials(
-                                    GoogleCredentials.fromStream(
-                                            new ClassPathResource(firebaseProperties.getLocation())
-                                                    .getInputStream()))
-                            .build();
+    public FirebaseApp firebaseApp() throws IOException {
+        final FirebaseOptions options = new FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(
+                        context.getResource(firebaseProperties.getLocation()).getInputStream()))
+                .build();
 
-            if (FirebaseApp.getApps().isEmpty()) {
-                return FirebaseApp.initializeApp(options);
-            }
+        if (FirebaseApp.getApps().isEmpty()) {
+            return FirebaseApp.initializeApp(options);
+        } else {
             return FirebaseApp.getInstance();
-        } catch (final Exception e) {
-            return FirebaseApp.initializeApp();
         }
     }
 
     @Bean
-    public FirebaseMessaging firebaseMessaging() {
+    public FirebaseMessaging firebaseMessaging() throws IOException {
         return FirebaseMessaging.getInstance(firebaseApp());
     }
 }
