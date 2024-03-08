@@ -37,6 +37,7 @@ jobs:
 
     - run: chmod +x gradlew
     - run: ./gradlew build -x test
+    - run: ./gradlew test jacocoTestReport
     - run: ./gradlew jib
 
     - name: Test Coverage Report
