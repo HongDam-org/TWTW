@@ -36,6 +36,7 @@ public abstract class LoginTest {
         final Member member = MemberEntityFixture.LOGIN_MEMBER.toEntity();
         loginUser = memberRepository.save(member);
         when(authService.getMemberByJwt()).thenReturn(loginUser);
+        when(authService.getMemberIdValue()).thenReturn("123123123.123123123.123123123");
     }
 
     @BeforeEach

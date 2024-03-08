@@ -13,7 +13,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @DataJpaTest
-@ActiveProfiles("test")
 @Target(ElementType.TYPE)
 @Import(QuerydslConfig.class)
 @Retention(RetentionPolicy.RUNTIME)

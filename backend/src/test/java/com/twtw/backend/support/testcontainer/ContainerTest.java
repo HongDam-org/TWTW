@@ -24,12 +24,13 @@ public class ContainerTest implements
     }
 
     @Override
-    public void initialize(ConfigurableApplicationContext applicationContext) {
+    public void initialize(final ConfigurableApplicationContext applicationContext) {
         TestPropertyValues.of(
                 "spring.data.redis.host=" + REDIS_CONTAINER.getHost(),
                 "spring.data.redis.port=" + REDIS_CONTAINER.getFirstMappedPort(),
                 "spring.rabbitmq.host=" + RABBIT_MQ_CONTAINER.getHost(),
-                "spring.rabbitmq.port=" + RABBIT_MQ_CONTAINER.getAmqpPort(),
+                "spring.rabbitmq.port=" + RABBIT_MQ_CONTAINER.getMappedPort(5672),
+                "spring.rabbitmq.stomp.port=" + RABBIT_MQ_CONTAINER.getMappedPort(61613),
                 "spring.rabbitmq.username=guest",
                 "spring.rabbitmq.password=guest"
         ).applyTo(applicationContext.getEnvironment());

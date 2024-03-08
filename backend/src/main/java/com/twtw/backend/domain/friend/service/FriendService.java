@@ -81,9 +81,13 @@ public class FriendService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    public String getMemberIdValue() {
+        return authService.getMemberIdValue();
+    }
+
     @CacheEvict(
             value = "getFriendsWithCache",
-            key = "'getFriendsWithCache'.concat(#root.target.authService.getMemberIdValue())",
+            key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue())",
             cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public List<FriendResponse> getFriends() {
@@ -92,7 +96,7 @@ public class FriendService {
 
     @Cacheable(
             value = "getFriendsWithCache",
-            key = "'getFriendsWithCache'.concat(#root.target.authService.getMemberIdValue())",
+            key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue())",
             cacheManager = "cacheManager",
             unless = "#result.size() <= 0")
     @Transactional(readOnly = true)
@@ -112,7 +116,7 @@ public class FriendService {
 
     @CacheEvict(
             value = "getFriendsByStatusWithCache",
-            key = "'getFriendsWithCache'.concat(#root.target.authService.getMemberIdValue()).concat(#friendStatus.name())",
+            key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#friendStatus.name())",
             cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public List<FriendResponse> getFriendsByStatus(final FriendStatus friendStatus) {
@@ -121,7 +125,7 @@ public class FriendService {
 
     @Cacheable(
             value = "getFriendsByStatusWithCache",
-            key = "'getFriendsWithCache'.concat(#root.target.authService.getMemberIdValue()).concat(#friendStatus.name())",
+            key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#friendStatus.name())",
             cacheManager = "cacheManager",
             unless = "#result.size() <= 0")
     @Transactional(readOnly = true)
@@ -141,7 +145,7 @@ public class FriendService {
 
     @CacheEvict(
             value = "getFriendsByNicknameWithCache",
-            key = "'getFriendsWithCache'.concat(#root.target.authService.getMemberIdValue()).concat(#nickname)",
+            key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#nickname)",
             cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public List<FriendResponse> getFriendByNickname(final String nickname) {
@@ -150,7 +154,7 @@ public class FriendService {
 
     @Cacheable(
             value = "getFriendsByNicknameWithCache",
-            key = "'getFriendsWithCache'.concat(#root.target.authService.getMemberIdValue()).concat(#nickname)",
+            key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#nickname)",
             cacheManager = "cacheManager",
             unless = "#result.size() <= 0")
     @Transactional(readOnly = true)
