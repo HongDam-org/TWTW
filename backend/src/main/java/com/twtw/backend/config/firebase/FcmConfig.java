@@ -5,14 +5,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.twtw.backend.global.properties.FirebaseProperties;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
 
 @Configuration
 @RequiredArgsConstructor
@@ -35,8 +31,8 @@ public class FcmConfig {
                 return FirebaseApp.initializeApp(options);
             }
             return FirebaseApp.getInstance();
-        } catch (final IOException ignored) {
-            return null;
+        } catch (final Exception e) {
+            return FirebaseApp.initializeApp();
         }
     }
 
