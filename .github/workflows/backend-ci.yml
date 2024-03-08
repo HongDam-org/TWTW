@@ -33,13 +33,12 @@ jobs:
       run: |
         mkdir -p src/test/resources
         mkdir -p src/main/resources
-        echo "${{ secrets.ENVIRONMENT }}" | base64 --decode > src/test/resources/application-env.yml
-        echo "${{ secrets.ENVIRONMENT }}" | base64 --decode > src/main/resources/application-env.yml
-        echo "${{ secrets.FIREBASE_JSON }}" | base64 --decode > src/test/resources/twtw_firebase_key.json
-        echo "${{ secrets.FIREBASE_JSON }}" | base64 --decode > src/main/resources/twtw_firebase_key.json
-        echo "${{ secrets.STORAGE_JSON }}" | base64 --decode > src/test/resources/engaged-shade-405207-b8ba9bb8a30f.json
-        echo "${{ secrets.STORAGE_JSON }}" | base64 --decode > src/main/resources/engaged-shade-405207-b8ba9bb8a30f.json
-        find src
+        echo "${{ secrets.ENVIRONMENT_YML }}" > src/test/resources/application-env.yml
+        echo "${{ secrets.ENVIRONMENT_YML }}" > src/main/resources/application-env.yml
+        echo "${{ secrets.FIREBASE_JSON }}" > src/test/resources/twtw_firebase_key.json
+        echo "${{ secrets.FIREBASE_JSON }}" > src/main/resources/twtw_firebase_key.json
+        echo "${{ secrets.STORAGE_JSON }}" > src/test/resources/engaged-shade-405207-b8ba9bb8a30f.json
+        echo "${{ secrets.STORAGE_JSON }}" > src/main/resources/engaged-shade-405207-b8ba9bb8a30f.json
 
     - run: chmod +x gradlew
     - run: ./gradlew build -x test
