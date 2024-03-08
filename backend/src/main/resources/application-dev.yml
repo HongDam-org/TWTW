@@ -39,3 +39,8 @@ spring:
     baseline-on-migrate: false
     user: root
     password: 1234
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus
