@@ -1,5 +1,6 @@
 package com.twtw.backend.config.firebase;
 
+import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -9,9 +10,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
 
 @Slf4j
 @Configuration
@@ -21,10 +19,9 @@ public class FcmConfig {
     private final FirebaseProperties firebaseProperties;
 
     @Bean
-    public FirebaseApp firebaseApp() throws IOException {
+    public FirebaseApp firebaseApp() {
         final FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(
-                        new ClassPathResource(firebaseProperties.getLocation()).getInputStream()))
+                .setCredentials(GoogleCredentials.create(new AccessToken(firebaseProperties.getKey(), null)))
                 .build();
 
         if (FirebaseApp.getApps().isEmpty()) {
@@ -34,7 +31,7 @@ public class FcmConfig {
     }
 
     @Bean
-    public FirebaseMessaging firebaseMessaging() throws IOException {
+    public FirebaseMessaging firebaseMessaging() {
         return FirebaseMessaging.getInstance(firebaseApp());
     }
 }
