@@ -40,17 +40,7 @@ jobs:
         echo "${{ secrets.STORAGE_JSON }}" > src/test/resources/engaged-shade-405207-b8ba9bb8a30f.json
         echo "${{ secrets.STORAGE_JSON }}" > src/main/resources/engaged-shade-405207-b8ba9bb8a30f.json
     
-    - name: Set File Permissions
-      run: |
-        chmod 644 src/test/resources/application-env.yml
-        chmod 644 src/main/resources/application-env.yml
-        chmod 644 src/test/resources/twtw_firebase_key.json
-        chmod 644 src/main/resources/twtw_firebase_key.json
-        chmod 644 src/test/resources/engaged-shade-405207-b8ba9bb8a30f.json
-        chmod 644 src/main/resources/engaged-shade-405207-b8ba9bb8a30f.json
-        chmod +x gradlew
-        find src
-      
+    - run: chmod +x gradlew
     - run: ./gradlew build
     - run: ./gradlew jib
 
