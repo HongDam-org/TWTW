@@ -7,7 +7,7 @@ route:
 receivers:
   - name: 'slack-notifications'
     slack_configs:
-    - channel: '#monitoring'
+    - channel: '#server-alert'
       send_resolved: true
       title: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
       text: "{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}"
