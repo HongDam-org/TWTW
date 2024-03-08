@@ -30,11 +30,14 @@ public class FcmConfig {
                                             new ClassPathResource(firebaseProperties.getLocation())
                                                     .getInputStream()))
                             .build();
+
             if (FirebaseApp.getApps().isEmpty()) {
                 return FirebaseApp.initializeApp(options);
             }
-        } catch (IOException ignored) {}
-        return FirebaseApp.getInstance();
+            return FirebaseApp.getInstance();
+        } catch (final IOException ignored) {
+            return null;
+        }
     }
 
     @Bean
