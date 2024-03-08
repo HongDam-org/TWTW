@@ -22,19 +22,14 @@ public class FcmConfig {
 
     @Bean
     public FirebaseApp firebaseApp() throws IOException {
-        log.info("FirebaseApp initializing...11111");
-
         final FirebaseOptions options = new FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(
                         new ClassPathResource(firebaseProperties.getLocation()).getInputStream()))
                 .build();
-        log.info("FirebaseApp initializing...22222");
 
         if (FirebaseApp.getApps().isEmpty()) {
-            log.info("FirebaseApp initializing...33333");
             return FirebaseApp.initializeApp(options);
         }
-        log.info("FirebaseApp initializing...44444");
         return FirebaseApp.getInstance();
     }
 

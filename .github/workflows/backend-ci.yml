@@ -50,8 +50,8 @@ jobs:
         chmod 644 src/main/resources/engaged-shade-405207-b8ba9bb8a30f.json
         chmod +x gradlew
         find src
-        ./gradlew build
-
+      
+    - run: ./gradlew build
     - run: ./gradlew jib
 
     - name: Test Coverage Report
