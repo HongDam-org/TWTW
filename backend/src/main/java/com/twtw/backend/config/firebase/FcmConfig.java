@@ -21,23 +21,24 @@ public class FcmConfig {
     private final FirebaseProperties firebaseProperties;
 
     @Bean
-    public FirebaseApp firebaseApp() throws IOException {
-        FirebaseOptions options =
-                new FirebaseOptions.Builder()
-                        .setCredentials(
-                                GoogleCredentials.fromStream(
-                                        new ClassPathResource(firebaseProperties.getLocation())
-                                                .getInputStream()))
-                        .build();
-
-        if (FirebaseApp.getApps().isEmpty()) {
-            return FirebaseApp.initializeApp(options);
-        }
+    public FirebaseApp firebaseApp() {
+        try {
+            final FirebaseOptions options =
+                    new FirebaseOptions.Builder()
+                            .setCredentials(
+                                    GoogleCredentials.fromStream(
+                                            new ClassPathResource(firebaseProperties.getLocation())
+                                                    .getInputStream()))
+                            .build();
+            if (FirebaseApp.getApps().isEmpty()) {
+                return FirebaseApp.initializeApp(options);
+            }
+        } catch (IOException ignored) {}
         return FirebaseApp.getInstance();
     }
 
     @Bean
-    public FirebaseMessaging firebaseMessaging() throws IOException {
+    public FirebaseMessaging firebaseMessaging() {
         return FirebaseMessaging.getInstance(firebaseApp());
     }
 }
