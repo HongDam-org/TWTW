@@ -25,10 +25,21 @@ public class FriendController {
         return ResponseEntity.ok(friendService.getFriends());
     }
 
+    @GetMapping("all/cache")
+    public ResponseEntity<List<FriendResponse>> getFriendsWithCache() {
+        return ResponseEntity.ok(friendService.getFriendsWithCache());
+    }
+
     @GetMapping
     public ResponseEntity<List<FriendResponse>> getFriendsByStatus(
             @RequestParam final FriendStatus friendStatus) {
         return ResponseEntity.ok(friendService.getFriendsByStatus(friendStatus));
+    }
+
+    @GetMapping("cache")
+    public ResponseEntity<List<FriendResponse>> getFriendsByStatusWithCache(
+            @RequestParam final FriendStatus friendStatus) {
+        return ResponseEntity.ok(friendService.getFriendsByStatusWithCache(friendStatus));
     }
 
     @PostMapping("request")
@@ -48,5 +59,11 @@ public class FriendController {
     public ResponseEntity<List<FriendResponse>> getFriendByName(
             @RequestParam final String nickname) {
         return ResponseEntity.ok(friendService.getFriendByNickname(nickname));
+    }
+
+    @GetMapping("search/cache")
+    public ResponseEntity<List<FriendResponse>> getFriendByNameWithCache(
+            @RequestParam final String nickname) {
+        return ResponseEntity.ok(friendService.getFriendByNicknameWithCache(nickname));
     }
 }

@@ -62,6 +62,7 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-gcp-storage:1.2.5.RELEASE'
 	implementation 'com.google.firebase:firebase-admin:6.8.1'
 	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+	implementation 'org.redisson:redisson-spring-boot-starter:3.18.0'
 
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 

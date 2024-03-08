@@ -86,4 +86,8 @@ public class Member implements Auditable {
     public void removeGroupMember(final GroupMember groupMember) {
         this.groupMembers.remove(groupMember);
     }
+
+    public boolean hasFasterNickname(final Member member) {
+        return this.nickname.compareTo(member.nickname) < 0;
+    }
 }

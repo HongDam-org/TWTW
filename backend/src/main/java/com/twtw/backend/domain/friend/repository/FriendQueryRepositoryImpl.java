@@ -1,19 +1,18 @@
 package com.twtw.backend.domain.friend.repository;
 
-import static com.twtw.backend.domain.friend.entity.QFriend.friend;
-
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.entity.FriendStatus;
 import com.twtw.backend.domain.member.entity.Member;
-
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static com.twtw.backend.domain.friend.entity.QFriend.friend;
 
 @Repository
 @RequiredArgsConstructor
@@ -81,5 +80,26 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
                                                                                 .containsIgnoreCase(
                                                                                         nickname)))))
                 .fetch();
+    }
+
+    @Override
+    public boolean existsByTwoMemberId(final UUID loginMemberId, final UUID memberId) {
+        return Optional.ofNullable(
+                jpaQueryFactory
+                        .selectFrom(friend)
+                        .setLockMode(LockModeType.PESSIMISTIC_READ)
+                        .setHint("javax.persistence.lock.timeout", 3)
+                        .where(
+                                (friend.toMember
+                                        .id
+                                        .eq(loginMemberId)
+                                        .and(friend.fromMember.id.eq(memberId))
+                                        .or(
+                                                friend.fromMember
+                                                        .id
+                                                        .eq(loginMemberId)
+                                                        .and(friend.toMember.id.eq(memberId)))))
+                        .fetchFirst())
+                .isPresent();
     }
 }

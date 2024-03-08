@@ -23,7 +23,7 @@ public class PathService {
 
     @Cacheable(
             value = "carPath",
-            key = "{#request}",
+            key = "'searchCarPath'.concat(#request)",
             cacheManager = "cacheManager",
             unless = "#result.code != 0")
     public SearchCarPathResponse searchCarPath(final SearchCarPathRequest request) {
@@ -32,7 +32,7 @@ public class PathService {
 
     @Cacheable(
             value = "pedPath",
-            key = "{#request}",
+            key = "'searchPedPath'.concat(#request)",
             cacheManager = "cacheManager",
             unless = "#result.features.size() <= 0")
     public SearchPedPathResponse searchPedPath(final SearchPedPathRequest request) {
