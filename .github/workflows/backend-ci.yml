@@ -32,6 +32,7 @@ jobs:
     - name: Apply Environment Variables
       run: |
         mkdir -p src/test/resources
+        echo "${{ secrets.ENVIRONMENT }}" | base64 --decode > src/test/resources/application-env.yml
         echo "${{ secrets.ENVIRONMENT }}" | base64 --decode > src/main/resources/application-env.yml
         find src
 
