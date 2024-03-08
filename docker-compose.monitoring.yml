@@ -32,8 +32,6 @@ alertmanager:
   user: root
   ports:
     - 9093:9093
-  environment:
-    - SLACK_API_URL=${SLACK_API_URL}
   volumes:
     - ./prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml
   networks:
