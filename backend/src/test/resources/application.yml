@@ -42,3 +42,13 @@ spring:
     user: sa
     password:
     clean-disabled: false
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      failureRateThreshold: 30
+      waitDurationInOpenState: 10000
+  instances:
+    backend-a:
+      base-config: default

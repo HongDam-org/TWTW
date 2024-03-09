@@ -6,6 +6,8 @@ import com.twtw.backend.global.client.TmapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.TmapProperties;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,6 +16,7 @@ import org.springframework.web.util.UriBuilder;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 @Component
 public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, SearchPedPathResponse> {
 
@@ -25,6 +28,7 @@ public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, Search
     }
 
     @Override
+    @CircuitBreaker(name = "backend-a", fallbackMethod = "fallback")
     public SearchPedPathResponse request(SearchPedPathRequest request) {
         return webClient
                 .post()
@@ -41,5 +45,10 @@ public class SearchPedPathClient extends TmapClient<SearchPedPathRequest, Search
     private URI getPathUri(final UriBuilder uriBuilder) {
         final UriBuilder builder = uriBuilder.queryParam("version", 1.1);
         return builder.build();
+    }
+
+    public SearchPedPathResponse fallback(final Exception e) {
+        log.error("SearchPedPathClient fallback", e);
+        return SearchPedPathResponse.onError();
     }
 }

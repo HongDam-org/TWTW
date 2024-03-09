@@ -52,7 +52,20 @@ management:
   endpoints:
     web:
       exposure:
-        include: prometheus
+        include: *
+  health:
+    circuitbreakers:
+      enabled: true
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      failureRateThreshold: 30
+      waitDurationInOpenState: 10000
+  instances:
+    backend-a:
+      base-config: default
 jwt:
   secret: ${JWT_SECRET}
 kakao-map:

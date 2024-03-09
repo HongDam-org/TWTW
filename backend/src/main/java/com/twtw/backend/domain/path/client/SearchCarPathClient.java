@@ -6,6 +6,8 @@ import com.twtw.backend.global.client.NaverMapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.NaverProperties;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,6 +16,7 @@ import org.springframework.web.util.UriBuilder;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 @Component
 public class SearchCarPathClient
         extends NaverMapClient<SearchCarPathRequest, SearchCarPathResponse> {
@@ -45,6 +48,7 @@ public class SearchCarPathClient
     }
 
     @Override
+    @CircuitBreaker(name = "backend-a", fallbackMethod = "fallback")
     public SearchCarPathResponse request(final SearchCarPathRequest request) {
         return webClient
                 .get()
@@ -57,5 +61,10 @@ public class SearchCarPathClient
                 .bodyToMono(SearchCarPathResponse.class)
                 .blockOptional()
                 .orElseThrow(WebClientResponseException::new);
+    }
+
+    public SearchCarPathResponse fallback(final Exception e) {
+        log.error("SearchCarPathClient fallback", e);
+        return SearchCarPathResponse.onError();
     }
 }

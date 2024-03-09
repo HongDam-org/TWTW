@@ -7,6 +7,8 @@ import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.KakaoProperties;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
@@ -14,6 +16,7 @@ import org.springframework.web.util.UriBuilder;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 @Component
 public class SurroundPlaceClient
         extends KakaoMapClient<SurroundPlaceRequest, SurroundPlaceResponse> {
@@ -27,6 +30,7 @@ public class SurroundPlaceClient
     }
 
     @Override
+    @CircuitBreaker(name = "backend-a", fallbackMethod = "fallback")
     public SurroundPlaceResponse request(final SurroundPlaceRequest request) {
         return webClient
                 .get()
@@ -36,6 +40,11 @@ public class SurroundPlaceClient
                 .bodyToMono(SurroundPlaceResponse.class)
                 .blockOptional()
                 .orElseThrow(WebClientResponseException::new);
+    }
+
+    public SurroundPlaceResponse fallback(final Exception e) {
+        log.error("SurroundPlaceClient fallback", e);
+        return SurroundPlaceResponse.onError();
     }
 
     private URI getUri(final SurroundPlaceRequest request, final UriBuilder uriBuilder) {
