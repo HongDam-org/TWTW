@@ -13,6 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SurroundPlaceResponse {
+
+private static final SurroundPlaceResponse ON_ERROR_RESPONSE = new SurroundPlaceResponse(
+            new MetaDetails(true),
+            List.of());
+
     private MetaDetails meta;
     private List<PlaceClientDetails> documents;
+
+    public static SurroundPlaceResponse onError() {
+        return ON_ERROR_RESPONSE;
+    }
 }

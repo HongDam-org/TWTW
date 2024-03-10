@@ -21,7 +21,7 @@ public class PlaceService {
 
     @Cacheable(
             value = "surroundPlace",
-            key = "{#surroundPlaceRequest}",
+            key = "'searchSurroundPlace'.concat(#surroundPlaceRequest)",
             cacheManager = "cacheManager",
             unless = "#result.results.size() <= 0")
     public PlaceResponse searchSurroundPlace(final SurroundPlaceRequest surroundPlaceRequest) {

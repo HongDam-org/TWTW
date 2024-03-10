@@ -10,6 +10,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchDestinationResponse {
+
+    private static final SearchDestinationResponse ON_ERROR_RESPONSE = new SearchDestinationResponse(
+            new MetaDetails(true),
+            List.of());
+
     private MetaDetails meta;
     private List<PlaceClientDetails> documents;
+
+    public static SearchDestinationResponse onError() {
+        return ON_ERROR_RESPONSE;
+    }
 }

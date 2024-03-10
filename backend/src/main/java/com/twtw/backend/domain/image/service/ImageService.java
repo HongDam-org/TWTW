@@ -11,6 +11,7 @@ import com.twtw.backend.global.properties.StorageProperties;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class ImageService {
     private final Storage storage;
     private final StorageProperties storageProperties;
 
+    @Transactional
     public ImageResponse uploadImage(final MultipartFile image) throws IOException {
         final Member member = authService.getMemberByJwt();
         final String contentType = image.getContentType();

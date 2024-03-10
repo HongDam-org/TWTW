@@ -133,11 +133,15 @@ public class AuthService {
     }
 
     public Member getMemberByJwt() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String memberIdValue = getMemberIdValue();
 
-        UUID id = UUID.fromString(authentication.getName());
+        UUID id = UUID.fromString(memberIdValue);
 
         return memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public String getMemberIdValue() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
     @Transactional

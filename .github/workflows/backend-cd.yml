@@ -2,10 +2,10 @@ name: TWTW Backend CD
 on:
   workflow_run:
     branches:
-      - "master"
+     - "master"
     workflows: ["TWTW Backend CI", "TWTW Nginx Build"]
     types:
-      - completed
+     - completed
 
 jobs:
   server-deploy:
@@ -14,23 +14,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Copy docker-compose file to server
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.AWS_IP }}
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./docker-compose.prod.yml"
-          target: "/var/www/TWTW"
+      # - name: Copy docker-compose file to server
+      #   uses: appleboy/scp-action@master
+      #   with:
+      #     host: ${{ secrets.AWS_IP }}
+      #     username: ubuntu
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     source: "./docker-compose.prod.yml"
+      #     target: "/var/www/TWTW"
 
-      - name: Deploy using docker-compose
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.AWS_IP }}
-          username: ubuntu
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd /var/www/TWTW
-            sudo docker-compose down
-            sudo docker-compose pull
-            sudo docker-compose up -d
+      # - name: Deploy using docker-compose
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.AWS_IP }}
+      #     username: ubuntu
+      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
+      #     script: |
+      #       cd /var/www/TWTW
+      #       sudo docker-compose down
+      #       sudo docker-compose pull
+      #       sudo docker-compose up -d

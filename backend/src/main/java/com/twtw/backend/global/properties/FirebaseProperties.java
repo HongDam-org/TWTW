@@ -9,5 +9,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @RequiredArgsConstructor
 @ConfigurationProperties(prefix = "firebase")
 public class FirebaseProperties {
-    private final String location;
+    private final String key;
 }

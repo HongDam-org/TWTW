@@ -25,4 +25,9 @@ public class GlobalErrorAdvice {
     public ResponseEntity<ErrorResponse> authority(final AuthorityException e) {
         return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
+
+    @ExceptionHandler(InterruptedException.class)
+    public ResponseEntity<ErrorResponse> interrupted(final InterruptedException e) {
+        return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+    }
 }

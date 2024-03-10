@@ -44,3 +44,4 @@ out/
 
 *.html
 application-env.yml
+*.json
