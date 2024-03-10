@@ -43,7 +43,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: *
+        include: ["metrics", "prometheus", "circuitbreakers", "circuitbreakerevents"]
   health:
     circuitbreakers:
       enabled: true
