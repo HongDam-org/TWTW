@@ -2,8 +2,10 @@ package com.twtw.backend.aspect;
 
 import com.twtw.backend.global.lock.DistributedLock;
 import com.twtw.backend.utils.SpringELParser;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -36,9 +38,9 @@ public class DistributedLockAspect {
         String key =
                 REDISSON_LOCK_PREFIX
                         + springELParser.getDynamicValue(
-                        signature.getParameterNames(),
-                        joinPoint.getArgs(),
-                        distributedLock.name());
+                                signature.getParameterNames(),
+                                joinPoint.getArgs(),
+                                distributedLock.name());
         RLock rLock = redissonClient.getLock(key);
 
         try {

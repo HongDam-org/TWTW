@@ -7,8 +7,7 @@ import org.springframework.boot.test.context.TestComponent;
 @TestComponent
 public class ResetDatabase {
 
-    @Autowired
-    private Flyway flyway;
+    @Autowired private Flyway flyway;
 
     public void reset() {
         flyway.clean();

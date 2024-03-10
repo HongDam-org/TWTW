@@ -1,5 +1,7 @@
 package com.twtw.backend.domain.friend.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.twtw.backend.domain.friend.dto.request.FriendRequest;
 import com.twtw.backend.domain.friend.dto.request.FriendUpdateRequest;
 import com.twtw.backend.domain.friend.dto.response.FriendResponse;
@@ -10,6 +12,7 @@ import com.twtw.backend.domain.member.entity.AuthType;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.OAuth2Info;
 import com.twtw.backend.support.service.LoginTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("FriendService의")
 class FriendServiceTest extends LoginTest {

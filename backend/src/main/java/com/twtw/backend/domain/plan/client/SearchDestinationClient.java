@@ -5,8 +5,11 @@ import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationResponse;
 import com.twtw.backend.global.client.KakaoMapClient;
 import com.twtw.backend.global.properties.KakaoProperties;
+
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

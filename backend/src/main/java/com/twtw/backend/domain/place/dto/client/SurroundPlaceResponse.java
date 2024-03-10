@@ -14,9 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SurroundPlaceResponse {
 
-private static final SurroundPlaceResponse ON_ERROR_RESPONSE = new SurroundPlaceResponse(
-            new MetaDetails(true),
-            List.of());
+    private static final SurroundPlaceResponse ON_ERROR_RESPONSE =
+            new SurroundPlaceResponse(new MetaDetails(true), List.of());
 
     private MetaDetails meta;
     private List<PlaceClientDetails> documents;

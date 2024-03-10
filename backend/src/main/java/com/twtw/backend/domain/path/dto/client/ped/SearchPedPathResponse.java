@@ -13,9 +13,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SearchPedPathResponse {
 
-    private static final SearchPedPathResponse ON_ERROR_RESPONSE = new SearchPedPathResponse(
-            "",
-            List.of());
+    private static final SearchPedPathResponse ON_ERROR_RESPONSE =
+            new SearchPedPathResponse("", List.of());
 
     private String type;
     private List<Feature> features;

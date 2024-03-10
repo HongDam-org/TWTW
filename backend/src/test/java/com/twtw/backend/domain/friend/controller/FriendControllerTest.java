@@ -1,23 +1,8 @@
 package com.twtw.backend.domain.friend.controller;
 
-import com.twtw.backend.domain.friend.dto.request.FriendRequest;
-import com.twtw.backend.domain.friend.dto.request.FriendUpdateRequest;
-import com.twtw.backend.domain.friend.dto.response.FriendResponse;
-import com.twtw.backend.domain.friend.entity.FriendStatus;
-import com.twtw.backend.domain.friend.service.FriendService;
-import com.twtw.backend.support.docs.RestDocsTest;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.ResultActions;
-
-import java.util.List;
-import java.util.UUID;
-
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentRequest;
 import static com.twtw.backend.support.docs.ApiDocsUtils.getDocumentResponse;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -27,6 +12,23 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.twtw.backend.domain.friend.dto.request.FriendRequest;
+import com.twtw.backend.domain.friend.dto.request.FriendUpdateRequest;
+import com.twtw.backend.domain.friend.dto.response.FriendResponse;
+import com.twtw.backend.domain.friend.entity.FriendStatus;
+import com.twtw.backend.domain.friend.service.FriendService;
+import com.twtw.backend.support.docs.RestDocsTest;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.ResultActions;
+
+import java.util.List;
+import java.util.UUID;
 
 @DisplayName("FriendController의")
 @WebMvcTest(FriendController.class)
@@ -84,7 +86,11 @@ class FriendControllerTest extends RestDocsTest {
 
         // docs
         perform.andDo(print())
-                .andDo(document("get all friends with cache", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "get all friends with cache",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 
     @Test
@@ -259,6 +265,10 @@ class FriendControllerTest extends RestDocsTest {
 
         // docs
         perform.andDo(print())
-                .andDo(document("get search friend with cache", getDocumentRequest(), getDocumentResponse()));
+                .andDo(
+                        document(
+                                "get search friend with cache",
+                                getDocumentRequest(),
+                                getDocumentResponse()));
     }
 }

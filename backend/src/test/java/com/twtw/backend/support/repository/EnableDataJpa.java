@@ -5,7 +5,6 @@ import com.twtw.backend.config.database.QuerydslConfig;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

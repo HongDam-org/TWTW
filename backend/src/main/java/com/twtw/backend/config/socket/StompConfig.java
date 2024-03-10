@@ -1,7 +1,9 @@
 package com.twtw.backend.config.socket;
 
 import com.twtw.backend.global.properties.RabbitMQProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.util.AntPathMatcher;

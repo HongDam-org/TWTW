@@ -7,7 +7,9 @@ import com.twtw.backend.global.exception.WebClientResponseException;
 import com.twtw.backend.global.properties.NaverProperties;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;

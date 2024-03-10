@@ -16,7 +16,9 @@ import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 import com.twtw.backend.global.lock.DistributedLock;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -116,7 +118,8 @@ public class FriendService {
 
     @CacheEvict(
             value = "getFriendsByStatusWithCache",
-            key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#friendStatus.name())",
+            key =
+                    "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#friendStatus.name())",
             cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public List<FriendResponse> getFriendsByStatus(final FriendStatus friendStatus) {
@@ -125,7 +128,8 @@ public class FriendService {
 
     @Cacheable(
             value = "getFriendsByStatusWithCache",
-            key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#friendStatus.name())",
+            key =
+                    "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#friendStatus.name())",
             cacheManager = "cacheManager",
             unless = "#result.size() <= 0")
     @Transactional(readOnly = true)

@@ -6,8 +6,10 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.twtw.backend.global.properties.FirebaseProperties;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,9 +22,12 @@ public class FcmConfig {
 
     @Bean
     public FirebaseApp firebaseApp() {
-        final FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.create(new AccessToken(firebaseProperties.getKey(), null)))
-                .build();
+        final FirebaseOptions options =
+                new FirebaseOptions.Builder()
+                        .setCredentials(
+                                GoogleCredentials.create(
+                                        new AccessToken(firebaseProperties.getKey(), null)))
+                        .build();
 
         if (FirebaseApp.getApps().isEmpty()) {
             return FirebaseApp.initializeApp(options);

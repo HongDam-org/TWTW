@@ -11,7 +11,8 @@ public class SpringELParser {
     private static final ExpressionParser PARSER = new SpelExpressionParser();
     private static final Integer START_INDEX = 0;
 
-    public Object getDynamicValue(final String[] parameterNames, final Object[] args, final String key) {
+    public Object getDynamicValue(
+            final String[] parameterNames, final Object[] args, final String key) {
         final StandardEvaluationContext context = new StandardEvaluationContext();
 
         for (int i = START_INDEX; i < parameterNames.length; i++) {

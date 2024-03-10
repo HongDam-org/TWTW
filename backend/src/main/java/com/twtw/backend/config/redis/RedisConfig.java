@@ -1,7 +1,9 @@
 package com.twtw.backend.config.redis;
 
 import com.twtw.backend.global.properties.RedisProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;

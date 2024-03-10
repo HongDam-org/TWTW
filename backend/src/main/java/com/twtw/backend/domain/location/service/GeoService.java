@@ -5,7 +5,9 @@ import com.twtw.backend.domain.location.dto.collection.MemberDistances;
 import com.twtw.backend.domain.location.dto.request.LocationRequest;
 import com.twtw.backend.domain.location.dto.response.AverageCoordinate;
 import com.twtw.backend.domain.member.entity.Member;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
