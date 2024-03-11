@@ -3,13 +3,8 @@ package com.twtw.backend.config.rabbitmq;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.global.constant.RabbitMQConstant;
 import com.twtw.backend.global.properties.RabbitMQProperties;
-
 import lombok.RequiredArgsConstructor;
-
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -29,7 +24,10 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue locationQueue() {
-        return new Queue(RabbitMQConstant.LOCATION_QUEUE.getName(), true);
+        return QueueBuilder.durable(RabbitMQConstant.LOCATION_QUEUE.getName())
+                .withArgument("x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .withArgument("x-dead-letter-routing-key", RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .build();
     }
 
     @Bean
@@ -46,7 +44,10 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue notificationQueue() {
-        return new Queue(RabbitMQConstant.NOTIFICATION_QUEUE.getName(), true);
+        return QueueBuilder.durable(RabbitMQConstant.NOTIFICATION_QUEUE.getName())
+                .withArgument("x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .withArgument("x-dead-letter-routing-key", RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .build();
     }
 
     @Bean
@@ -59,6 +60,23 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(notificationQueue())
                 .to(notificationTopicExchange())
                 .with(RabbitMQConstant.NOTIFICATION_ROUTING_KEY.getName());
+    }
+
+    @Bean
+    public Queue deadLetterQueue() {
+        return QueueBuilder.durable(RabbitMQConstant.DEAD_LETTER_QUEUE.getName()).build();
+    }
+
+    @Bean
+    public TopicExchange deadLetterExchange() {
+        return new TopicExchange(RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName());
+    }
+
+    @Bean
+    public Binding deadLetterBinding() {
+        return BindingBuilder.bind(deadLetterQueue())
+                .to(deadLetterExchange())
+                .with(RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName());
     }
 
     @Bean
@@ -94,6 +112,11 @@ public class RabbitMQConfig {
         rabbitAdmin.declareQueue(notificationQueue());
         rabbitAdmin.declareExchange(notificationTopicExchange());
         rabbitAdmin.declareBinding(notificationBinding());
+
+        rabbitAdmin.declareQueue(deadLetterQueue());
+        rabbitAdmin.declareExchange(deadLetterExchange());
+        rabbitAdmin.declareBinding(deadLetterBinding());
+
         return rabbitAdmin;
     }
 }

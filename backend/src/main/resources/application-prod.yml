@@ -83,3 +83,5 @@ tmap:
   url: ${TMAP_URL}
 firebase:
   location: ${FIREBASE_LOCATION}
+slack:
+  url: ${SLACK_URL}
