@@ -19,11 +19,7 @@ public class FcmConsumer {
     }
 
     @RabbitListener(queues = "notification.queue")
-    public void sendNotification(final NotificationRequest request) {
-        try {
-            firebaseMessaging.send(request.toMessage());
-        } catch (FirebaseMessagingException e) {
-            log.error(e.getMessage());
-        }
+    public void sendNotification(final NotificationRequest request) throws FirebaseMessagingException {
+        firebaseMessaging.send(request.toMessage());
     }
 }

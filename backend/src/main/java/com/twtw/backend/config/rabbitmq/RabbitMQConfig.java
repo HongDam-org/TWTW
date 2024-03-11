@@ -24,7 +24,10 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue locationQueue() {
-        return new Queue(RabbitMQConstant.LOCATION_QUEUE.getName(), true);
+        return QueueBuilder.durable(RabbitMQConstant.LOCATION_QUEUE.getName())
+                .withArgument("x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .withArgument("x-dead-letter-routing-key", RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .build();
     }
 
     @Bean
@@ -41,7 +44,10 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue notificationQueue() {
-        return new Queue(RabbitMQConstant.NOTIFICATION_QUEUE.getName(), true);
+        return QueueBuilder.durable(RabbitMQConstant.NOTIFICATION_QUEUE.getName())
+                .withArgument("x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .withArgument("x-dead-letter-routing-key", RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .build();
     }
 
     @Bean
