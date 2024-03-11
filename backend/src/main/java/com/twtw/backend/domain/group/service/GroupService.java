@@ -17,6 +17,8 @@ import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,11 +46,29 @@ public class GroupService {
         this.groupMapper = groupMapper;
         this.fcmProducer = fcmProducer;
     }
-
+    @CacheEvict(
+            value = "getGroupByIdWithCache",
+            key = "'getGroupWithCache'.concat(#groupId)",
+            cacheManager = "cacheManager"
+    )
     @Transactional(readOnly = true)
     public GroupInfoResponse getGroupById(UUID groupId) {
-        final Group group =
-                groupRepository.findById(groupId).orElseThrow(EntityNotFoundException::new);
+        final Group group = getGroupEntity(groupId);
+
+        return groupMapper.toGroupInfo(
+                group, groupMapper.toGroupMemberResponseList(group.getGroupMembers()));
+    }
+
+    @Cacheable(
+            value = "getGroupByIdWithCache",
+            key = "'getGroupWithCache'.concat(#groupId)",
+            cacheManager = "cacheManager"
+    )
+    @Transactional(readOnly = true)
+    public GroupInfoResponse getGroupByIdWithCache(UUID groupId){
+
+        final Group group = getGroupEntity(groupId);
+
         return groupMapper.toGroupInfo(
                 group, groupMapper.toGroupMemberResponseList(group.getGroupMembers()));
     }
@@ -127,8 +147,34 @@ public class GroupService {
         return groupMapper.toGroupInfo(group, groupMemberResponses);
     }
 
+    public String getMemberIdValue(){
+        return authService.getMemberIdValue();
+    }
+
+    @CacheEvict(
+            value = "getMyGroupsWithCache",
+            key = "'getMyGroupsWithCache'.concat(#root.target.getMemberIdValue())",
+            cacheManager = "cacheManager"
+    )
     @Transactional(readOnly = true)
     public List<GroupResponse> getMyGroups() {
+        Member loginMember = authService.getMemberByJwt();
+
+        if (loginMember.hasNoGroupMember()) {
+            return List.of();
+        }
+
+        return groupMapper.toGroupResponses(loginMember.getGroupMembers());
+    }
+
+    @Cacheable(
+            value = "getMyGroupsWithCache",
+            key = "'getMyGroupsWithCache'.concat(#root.target.getMemberIdValue())",
+            cacheManager = "cacheManager",
+            unless = "#result.size() <= 0"
+    )
+    @Transactional(readOnly = true)
+    public List<GroupResponse> getMyGroupsWithCache(){
         Member loginMember = authService.getMemberByJwt();
 
         if (loginMember.hasNoGroupMember()) {

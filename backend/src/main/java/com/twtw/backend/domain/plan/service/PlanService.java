@@ -31,6 +31,7 @@ import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,8 +122,23 @@ public class PlanService {
         plan.deleteMember(member);
     }
 
+    @CacheEvict(
+            value = "getPlanByIdWithCache",
+            key = "'getPlanByIdWithCache'.concat(#id)",
+            cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public PlanInfoResponse getPlanById(UUID id) {
+        Plan plan = getPlanEntity(id);
+
+        return getPlanInfoResponse(plan);
+    }
+
+    @Cacheable(
+            value = "getPlanByIdWithCache",
+            key = "'getPlanByIdWithCache'.concat(#id)",
+            cacheManager = "cacheManager")
+    @Transactional(readOnly = true)
+    public PlanInfoResponse getPlanByIdWithCache(UUID id) {
         Plan plan = getPlanEntity(id);
 
         return getPlanInfoResponse(plan);
@@ -149,8 +165,27 @@ public class PlanService {
         return planRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    public String getMemberIdValue(){
+        return authService.getMemberIdValue();
+    }
+    @CacheEvict(
+            value = "getPlansWithCache",
+            key = "'getPlansWithCache'.concat(#root.target.getMemberIdValue())",
+            cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public List<PlanInfoResponse> getPlans() {
+        final Member member = authService.getMemberByJwt();
+        final List<Plan> plans = planRepository.findAllByMember(member);
+        return plans.stream().map(this::getPlanInfoResponse).toList();
+    }
+
+    @Cacheable(
+            value = "getPlansWithCache",
+            key = "'getPlansWithCache'.concat(#root.target.getMemberIdValue())",
+            cacheManager = "cacheManager",
+            unless = "#result.size() <= 0")
+    @Transactional(readOnly = true)
+    public List<PlanInfoResponse> getPlansWithCache() {
         final Member member = authService.getMemberByJwt();
         final List<Plan> plans = planRepository.findAllByMember(member);
         return plans.stream().map(this::getPlanInfoResponse).toList();
@@ -204,7 +239,24 @@ public class PlanService {
         plan.deleteInvite(member);
     }
 
+    @CacheEvict(
+            value = "getPlansByGroupIdWithCache",
+            key = "'getPlansByGroupIdWithCache'.concat(#groupId)",
+            cacheManager = "cacheManager")
+    @Transactional(readOnly = true)
     public List<PlanInfoResponse> getPlansByGroupId(final UUID groupId) {
+        final Group group = groupService.getGroupEntity(groupId);
+        final List<Plan> plans = group.getPlans();
+        return plans.stream().map(this::getPlanInfoResponse).toList();
+    }
+
+    @Cacheable(
+            value = "getPlansByGroupIdWithCache",
+            key = "'getPlansByGroupIdWithCache'.concat(#groupId)",
+            cacheManager = "cacheManager",
+            unless = "#result.size() <= 0")
+    @Transactional(readOnly = true)
+    public List<PlanInfoResponse> getPlansByGroupIdWithCache(final UUID groupId) {
         final Group group = groupService.getGroupEntity(groupId);
         final List<Plan> plans = group.getPlans();
         return plans.stream().map(this::getPlanInfoResponse).toList();
