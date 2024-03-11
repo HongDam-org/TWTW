@@ -31,12 +31,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         x ->
                                 x.requestMatchers(
-                                                "auth/refresh",
-                                                "auth/save",
-                                                "auth/login",
-                                                "member/duplicate/**",
-                                                "location/**",
-                                                "actuator/**")
+                                                "/auth/refresh",
+                                                "/auth/save",
+                                                "/auth/login",
+                                                "/member/duplicate/**",
+                                                "/location/**",
+                                                "/actuator/**",
+                                                "/member/test/**")
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())

@@ -16,7 +16,7 @@ import java.util.Objects;
 public class OAuth2Info {
 
     @Lob
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String clientId;
 
     @Enumerated(value = EnumType.STRING)
