@@ -3,7 +3,9 @@ package com.twtw.backend.config.rabbitmq;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.global.constant.RabbitMQConstant;
 import com.twtw.backend.global.properties.RabbitMQProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -25,8 +27,11 @@ public class RabbitMQConfig {
     @Bean
     public Queue locationQueue() {
         return QueueBuilder.durable(RabbitMQConstant.LOCATION_QUEUE.getName())
-                .withArgument("x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
-                .withArgument("x-dead-letter-routing-key", RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .withArgument(
+                        "x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .withArgument(
+                        "x-dead-letter-routing-key",
+                        RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
                 .build();
     }
 
@@ -45,8 +50,11 @@ public class RabbitMQConfig {
     @Bean
     public Queue notificationQueue() {
         return QueueBuilder.durable(RabbitMQConstant.NOTIFICATION_QUEUE.getName())
-                .withArgument("x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
-                .withArgument("x-dead-letter-routing-key", RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .withArgument(
+                        "x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .withArgument(
+                        "x-dead-letter-routing-key",
+                        RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
                 .build();
     }
 

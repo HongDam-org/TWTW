@@ -1,6 +1,7 @@
 package com.twtw.backend.domain.deadletter;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,8 @@ public class DeadLetterConsumer {
     @RabbitListener(queues = "deadletter.queue")
     public void handleDeadLetterMessage(final String message) {
         log.error("Dead letter received: {}", message);
-        webClient.post()
+        webClient
+                .post()
                 .uri(slackUrl)
                 .bodyValue("{\"text\": \"Dead letter received: " + message + "\"}")
                 .retrieve()
