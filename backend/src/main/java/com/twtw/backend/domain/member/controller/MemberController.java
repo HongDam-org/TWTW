@@ -29,8 +29,20 @@ public class MemberController {
         return ResponseEntity.ok(memberService.getMemberByNickname(nickname));
     }
 
+    @GetMapping("/cache")
+    public ResponseEntity<List<MemberResponse>> searchMemberByNicknameWithCache(
+            @RequestParam(name = "nickname") String nickname
+    ){
+        return ResponseEntity.ok(memberService.getMemberByNicknameWithCache(nickname));
+    }
+
     @GetMapping("/me")
     public ResponseEntity<MemberResponse> getMemberByJwt() {
         return ResponseEntity.ok(memberService.getMemberId());
+    }
+
+    @GetMapping("/me/cache")
+    public ResponseEntity<MemberResponse> getMemberByJwtWithCache(){
+        return ResponseEntity.ok(memberService.getMemberIdWithCache());
     }
 }
