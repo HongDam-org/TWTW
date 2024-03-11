@@ -25,6 +25,11 @@ public class GroupController {
         return ResponseEntity.ok(groupService.getGroupById(id));
     }
 
+    @GetMapping("/{id}/cache")
+    public ResponseEntity<GroupInfoResponse> getGroupByIdWithCache(@PathVariable UUID id){
+        return ResponseEntity.ok(groupService.getGroupByIdWithCache(id));
+    }
+
     @PostMapping
     public ResponseEntity<GroupInfoResponse> makeGroup(
             @RequestBody MakeGroupRequest makeGroupRequest) {
@@ -65,6 +70,11 @@ public class GroupController {
     @GetMapping
     public ResponseEntity<List<GroupResponse>> getMyGroups() {
         return ResponseEntity.ok(groupService.getMyGroups());
+    }
+
+    @GetMapping("/cache")
+    public ResponseEntity<List<GroupResponse>> getMyGroupsWithCache() {
+        return ResponseEntity.ok(groupService.getMyGroupsWithCache());
     }
 
     @PostMapping("location")
