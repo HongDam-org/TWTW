@@ -39,6 +39,11 @@ public class PlanController {
         return ResponseEntity.ok(planService.getPlanById(id));
     }
 
+    @GetMapping("/{id}/cache")
+    public ResponseEntity<PlanInfoResponse> getPlanByIdWithCache(@PathVariable UUID id) {
+        return ResponseEntity.ok(planService.getPlanByIdWithCache(id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePlanById(@PathVariable UUID id) {
         planService.deletePlan(id);
@@ -73,11 +78,23 @@ public class PlanController {
         return ResponseEntity.ok(planService.getPlans());
     }
 
+    @GetMapping("/cache")
+    public ResponseEntity<List<PlanInfoResponse>> getPlansWithCache() {
+        return ResponseEntity.ok(planService.getPlansWithCache());
+    }
+
     @GetMapping("group/{groupId}")
     public ResponseEntity<List<PlanInfoResponse>> getPlansByGroupId(
             @PathVariable final UUID groupId) {
         return ResponseEntity.ok(planService.getPlansByGroupId(groupId));
     }
+
+    @GetMapping("group/{groupUd}/cache")
+    public ResponseEntity<List<PlanInfoResponse>> getPlansByGroupIdWithCache(
+            @PathVariable final UUID groupId) {
+        return ResponseEntity.ok(planService.getPlansByGroupIdWithCache(groupId));
+    }
+
 
     @PostMapping("update")
     public ResponseEntity<Void> updatePlan(@RequestBody final UpdatePlanRequest updatePlanRequest) {
