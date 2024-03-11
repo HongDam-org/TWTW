@@ -39,7 +39,7 @@ public class MemberService {
         return memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public String getMemberIdValue(){
+    public String getMemberIdValue() {
         return authService.getMemberIdValue();
     }
 
@@ -61,7 +61,7 @@ public class MemberService {
             cacheManager = "cacheManager",
             unless = "#result.size() <= 0")
     @Transactional(readOnly = true)
-    public List<MemberResponse> getMemberByNicknameWithCache(final String nickname){
+    public List<MemberResponse> getMemberByNicknameWithCache(final String nickname) {
         final List<Member> members =
                 memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
         members.removeIf(authService.getMemberByJwt()::equals);

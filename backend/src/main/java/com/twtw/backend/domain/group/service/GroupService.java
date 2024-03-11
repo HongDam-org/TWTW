@@ -46,11 +46,11 @@ public class GroupService {
         this.groupMapper = groupMapper;
         this.fcmProducer = fcmProducer;
     }
+
     @CacheEvict(
             value = "getGroupByIdWithCache",
             key = "'getGroupWithCache'.concat(#groupId)",
-            cacheManager = "cacheManager"
-    )
+            cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public GroupInfoResponse getGroupById(UUID groupId) {
         final Group group = getGroupEntity(groupId);
@@ -62,10 +62,9 @@ public class GroupService {
     @Cacheable(
             value = "getGroupByIdWithCache",
             key = "'getGroupWithCache'.concat(#groupId)",
-            cacheManager = "cacheManager"
-    )
+            cacheManager = "cacheManager")
     @Transactional(readOnly = true)
-    public GroupInfoResponse getGroupByIdWithCache(UUID groupId){
+    public GroupInfoResponse getGroupByIdWithCache(UUID groupId) {
 
         final Group group = getGroupEntity(groupId);
 
@@ -147,15 +146,14 @@ public class GroupService {
         return groupMapper.toGroupInfo(group, groupMemberResponses);
     }
 
-    public String getMemberIdValue(){
+    public String getMemberIdValue() {
         return authService.getMemberIdValue();
     }
 
     @CacheEvict(
             value = "getMyGroupsWithCache",
             key = "'getMyGroupsWithCache'.concat(#root.target.getMemberIdValue())",
-            cacheManager = "cacheManager"
-    )
+            cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public List<GroupResponse> getMyGroups() {
         Member loginMember = authService.getMemberByJwt();
@@ -171,10 +169,9 @@ public class GroupService {
             value = "getMyGroupsWithCache",
             key = "'getMyGroupsWithCache'.concat(#root.target.getMemberIdValue())",
             cacheManager = "cacheManager",
-            unless = "#result.size() <= 0"
-    )
+            unless = "#result.size() <= 0")
     @Transactional(readOnly = true)
-    public List<GroupResponse> getMyGroupsWithCache(){
+    public List<GroupResponse> getMyGroupsWithCache() {
         Member loginMember = authService.getMemberByJwt();
 
         if (loginMember.hasNoGroupMember()) {

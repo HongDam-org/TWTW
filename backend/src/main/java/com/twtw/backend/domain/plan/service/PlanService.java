@@ -165,9 +165,10 @@ public class PlanService {
         return planRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    public String getMemberIdValue(){
+    public String getMemberIdValue() {
         return authService.getMemberIdValue();
     }
+
     @CacheEvict(
             value = "getPlansWithCache",
             key = "'getPlansWithCache'.concat(#root.target.getMemberIdValue())",

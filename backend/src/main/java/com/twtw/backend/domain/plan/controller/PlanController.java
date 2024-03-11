@@ -95,7 +95,6 @@ public class PlanController {
         return ResponseEntity.ok(planService.getPlansByGroupIdWithCache(groupId));
     }
 
-
     @PostMapping("update")
     public ResponseEntity<Void> updatePlan(@RequestBody final UpdatePlanRequest updatePlanRequest) {
         planService.updatePlan(updatePlanRequest);

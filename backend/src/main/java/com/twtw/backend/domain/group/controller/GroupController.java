@@ -26,7 +26,7 @@ public class GroupController {
     }
 
     @GetMapping("/{id}/cache")
-    public ResponseEntity<GroupInfoResponse> getGroupByIdWithCache(@PathVariable UUID id){
+    public ResponseEntity<GroupInfoResponse> getGroupByIdWithCache(@PathVariable UUID id) {
         return ResponseEntity.ok(groupService.getGroupByIdWithCache(id));
     }
 
