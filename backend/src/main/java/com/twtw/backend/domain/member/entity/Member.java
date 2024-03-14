@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.member.entity;
 
+import com.github.f4b6a3.ulid.UlidCreator;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
@@ -22,10 +23,10 @@ import java.util.UUID;
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member implements Auditable {
+
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID id = UlidCreator.getMonotonicUlid().toUuid();
 
     @Column(nullable = false, unique = true, length = 8)
     private String nickname;
@@ -89,5 +90,9 @@ public class Member implements Auditable {
 
     public boolean hasFasterNickname(final Member member) {
         return this.nickname.compareTo(member.nickname) < 0;
+    }
+
+    public boolean nicknameContains(final String nickname) {
+        return this.nickname.contains(nickname);
     }
 }

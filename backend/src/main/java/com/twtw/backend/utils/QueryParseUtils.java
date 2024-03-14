@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StringParseUtils {
+public class QueryParseUtils {
 
     private static final String BLANK = " ";
     private static final String PLUS = "+";

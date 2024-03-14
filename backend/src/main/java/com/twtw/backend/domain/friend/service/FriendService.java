@@ -6,7 +6,8 @@ import com.twtw.backend.domain.friend.dto.response.FriendResponse;
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.entity.FriendStatus;
 import com.twtw.backend.domain.friend.mapper.FriendMapper;
-import com.twtw.backend.domain.friend.repository.FriendRepository;
+import com.twtw.backend.domain.friend.repository.FriendCommandRepository;
+import com.twtw.backend.domain.friend.repository.FriendQueryRepository;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
@@ -15,7 +16,7 @@ import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-import com.twtw.backend.utils.StringParseUtils;
+import com.twtw.backend.utils.QueryParseUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -28,7 +29,8 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class FriendService {
-    private final FriendRepository friendRepository;
+    private final FriendQueryRepository friendQueryRepository;
+    private final FriendCommandRepository friendCommandRepository;
     private final FriendMapper friendMapper;
     private final MemberService memberService;
     private final AuthService authService;
@@ -54,7 +56,7 @@ public class FriendService {
     }
 
     public void createFriendRequest(final Member fromMember, final Member toMember) {
-        friendRepository.save(friendMapper.toEntity(fromMember, toMember));
+        friendCommandRepository.save(friendMapper.toEntity(fromMember, toMember));
     }
 
     private void sendNotification(final String deviceToken, final String nickname, final UUID id) {
@@ -75,7 +77,7 @@ public class FriendService {
     }
 
     private Friend getFriendById(final UUID loginMemberId, final UUID memberId) {
-        return friendRepository
+        return friendQueryRepository
                 .findByTwoMemberId(loginMemberId, memberId)
                 .orElseThrow(EntityNotFoundException::new);
     }
@@ -106,7 +108,7 @@ public class FriendService {
     private List<FriendResponse> getFriendResponses() {
         final Member loginMember = authService.getMemberByJwt();
         final List<Member> friends =
-                friendRepository.findByMember(loginMember).stream()
+                friendQueryRepository.findByMember(loginMember).stream()
                         .map(friend -> friend.getFriendMember(loginMember))
                         .toList();
 
@@ -137,7 +139,7 @@ public class FriendService {
     private List<FriendResponse> getFriendResponsesByStatus(final FriendStatus friendStatus) {
         final Member loginMember = authService.getMemberByJwt();
         final List<Member> friends =
-                friendRepository.findByMemberAndFriendStatus(loginMember, friendStatus).stream()
+                friendQueryRepository.findByMemberAndFriendStatus(loginMember, friendStatus).stream()
                         .map(friend -> friend.getFriendMember(loginMember))
                         .toList();
 
@@ -165,11 +167,20 @@ public class FriendService {
 
     private List<FriendResponse> getFriendResponsesByNickname(final String nickname) {
         final Member loginMember = authService.getMemberByJwt();
-        final List<Member> friends =
-                friendRepository.findByMemberAndMemberNickname(loginMember, StringParseUtils.parse(nickname)).stream()
-                        .map(friend -> friend.getFriendMember(loginMember))
-                        .toList();
+        final List<Member> friends = findFriendsByNickname(loginMember, nickname);
 
         return friendMapper.toResponses(friends);
+    }
+
+    private List<Member> findFriendsByNickname(final Member loginMember, final String nickname) {
+        if (nickname.length() < 2) {
+            return friendQueryRepository.findByMemberAndMemberNicknameContaining(loginMember.getId(), nickname).stream()
+                    .map(friend -> friend.getFriendMember(loginMember))
+                    .toList();
+        }
+        return friendCommandRepository.findByMemberAndMemberNickname(loginMember.getId(), QueryParseUtils.parse(nickname)).stream()
+                        .filter(friend -> friend.nicknameContains(nickname))
+                        .map(friend -> friend.getFriendMember(loginMember))
+                        .toList();
     }
 }

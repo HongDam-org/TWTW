@@ -1,7 +1,5 @@
 package com.twtw.backend.domain.member.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
@@ -10,19 +8,22 @@ import com.twtw.backend.domain.member.entity.AuthType;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
-import com.twtw.backend.support.database.DatabaseTest;
-import com.twtw.backend.support.exclude.ExcludeTest;
-
+import com.twtw.backend.support.service.ServiceTest;
+import com.twtw.backend.support.stub.StubConfig;
+import com.twtw.backend.support.testcontainer.ContainerTestConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
-@DatabaseTest
-@DisplayName("AuthService의 ")
-class AuthServiceTest extends ExcludeTest {
+import static org.assertj.core.api.Assertions.assertThat;
+
+@ServiceTest
+@ContextConfiguration(initializers = {ContainerTestConfig.class}, classes = StubConfig.class)
+@DisplayName("AuthService의")
+class AuthServiceTest {
 
     @Autowired private AuthService authService;
-
     @Autowired private MemberRepository memberRepository;
 
     @Test
@@ -31,7 +32,7 @@ class AuthServiceTest extends ExcludeTest {
         // given
         MemberSaveRequest kakaoRequest =
                 new MemberSaveRequest(
-                        "JinJooWon_Kakao",
+                        "Kakao",
                         "TEST_PROFILE_IMAGE",
                         "deviceToken",
                         new OAuthRequest("TEST_KAKAO_TOKEN", AuthType.KAKAO));
@@ -49,7 +50,7 @@ class AuthServiceTest extends ExcludeTest {
         // given
         MemberSaveRequest appleRequest =
                 new MemberSaveRequest(
-                        "JinJooWon_Apple",
+                        "Apple",
                         "TEST_PROFILE_IMAGE",
                         "deviceToken",
                         new OAuthRequest("TEST_APPLE_TOKEN", AuthType.APPLE));

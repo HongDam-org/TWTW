@@ -1,7 +1,12 @@
 package com.twtw.backend.domain.member.repository;
 
 import com.twtw.backend.domain.member.entity.RefreshToken;
+import org.springframework.stereotype.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-public interface RefreshTokenRepository extends JpaRepository<RefreshToken, String> {}
+@Repository
+public interface RefreshTokenRepository {
+    Optional<RefreshToken> findByTokenKey(final String tokenKey);
+    RefreshToken save(final RefreshToken refreshToken);
+}

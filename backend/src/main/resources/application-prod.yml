@@ -43,9 +43,9 @@ spring:
         bucket: ${BUCKET_NAME}
         storage-url: ${BUCKET_URL}
   flyway:
-    url: jdbc:mariadb://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DATABASE}?serverTimezone=Asia/Seoul
     enabled: true
-    baseline-on-migrate: false
+    baseline-on-migrate: true
     user: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
 management:

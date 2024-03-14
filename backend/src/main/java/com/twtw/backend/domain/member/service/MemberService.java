@@ -7,8 +7,7 @@ import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-
-import com.twtw.backend.utils.StringParseUtils;
+import com.twtw.backend.utils.QueryParseUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -54,10 +53,17 @@ public class MemberService {
     }
 
     private List<MemberResponse> getMemberResponses(final String nickname) {
-        final List<Member> members =
-                memberRepository.findAllByNicknameContainingIgnoreCase(StringParseUtils.parse(nickname));
-        members.removeIf(authService.getMemberByJwt()::equals);
-        return getResponsesByMembers(members);
+        final List<Member> members = getMembersByNickname(nickname);
+        final Member member = authService.getMemberByJwt();
+        return getResponsesByMembers(members.stream().filter(m -> !m.equals(member)).toList());
+    }
+
+    public List<Member> getMembersByNickname(final String nickname) {
+        if (nickname.length() < 2) {
+            return memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
+        }
+        return memberRepository.findAllByNickname(QueryParseUtils.parse(nickname))
+                        .stream().filter(member -> member.nicknameContains(nickname)).toList();
     }
 
     @Cacheable(
@@ -83,7 +89,7 @@ public class MemberService {
     }
 
     public List<Member> getMembersByIds(final List<UUID> friendMemberIds) {
-        return memberRepository.findAllById(friendMemberIds);
+        return memberRepository.findAllByIds(friendMemberIds);
     }
 
     @CacheEvict(

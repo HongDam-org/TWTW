@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.plan.entity;
 
+import com.github.f4b6a3.ulid.UlidCreator;
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.entity.GroupMember;
 import com.twtw.backend.domain.member.entity.Member;
@@ -8,11 +9,8 @@ import com.twtw.backend.domain.plan.exception.PlanMakerNotExistsException;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
-
 import jakarta.persistence.*;
-
 import lombok.*;
-
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
@@ -28,20 +26,20 @@ import java.util.stream.Collectors;
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Plan implements Auditable {
+
     @Id
-    @GeneratedValue(generator = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    private UUID id = UlidCreator.getMonotonicUlid().toUuid();
 
     @Column(nullable = false)
     private String name;
 
     @JoinColumn(columnDefinition = "BINARY(16)")
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Place place;
 
     @JoinColumn(name = "group_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Group group;
 
     @OneToMany(

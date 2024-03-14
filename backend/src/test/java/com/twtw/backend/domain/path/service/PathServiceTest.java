@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayName("PathService의")
-public class PathServiceTest extends LoginTest {
+class PathServiceTest extends LoginTest {
     @Autowired private PathService pathService;
 
     @Test

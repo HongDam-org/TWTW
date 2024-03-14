@@ -57,4 +57,15 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
                                 .and(friend.friendStatus.eq(friendStatus)))
                 .fetch();
     }
+
+    @Override
+    public List<Friend> findByMemberAndMemberNicknameContaining(final UUID memberId, final String nickname) {
+        return jpaQueryFactory.selectFrom(friend)
+                .where(
+                        (friend.friendStatus.eq(FriendStatus.ACCEPTED))
+                                .and
+                        (friend.toMember.id.eq(memberId).and(friend.fromMember.nickname.contains(nickname)))
+                                .or(friend.fromMember.id.eq(memberId).and(friend.toMember.nickname.contains(nickname))))
+                .fetch();
+    }
 }

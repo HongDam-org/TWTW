@@ -1,16 +1,13 @@
-package com.twtw.backend.support.database;
+package com.twtw.backend.support.service;
 
-import com.twtw.backend.config.database.QuerydslConfig;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+@SpringBootTest
 @Target(ElementType.TYPE)
-@Import(QuerydslConfig.class)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public @interface DatabaseTest {}
+public @interface ServiceTest {}

@@ -1,9 +1,8 @@
 package com.twtw.backend.domain.plan.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
+import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.place.entity.CategoryGroupCode;
 import com.twtw.backend.domain.plan.dto.client.SearchDestinationRequest;
 import com.twtw.backend.domain.plan.dto.request.PlanMemberRequest;
@@ -19,7 +18,6 @@ import com.twtw.backend.fixture.place.PlaceDetailsFixture;
 import com.twtw.backend.fixture.place.PlaceEntityFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,12 +28,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @DisplayName("PlanService의")
 class PlanServiceTest extends LoginTest {
 
     @Autowired private PlanService planService;
     @Autowired private GroupRepository groupRepository;
     @Autowired private PlanRepository planRepository;
+    @Autowired private MemberRepository memberRepository;
 
     @Test
     @DisplayName("목적지 검색이 수행되는가")
@@ -96,7 +97,7 @@ class PlanServiceTest extends LoginTest {
 
         // then
         final Plan result = planRepository.findById(planId).orElseThrow();
-        assertThat(result.getPlanMembers()).hasSize(1);
+        assertThat(result.getPlanMembers()).hasSize(2);
     }
 
     @Test
