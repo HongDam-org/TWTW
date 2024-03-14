@@ -61,6 +61,7 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-mysql'
 
+	implementation 'com.github.f4b6a3:ulid-creator:5.2.3'
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 	implementation 'org.springframework.cloud:spring-cloud-gcp-starter:1.2.5.RELEASE'
 	implementation 'org.springframework.cloud:spring-cloud-gcp-storage:1.2.5.RELEASE'
@@ -71,8 +72,8 @@ dependencies {
 	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
 
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	testRuntimeOnly 'com.h2database:h2'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	testRuntimeOnly 'com.mysql:mysql-connector-j'
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -91,6 +92,7 @@ dependencies {
 	testImplementation "org.testcontainers:junit-jupiter:1.19.7"
 	testImplementation "com.redis:testcontainers-redis:2.0.1"
 	testImplementation "org.testcontainers:rabbitmq:1.19.7"
+	testImplementation "org.testcontainers:mysql:1.17.2"
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
 }

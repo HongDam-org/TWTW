@@ -1,5 +1,6 @@
 package com.twtw.backend.domain.plan.entity;
 
+import com.github.f4b6a3.ulid.UlidCreator;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
@@ -24,10 +25,10 @@ import java.util.UUID;
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PlanMember implements Auditable {
+
     @Id
-    @GeneratedValue(generator = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    private UUID id = UlidCreator.getMonotonicUlid().toUuid();
 
     @JoinColumn(columnDefinition = "BINARY(16)")
     @ManyToOne(fetch = FetchType.LAZY)

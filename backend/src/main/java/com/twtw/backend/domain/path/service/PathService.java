@@ -27,7 +27,7 @@ public class PathService {
             cacheManager = "cacheManager",
             unless = "#result.code != 0")
     public SearchCarPathResponse searchCarPath(final SearchCarPathRequest request) {
-        return this.carPathClient.request(request);
+        return carPathClient.request(request);
     }
 
     @Cacheable(
@@ -36,6 +36,6 @@ public class PathService {
             cacheManager = "cacheManager",
             unless = "#result.features.size() <= 0")
     public SearchPedPathResponse searchPedPath(final SearchPedPathRequest request) {
-        return this.pedPathClient.request(request);
+        return pedPathClient.request(request);
     }
 }

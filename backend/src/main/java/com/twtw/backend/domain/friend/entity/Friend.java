@@ -1,29 +1,13 @@
 package com.twtw.backend.domain.friend.entity;
 
+import com.github.f4b6a3.ulid.UlidCreator;
 import com.twtw.backend.domain.friend.exception.InvalidFriendMemberException;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
@@ -31,15 +15,15 @@ import java.util.UUID;
 
 @Getter
 @Entity
+@EqualsAndHashCode(of = "id")
 @Where(clause = "deleted_at is null and friend_status != 'EXPIRED'")
 @EntityListeners(AuditListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Friend implements Auditable {
 
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @Column(name = "id", columnDefinition = "BINARY(16)")
-    private UUID id;
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID id = UlidCreator.getMonotonicUlid().toUuid();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(columnDefinition = "BINARY(16)")
@@ -103,5 +87,9 @@ public class Friend implements Auditable {
                         && this.baseTime
                                 .getCreatedAt()
                                 .isAfter(LocalDateTime.now().minusMinutes(30L)));
+    }
+
+    public boolean nicknameContains(final String nickname) {
+        return this.fromMember.nicknameContains(nickname) || this.toMember.nicknameContains(nickname);
     }
 }
