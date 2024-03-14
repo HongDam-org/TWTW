@@ -15,10 +15,8 @@ import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
-import com.twtw.backend.global.lock.DistributedLock;
-
+import com.twtw.backend.utils.StringParseUtils;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -55,7 +53,6 @@ public class FriendService {
         createFriendRequest(member, loginMember);
     }
 
-    @DistributedLock(name = "#fromMember.getNickname().concat(#toMember.getNickname())")
     public void createFriendRequest(final Member fromMember, final Member toMember) {
         friendRepository.save(friendMapper.toEntity(fromMember, toMember));
     }
@@ -169,7 +166,7 @@ public class FriendService {
     private List<FriendResponse> getFriendResponsesByNickname(final String nickname) {
         final Member loginMember = authService.getMemberByJwt();
         final List<Member> friends =
-                friendRepository.findByMemberAndMemberNickname(loginMember, nickname).stream()
+                friendRepository.findByMemberAndMemberNickname(loginMember, StringParseUtils.parse(nickname)).stream()
                         .map(friend -> friend.getFriendMember(loginMember))
                         .toList();
 

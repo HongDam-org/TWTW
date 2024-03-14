@@ -8,6 +8,7 @@ import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
+import com.twtw.backend.utils.StringParseUtils;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -49,8 +50,12 @@ public class MemberService {
             cacheManager = "cacheManager")
     @Transactional(readOnly = true)
     public List<MemberResponse> getMemberByNickname(final String nickname) {
+        return getMemberResponses(nickname);
+    }
+
+    private List<MemberResponse> getMemberResponses(final String nickname) {
         final List<Member> members =
-                memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
+                memberRepository.findAllByNicknameContainingIgnoreCase(StringParseUtils.parse(nickname));
         members.removeIf(authService.getMemberByJwt()::equals);
         return getResponsesByMembers(members);
     }
@@ -62,10 +67,7 @@ public class MemberService {
             unless = "#result.size() <= 0")
     @Transactional(readOnly = true)
     public List<MemberResponse> getMemberByNicknameWithCache(final String nickname) {
-        final List<Member> members =
-                memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
-        members.removeIf(authService.getMemberByJwt()::equals);
-        return getResponsesByMembers(members);
+        return getMemberResponses(nickname);
     }
 
     public MemberResponse getResponseByMember(Member member) {

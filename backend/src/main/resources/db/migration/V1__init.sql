@@ -18,7 +18,7 @@ create table `member`
     device_token_id BINARY(16),
     id              BINARY(16) not null,
     auth_type       enum ('APPLE','KAKAO'),
-    nickname        varchar(255) not null,
+    nickname        varchar(8) not null,
     profile_image   varchar(255),
     role            enum ('ROLE_ADMIN','ROLE_USER'),
     client_id       tinytext     not null,
@@ -127,3 +127,5 @@ alter table plan_member
     add constraint fk_plan_member_member_id foreign key (`member_id`) references `member` (id);
 alter table plan_member
     add constraint fk_plan_member_plan_id foreign key (plan_id) references plan (id);
+
+CREATE FULLTEXT INDEX idx_member_nickname ON `member` (nickname) with parser ngram;

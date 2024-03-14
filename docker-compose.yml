@@ -16,7 +16,7 @@ services:
     tty: true
 
   db:
-    image: mariadb:10
+    image: mysql
     container_name: db
     ports:
       - 3306:3306

@@ -14,8 +14,4 @@ public interface FriendQueryRepository {
     List<Friend> findByMember(final Member member);
 
     List<Friend> findByMemberAndFriendStatus(final Member member, final FriendStatus friendStatus);
-
-    List<Friend> findByMemberAndMemberNickname(final Member member, final String nickname);
-
-    boolean existsByTwoMemberId(final UUID loginMemberId, final UUID memberId);
 }
