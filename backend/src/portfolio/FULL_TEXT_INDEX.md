@@ -43,7 +43,7 @@ $$
 
 - 500만 row가 insert 됐다.
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/a4cc5c7b-39db-4aa3-89cd-91c97faee2cc)
 
 ### Like 연산 결과
 
@@ -53,7 +53,7 @@ SELECT * FROM member WHERE nickname like '%123456%';
 
 ### like 연산 쿼리 결과 [2.63s]
 
-![스크린샷 2024-03-13 오후 5.34.24.png](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-03-13_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_5.34.24.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/57bf2918-b2fe-4614-bd08-8499168b1d9a)
 
 # Full Text Index 적용
 
@@ -78,7 +78,7 @@ SELECT * FROM member WHERE MATCH(nickname) AGAINST('123456' IN BOOLEAN MODE);
 
 ### match 쿼리 결과 [error]
 
-![스크린샷 2024-03-13 오후 5.20.43.png](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-03-13_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_5.20.43.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/a6f0f6e8-f723-481d-abd9-7874d2cdc0ad)
 
 - **ngram**
 
@@ -86,7 +86,7 @@ SELECT * FROM member WHERE MATCH(nickname) AGAINST('123456' IN BOOLEAN MODE);
 >
 - **캐시 사이즈 2배 늘려봤지만** 에러는 해결이 되지 않음
 
-![스크린샷 2024-03-13 오후 5.36.44.png](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA_2024-03-13_%25E1%2584%258B%25E1%2585%25A9%25E1%2584%2592%25E1%2585%25AE_5.36.44.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/0e62fe27-b3ae-4450-95fb-e347efa8a713)
 
 > 캐시 사이즈를 늘린다면 메모리 부담이 발생하므로 **최적의 방법이라 판단하지 않았다 !**
 >
@@ -104,23 +104,23 @@ SELECT * FROM member WHERE MATCH(nickname) AGAINST('123456' IN BOOLEAN MODE);
 
 ### like 연산 결과 [2.37s]
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled%201.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/e300d6d2-ab41-41b9-ba2a-2292b757d6c3)
 
 ### match against boolean mode는 다음과 같은 결과 [29.22s]
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled%202.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/5045258d-cc73-43e0-84f3-accf6bc7e014)
 
 - 쿼리가 상당히 느리다.
 
 > 쿼리 Profiling으로 실행 계획 확인
 >
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled%203.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/43da9c5b-8b90-4a95-b056-00a943890123)
 
 - FULLTEXT initialization 이라는 전체 텍스트 인덱스를 초기화하고, 매번 검색을 위해 데이터를 메모리로 로딩하는 과정 에서 약 29s 가 걸림
 - Optimize table member 커맨드를 사용하여 FULLTEXT initialization의 성능을 높이려는 시도
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled%204.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/ef5cbc78-e8b6-4ac5-99af-24e330ce2126)
 
 - 하지만 이후에도 성능에 큰 변화가 없었다.
 
@@ -148,7 +148,7 @@ SELECT * FROM member WHERE MATCH(nickname) AGAINST('+12 +23 +34 +45 +56' IN BOOL
 
 ### 길이 2씩 나누어 검색 [0.53s]
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled%205.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/7e9b0951-ad90-41de-8ec3-0f9000b91c79)
 
 - 몇개의 결과가 더 나왔으며 이전과 비교해 누락된 row는 없었다.
     - 더 나온 이유는 순서를 보장하지 않고 12, 23, 34, 45, 56 을 포함하는 문자열을 검색하기 때문
@@ -156,7 +156,7 @@ SELECT * FROM member WHERE MATCH(nickname) AGAINST('+12 +23 +34 +45 +56' IN BOOL
 
 ### 혹시 몰라 길이 3씩 나누어 검색 [1m 4.19s]
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled%206.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/af50d00f-c1ae-40b4-ade6-1b8ebd9f5dff)
 
 - 이건 예상대로 훨씬 성능이 좋지 않다.
 - 길이 3만큼 나누어 검색하면 기존의 문자열 하나만 조건으로 넣었을 때보다 더 느림
@@ -173,11 +173,11 @@ SELECT * FROM member WHERE MATCH(nickname) AGAINST('+12 +23 +34 +45 +56' IN BOOL
 
 ### before
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled%207.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/78841f74-4dd0-48f6-89e8-7cb6ddb96812)
 
 ### after
 
-![Untitled](Full%20Text%20Index%20%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%8B%E1%85%AD%E1%86%BC%E1%84%80%E1%85%B5%2056c99542a08e4cab9b9bdb331e9f3dc8/Untitled%208.png)
+![image](https://github.com/HongDam-org/TWTW/assets/84346055/be4722b3-7eab-45ae-8160-4138a6e862d8)
 
 - 추후 데이터가 훨씬 많이 쌓이고 서비스가 확장되면 Elastic Search와 같은 다른 기술의 도입도 가능하지만,
   현재의 주어진 인프라 내에서 서비스 요구사항 수정으로 오류를 해결하고 쿼리를 수정하여 성능도 향상할 수 있었음
