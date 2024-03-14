@@ -14,7 +14,9 @@ public class StubRefreshTokenRepository implements RefreshTokenRepository {
 
     @Override
     public Optional<RefreshToken> findByTokenKey(final String tokenKey) {
-        return map.values().stream().filter(refreshToken -> refreshToken.getTokenKey().equals(tokenKey)).findFirst();
+        return map.values().stream()
+                .filter(refreshToken -> refreshToken.getTokenKey().equals(tokenKey))
+                .findFirst();
     }
 
     @Override

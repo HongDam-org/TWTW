@@ -13,21 +13,32 @@ public class StubMemberRepository implements MemberRepository {
 
     @Override
     public List<Member> findAllByNickname(final String nickname) {
-        return map.values().stream().filter(member -> member.getNickname().toUpperCase().contains(nickname.toUpperCase())).toList();
+        return map.values().stream()
+                .filter(
+                        member ->
+                                member.getNickname().toUpperCase().contains(nickname.toUpperCase()))
+                .toList();
     }
 
     @Override
     public List<Member> findAllByNicknameContainingIgnoreCase(final String nickname) {
-        return map.values().stream().filter(member -> member.getNickname().toUpperCase().contains(nickname.toUpperCase())).toList();
+        return map.values().stream()
+                .filter(
+                        member ->
+                                member.getNickname().toUpperCase().contains(nickname.toUpperCase()))
+                .toList();
     }
 
     @Override
-    public Optional<Member> findByOAuthIdAndAuthType(final String oAuthId, final AuthType authType) {
+    public Optional<Member> findByOAuthIdAndAuthType(
+            final String oAuthId, final AuthType authType) {
         return map.values().stream()
-                .filter(member -> {
-                    final OAuth2Info oauthInfo = member.getOauthInfo();
-                    return oauthInfo.getClientId().equals(oAuthId) && oauthInfo.getAuthType().equals(authType);
-                })
+                .filter(
+                        member -> {
+                            final OAuth2Info oauthInfo = member.getOauthInfo();
+                            return oauthInfo.getClientId().equals(oAuthId)
+                                    && oauthInfo.getAuthType().equals(authType);
+                        })
                 .findFirst();
     }
 
@@ -49,7 +60,9 @@ public class StubMemberRepository implements MemberRepository {
 
     @Override
     public List<Member> findAllByIds(final List<UUID> friendMemberIds) {
-        return map.values().stream().filter(member -> friendMemberIds.contains(member.getId())).toList();
+        return map.values().stream()
+                .filter(member -> friendMemberIds.contains(member.getId()))
+                .toList();
     }
 
     @Override

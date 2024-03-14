@@ -17,7 +17,9 @@ import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 import com.twtw.backend.utils.QueryParseUtils;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -139,7 +141,9 @@ public class FriendService {
     private List<FriendResponse> getFriendResponsesByStatus(final FriendStatus friendStatus) {
         final Member loginMember = authService.getMemberByJwt();
         final List<Member> friends =
-                friendQueryRepository.findByMemberAndFriendStatus(loginMember, friendStatus).stream()
+                friendQueryRepository
+                        .findByMemberAndFriendStatus(loginMember, friendStatus)
+                        .stream()
                         .map(friend -> friend.getFriendMember(loginMember))
                         .toList();
 
@@ -174,13 +178,17 @@ public class FriendService {
 
     private List<Member> findFriendsByNickname(final Member loginMember, final String nickname) {
         if (nickname.length() < 2) {
-            return friendQueryRepository.findByMemberAndMemberNicknameContaining(loginMember.getId(), nickname).stream()
+            return friendQueryRepository
+                    .findByMemberAndMemberNicknameContaining(loginMember.getId(), nickname)
+                    .stream()
                     .map(friend -> friend.getFriendMember(loginMember))
                     .toList();
         }
-        return friendCommandRepository.findByMemberAndMemberNickname(loginMember.getId(), QueryParseUtils.parse(nickname)).stream()
-                        .filter(friend -> friend.nicknameContains(nickname))
-                        .map(friend -> friend.getFriendMember(loginMember))
-                        .toList();
+        return friendCommandRepository
+                .findByMemberAndMemberNickname(loginMember.getId(), QueryParseUtils.parse(nickname))
+                .stream()
+                .filter(friend -> friend.nicknameContains(nickname))
+                .map(friend -> friend.getFriendMember(loginMember))
+                .toList();
     }
 }

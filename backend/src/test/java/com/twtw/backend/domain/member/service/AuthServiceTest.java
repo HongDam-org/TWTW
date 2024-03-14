@@ -1,5 +1,7 @@
 package com.twtw.backend.domain.member.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.twtw.backend.domain.member.dto.request.MemberSaveRequest;
 import com.twtw.backend.domain.member.dto.request.OAuthRequest;
 import com.twtw.backend.domain.member.dto.response.AfterLoginResponse;
@@ -11,15 +13,16 @@ import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.service.ServiceTest;
 import com.twtw.backend.support.stub.StubConfig;
 import com.twtw.backend.support.testcontainer.ContainerTestConfig;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 @ServiceTest
-@ContextConfiguration(initializers = {ContainerTestConfig.class}, classes = StubConfig.class)
+@ContextConfiguration(
+        initializers = {ContainerTestConfig.class},
+        classes = StubConfig.class)
 @DisplayName("AuthService의")
 class AuthServiceTest {
 

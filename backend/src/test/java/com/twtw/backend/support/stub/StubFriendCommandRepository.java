@@ -2,6 +2,7 @@ package com.twtw.backend.support.stub;
 
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.repository.FriendCommandRepository;
+
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -16,7 +17,14 @@ public class StubFriendCommandRepository implements FriendCommandRepository {
     @Override
     public List<Friend> findByMemberAndMemberNickname(final UUID memberId, final String nickname) {
         return map.values().stream()
-                .filter(friend -> (friend.getToMember().getId().equals(memberId) || friend.getFromMember().getId().equals(memberId)) && friend.getToMember().getNickname().toUpperCase().contains(nickname.toUpperCase()))
+                .filter(
+                        friend ->
+                                (friend.getToMember().getId().equals(memberId)
+                                                || friend.getFromMember().getId().equals(memberId))
+                                        && friend.getToMember()
+                                                .getNickname()
+                                                .toUpperCase()
+                                                .contains(nickname.toUpperCase()))
                 .toList();
     }
 

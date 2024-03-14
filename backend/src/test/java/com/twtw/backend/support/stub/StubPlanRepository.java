@@ -13,7 +13,10 @@ public class StubPlanRepository implements PlanRepository {
     @Override
     public List<Plan> findAllByMember(final Member member) {
         return map.values().stream()
-                .filter(plan -> plan.getPlanMembers().stream().anyMatch(planMember -> planMember.isSameMember(member)))
+                .filter(
+                        plan ->
+                                plan.getPlanMembers().stream()
+                                        .anyMatch(planMember -> planMember.isSameMember(member)))
                 .toList();
     }
 

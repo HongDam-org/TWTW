@@ -1,17 +1,19 @@
 package com.twtw.backend.domain.friend.repository;
 
+import static com.twtw.backend.domain.friend.entity.QFriend.friend;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.entity.FriendStatus;
 import com.twtw.backend.domain.member.entity.Member;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import static com.twtw.backend.domain.friend.entity.QFriend.friend;
 
 @Repository
 @RequiredArgsConstructor
@@ -59,13 +61,22 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
     }
 
     @Override
-    public List<Friend> findByMemberAndMemberNicknameContaining(final UUID memberId, final String nickname) {
-        return jpaQueryFactory.selectFrom(friend)
+    public List<Friend> findByMemberAndMemberNicknameContaining(
+            final UUID memberId, final String nickname) {
+        return jpaQueryFactory
+                .selectFrom(friend)
                 .where(
                         (friend.friendStatus.eq(FriendStatus.ACCEPTED))
-                                .and
-                        (friend.toMember.id.eq(memberId).and(friend.fromMember.nickname.contains(nickname)))
-                                .or(friend.fromMember.id.eq(memberId).and(friend.toMember.nickname.contains(nickname))))
+                                .and(
+                                        friend.toMember
+                                                .id
+                                                .eq(memberId)
+                                                .and(friend.fromMember.nickname.contains(nickname)))
+                                .or(
+                                        friend.fromMember
+                                                .id
+                                                .eq(memberId)
+                                                .and(friend.toMember.nickname.contains(nickname))))
                 .fetch();
     }
 }

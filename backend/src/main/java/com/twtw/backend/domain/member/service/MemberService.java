@@ -8,6 +8,7 @@ import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 import com.twtw.backend.utils.QueryParseUtils;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -62,8 +63,9 @@ public class MemberService {
         if (nickname.length() < 2) {
             return memberRepository.findAllByNicknameContainingIgnoreCase(nickname);
         }
-        return memberRepository.findAllByNickname(QueryParseUtils.parse(nickname))
-                        .stream().filter(member -> member.nicknameContains(nickname)).toList();
+        return memberRepository.findAllByNickname(QueryParseUtils.parse(nickname)).stream()
+                .filter(member -> member.nicknameContains(nickname))
+                .toList();
     }
 
     @Cacheable(

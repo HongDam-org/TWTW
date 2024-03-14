@@ -17,7 +17,9 @@ public interface JpaMemberRepository extends JpaRepository<Member, UUID>, Member
 
     @Query(
             value =
-                    "SELECT * FROM member m WHERE MATCH (m.nickname) AGAINST(:nickname IN BOOLEAN MODE)", nativeQuery = true)
+                    "SELECT * FROM member m WHERE MATCH (m.nickname) AGAINST(:nickname IN BOOLEAN"
+                        + " MODE)",
+            nativeQuery = true)
     List<Member> findAllByNickname(@Param("nickname") String nickname);
 
     @Query(

@@ -4,8 +4,11 @@ import com.github.f4b6a3.ulid.UlidCreator;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
+
 import jakarta.persistence.*;
+
 import lombok.*;
+
 import org.hibernate.annotations.Where;
 
 import java.util.UUID;

@@ -7,6 +7,7 @@ import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.domain.plan.repository.PlanRepository;
+
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;

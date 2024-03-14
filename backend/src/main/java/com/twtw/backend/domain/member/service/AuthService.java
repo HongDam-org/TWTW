@@ -18,6 +18,7 @@ import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
 import com.twtw.backend.global.exception.EntityNotFoundException;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -121,7 +122,8 @@ public class AuthService {
     }
 
     public String getRefreshTokenValue(String tokenKey) {
-        return refreshTokenRepository.findByTokenKey(tokenKey)
+        return refreshTokenRepository
+                .findByTokenKey(tokenKey)
                 .orElseThrow(EntityNotFoundException::new)
                 .getTokenValue();
     }

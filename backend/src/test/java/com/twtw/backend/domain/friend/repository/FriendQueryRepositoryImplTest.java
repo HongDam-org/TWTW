@@ -1,5 +1,7 @@
 package com.twtw.backend.domain.friend.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.entity.FriendStatus;
 import com.twtw.backend.domain.member.entity.AuthType;
@@ -7,15 +9,15 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.OAuth2Info;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.support.repository.RepositoryTest;
+
 import jakarta.persistence.EntityManager;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @Import(FriendQueryRepositoryImpl.class)
 @DisplayName("FriendQueryRepository에")
@@ -84,7 +86,10 @@ class FriendQueryRepositoryImplTest extends RepositoryTest {
         final Member from =
                 memberRepository.save(
                         new Member(
-                                "14312", "123", new OAuth2Info("321", AuthType.APPLE), "deviceToken1"));
+                                "14312",
+                                "123",
+                                new OAuth2Info("321", AuthType.APPLE),
+                                "deviceToken1"));
         final Member to =
                 memberRepository.save(
                         new Member(
@@ -97,7 +102,8 @@ class FriendQueryRepositoryImplTest extends RepositoryTest {
 
         // when
         final List<Friend> result =
-                friendQueryRepositoryImpl.findByMemberAndFriendStatus(from, friend.getFriendStatus());
+                friendQueryRepositoryImpl.findByMemberAndFriendStatus(
+                        from, friend.getFriendStatus());
 
         // then
         assertThat(result).hasSize(1);

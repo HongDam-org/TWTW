@@ -9,8 +9,11 @@ import com.twtw.backend.domain.plan.exception.PlanMakerNotExistsException;
 import com.twtw.backend.global.audit.AuditListener;
 import com.twtw.backend.global.audit.Auditable;
 import com.twtw.backend.global.audit.BaseTime;
+
 import jakarta.persistence.*;
+
 import lombok.*;
+
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
@@ -35,11 +38,16 @@ public class Plan implements Auditable {
     private String name;
 
     @JoinColumn(columnDefinition = "BINARY(16)")
-    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    @OneToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            orphanRemoval = true)
     private Place place;
 
     @JoinColumn(name = "group_id")
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Group group;
 
     @OneToMany(

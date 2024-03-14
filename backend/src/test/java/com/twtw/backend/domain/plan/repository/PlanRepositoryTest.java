@@ -1,5 +1,7 @@
 package com.twtw.backend.domain.plan.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.repository.GroupRepository;
 import com.twtw.backend.domain.member.entity.Member;
@@ -10,6 +12,7 @@ import com.twtw.backend.fixture.group.GroupEntityFixture;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.fixture.plan.PlanEntityFixture;
 import com.twtw.backend.support.repository.RepositoryTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("PlanRepository의")
 class PlanRepositoryTest extends RepositoryTest {

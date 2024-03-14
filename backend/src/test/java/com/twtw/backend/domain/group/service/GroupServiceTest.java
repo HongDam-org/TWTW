@@ -1,5 +1,7 @@
 package com.twtw.backend.domain.group.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.twtw.backend.domain.group.dto.request.InviteGroupRequest;
 import com.twtw.backend.domain.group.dto.request.JoinGroupRequest;
 import com.twtw.backend.domain.group.dto.request.MakeGroupRequest;
@@ -12,14 +14,13 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
 import com.twtw.backend.support.service.LoginTest;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("GroupService의")
 class GroupServiceTest extends LoginTest {
@@ -101,7 +102,8 @@ class GroupServiceTest extends LoginTest {
         // when
         groupService.unShareLocation(saveGroup.getId());
 
-        final GroupMember result = groupRepository.findById(saveGroup.getId()).orElseThrow().getSameMember(loginUser);
+        final GroupMember result =
+                groupRepository.findById(saveGroup.getId()).orElseThrow().getSameMember(loginUser);
 
         // then
         assertThat(result.getIsShare()).isFalse();
