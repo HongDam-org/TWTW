@@ -25,8 +25,7 @@ public class PlaceService {
             key = "'searchSurroundPlace'.concat(#surroundPlaceRequest.toString())",
             cacheManager = "cacheManager")
     public PlaceResponse searchSurroundPlace(final SurroundPlaceRequest surroundPlaceRequest) {
-        final SurroundPlaceResponse response = surroundPlaceClient.request(surroundPlaceRequest);
-        return new PlaceResponse(response.getDocuments(), response.getMeta().getIsEnd());
+        return getPlaceResponse(surroundPlaceRequest);
     }
 
     @Cacheable(
@@ -36,6 +35,10 @@ public class PlaceService {
             unless = "#result.results.size() <= 0")
     public PlaceResponse searchSurroundPlaceWithCache(
             final SurroundPlaceRequest surroundPlaceRequest) {
+        return getPlaceResponse(surroundPlaceRequest);
+    }
+
+    private PlaceResponse getPlaceResponse(final SurroundPlaceRequest surroundPlaceRequest) {
         final SurroundPlaceResponse response = surroundPlaceClient.request(surroundPlaceRequest);
         return new PlaceResponse(response.getDocuments(), response.getMeta().getIsEnd());
     }
