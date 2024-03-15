@@ -6,6 +6,7 @@ import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathRequest;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
 import com.twtw.backend.global.client.MapClient;
 
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +24,34 @@ public class PathService {
 
     @Cacheable(
             value = "carPath",
-            key = "'searchCarPath'.concat(#request)",
+            key = "'searchCarPath'.concat(#request.toString())",
             cacheManager = "cacheManager",
             unless = "#result.code != 0")
+    public SearchCarPathResponse searchCarPathWithCache(final SearchCarPathRequest request) {
+        return carPathClient.request(request);
+    }
+
+    @CacheEvict(
+            value = "carPath",
+            key = "'searchCarPath'.concat(#request.toString())",
+            cacheManager = "cacheManager")
     public SearchCarPathResponse searchCarPath(final SearchCarPathRequest request) {
         return carPathClient.request(request);
     }
 
     @Cacheable(
             value = "pedPath",
-            key = "'searchPedPath'.concat(#request)",
+            key = "'searchPedPath'.concat(#request.toString())",
             cacheManager = "cacheManager",
             unless = "#result.features.size() <= 0")
+    public SearchPedPathResponse searchPedPathWithCache(final SearchPedPathRequest request) {
+        return pedPathClient.request(request);
+    }
+
+    @CacheEvict(
+            value = "pedPath",
+            key = "'searchPedPath'.concat(#request.toString())",
+            cacheManager = "cacheManager")
     public SearchPedPathResponse searchPedPath(final SearchPedPathRequest request) {
         return pedPathClient.request(request);
     }

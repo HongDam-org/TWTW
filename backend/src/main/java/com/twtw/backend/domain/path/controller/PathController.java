@@ -29,9 +29,21 @@ public class PathController {
         return ResponseEntity.ok(pathService.searchCarPath(request));
     }
 
+    @PostMapping("/search/car/cache")
+    public ResponseEntity<SearchCarPathResponse> searchCarPathWithCache(
+            @RequestBody @Valid SearchCarPathRequest request) {
+        return ResponseEntity.ok(pathService.searchCarPathWithCache(request));
+    }
+
     @PostMapping("/search/ped")
     public ResponseEntity<SearchPedPathResponse> searchPedPath(
             @RequestBody @Valid SearchPedPathRequest request) {
         return ResponseEntity.ok(pathService.searchPedPath(request));
+    }
+
+    @PostMapping("/search/ped/cache")
+    public ResponseEntity<SearchPedPathResponse> searchPedPathWithCache(
+            @RequestBody @Valid SearchPedPathRequest request) {
+        return ResponseEntity.ok(pathService.searchPedPathWithCache(request));
     }
 }

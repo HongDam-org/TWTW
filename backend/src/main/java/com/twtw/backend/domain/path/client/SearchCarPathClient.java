@@ -50,7 +50,7 @@ public class SearchCarPathClient
     }
 
     @Override
-    @CircuitBreaker(name = "backend-a", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "backend-b", fallbackMethod = "fallback")
     public SearchCarPathResponse request(final SearchCarPathRequest request) {
         return webClient
                 .get()

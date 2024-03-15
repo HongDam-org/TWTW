@@ -1,15 +1,15 @@
 package com.twtw.backend.domain.notification.messagequeue;
 
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
+import com.rabbitmq.client.Channel;
 import com.twtw.backend.domain.notification.dto.NotificationRequest;
-
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
-@Slf4j
+import java.io.IOException;
+
 @Component
 public class FcmConsumer {
     private final FirebaseMessaging firebaseMessaging;
@@ -19,8 +19,14 @@ public class FcmConsumer {
     }
 
     @RabbitListener(queues = "notification.queue")
-    public void sendNotification(final NotificationRequest request)
-            throws FirebaseMessagingException {
-        firebaseMessaging.send(request.toMessage());
+    public void sendNotification(
+            final NotificationRequest request,
+            final Channel channel,
+            @Header(AmqpHeaders.DELIVERY_TAG) final long tag) throws IOException {
+        try {
+            firebaseMessaging.send(request.toMessage());
+        } catch (final Exception e) {
+            channel.basicNack(tag, false, false);
+        }
     }
 }

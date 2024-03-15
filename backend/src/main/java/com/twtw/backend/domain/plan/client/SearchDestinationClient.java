@@ -32,7 +32,7 @@ public class SearchDestinationClient
     }
 
     @Override
-    @CircuitBreaker(name = "backend-a", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "backend-d", fallbackMethod = "fallback")
     public SearchDestinationResponse request(final SearchDestinationRequest request) {
         return webClient
                 .get()

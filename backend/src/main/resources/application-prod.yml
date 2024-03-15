@@ -66,6 +66,12 @@ resilience4j.circuitbreaker:
   instances:
     backend-a:
       base-config: default
+    backend-b:
+      base-config: default
+    backend-c:
+      base-config: default
+    backend-d:
+      base-config: default
 jwt:
   secret: ${JWT_SECRET}
 kakao-map:

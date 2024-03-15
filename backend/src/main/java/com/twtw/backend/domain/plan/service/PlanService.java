@@ -57,7 +57,7 @@ public class PlanService {
 
     @Cacheable(
             value = "planDestination",
-            key = "'searchPlanDestination'.concat(#request)",
+            key = "'searchPlanDestination'.concat(#request.toString())",
             cacheManager = "cacheManager",
             unless = "#result.results.size() <= 0")
     public PlanDestinationResponse searchPlanDestination(final SearchDestinationRequest request) {

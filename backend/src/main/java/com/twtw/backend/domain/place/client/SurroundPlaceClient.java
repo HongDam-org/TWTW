@@ -32,7 +32,7 @@ public class SurroundPlaceClient
     }
 
     @Override
-    @CircuitBreaker(name = "backend-a", fallbackMethod = "fallback")
+    @CircuitBreaker(name = "backend-c", fallbackMethod = "fallback")
     public SurroundPlaceResponse request(final SurroundPlaceRequest request) {
         return webClient
                 .get()

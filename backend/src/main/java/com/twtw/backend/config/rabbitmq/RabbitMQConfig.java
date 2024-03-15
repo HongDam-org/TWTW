@@ -27,11 +27,8 @@ public class RabbitMQConfig {
     @Bean
     public Queue locationQueue() {
         return QueueBuilder.durable(RabbitMQConstant.LOCATION_QUEUE.getName())
-                .withArgument(
-                        "x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
-                .withArgument(
-                        "x-dead-letter-routing-key",
-                        RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .deadLetterExchange(RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .deadLetterRoutingKey(RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
                 .build();
     }
 
@@ -50,11 +47,8 @@ public class RabbitMQConfig {
     @Bean
     public Queue notificationQueue() {
         return QueueBuilder.durable(RabbitMQConstant.NOTIFICATION_QUEUE.getName())
-                .withArgument(
-                        "x-dead-letter-exchange", RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
-                .withArgument(
-                        "x-dead-letter-routing-key",
-                        RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .deadLetterExchange(RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .deadLetterRoutingKey(RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
                 .build();
     }
 
@@ -76,8 +70,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public TopicExchange deadLetterExchange() {
-        return new TopicExchange(RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName());
+    public DirectExchange deadLetterExchange() {
+        return new DirectExchange(RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName());
     }
 
     @Bean
