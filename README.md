@@ -34,7 +34,7 @@
 
 
 ## 시스템 아키텍처
-![image](https://github.com/HongDam-org/TWTW/assets/89020004/6d342ca1-30b7-4fae-928a-1124ee82bea8)
+![image](https://github.com/HongDam-org/TWTW/assets/89020004/d5bab128-dd9b-42cd-aa4a-c33a188381f5)
 
 ## DB ERD
 ![image](https://github.com/HongDam-org/TWTW/assets/89020004/7fafa2f5-fdaf-4010-a788-d21729ac20d7)
