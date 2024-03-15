@@ -18,8 +18,8 @@ spring:
   main:
     allow-bean-definition-overriding: true
   rabbitmq:
-    host: rabbitmq
-    port: 5672
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
     username: ${RABBITMQ_USERNAME}
     password: ${RABBITMQ_PASSWORD}
   cache:
@@ -28,8 +28,8 @@ spring:
       cache-null-values: true
   data:
     redis:
-      host: redis
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
   jackson:
     default-property-inclusion: non_null
   cloud:
