@@ -324,7 +324,7 @@ class MemberServiceTest extends LoginTest {
 > 컨트롤러 Layer에서의 Request & Response 테스트를 위해 Service를 mock으로 만들어 테스트 작성
 >
 
-```java
+```
     @Test
     @DisplayName("닉네임이 중복되었는가")
     void duplicate() throws Exception {
