@@ -1,7 +1,9 @@
 package com.twtw.backend.config.redis;
 
 import com.twtw.backend.global.properties.RedisProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;

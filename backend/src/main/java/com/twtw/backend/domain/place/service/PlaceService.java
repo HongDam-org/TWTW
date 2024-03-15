@@ -34,7 +34,8 @@ public class PlaceService {
             key = "'searchSurroundPlace'.concat(#surroundPlaceRequest.toString())",
             cacheManager = "cacheManager",
             unless = "#result.results.size() <= 0")
-    public PlaceResponse searchSurroundPlaceWithCache(final SurroundPlaceRequest surroundPlaceRequest) {
+    public PlaceResponse searchSurroundPlaceWithCache(
+            final SurroundPlaceRequest surroundPlaceRequest) {
         final SurroundPlaceResponse response = surroundPlaceClient.request(surroundPlaceRequest);
         return new PlaceResponse(response.getDocuments(), response.getMeta().getIsEnd());
     }
