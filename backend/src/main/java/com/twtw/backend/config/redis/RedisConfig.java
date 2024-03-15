@@ -1,13 +1,7 @@
 package com.twtw.backend.config.redis;
 
 import com.twtw.backend.global.properties.RedisProperties;
-
 import lombok.RequiredArgsConstructor;
-
-import org.redisson.Redisson;
-import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
-import org.redisson.spring.data.connection.RedissonConnectionFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -29,25 +24,11 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class RedisConfig {
     private static final Long TIME_TO_LIVE = 1L;
-    private static final String REDISSON_HOST_PREFIX = "redis://";
-    private static final String URL_DELIMITER = ":";
     private final RedisProperties redisProperties;
 
     @Bean
-    public RedissonClient redissonClient() {
-        final Config config = new Config();
-        config.useSingleServer()
-                .setAddress(
-                        REDISSON_HOST_PREFIX
-                                + redisProperties.getHost()
-                                + URL_DELIMITER
-                                + redisProperties.getPort());
-        return Redisson.create(config);
-    }
-
-    @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new RedissonConnectionFactory(redissonClient());
+        return new LettuceConnectionFactory(redisProperties.getHost(), redisProperties.getPort());
     }
 
     @Bean

@@ -23,4 +23,10 @@ public class PlaceController {
             @ModelAttribute final SurroundPlaceRequest surroundPlaceRequest) {
         return ResponseEntity.ok(placeService.searchSurroundPlace(surroundPlaceRequest));
     }
+
+    @GetMapping("surround/cache")
+    public ResponseEntity<PlaceResponse> searchSurroundPlaceWithCache(
+            @ModelAttribute final SurroundPlaceRequest surroundPlaceRequest) {
+        return ResponseEntity.ok(placeService.searchSurroundPlaceWithCache(surroundPlaceRequest));
+    }
 }
