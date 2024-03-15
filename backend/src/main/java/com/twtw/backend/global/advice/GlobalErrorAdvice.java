@@ -3,7 +3,9 @@ package com.twtw.backend.global.advice;
 import com.twtw.backend.global.exception.AuthorityException;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 import com.twtw.backend.global.exception.WebClientResponseException;
+
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
