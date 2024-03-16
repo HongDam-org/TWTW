@@ -26,7 +26,16 @@ jobs:
           echo "[default]" >> ~/.aws/credentials
           echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
-        
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          cd ./terraform
+          terraform init
+          plan_output=$(terraform plan -no-color)
+          echo "::set-output name=has_changes::$(echo $plan_output | grep -E 'No changes. Infrastructure is up-to-date.' > /dev/null && echo 'false' || echo 'true')"
+          echo "$plan_output"
+
       - name: Generate provider.tf
         run: |
           echo 'provider "aws" {' > ./terraform/provider.tf
@@ -36,15 +45,18 @@ jobs:
           echo '}' >> ./terraform/provider.tf
 
       - name: Set up Terraform
+        if: steps.plan.outputs.has_changes == 'true'
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.0
       
       - name: Generate environment-var.tf
+        if: steps.plan.outputs.has_changes == 'true'
         run: |
           echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/environment-var.tf
 
       - name: Run Terraform commands
+        if: steps.plan.outputs.has_changes == 'true'
         run: |
           cd ./terraform
           terraform init
