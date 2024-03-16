@@ -8,3 +8,4 @@ data/
 *.tfstate
 *.tfvars
 environment-var.tf
+provider.tf
