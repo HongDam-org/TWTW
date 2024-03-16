@@ -200,8 +200,8 @@ resource "aws_elasticache_cluster" "elasticache_cluster" {
   num_cache_nodes   = 1
 }
 
-resource "aws_launch_template" "asg" {
-  name          = "asg"
+resource "aws_launch_template" "asg_template" {
+  name_prefix   = "lt-twtw-"
   image_id      = var.ami
   instance_type = "t3a.medium"
 }
@@ -216,7 +216,7 @@ resource "aws_autoscaling_group" "autoscaling_group" {
   force_delete              = true
 
   launch_template {
-    id      = var.ami
+    id      = aws_launch_template.asg_template.id
     version = "$Latest"
   }
 
