@@ -194,20 +194,6 @@ resource "aws_launch_template" "asg_template" {
   name_prefix   = "lt-twtw-"
   image_id      = var.ami
   instance_type = "t3a.medium"
-}
-
-resource "aws_autoscaling_group" "autoscaling_group" {
-  name_prefix               = "server_launch_config"
-  min_size                  = 2
-  max_size                  = 4
-  health_check_type         = "ELB"
-  health_check_grace_period = 100
-  force_delete              = true
-
-  launch_template {
-    id      = aws_launch_template.asg_template.id
-    version = "$Latest"
-  }
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
@@ -222,6 +208,20 @@ resource "aws_autoscaling_group" "autoscaling_group" {
     sudo docker-compose -f docker-compose.prod.yml up -d
     EOF
   )
+}
+
+resource "aws_autoscaling_group" "autoscaling_group" {
+  name_prefix               = "server_launch_config"
+  min_size                  = 2
+  max_size                  = 4
+  health_check_type         = "ELB"
+  health_check_grace_period = 100
+  force_delete              = true
+
+  launch_template {
+    id      = aws_launch_template.asg_template.id
+    version = "$Latest"
+  }
 
   vpc_zone_identifier = [
     aws_subnet.private-subnet-a.id,
