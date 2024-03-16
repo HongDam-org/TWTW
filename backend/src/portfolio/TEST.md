@@ -369,3 +369,7 @@ class MemberServiceTest extends LoginTest {
 ---
 
 - Jacoco 도입으로 테스트시와 PR시 커버리지 확인 가능
+![](https://github.com/HongDam-org/TWTW/assets/89020004/3d90c15c-9020-4df8-82d0-3669c1d58250)
+
+- Jacoco 커버리지
+![](https://github.com/HongDam-org/TWTW/assets/89020004/c670bcd9-c719-428a-932e-bc017148c148)
