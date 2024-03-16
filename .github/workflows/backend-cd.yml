@@ -1,11 +1,5 @@
 name: TWTW Backend CD
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - '.github/workflows/backend-cd.yml'
-      - '**.tf'
   workflow_run:
     branches:
      - "master"
@@ -20,80 +14,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Configure AWS credentials
-        run: |
-          mkdir -p ~/.aws && touch ~/.aws/credentials
-          echo "[default]" >> ~/.aws/credentials
-          echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
-          echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
-
-      - name: Generate provider.tf
-        run: |
-          echo 'provider "aws" {' > ./terraform/provider.tf
-          echo '  region = "${{ secrets.AWS_REGION }}"' >> ./terraform/provider.tf
-          echo '  access_key = "${{ secrets.AWS_ACCESS_KEY_ID }}"' >> ./terraform/provider.tf
-          echo '  secret_key = "${{ secrets.AWS_SECRET_ACCESS_KEY }}"' >> ./terraform/provider.tf
-          echo '}' >> ./terraform/provider.tf
-
-      - name: Set up Terraform
-        if: steps.plan.outputs.has_changes == 'true'
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: 1.0.0
-      
-      - name: Generate environment-var.tf
-        run: |
-          echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/environment-var.tf
-
-      - name: Terraform Plan and Apply
-        id: terraform
-        run: |
-          cd ./terraform
-          terraform init
-          terraform plan -out=tfplan
-          terraform show -json tfplan > plan.json
-          
-          if jq -e '.resource_changes[] | select(.change.actions | index("no-op") | not)' plan.json; then
-            terraform apply -auto-approve tfplan
-          fi
-        env:
-          TF_VAR_ami: ${{ secrets.TF_VAR_ami }}
-          TF_VAR_db_password: ${{ secrets.TF_VAR_db_password }}
-          TF_VAR_tags: ${{ secrets.TF_VAR_tags }}
-          TF_VAR_elb_protocol: ${{ secrets.TF_VAR_elb_protocol }}
-          TF_VAR_elb_port: ${{ secrets.TF_VAR_elb_port }}
-          TF_VAR_rabbitmq: ${{ secrets.TF_VAR_rabbitmq }}
-
-
-      - name: Get EC2 instance IP
-        id: get_ec2_ip
-        run: |
-          EC2_IP=$(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --output=text)
-          echo "::set-output name=ec2_ip::$EC2_IP"
-          RABBITMQ_HOST=$(aws mq describe-broker --broker-id <broker-id> --query "BrokerInstances[0].ConsoleURL" --output text)
-          REDIS_HOST=$(aws elasticache describe-cache-clusters --cache-cluster-id <cluster-id> --query "CacheClusters[0].ConfigurationEndpoint.Address" --output text)
-          MYSQL_HOST=$(aws rds describe-db-instances --db-instance-identifier <db-instance-id> --query "DBInstances[0].Endpoint.Address" --output text)
-
-          echo "RABBITMQ_HOST=$RABBITMQ_HOST" > /var/www/TWTW/.env
-          echo "REDIS_HOST=$REDIS_HOST" >> /var/www/TWTW/.env
-          echo "MYSQL_HOST=$MYSQL_HOST" >> /var/www/TWTW/.env
-          echo "${{ secrets.ENV_FILE }}" >> /var/www/TWTW/.env
-
       - name: Copy docker-compose file to server
         uses: appleboy/scp-action@master
         with:
-          host: ${{ steps.get_ec2_ip.outputs.ec2_ip }}
+          host: ${{ secrets.AWS_IP }}
           username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "./docker-compose.prod.yml"
           target: "/var/www/TWTW"
 
       - name: Deploy using docker-compose
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ steps.get_ec2_ip.outputs.ec2_ip }}
+          host: ${{ secrets.AWS_IP }}
           username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            if [ ! -f /var/www/TWTW/.env ]; then
+              echo "${{ secrets.ENV_FILE }}" > /var/www/TWTW/.env
+            fi
             cd /var/www/TWTW
             sudo docker-compose -f docker-compose.prod.yml down
             sudo docker-compose -f docker-compose.prod.yml pull
-            sudo docker-compose -f docker-compose.prod.yml up --build -d
+            sudo docker-compose -f docker-compose.prod.yml up -d

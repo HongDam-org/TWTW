@@ -1,3 +1,10 @@
+
+/**
+
+ 현재 작업중입니다. (미완성)
+
+*/
+
 resource "aws_vpc" "vpc_network" {
   tags                 = merge(var.tags, {})
   enable_dns_support   = true
@@ -183,7 +190,6 @@ resource "aws_elasticache_cluster" "elasticache_cluster" {
   engine               = "redis"
   node_type            = "cache.t2.micro"
   num_cache_nodes      = 1
-  parameter_group_name = "default.redis3.2"
   subnet_group_name    = aws_elasticache_subnet_group.elasticache_subnet_group.name
   security_group_ids   = [aws_security_group.security-group-c.id]
 
