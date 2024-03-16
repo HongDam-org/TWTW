@@ -26,9 +26,9 @@ jobs:
           echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
         
-      - name: Generate env.auto.tfvars
+      - name: Generate environment-var.tf
         run: |
-          echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/env.tf
+          echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/environment-var.tf
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1

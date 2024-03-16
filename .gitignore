@@ -6,5 +6,5 @@ data/
 */.terraform/
 *.hcl
 *.tfstate
-env.tf
 *.tfvars
+environment-var.tf
