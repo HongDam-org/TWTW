@@ -1,5 +1,6 @@
 resource "aws_default_vpc" "vpc_network" {
   tags                 = merge(var.tags, {})
+  cidr_block           = "10.0.0.0/24"
   enable_dns_support   = true
   enable_dns_hostnames = true
 }
@@ -12,21 +13,21 @@ resource "aws_internet_gateway" "internet_gw" {
 resource "aws_subnet" "private-subnet-a" {
   vpc_id            = aws_default_vpc.vpc_network.id
   tags              = merge(var.tags, {})
-  cidr_block        = var.private_subnet_cidr[0]
+  cidr_block        = "10.0.2.0/24"
   availability_zone = "ap-northeast-2a"
 }
 
 resource "aws_subnet" "private-subnet-c" {
   vpc_id            = aws_default_vpc.vpc_network.id
   tags              = merge(var.tags, {})
-  cidr_block        = var.private_subnet_cidr[1]
+  cidr_block        = "10.0.3.0/24"
   availability_zone = "ap-northeast-2c"
 }
 
 resource "aws_subnet" "public-subnet-c" {
   vpc_id            = aws_default_vpc.vpc_network.id
   tags              = merge(var.tags, {})
-  cidr_block        = var.public_subnet_cidr
+  cidr_block        = "10.0.1.0/24"
   availability_zone = "ap-northeast-2b"
 }
 
@@ -109,7 +110,7 @@ resource "aws_security_group" "security-group-a" {
     protocol  = "tcp"
     from_port = 80
     cidr_blocks = [
-      var.public_subnet_cidr,
+       "10.0.1.0/24",
     ]
   }
   ingress {
@@ -117,7 +118,7 @@ resource "aws_security_group" "security-group-a" {
     protocol  = "tcp"
     from_port = 61613
     cidr_blocks = [
-      var.public_subnet_cidr,
+       "10.0.1.0/24",
     ]
   }
   ingress {
@@ -125,7 +126,7 @@ resource "aws_security_group" "security-group-a" {
     protocol  = "tcp"
     from_port = 5672
     cidr_blocks = [
-      var.public_subnet_cidr,
+       "10.0.1.0/24",
     ]
   }
 }
@@ -148,7 +149,7 @@ resource "aws_security_group" "security-group-c" {
     protocol  = "tcp"
     from_port = 80
     cidr_blocks = [
-      var.public_subnet_cidr,
+       "10.0.1.0/24",
     ]
   }
 }

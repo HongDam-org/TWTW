@@ -49,9 +49,6 @@ jobs:
           terraform init
           terraform apply -auto-approve
         env:
-          TF_VAR_vpc_cidr_block: ${{ secrets.TF_VAR_vpc_cidr_block }}
-          TF_VAR_public_subnet_cidr: ${{ secrets.TF_VAR_public_subnet_cidr }}
-          TF_VAR_private_subnet_cidr: ${{ secrets.TF_VAR_private_subnet_cidr }}
           TF_VAR_ami: ${{ secrets.TF_VAR_ami }}
           TF_VAR_db_password: ${{ secrets.TF_VAR_db_password }}
           TF_VAR_tags: ${{ secrets.TF_VAR_tags }}
