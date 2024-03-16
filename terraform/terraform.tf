@@ -173,7 +173,7 @@ resource "aws_db_instance" "db_instance" {
   engine            = "mysql"
   db_name           = "TWTW"
   availability_zone = "ap-northeast-2b"
-  db_subnet_group_name = aws_subnet_group.twtw_subnet_group.name
+  db_subnet_group_name = aws_db_subnet_group.twtw_db_subnet_group.name
   allocated_storage = 20
 }
 
