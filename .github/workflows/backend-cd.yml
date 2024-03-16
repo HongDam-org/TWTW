@@ -38,10 +38,6 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.0
-      
-      - name: Generate environment-var.tf
-        run: |
-          echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/environment-var.tf
 
       - name: Run Terraform commands
         run: |
