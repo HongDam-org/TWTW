@@ -154,12 +154,12 @@ resource "aws_security_group" "security-group-c" {
   }
 }
 
-resource "aws_subnet_group" "twtw_subnet_group" {
-  name       = "twtw-subnet-group"
+resource "aws_db_subnet_group" "twtw_db_subnet_group" {
+  name       = "twtw-db-subnet-group"
   subnet_ids = [aws_subnet.private-subnet-a.id, aws_subnet.private-subnet-c.id]
 
   tags = {
-    Name = "TWTW subnet group"
+    Name = "TWTW rds subnet group"
   }
 }
 
