@@ -26,6 +26,24 @@ resource "aws_subnet" "public-subnet-c" {
   availability_zone = "ap-northeast-2b"
 }
 
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc_network.id
+}
+
+resource "aws_route_table" "r" {
+  vpc_id = aws_vpc.vpc_network.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+}
+
+resource "aws_route_table_association" "a" {
+  subnet_id      = aws_subnet.public-subnet-c.id
+  route_table_id = aws_route_table.r.id
+}
+
 resource "aws_elb" "elb" {
   tags                      = merge(var.tags, {})
   cross_zone_load_balancing = true
@@ -142,7 +160,7 @@ resource "aws_db_instance" "db_instance" {
   tags              = merge(var.tags, {})
   port              = 3306
   password          = var.db_password
-  instance_class    = "db.md5.large"
+  instance_class    = "db.m5d.large"
   engine            = "mysql"
   db_name           = "TWTW"
   availability_zone = "ap-northeast-2b"
@@ -164,7 +182,6 @@ resource "aws_mq_broker" "mq_broker" {
 
   subnet_ids = [
     aws_subnet.private-subnet-a.id,
-    aws_subnet.private-subnet-c.id,
   ]
 
   security_groups    = [
