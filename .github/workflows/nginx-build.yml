@@ -1,8 +1,10 @@
 name: TWTW Nginx Build
 on:
   push:
+    branches:
+      - 'master'
     paths:
-      - ./nginx
+      - '**.conf'
 defaults:
   run:
     shell: bash
