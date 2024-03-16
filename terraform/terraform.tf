@@ -137,7 +137,7 @@ resource "aws_instance" "instance-c" {
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    private_key = file("${local_file.private_key_pem.filename}")
+    private_key = file("${local_file.private_key.filename}")
     host        = self.public_ip
   }
 
