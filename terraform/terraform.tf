@@ -1,32 +1,28 @@
-resource "aws_default_vpc" "vpc_network" {
+resource "aws_vpc" "vpc_network" {
   tags                 = merge(var.tags, {})
   enable_dns_support   = true
   enable_dns_hostnames = true
-}
-
-resource "aws_internet_gateway" "internet_gw" {
-  vpc_id = aws_default_vpc.vpc_network.id
-  tags   = merge(var.tags, {})
+  cidr_block           = "10.0.0.0/16"
 }
 
 resource "aws_subnet" "private-subnet-a" {
-  vpc_id            = aws_default_vpc.vpc_network.id
+  vpc_id            = aws_vpc.vpc_network.id
   tags              = merge(var.tags, {})
-  cidr_block        = "10.0.2.0/24"
+  cidr_block        = cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 1)
   availability_zone = "ap-northeast-2a"
 }
 
 resource "aws_subnet" "private-subnet-c" {
-  vpc_id            = aws_default_vpc.vpc_network.id
+  vpc_id            = aws_vpc.vpc_network.id
   tags              = merge(var.tags, {})
-  cidr_block        = "10.0.3.0/24"
+  cidr_block        = cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 2)
   availability_zone = "ap-northeast-2c"
 }
 
 resource "aws_subnet" "public-subnet-c" {
-  vpc_id            = aws_default_vpc.vpc_network.id
+  vpc_id            = aws_vpc.vpc_network.id
   tags              = merge(var.tags, {})
-  cidr_block        = "10.0.1.0/24"
+  cidr_block        = cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 3)
   availability_zone = "ap-northeast-2b"
 }
 
@@ -92,7 +88,7 @@ resource "aws_instance" "instance-c" {
 }
 
 resource "aws_security_group" "security-group-a" {
-  vpc_id = aws_default_vpc.vpc_network.id
+  vpc_id = aws_vpc.vpc_network.id
   tags   = merge(var.tags, {})
 
   egress {
@@ -109,7 +105,7 @@ resource "aws_security_group" "security-group-a" {
     protocol  = "tcp"
     from_port = 80
     cidr_blocks = [
-       "10.0.1.0/24",
+       cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 3)
     ]
   }
   ingress {
@@ -117,21 +113,13 @@ resource "aws_security_group" "security-group-a" {
     protocol  = "tcp"
     from_port = 61613
     cidr_blocks = [
-       "10.0.1.0/24",
-    ]
-  }
-  ingress {
-    to_port   = 5672
-    protocol  = "tcp"
-    from_port = 5672
-    cidr_blocks = [
-       "10.0.1.0/24",
+       cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 3)
     ]
   }
 }
 
 resource "aws_security_group" "security-group-c" {
-  vpc_id = aws_default_vpc.vpc_network.id
+  vpc_id = aws_vpc.vpc_network.id
   tags   = merge(var.tags, {})
 
   egress {
@@ -148,7 +136,7 @@ resource "aws_security_group" "security-group-c" {
     protocol  = "tcp"
     from_port = 80
     cidr_blocks = [
-       "10.0.1.0/24",
+       cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 3),
     ]
   }
 }
@@ -163,6 +151,7 @@ resource "aws_db_instance" "db_instance" {
   engine            = "mysql"
   db_name           = "TWTW"
   availability_zone = "ap-northeast-2b"
+  allocated_storage = 20
 }
 
 resource "aws_mq_broker" "mq_broker" {
@@ -190,6 +179,7 @@ resource "aws_elasticache_cluster" "elasticache_cluster" {
   cluster_id        = "twtw-redis-cluster"
   availability_zone = "ap-northeast-2b"
   node_type         = "cache.t2.micro"
+  num_cache_nodes   = 1
 }
 
 resource "aws_launch_template" "asg" {

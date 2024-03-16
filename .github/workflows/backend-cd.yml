@@ -87,4 +87,4 @@ jobs:
             cd /var/www/TWTW
             sudo docker-compose -f docker-compose.prod.yml down
             sudo docker-compose -f docker-compose.prod.yml pull
-            sudo docker-compose -f docker-compose.prod.yml up -d
+            sudo docker-compose -f docker-compose.prod.yml up --build -d
