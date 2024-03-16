@@ -27,15 +27,6 @@ jobs:
           echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
 
-      - name: Terraform Plan
-        id: plan
-        run: |
-          cd ./terraform
-          terraform init
-          plan_output=$(terraform plan -no-color)
-          echo "::set-output name=has_changes::$(echo $plan_output | grep -E 'No changes. Infrastructure is up-to-date.' > /dev/null && echo 'false' || echo 'true')"
-          echo "$plan_output"
-
       - name: Generate provider.tf
         run: |
           echo 'provider "aws" {' > ./terraform/provider.tf
@@ -51,16 +42,20 @@ jobs:
           terraform_version: 1.0.0
       
       - name: Generate environment-var.tf
-        if: steps.plan.outputs.has_changes == 'true'
         run: |
           echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/environment-var.tf
 
-      - name: Run Terraform commands
-        if: steps.plan.outputs.has_changes == 'true'
+      - name: Terraform Plan and Apply
+        id: terraform
         run: |
           cd ./terraform
           terraform init
-          terraform apply -auto-approve
+          terraform plan -out=tfplan
+          terraform show -json tfplan > plan.json
+          
+          if jq -e '.resource_changes[] | select(.change.actions | index("no-op") | not)' plan.json; then
+            terraform apply -auto-approve tfplan
+          fi
         env:
           TF_VAR_ami: ${{ secrets.TF_VAR_ami }}
           TF_VAR_db_password: ${{ secrets.TF_VAR_db_password }}
@@ -68,6 +63,7 @@ jobs:
           TF_VAR_elb_protocol: ${{ secrets.TF_VAR_elb_protocol }}
           TF_VAR_elb_port: ${{ secrets.TF_VAR_elb_port }}
           TF_VAR_rabbitmq: ${{ secrets.TF_VAR_rabbitmq }}
+
 
       - name: Get EC2 instance IP
         id: get_ec2_ip
