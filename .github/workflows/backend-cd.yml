@@ -14,26 +14,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # - name: Copy docker-compose file to server
-      #   uses: appleboy/scp-action@master
-      #   with:
-      #     host: ${{ secrets.AWS_IP }}
-      #     username: ubuntu
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     source: "./docker-compose.prod.yml"
-      #     target: "/var/www/TWTW"
+      - name: Copy docker-compose file to server
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.AWS_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "./docker-compose.prod.yml"
+          target: "/var/www/TWTW"
 
-      # - name: Deploy using docker-compose
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.AWS_IP }}
-      #     username: ubuntu
-      #     key: ${{ secrets.SSH_PRIVATE_KEY }}
-      #     script: |
-      #       if [ ! -f /var/www/TWTW/.env ]; then
-      #         echo "${{ secrets.ENV_FILE }}" > /var/www/TWTW/.env
-      #       fi
-      #       cd /var/www/TWTW
-      #       sudo docker-compose -f docker-compose.prod.yml down
-      #       sudo docker-compose -f docker-compose.prod.yml pull
-      #       sudo docker-compose -f docker-compose.prod.yml up -d
+      - name: Deploy using docker-compose
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.AWS_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            if [ ! -f /var/www/TWTW/.env ]; then
+              echo "${{ secrets.ENV_FILE }}" > /var/www/TWTW/.env
+            fi
+            cd /var/www/TWTW
+            sudo docker-compose -f docker-compose.prod.yml down
+            sudo docker-compose -f docker-compose.prod.yml pull
+            sudo docker-compose -f docker-compose.prod.yml up -d

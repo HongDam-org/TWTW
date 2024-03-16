@@ -27,8 +27,8 @@
 
 ---
 
-**최종 구조 UML**
-![](https://github.com/HongDam-org/TWTW/assets/89020004/9de883cf-d850-4891-bf03-06adb0d1a257)
+**전략 패턴을 사용한 전체 구조**
+![image](https://github.com/HongDam-org/TWTW/assets/89020004/35c3d380-0223-4756-804e-afb353c5ecbc)
 
 **Repository의 추상화**
 
