@@ -67,19 +67,19 @@ resource "aws_elb" "elb" {
   ]
 }
 
-resource "tls_private_key" "key" {
+resource "tls_private_key" "twtw_key" {
   algorithm = "RSA"
-  rsa_bits  = 4096
 }
 
-resource "aws_key_pair" "generated_key" {
-  key_name   = "twtw-key"
-  public_key = tls_private_key.key.public_key_openssh
+resource "aws_key_pair" "deployer" {
+  key_name   = "deployer-key"
+  public_key = tls_private_key.twtw_key.public_key_openssh
 }
 
-resource "local_file" "private_key_pem" {
-  content  = tls_private_key.key.private_key_pem
-  filename = "${path.module}/twtw-key.pem"
+resource "local_file" "private_key" {
+  sensitive_content = tls_private_key.twtw_key.private_key_pem
+  filename          = "${path.module}/deployer-key.pem"
+  file_permission   = "0400"
 }
 
 resource "aws_instance" "instance-a" {
@@ -89,6 +89,7 @@ resource "aws_instance" "instance-a" {
   availability_zone           = "ap-northeast-2a"
   associate_public_ip_address = false
   ami                         = var.ami
+  key_name                    = aws_key_pair.deployer.key_name
 
   vpc_security_group_ids = [
     aws_security_group.security-group-a.id,
@@ -97,7 +98,7 @@ resource "aws_instance" "instance-a" {
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    private_key = file("${local_file.private_key_pem.filename}")
+    private_key = file("${local_file.private_key.filename}")
     host        = self.public_ip
   }
 
