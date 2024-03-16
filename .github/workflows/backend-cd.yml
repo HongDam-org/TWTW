@@ -26,24 +26,33 @@ jobs:
           echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
         
-      - name: Generate environment tf files
+      - name: Generate provider.tf
         run: |
-          echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/environment-var.tf
-          echo "${{ secrets.TF_PROVIDER }}" > ./terraform/provider.tf
+          echo 'provider "aws" {' > ./terraform/provider.tf
+          echo '  region = "${{ secrets.AWS_REGION }}"' >> ./terraform/provider.tf
+          echo '  access_key = "${{ secrets.AWS_ACCESS_KEY_ID }}"' >> ./terraform/provider.tf
+          echo '  secret_key = "${{ secrets.AWS_SECRET_ACCESS_KEY }}"' >> ./terraform/provider.tf
+          echo '}' >> ./terraform/provider.tf
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: 1.0.0
 
-      - name: Terraform Init
+      - name: Run Terraform commands
+        env:
+          TF_VAR_vpc_cidr_block: ${{ secrets.TF_VAR_vpc_cidr_block }}
+          TF_VAR_public_subnet_cidr: ${{ secrets.TF_VAR_public_subnet_cidr }}
+          TF_VAR_private_subnet_cidr: ${{ secrets.TF_VAR_private_subnet_cidr }}
+          TF_VAR_ami: ${{ secrets.TF_VAR_ami }}
+          TF_VAR_db_password: ${{ secrets.TF_VAR_db_password }}
+          TF_VAR_elb_protocol: ${{ secrets.TF_VAR_elb_protocol }}
+          TF_VAR_elb_port: ${{ secrets.TF_VAR_elb_port }}
+          TF_VAR_rabbitmq: ${{ secrets.TF_VAR_rabbitmq }}
+          TF_VAR_tags: ${{ secrets.TF_VAR_tags }}
         run: |
           cd ./terraform
           terraform init
-
-      - name: Terraform Apply
-        run: |
-          cd ./terraform
           terraform apply -auto-approve
 
       - name: Get EC2 instance IP
