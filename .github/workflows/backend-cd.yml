@@ -25,18 +25,10 @@ jobs:
           echo "[default]" >> ~/.aws/credentials
           echo "aws_access_key_id=${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
           echo "aws_secret_access_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
-
-      - name: Generate provider.tf
-        run: |
-          echo 'provider "aws" {' > ./terraform/provider.tf
-          echo '  region = "${{ secrets.AWS_REGION }}"' >> ./terraform/provider.tf
-          echo '  access_key = "${{ secrets.AWS_ACCESS_KEY_ID }}"' >> ./terraform/provider.tf
-          echo '  secret_key = "${{ secrets.AWS_SECRET_ACCESS_KEY }}"' >> ./terraform/provider.tf
-          echo '}' >> ./terraform/provider.tf
         
       - name: Generate env.auto.tfvars
         run: |
-          echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/env.auto.tfvars
+          echo "${{ secrets.TF_ENV_FILE }}" > ./terraform/env.tf
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
