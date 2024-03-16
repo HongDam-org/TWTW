@@ -16,16 +16,19 @@
 ---
 
 - **Repository Test**
-    - DB를 통한 접근이 수행되는가에 초점을 맞추어 테스트 코드 작성
+  - DB를 통한 접근이 수행되는가에 초점을 맞추어 테스트 코드 작성
 - **Service Test**
-    - Stub을 활용하여 DB 접근을 하지 않고 서비스 로직에만 초점을 맞추어 테스트 코드 작성
+  - Stub을 활용하여 DB 접근을 하지 않고 서비스 로직에만 초점을 맞추어 테스트 코드 작성
 - **Controller Test**
-    - mock을 활용하여 Service 로직을 타지 않고 테스트 수행
-    - 테스트를 수행하면서 자동으로 rest docs 생성
+  - mock을 활용하여 Service 로직을 타지 않고 테스트 수행
+  - 테스트를 수행하면서 자동으로 rest docs 생성
 
 ### 테스트용 Repository 분리
 
 ---
+
+**최종 구조 UML**
+![](https://github.com/HongDam-org/TWTW/assets/89020004/9de883cf-d850-4891-bf03-06adb0d1a257)
 
 **Repository의 추상화**
 
@@ -324,7 +327,7 @@ class MemberServiceTest extends LoginTest {
 > 컨트롤러 Layer에서의 Request & Response 테스트를 위해 Service를 mock으로 만들어 테스트 작성
 >
 
-```
+```Java
     @Test
     @DisplayName("닉네임이 중복되었는가")
     void duplicate() throws Exception {
@@ -354,12 +357,12 @@ class MemberServiceTest extends LoginTest {
 ---
 
 - **Stub을 사용하여 유연한 처리**
-    - Repository Layer가 **JPA에 종속적이지 않고** 테스트에 용이한 **유연한 구조** 가져감
-    - Controller 테스트의 경우 하나의 메서드만 mocking하면 되었지만, Service 테스트에서는 많은 의존성 때문에 모두 mock으로 처리하기에 부담, 같은 메서드도 매번 mock 처리하기에도 어려움
+  - Repository Layer가 **JPA에 종속적이지 않고** 테스트에 용이한 **유연한 구조** 가져감
+  - Controller 테스트의 경우 하나의 메서드만 mocking하면 되었지만, Service 테스트에서는 많은 의존성 때문에 모두 mock으로 처리하기에 부담, 같은 메서드도 매번 mock 처리하기에도 어려움
 
 - **TestContainer 도입**
-    - MySQL에서 제공하는 기능을 기존에 사용하던 테스트용 H2 DB에서 지원하지 않음(FULL TEXT INDEX)
-    - Redis, RabbitMQ와 같은 외부 시스템과 연동되는 부분을 원활히 테스트
+  - MySQL에서 제공하는 기능을 기존에 사용하던 테스트용 H2 DB에서 지원하지 않음(FULL TEXT INDEX)
+  - Redis, RabbitMQ와 같은 외부 시스템과 연동되는 부분을 원활히 테스트
 
 ### 테스트 커버리지
 
