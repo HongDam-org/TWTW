@@ -5,6 +5,7 @@ on:
       - master
     paths:
       - '.github/workflows/backend-cd.yml'
+      - '**.tf'
   workflow_run:
     branches:
      - "master"

@@ -30,11 +30,6 @@ resource "aws_elb" "elb" {
   tags                      = merge(var.tags, {})
   cross_zone_load_balancing = true
 
-  availability_zones = [
-    "ap-northeast-2a",
-    "ap-northeast-2b",
-  ]
-
   listener {
     lb_protocol       = var.elb_protocol[0]
     lb_port           = var.elb_port[0]
@@ -147,7 +142,7 @@ resource "aws_db_instance" "db_instance" {
   tags              = merge(var.tags, {})
   port              = 3306
   password          = var.db_password
-  instance_class    = "db.m1.micro"
+  instance_class    = "db.md5.large"
   engine            = "mysql"
   db_name           = "TWTW"
   availability_zone = "ap-northeast-2b"
@@ -160,11 +155,17 @@ resource "aws_mq_broker" "mq_broker" {
   engine_version = "3.8.6"
   host_instance_type = "mq.t3.micro"
   broker_name = "rabbitmq"
+  publicly_accessible = false
 
   user {
     username = var.rabbitmq.username
     password = var.rabbitmq.password
   }
+
+  subnet_ids = [
+    aws_subnet.private-subnet-a.id,
+    aws_subnet.private-subnet-c.id,
+  ]
 
   security_groups    = [
         aws_security_group.security-group-a.id, 
