@@ -216,7 +216,7 @@ resource "aws_autoscaling_group" "autoscaling_group" {
   force_delete              = true
 
   launch_template {
-    id      = aws_launch_template.asg.id
+    id      = var.ami
     version = "$Latest"
   }
 
