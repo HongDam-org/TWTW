@@ -3,3 +3,8 @@ backend/src/main/resources/application-env.yml
 .env
 secret.yml
 data/
+*/.terraform/
+*.hcl
+*.tfstate
+provider.tf
+*.tfvars
