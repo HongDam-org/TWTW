@@ -19,7 +19,7 @@ resource "aws_subnet" "private-subnet-c" {
   availability_zone = "ap-northeast-2c"
 }
 
-resource "aws_subnet" "public-subnet-c" {
+resource "aws_subnet" "public-subnet-b" {
   vpc_id            = aws_vpc.vpc_network.id
   tags              = merge(var.tags, {})
   cidr_block        = cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 3)
@@ -40,7 +40,7 @@ resource "aws_route_table" "r" {
 }
 
 resource "aws_route_table_association" "a" {
-  subnet_id      = aws_subnet.public-subnet-c.id
+  subnet_id      = aws_subnet.public-subnet-b.id
   route_table_id = aws_route_table.r.id
 }
 
@@ -63,8 +63,23 @@ resource "aws_elb" "elb" {
   }
 
   subnets = [
-    aws_subnet.public-subnet-c.id
+    aws_subnet.public-subnet-b.id
   ]
+}
+
+resource "tls_private_key" "key" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name   = "twtw-key"
+  public_key = tls_private_key.key.public_key_openssh
+}
+
+resource "local_file" "private_key_pem" {
+  content  = tls_private_key.key.private_key_pem
+  filename = "${path.module}/twtw-key.pem"
 }
 
 resource "aws_instance" "instance-a" {
@@ -78,6 +93,25 @@ resource "aws_instance" "instance-a" {
   vpc_security_group_ids = [
     aws_security_group.security-group-a.id,
   ]
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("${local_file.private_key_pem.filename}")
+    host        = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update",
+      "sudo apt install -y docker.io",
+      "sudo systemctl start docker",
+      "sudo systemctl enable docker",
+      "sudo curl -L \"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
+      "sudo chmod +x /usr/local/bin/docker-compose",
+      "sudo usermod -aG docker ubuntu",
+    ]
+  }
 }
 
 resource "aws_instance" "instance-c" {
@@ -96,6 +130,25 @@ resource "aws_instance" "instance-c" {
       "sudo systemctl enable docker",
       "sudo apt install docker-compose",
       "sudo usermod -aG docker ubuntu"
+    ]
+  }
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("${local_file.private_key_pem.filename}")
+    host        = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt update",
+      "sudo apt install -y docker.io",
+      "sudo systemctl start docker",
+      "sudo systemctl enable docker",
+      "sudo curl -L \"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
+      "sudo chmod +x /usr/local/bin/docker-compose",
+      "sudo usermod -aG docker ubuntu",
     ]
   }
 }
@@ -172,7 +225,6 @@ resource "aws_db_instance" "db_instance" {
   instance_class    = "db.m5d.large"
   engine            = "mysql"
   db_name           = "TWTW"
-  availability_zone = "ap-northeast-2b"
   db_subnet_group_name = aws_db_subnet_group.twtw_db_subnet_group.name
   allocated_storage = 20
 }
