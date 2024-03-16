@@ -67,124 +67,6 @@ resource "aws_elb" "elb" {
   ]
 }
 
-resource "tls_private_key" "twtw_key" {
-  algorithm = "RSA"
-}
-
-resource "aws_key_pair" "deployer" {
-  key_name   = "deployer-key"
-  public_key = tls_private_key.twtw_key.public_key_openssh
-}
-
-resource "local_file" "private_key" {
-  sensitive_content = tls_private_key.twtw_key.private_key_pem
-  filename          = "${path.module}/deployer-key.pem"
-  file_permission   = "0400"
-}
-
-resource "aws_instance" "instance-a" {
-  tags                        = merge(var.tags, {})
-  subnet_id                   = aws_subnet.private-subnet-a.id
-  instance_type               = "t3a.medium"
-  availability_zone           = "ap-northeast-2a"
-  associate_public_ip_address = false
-  ami                         = var.ami
-  key_name                    = aws_key_pair.deployer.key_name
-
-  vpc_security_group_ids = [
-    aws_security_group.security-group-a.id,
-  ]
-
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file("${local_file.private_key.filename}")
-    host        = self.public_ip
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update",
-      "sudo apt install -y docker.io",
-      "sudo systemctl start docker",
-      "sudo systemctl enable docker",
-      "sudo curl -L \"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
-      "sudo chmod +x /usr/local/bin/docker-compose",
-      "sudo usermod -aG docker ubuntu",
-    ]
-  }
-}
-
-resource "aws_instance" "instance-c" {
-  tags              = merge(var.tags, {})
-  subnet_id         = aws_subnet.private-subnet-c.id
-  instance_type     = "t3a.medium"
-  availability_zone = "ap-northeast-2c"
-  associate_public_ip_address = false
-  ami                         = var.ami
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update",
-      "sudo apt install -y docker.io",
-      "sudo systemctl start docker",
-      "sudo systemctl enable docker",
-      "sudo apt install docker-compose",
-      "sudo usermod -aG docker ubuntu"
-    ]
-  }
-
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file("${local_file.private_key.filename}")
-    host        = self.public_ip
-  }
-
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update",
-      "sudo apt install -y docker.io",
-      "sudo systemctl start docker",
-      "sudo systemctl enable docker",
-      "sudo curl -L \"https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)\" -o /usr/local/bin/docker-compose",
-      "sudo chmod +x /usr/local/bin/docker-compose",
-      "sudo usermod -aG docker ubuntu",
-    ]
-  }
-}
-
-resource "aws_security_group" "security-group-a" {
-  vpc_id = aws_vpc.vpc_network.id
-  tags   = merge(var.tags, {})
-
-  egress {
-    to_port   = 0
-    protocol  = "tcp"
-    from_port = 0
-    cidr_blocks = [
-      aws_subnet.private-subnet-a.cidr_block,
-    ]
-  }
-
-  ingress {
-    to_port   = 80
-    protocol  = "tcp"
-    from_port = 80
-    cidr_blocks = [
-       cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 3)
-    ]
-  }
-  ingress {
-    to_port   = 61613
-    protocol  = "tcp"
-    from_port = 61613
-    cidr_blocks = [
-       cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 3)
-    ]
-  }
-}
-
 resource "aws_security_group" "security-group-c" {
   vpc_id = aws_vpc.vpc_network.id
   tags   = merge(var.tags, {})
@@ -194,7 +76,7 @@ resource "aws_security_group" "security-group-c" {
     protocol  = "tcp"
     from_port = 0
     cidr_blocks = [
-      aws_subnet.private-subnet-c.cidr_block,
+      "0.0.0.0/0",
     ]
   }
 
@@ -203,7 +85,43 @@ resource "aws_security_group" "security-group-c" {
     protocol  = "tcp"
     from_port = 80
     cidr_blocks = [
-       cidrsubnet(aws_vpc.vpc_network.cidr_block, 8, 3),
+       "0.0.0.0/0",
+    ]
+  }
+
+  ingress {
+    to_port   = 3306
+    protocol  = "tcp"
+    from_port = 3306
+    cidr_blocks = [
+       "0.0.0.0/0",
+    ]
+  }
+
+  ingress {
+    to_port   = 5672
+    protocol  = "tcp"
+    from_port = 5672
+    cidr_blocks = [
+       "0.0.0.0/0",
+    ]
+  }
+
+  ingress {
+    to_port   = 6379
+    protocol  = "tcp"
+    from_port = 6379
+    cidr_blocks = [
+       "0.0.0.0/0",
+    ]
+  }
+
+  ingress {
+    to_port   = 61613
+    protocol  = "tcp"
+    from_port = 61613
+    cidr_blocks = [
+       "0.0.0.0/0",
     ]
   }
 }
@@ -218,24 +136,23 @@ resource "aws_db_subnet_group" "twtw_db_subnet_group" {
 }
 
 resource "aws_db_instance" "db_instance" {
-  username          = "admin"
-  timezone          = "Asia/Seoul"
-  tags              = merge(var.tags, {})
-  port              = 3306
-  password          = var.db_password
-  instance_class    = "db.m5d.large"
-  engine            = "mysql"
-  db_name           = "TWTW"
-  db_subnet_group_name = aws_db_subnet_group.twtw_db_subnet_group.name
-  allocated_storage = 20
+  username               = "admin"
+  tags                   = merge(var.tags, {})
+  port                   = 3306
+  password               = var.db_password
+  instance_class         = "db.m5d.large"
+  engine                 = "mysql"
+  db_name                = "TWTW"
+  db_subnet_group_name   = aws_db_subnet_group.twtw_db_subnet_group.name
+  allocated_storage      = 20
 }
 
 resource "aws_mq_broker" "mq_broker" {
-  tags        = merge(var.tags, {})
-  engine_type = "rabbitmq"
-  engine_version = "3.8.6"
-  host_instance_type = "mq.t3.micro"
-  broker_name = "rabbitmq"
+  tags                = merge(var.tags, {})
+  engine_type         = "rabbitmq"
+  engine_version      = "3.8.6"
+  host_instance_type  = "mq.t3.micro"
+  broker_name         = "rabbitmq"
   publicly_accessible = false
 
   user {
@@ -247,20 +164,30 @@ resource "aws_mq_broker" "mq_broker" {
     aws_subnet.private-subnet-a.id,
   ]
 
-  security_groups    = [
-        aws_security_group.security-group-a.id, 
-        aws_security_group.security-group-c.id
-    ]
+  security_groups = [
+    aws_security_group.security-group-c.id,
+  ]
+}
+
+resource "aws_elasticache_subnet_group" "elasticache_subnet_group" {
+  name        = "twtw-elasticache-subnet-group"
+  subnet_ids  = [aws_subnet.private-subnet-a.id, aws_subnet.private-subnet-c.id]
+
+  tags = {
+    Name = "TWTW ElastiCache subnet group"
+  }
 }
 
 resource "aws_elasticache_cluster" "elasticache_cluster" {
-  tags              = merge(var.tags, {})
-  port              = 6379
-  engine            = "redis"
-  cluster_id        = "twtw-redis-cluster"
-  availability_zone = "ap-northeast-2b"
-  node_type         = "cache.t2.micro"
-  num_cache_nodes   = 1
+  cluster_id           = "twtw-redis-cluster"
+  engine               = "redis"
+  node_type            = "cache.t2.micro"
+  num_cache_nodes      = 1
+  parameter_group_name = "default.redis3.2"
+  subnet_group_name    = aws_elasticache_subnet_group.elasticache_subnet_group.name
+  security_group_ids   = [aws_security_group.security-group-c.id]
+
+  tags = merge(var.tags, {})
 }
 
 resource "aws_launch_template" "asg_template" {
@@ -268,7 +195,6 @@ resource "aws_launch_template" "asg_template" {
   image_id      = var.ami
   instance_type = "t3a.medium"
 }
-
 
 resource "aws_autoscaling_group" "autoscaling_group" {
   name_prefix               = "server_launch_config"
@@ -282,6 +208,20 @@ resource "aws_autoscaling_group" "autoscaling_group" {
     id      = aws_launch_template.asg_template.id
     version = "$Latest"
   }
+
+  user_data = base64encode(<<-EOF
+    #!/bin/bash
+    sudo apt update
+    sudo apt install -y docker.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    sudo usermod -aG docker ubuntu
+    sudo curl -o ./docker-compose.prod.yml https://raw.githubusercontent.com/HongDam-org/TWTW/master/docker-compose.prod.yml
+    sudo docker-compose -f docker-compose.prod.yml up -d
+    EOF
+  )
 
   vpc_zone_identifier = [
     aws_subnet.private-subnet-a.id,
