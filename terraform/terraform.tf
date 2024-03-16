@@ -154,6 +154,15 @@ resource "aws_security_group" "security-group-c" {
   }
 }
 
+resource "aws_subnet_group" "twtw_subnet_group" {
+  name       = "twtw-subnet-group"
+  subnet_ids = [aws_subnet.private-subnet-a.id, aws_subnet.private-subnet-c.id]
+
+  tags = {
+    Name = "TWTW subnet group"
+  }
+}
+
 resource "aws_db_instance" "db_instance" {
   username          = "admin"
   timezone          = "Asia/Seoul"
@@ -164,6 +173,7 @@ resource "aws_db_instance" "db_instance" {
   engine            = "mysql"
   db_name           = "TWTW"
   availability_zone = "ap-northeast-2b"
+  db_subnet_group_name = aws_subnet_group.twtw_subnet_group.name
   allocated_storage = 20
 }
 
