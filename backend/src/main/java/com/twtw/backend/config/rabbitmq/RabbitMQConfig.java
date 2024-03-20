@@ -3,7 +3,9 @@ package com.twtw.backend.config.rabbitmq;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.global.constant.RabbitMQConstant;
 import com.twtw.backend.global.properties.RabbitMQProperties;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
@@ -125,8 +127,10 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
-        final SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
+            ConnectionFactory connectionFactory) {
+        final SimpleRabbitListenerContainerFactory factory =
+                new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setConcurrentConsumers(3);
         factory.setMaxConcurrentConsumers(10);
