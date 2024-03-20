@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Slf4j
@@ -29,8 +31,6 @@ public class DeadLetterConsumer {
                 .uri(slackUrl)
                 .bodyValue("{\"text\": \"Dead letter received: " + message + "\"}")
                 .retrieve()
-                .bodyToMono(String.class)
-                .doOnSuccess(s -> log.info("Slack message sent: {}", s))
-                .subscribe();
+                .onStatus(HttpStatusCode::isError, ClientResponse::createException);
     }
 }

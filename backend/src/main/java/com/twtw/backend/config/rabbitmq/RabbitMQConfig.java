@@ -3,11 +3,10 @@ package com.twtw.backend.config.rabbitmq;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twtw.backend.global.constant.RabbitMQConstant;
 import com.twtw.backend.global.properties.RabbitMQProperties;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -15,6 +14,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.backoff.FixedBackOffPolicy;
+import org.springframework.retry.policy.SimpleRetryPolicy;
+import org.springframework.retry.support.RetryTemplate;
 
 @EnableRabbit
 @Configuration
@@ -120,5 +122,31 @@ public class RabbitMQConfig {
         rabbitAdmin.declareBinding(deadLetterBinding());
 
         return rabbitAdmin;
+    }
+
+    @Bean
+    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+        final SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setConcurrentConsumers(3);
+        factory.setMaxConcurrentConsumers(10);
+        factory.setRetryTemplate(retryTemplate());
+        return factory;
+    }
+
+    @Bean
+    public RetryTemplate retryTemplate() {
+        final RetryTemplate retryTemplate = new RetryTemplate();
+
+        final SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
+        retryPolicy.setMaxAttempts(3);
+
+        final FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
+        backOffPolicy.setBackOffPeriod(3000);
+
+        retryTemplate.setRetryPolicy(retryPolicy);
+        retryTemplate.setBackOffPolicy(backOffPolicy);
+
+        return retryTemplate;
     }
 }
