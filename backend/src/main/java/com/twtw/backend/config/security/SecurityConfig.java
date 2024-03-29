@@ -18,6 +18,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private static final String[] AUTH_WHITELIST = {
+            "/auth/refresh",
+            "/auth/save",
+            "/auth/login",
+            "/member/duplicate/**",
+            "/location/**",
+            "/actuator/**"};
     private final JwtFilter jwtFilter;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -30,14 +38,7 @@ public class SecurityConfig {
                 .formLogin(f -> f.disable())
                 .authorizeHttpRequests(
                         x ->
-                                x.requestMatchers(
-                                                "/auth/refresh",
-                                                "/auth/save",
-                                                "/auth/login",
-                                                "/member/duplicate/**",
-                                                "/location/**",
-                                                "/actuator/**",
-                                                "/member/test/**")
+                                x.requestMatchers(AUTH_WHITELIST)
                                         .permitAll()
                                         .anyRequest()
                                         .authenticated())
