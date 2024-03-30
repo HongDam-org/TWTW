@@ -10,5 +10,6 @@ import java.util.UUID;
 @Repository
 public interface NotificationRepository {
     Notification save(final Notification notification);
+
     Optional<Notification> findById(final UUID id);
 }
