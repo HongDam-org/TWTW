@@ -28,7 +28,7 @@ public class Notification implements Auditable {
 
     @Id
     @Column(columnDefinition = "BINARY(16)")
-    private final UUID id = UlidCreator.getMonotonicUlid().toUuid();
+    private UUID id = UlidCreator.getMonotonicUlid().toUuid();
 
     @Column(nullable = false)
     private String title;

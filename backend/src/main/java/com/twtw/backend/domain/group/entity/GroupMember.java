@@ -30,11 +30,11 @@ public class GroupMember implements Auditable {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id = UlidCreator.getMonotonicUlid().toUuid();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
