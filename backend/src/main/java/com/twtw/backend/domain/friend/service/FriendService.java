@@ -12,6 +12,7 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.domain.notification.dto.NotificationRequest;
+import com.twtw.backend.domain.notification.entity.NotificationType;
 import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
@@ -67,7 +68,8 @@ public class FriendService {
                         deviceToken,
                         NotificationTitle.FRIEND_REQUEST_TITLE.getName(),
                         NotificationBody.FRIEND_REQUEST_BODY.toNotificationBody(nickname),
-                        id.toString()));
+                        id.toString()),
+                NotificationType.FRIEND_REQUEST);
     }
 
     @Transactional

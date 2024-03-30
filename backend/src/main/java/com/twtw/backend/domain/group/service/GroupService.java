@@ -12,6 +12,7 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.domain.notification.dto.NotificationRequest;
+import com.twtw.backend.domain.notification.entity.NotificationType;
 import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
@@ -137,7 +138,8 @@ public class GroupService {
                         deviceToken,
                         NotificationTitle.GROUP_REQUEST_TITLE.getName(),
                         NotificationBody.GROUP_REQUEST_BODY.toNotificationBody(groupName),
-                        id.toString()));
+                        id.toString()),
+                NotificationType.GROUP_REQUEST);
     }
 
     public GroupInfoResponse getGroupInfoResponse(Group group) {

@@ -8,6 +8,7 @@ import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.member.service.MemberService;
 import com.twtw.backend.domain.notification.dto.NotificationRequest;
+import com.twtw.backend.domain.notification.entity.NotificationType;
 import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.domain.place.entity.Place;
 import com.twtw.backend.domain.place.service.PlaceService;
@@ -113,7 +114,8 @@ public class PlanService {
                         deviceToken,
                         NotificationTitle.PLAN_REQUEST_TITLE.getName(),
                         NotificationBody.PLAN_REQUEST_BODY.toNotificationBody(planName),
-                        id.toString()));
+                        id.toString()),
+                NotificationType.PLAN_REQUEST);
     }
 
     public void outPlan(PlanMemberRequest request) {
@@ -223,7 +225,8 @@ public class PlanService {
                         NotificationTitle.DESTINATION_CHANGE_TITLE.getName(),
                         NotificationBody.DESTINATION_CHANGE_BODY.toNotificationBody(
                                 destinationName),
-                        id.toString()));
+                        id.toString()),
+                NotificationType.DESTINATION_CHANGE);
     }
 
     @Transactional

@@ -5,15 +5,14 @@ import com.google.firebase.messaging.Aps;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 public class NotificationRequest {
 
     private static final ApnsConfig APNS_CONFIG =
@@ -27,6 +26,16 @@ public class NotificationRequest {
     private String title;
     private String body;
     private String id;
+
+    @Setter private String notificationId;
+
+    public NotificationRequest(
+            final String deviceToken, final String title, final String body, final String id) {
+        this.deviceToken = deviceToken;
+        this.title = title;
+        this.body = body;
+        this.id = id;
+    }
 
     public Message toMessage() {
         return Message.builder()
