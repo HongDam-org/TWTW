@@ -11,8 +11,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class AfterLoginResponse {
 
-    private static final AfterLoginResponse SIGNUP = AfterLoginResponse.builder()
-            .status(AuthStatus.SIGNUP).build();
+    private static final AfterLoginResponse SIGNUP =
+            AfterLoginResponse.builder().status(AuthStatus.SIGNUP).build();
     private AuthStatus status;
     private TokenDto tokenDto;
 

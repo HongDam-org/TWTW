@@ -20,12 +20,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
-            "/auth/refresh",
-            "/auth/save",
-            "/auth/login",
-            "/member/duplicate/**",
-            "/location/**",
-            "/actuator/**"};
+        "/auth/refresh",
+        "/auth/save",
+        "/auth/login",
+        "/member/duplicate/**",
+        "/location/**",
+        "/actuator/**"
+    };
     private final JwtFilter jwtFilter;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;

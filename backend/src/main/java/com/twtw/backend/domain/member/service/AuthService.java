@@ -87,8 +87,7 @@ public class AuthService {
         Optional<Member> member =
                 memberRepository.findByOAuthIdAndAuthType(clientId, request.getAuthType());
 
-        return member.map(this::getAfterLoginResponse)
-                .orElseGet(AfterLoginResponse::ofSignup);
+        return member.map(this::getAfterLoginResponse).orElseGet(AfterLoginResponse::ofSignup);
     }
 
     private AfterLoginResponse getAfterLoginResponse(final Member member) {
@@ -113,7 +112,8 @@ public class AuthService {
         Optional<Authentication> authentication =
                 tokenProvider.getAuthentication(tokenRequest.getAccessToken());
 
-        return authentication.map(auth -> getTokenDto(auth, refreshToken))
+        return authentication
+                .map(auth -> getTokenDto(auth, refreshToken))
                 .orElseThrow(AuthorityException::new);
     }
 

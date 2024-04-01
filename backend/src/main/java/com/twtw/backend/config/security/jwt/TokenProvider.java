@@ -4,8 +4,11 @@ import com.twtw.backend.domain.member.dto.response.TokenDto;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.entity.Role;
 import com.twtw.backend.global.exception.AuthorityException;
+
 import io.jsonwebtoken.*;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -63,9 +66,9 @@ public class TokenProvider {
 
                             addRole(role, authorities);
 
-                            return new UsernamePasswordAuthenticationToken(claims.getSubject(), "", authorities);
-                        }
-                );
+                            return new UsernamePasswordAuthenticationToken(
+                                    claims.getSubject(), "", authorities);
+                        });
     }
 
     private void addRole(final String role, final Collection<GrantedAuthority> authorities) {
@@ -93,17 +96,18 @@ public class TokenProvider {
     private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parserBuilder()
-                            .setSigningKey(key)
-                            .build()
-                            .parseClaimsJws(accessToken)
-                            .getBody();
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(accessToken)
+                    .getBody();
         } catch (ExpiredJwtException e) {
             throw new AuthorityException();
         }
     }
 
     public UsernamePasswordAuthenticationToken makeCredit(Member member) {
-        List<GrantedAuthority> role = List.of(new SimpleGrantedAuthority(member.getRole().toString()));
+        List<GrantedAuthority> role =
+                List.of(new SimpleGrantedAuthority(member.getRole().toString()));
 
         return new UsernamePasswordAuthenticationToken(member.getId().toString(), "", role);
     }
