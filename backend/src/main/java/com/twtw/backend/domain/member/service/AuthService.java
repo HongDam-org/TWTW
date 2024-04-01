@@ -17,6 +17,7 @@ import com.twtw.backend.domain.member.exception.RefreshTokenValidationException;
 import com.twtw.backend.domain.member.mapper.MemberMapper;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
+import com.twtw.backend.global.exception.AuthorityException;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -86,14 +87,14 @@ public class AuthService {
         Optional<Member> member =
                 memberRepository.findByOAuthIdAndAuthType(clientId, request.getAuthType());
 
-        if (member.isPresent()) {
-            Member curMember = member.get();
-            UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(curMember);
-            TokenDto tokenDto = saveRefreshToken(credit, curMember.getId().toString());
-            return new AfterLoginResponse(AuthStatus.SIGNIN, tokenDto);
-        }
+        return member.map(this::getAfterLoginResponse)
+                .orElseGet(AfterLoginResponse::ofSignup);
+    }
 
-        return new AfterLoginResponse(AuthStatus.SIGNUP, null);
+    private AfterLoginResponse getAfterLoginResponse(final Member member) {
+        UsernamePasswordAuthenticationToken credit = tokenProvider.makeCredit(member);
+        TokenDto tokenDto = saveRefreshToken(credit, member.getId().toString());
+        return new AfterLoginResponse(AuthStatus.SIGNIN, tokenDto);
     }
 
     /*
@@ -109,16 +110,19 @@ public class AuthService {
             throw new RefreshTokenValidationException();
         }
 
-        Authentication authentication =
+        Optional<Authentication> authentication =
                 tokenProvider.getAuthentication(tokenRequest.getAccessToken());
 
-        String userName = authentication.getName();
+        return authentication.map(auth -> getTokenDto(auth, refreshToken))
+                .orElseThrow(AuthorityException::new);
+    }
 
+    private TokenDto getTokenDto(final Authentication auth, final String refreshToken) {
+        String userName = auth.getName();
         if (!getRefreshTokenValue(userName).equals(refreshToken)) {
             throw new RefreshTokenInfoMismatchException();
         }
-
-        return saveRefreshToken(authentication, userName);
+        return saveRefreshToken(auth, auth.getName());
     }
 
     public String getRefreshTokenValue(String tokenKey) {
