@@ -40,6 +40,9 @@ public class Notification implements Auditable {
     private String idInfo;
 
     @Column(nullable = false)
+    private String deviceToken;
+
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private NotificationType type;
 
@@ -52,10 +55,12 @@ public class Notification implements Auditable {
             final String title,
             final String body,
             final String idInfo,
+            final String deviceToken,
             final NotificationType type) {
         this.title = title;
         this.body = body;
         this.idInfo = idInfo;
+        this.deviceToken = deviceToken;
         this.type = type;
     }
 

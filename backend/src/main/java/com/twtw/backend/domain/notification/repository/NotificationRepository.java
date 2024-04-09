@@ -4,6 +4,7 @@ import com.twtw.backend.domain.notification.entity.Notification;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,4 +13,6 @@ public interface NotificationRepository {
     Notification save(final Notification notification);
 
     Optional<Notification> findById(final UUID id);
+
+    List<Notification> findAllByIdIn(final List<UUID> ids);
 }
