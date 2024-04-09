@@ -15,11 +15,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class DeadLetterConsumer {
 
+    private static final String ALERT_URL = "https://hooks.slack.com/services/";
+    private static final String ALERT_MESSAGE = "{\"text\": \"Dead letter received: %s\"}";
     private final WebClient webClient;
     private final String slackUrl;
 
     public DeadLetterConsumer(@Value("${slack.url}") final String slackUrl) {
-        this.webClient = WebClient.create("https://hooks.slack.com/services/");
+        this.webClient = WebClient.create(ALERT_URL);
         this.slackUrl = slackUrl;
     }
 
@@ -29,7 +31,7 @@ public class DeadLetterConsumer {
         webClient
                 .post()
                 .uri(slackUrl)
-                .bodyValue("{\"text\": \"Dead letter received: " + message + "\"}")
+                .bodyValue(String.format(ALERT_MESSAGE, message))
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, ClientResponse::createException);
     }
