@@ -11,7 +11,7 @@ import org.mapstruct.MappingConstants.ComponentModel;
 public interface NotificationMapper {
 
     @Mapping(target = "notificationId", source = "notification.id")
-    @Mapping(target = "deviceToken", source = "notification.notificationType")
+    @Mapping(target = "deviceToken", source = "notification.deviceToken")
     @Mapping(target = "title", source = "notification.title")
     @Mapping(target = "body", source = "notification.body")
     @Mapping(target = "id", source = "notification.idInfo")
