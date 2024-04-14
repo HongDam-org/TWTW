@@ -41,12 +41,12 @@ public class LogIntroduction {
 
     @Before("allService() || allRepository()")
     public void serviceAndRepositoryLog(final JoinPoint joinPoint) {
-        logging(joinPoint, log::info);
+        logging(joinPoint, log::debug);
     }
 
     @Before("allClient() || allProducer() || allConsumer()")
-    public void clientLog(final JoinPoint joinPoint) {
-        logging(joinPoint, log::info);
+    public void externalSystemLog(final JoinPoint joinPoint) {
+        logging(joinPoint, log::debug);
     }
 
     private void logging(final JoinPoint joinPoint, final BiConsumer<String, String> consumer) {
