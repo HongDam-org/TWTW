@@ -16,6 +16,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class StompConfig implements WebSocketMessageBrokerConfigurer {
 
+    private static final int HEART_BEAT_INTERVAL = 10_000;
     private final RabbitMQProperties rabbitMQProperties;
 
     @Override
@@ -31,7 +32,9 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
                 .setRelayHost(rabbitMQProperties.getHost())
                 .setRelayPort(61613)
                 .setClientPasscode(rabbitMQProperties.getPassword())
-                .setClientLogin(rabbitMQProperties.getUsername());
+                .setClientLogin(rabbitMQProperties.getUsername())
+                .setSystemHeartbeatSendInterval(HEART_BEAT_INTERVAL)
+                .setSystemHeartbeatReceiveInterval(HEART_BEAT_INTERVAL);
 
         registry.setApplicationDestinationPrefixes("/pub");
     }

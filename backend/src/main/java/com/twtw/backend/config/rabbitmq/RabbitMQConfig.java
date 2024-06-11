@@ -57,8 +57,8 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public TopicExchange notificationTopicExchange() {
-        return new TopicExchange(RabbitMQConstant.NOTIFICATION_EXCHANGE.getName());
+    public DirectExchange notificationTopicExchange() {
+        return new DirectExchange(RabbitMQConstant.NOTIFICATION_EXCHANGE.getName());
     }
 
     @Bean
