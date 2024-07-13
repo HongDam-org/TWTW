@@ -6,7 +6,7 @@ import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathRequest;
 import com.twtw.backend.domain.path.dto.client.ped.SearchPedPathResponse;
 import com.twtw.backend.global.client.MapClient;
 
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class PathService {
         return carPathClient.request(request);
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "carPath",
             key = "'searchCarPath'.concat(#request.toString())",
             cacheManager = "cacheManager")
@@ -48,7 +48,7 @@ public class PathService {
         return pedPathClient.request(request);
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "pedPath",
             key = "'searchPedPath'.concat(#request.toString())",
             cacheManager = "cacheManager")

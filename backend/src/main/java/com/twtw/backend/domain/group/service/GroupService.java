@@ -18,7 +18,7 @@ import com.twtw.backend.global.constant.NotificationBody;
 import com.twtw.backend.global.constant.NotificationTitle;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class GroupService {
         this.fcmProducer = fcmProducer;
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getGroupByIdWithCache",
             key = "'getGroupWithCache'.concat(#groupId)",
             cacheManager = "cacheManager")
@@ -152,7 +152,7 @@ public class GroupService {
         return authService.getMemberIdValue();
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getMyGroupsWithCache",
             key = "'getMyGroupsWithCache'.concat(#root.target.getMemberIdValue())",
             cacheManager = "cacheManager")

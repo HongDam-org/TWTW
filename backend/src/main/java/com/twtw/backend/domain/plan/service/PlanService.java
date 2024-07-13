@@ -32,7 +32,7 @@ import com.twtw.backend.global.exception.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -124,7 +124,7 @@ public class PlanService {
         plan.deleteMember(member);
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getPlanByIdWithCache",
             key = "'getPlanByIdWithCache'.concat(#id)",
             cacheManager = "cacheManager")
@@ -171,7 +171,7 @@ public class PlanService {
         return authService.getMemberIdValue();
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getPlansWithCache",
             key = "'getPlansWithCache'.concat(#root.target.getMemberIdValue())",
             cacheManager = "cacheManager")
@@ -243,7 +243,7 @@ public class PlanService {
         plan.deleteInvite(member);
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getPlansByGroupIdWithCache",
             key = "'getPlansByGroupIdWithCache'.concat(#groupId)",
             cacheManager = "cacheManager")

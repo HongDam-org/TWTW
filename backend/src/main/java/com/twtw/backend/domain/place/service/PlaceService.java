@@ -10,7 +10,7 @@ import com.twtw.backend.global.client.KakaoMapClient;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class PlaceService {
     private final PlaceMapper placeMapper;
     private final KakaoMapClient<SurroundPlaceRequest, SurroundPlaceResponse> surroundPlaceClient;
 
-    @CacheEvict(
+    @CachePut(
             value = "surroundPlace",
             key = "'searchSurroundPlace'.concat(#surroundPlaceRequest.toString())",
             cacheManager = "cacheManager")

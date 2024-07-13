@@ -21,7 +21,7 @@ import com.twtw.backend.utils.QueryParseUtils;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,7 +90,7 @@ public class FriendService {
         return authService.getMemberIdValue();
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getFriendsWithCache",
             key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue())",
             cacheManager = "cacheManager")
@@ -119,7 +119,7 @@ public class FriendService {
         return friendMapper.toResponses(friends);
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getFriendsByStatusWithCache",
             key =
                     "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#friendStatus.name())",
@@ -152,7 +152,7 @@ public class FriendService {
         return friendMapper.toResponses(friends);
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getFriendsByNicknameWithCache",
             key = "'getFriendsWithCache'.concat(#root.target.getMemberIdValue()).concat(#nickname)",
             cacheManager = "cacheManager")

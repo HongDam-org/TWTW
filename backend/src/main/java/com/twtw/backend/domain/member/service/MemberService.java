@@ -9,7 +9,7 @@ import com.twtw.backend.domain.plan.entity.Plan;
 import com.twtw.backend.global.exception.EntityNotFoundException;
 import com.twtw.backend.utils.QueryParseUtils;
 
-import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +44,7 @@ public class MemberService {
         return authService.getMemberIdValue();
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getMemberByNicknameWithCache",
             key = "'getMemberWithCache'.concat(#root.target.getMemberIdValue()).concat(#nickname)",
             cacheManager = "cacheManager")
@@ -94,7 +94,7 @@ public class MemberService {
         return memberRepository.findAllByIds(friendMemberIds);
     }
 
-    @CacheEvict(
+    @CachePut(
             value = "getMemberByIdWithCache",
             key = "'getMemberByIdWithCache'.concat(#root.target.getMemberIdValue())",
             cacheManager = "cacheManager")
