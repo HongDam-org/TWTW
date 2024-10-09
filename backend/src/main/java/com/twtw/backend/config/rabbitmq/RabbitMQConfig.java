@@ -16,7 +16,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.retry.backoff.FixedBackOffPolicy;
+import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
@@ -132,8 +132,8 @@ public class RabbitMQConfig {
         final SimpleRabbitListenerContainerFactory factory =
                 new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
-        factory.setConcurrentConsumers(3);
-        factory.setMaxConcurrentConsumers(10);
+        factory.setConcurrentConsumers(20);
+        factory.setMaxConcurrentConsumers(200);
         factory.setRetryTemplate(retryTemplate());
         return factory;
     }
@@ -145,8 +145,10 @@ public class RabbitMQConfig {
         final SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
         retryPolicy.setMaxAttempts(3);
 
-        final FixedBackOffPolicy backOffPolicy = new FixedBackOffPolicy();
-        backOffPolicy.setBackOffPeriod(3000);
+        final ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
+        backOffPolicy.setInitialInterval(10_000);
+        backOffPolicy.setMultiplier(1.5);
+        backOffPolicy.setMaxInterval(60_000);
 
         retryTemplate.setRetryPolicy(retryPolicy);
         retryTemplate.setBackOffPolicy(backOffPolicy);
