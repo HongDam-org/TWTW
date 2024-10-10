@@ -13,6 +13,9 @@ public enum RabbitMQConstant {
     NOTIFICATION_QUEUE("notification.queue"),
     NOTIFICATION_EXCHANGE("notification"),
     NOTIFICATION_ROUTING_KEY("notification"),
+    NOTIFICATION_RETRY_QUEUE("notification.retry.queue"),
+    NOTIFICATION_RETRY_EXCHANGE("notification.retry"),
+    NOTIFICATION_RETRY_ROUTING_KEY("notification.retry"),
     DEAD_LETTER_QUEUE("deadletter.queue"),
     DEAD_LETTER_EXCHANGE("deadletter"),
     DEAD_LETTER_ROUTING_KEY("deadletter");

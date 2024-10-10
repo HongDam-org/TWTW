@@ -16,6 +16,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
@@ -50,10 +51,7 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue notificationQueue() {
-        return QueueBuilder.durable(RabbitMQConstant.NOTIFICATION_QUEUE.getName())
-                .deadLetterExchange(RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
-                .deadLetterRoutingKey(RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
-                .build();
+        return QueueBuilder.durable(RabbitMQConstant.NOTIFICATION_QUEUE.getName()).build();
     }
 
     @Bean
@@ -66,6 +64,26 @@ public class RabbitMQConfig {
         return BindingBuilder.bind(notificationQueue())
                 .to(notificationTopicExchange())
                 .with(RabbitMQConstant.NOTIFICATION_ROUTING_KEY.getName());
+    }
+
+    @Bean
+    public Queue notificationRetryQueue() {
+        return QueueBuilder.durable(RabbitMQConstant.NOTIFICATION_RETRY_QUEUE.getName())
+                .deadLetterExchange(RabbitMQConstant.DEAD_LETTER_EXCHANGE.getName())
+                .deadLetterRoutingKey(RabbitMQConstant.DEAD_LETTER_ROUTING_KEY.getName())
+                .build();
+    }
+
+    @Bean
+    public DirectExchange notificationRetryTopicExchange() {
+        return new DirectExchange(RabbitMQConstant.NOTIFICATION_RETRY_EXCHANGE.getName());
+    }
+
+    @Bean
+    public Binding notificationRetryBinding() {
+        return BindingBuilder.bind(notificationRetryQueue())
+                .to(notificationRetryTopicExchange())
+                .with(RabbitMQConstant.NOTIFICATION_RETRY_ROUTING_KEY.getName());
     }
 
     @Bean
@@ -119,6 +137,10 @@ public class RabbitMQConfig {
         rabbitAdmin.declareExchange(notificationTopicExchange());
         rabbitAdmin.declareBinding(notificationBinding());
 
+        rabbitAdmin.declareQueue(notificationRetryQueue());
+        rabbitAdmin.declareExchange(notificationRetryTopicExchange());
+        rabbitAdmin.declareBinding(notificationRetryBinding());
+
         rabbitAdmin.declareQueue(deadLetterQueue());
         rabbitAdmin.declareExchange(deadLetterExchange());
         rabbitAdmin.declareBinding(deadLetterBinding());
@@ -126,6 +148,7 @@ public class RabbitMQConfig {
         return rabbitAdmin;
     }
 
+    @Primary
     @Bean
     public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory(
             ConnectionFactory connectionFactory) {
@@ -134,6 +157,17 @@ public class RabbitMQConfig {
         factory.setConnectionFactory(connectionFactory);
         factory.setConcurrentConsumers(20);
         factory.setMaxConcurrentConsumers(200);
+        return factory;
+    }
+
+    @Bean
+    public SimpleRabbitListenerContainerFactory retryRabbitListenerContainerFactory(
+            ConnectionFactory connectionFactory) {
+        final SimpleRabbitListenerContainerFactory factory =
+                new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setConcurrentConsumers(5);
+        factory.setMaxConcurrentConsumers(50);
         factory.setRetryTemplate(retryTemplate());
         return factory;
     }
