@@ -155,8 +155,15 @@ public class RabbitMQConfig {
         final SimpleRabbitListenerContainerFactory factory =
                 new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
+<<<<<<< Updated upstream
         factory.setConcurrentConsumers(20);
         factory.setMaxConcurrentConsumers(200);
+<<<<<<< HEAD
+=======
+=======
+        factory.setConcurrentConsumers(10);
+        factory.setMaxConcurrentConsumers(50);
+>>>>>>> 8093b8b ([FIX] thread pool size setting)
         return factory;
     }
 
@@ -167,7 +174,12 @@ public class RabbitMQConfig {
                 new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setConcurrentConsumers(5);
+<<<<<<< HEAD
         factory.setMaxConcurrentConsumers(50);
+=======
+        factory.setMaxConcurrentConsumers(25);
+>>>>>>> Stashed changes
+>>>>>>> 8093b8b ([FIX] thread pool size setting)
         factory.setRetryTemplate(retryTemplate());
         return factory;
     }
