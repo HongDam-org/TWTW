@@ -55,8 +55,8 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
     @Bean
     public ThreadPoolTaskExecutor inboundTaskExecutor() {
         final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(15);
-        executor.setMaxPoolSize(150);
+        executor.setCorePoolSize(10);
+        executor.setMaxPoolSize(20);
         executor.setThreadNamePrefix("stomp-inbound-");
         executor.initialize();
         return executor;
@@ -65,8 +65,8 @@ public class StompConfig implements WebSocketMessageBrokerConfigurer {
     @Bean
     public ThreadPoolTaskExecutor outboundTaskExecutor() {
         final ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(20);
-        executor.setMaxPoolSize(200);
+        executor.setCorePoolSize(10);
+        executor.setMaxPoolSize(20);
         executor.setThreadNamePrefix("stomp-outbound-");
         executor.initialize();
         return executor;
