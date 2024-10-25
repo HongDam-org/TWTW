@@ -132,8 +132,24 @@ public class RabbitMQConfig {
         final SimpleRabbitListenerContainerFactory factory =
                 new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
+<<<<<<< Updated upstream
         factory.setConcurrentConsumers(20);
         factory.setMaxConcurrentConsumers(200);
+=======
+        factory.setConcurrentConsumers(10);
+        factory.setMaxConcurrentConsumers(50);
+        return factory;
+    }
+
+    @Bean
+    public SimpleRabbitListenerContainerFactory retryRabbitListenerContainerFactory(
+            ConnectionFactory connectionFactory) {
+        final SimpleRabbitListenerContainerFactory factory =
+                new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+        factory.setConcurrentConsumers(5);
+        factory.setMaxConcurrentConsumers(25);
+>>>>>>> Stashed changes
         factory.setRetryTemplate(retryTemplate());
         return factory;
     }
