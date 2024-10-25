@@ -159,11 +159,17 @@ public class RabbitMQConfig {
         factory.setConcurrentConsumers(20);
         factory.setMaxConcurrentConsumers(200);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
         factory.setConcurrentConsumers(10);
         factory.setMaxConcurrentConsumers(50);
 >>>>>>> 8093b8b ([FIX] thread pool size setting)
+=======
+=======
+        factory.setConcurrentConsumers(10);
+        factory.setMaxConcurrentConsumers(50);
+>>>>>>> origin/feat/thread-pool-retry-backoff
         return factory;
     }
 
@@ -175,11 +181,16 @@ public class RabbitMQConfig {
         factory.setConnectionFactory(connectionFactory);
         factory.setConcurrentConsumers(5);
 <<<<<<< HEAD
+<<<<<<< HEAD
         factory.setMaxConcurrentConsumers(50);
 =======
         factory.setMaxConcurrentConsumers(25);
 >>>>>>> Stashed changes
 >>>>>>> 8093b8b ([FIX] thread pool size setting)
+=======
+        factory.setMaxConcurrentConsumers(25);
+>>>>>>> Stashed changes
+>>>>>>> origin/feat/thread-pool-retry-backoff
         factory.setRetryTemplate(retryTemplate());
         return factory;
     }
