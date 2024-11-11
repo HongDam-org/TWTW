@@ -1,4 +1,4 @@
-package com.twtw.backend.support.stub;
+package com.twtw.backend.support.fake;
 
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.repository.FriendCommandRepository;
@@ -17,43 +17,43 @@ import java.util.Map;
 import java.util.UUID;
 
 @TestConfiguration
-public class StubConfig {
+public class FakeConfig {
 
     private final Map<UUID, Friend> map = new HashMap<>();
 
     @Bean
     @Primary
-    public FriendQueryRepository stubFriendQueryRepository() {
-        return new StubFriendQueryRepository(map);
+    public FriendQueryRepository fakeFriendQueryRepository() {
+        return new FakeFriendQueryRepository(map);
     }
 
     @Bean
     @Primary
-    public FriendCommandRepository stubFriendCommandRepository() {
-        return new StubFriendCommandRepository(map);
+    public FriendCommandRepository fakeFriendCommandRepository() {
+        return new FakeFriendCommandRepository(map);
     }
 
     @Bean
     @Primary
-    public RefreshTokenRepository refreshTokenRepository() {
-        return new StubRefreshTokenRepository();
+    public RefreshTokenRepository fakeRefreshTokenRepository() {
+        return new FakeRefreshTokenRepository();
     }
 
     @Bean
     @Primary
-    public GroupRepository groupRepository() {
-        return new StubGroupRepository();
+    public GroupRepository fakeGroupRepository() {
+        return new FakeGroupRepository();
     }
 
     @Bean
     @Primary
-    public MemberRepository memberRepository() {
-        return new StubMemberRepository();
+    public MemberRepository fakeMemberRepository() {
+        return new FakeMemberRepository();
     }
 
     @Bean
     @Primary
-    public PlanRepository planRepository() {
-        return new StubPlanRepository();
+    public PlanRepository fakePlanRepository() {
+        return new FakePlanRepository();
     }
 }

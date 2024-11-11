@@ -10,8 +10,8 @@ import com.twtw.backend.domain.member.entity.AuthType;
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
+import com.twtw.backend.support.fake.FakeConfig;
 import com.twtw.backend.support.service.ServiceTest;
-import com.twtw.backend.support.stub.StubConfig;
 import com.twtw.backend.support.testcontainer.ContainerTestConfig;
 
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 @ServiceTest
 @ContextConfiguration(
         initializers = {ContainerTestConfig.class},
-        classes = StubConfig.class)
+        classes = FakeConfig.class)
 @DisplayName("AuthService의")
 class AuthServiceTest {
 

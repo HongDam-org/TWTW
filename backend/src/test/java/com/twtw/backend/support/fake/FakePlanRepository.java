@@ -1,4 +1,4 @@
-package com.twtw.backend.support.stub;
+package com.twtw.backend.support.fake;
 
 import com.twtw.backend.domain.member.entity.Member;
 import com.twtw.backend.domain.plan.entity.Plan;
@@ -6,7 +6,7 @@ import com.twtw.backend.domain.plan.repository.PlanRepository;
 
 import java.util.*;
 
-public class StubPlanRepository implements PlanRepository {
+public class FakePlanRepository implements PlanRepository {
 
     private final Map<UUID, Plan> map = new HashMap<>();
 

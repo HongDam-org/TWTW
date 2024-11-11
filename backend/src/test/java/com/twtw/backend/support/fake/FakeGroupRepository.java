@@ -1,4 +1,4 @@
-package com.twtw.backend.support.stub;
+package com.twtw.backend.support.fake;
 
 import com.twtw.backend.domain.group.entity.Group;
 import com.twtw.backend.domain.group.repository.GroupRepository;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class StubGroupRepository implements GroupRepository {
+public class FakeGroupRepository implements GroupRepository {
 
     private final Map<UUID, Group> map = new HashMap<>();
 

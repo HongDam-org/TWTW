@@ -29,11 +29,11 @@ class FriendServiceTest extends LoginTest {
     @Autowired private FriendService friendService;
 
     @Autowired
-    @Qualifier("stubFriendQueryRepository")
+    @Qualifier("fakeFriendQueryRepository")
     private FriendQueryRepository friendQueryRepository;
 
     @Autowired
-    @Qualifier("stubFriendCommandRepository")
+    @Qualifier("fakeFriendCommandRepository")
     private FriendCommandRepository friendCommandRepository;
 
     @Autowired private MemberRepository memberRepository;

@@ -9,7 +9,7 @@ import com.twtw.backend.domain.member.repository.MemberRepository;
 import com.twtw.backend.domain.member.service.AuthService;
 import com.twtw.backend.domain.notification.messagequeue.FcmProducer;
 import com.twtw.backend.fixture.member.MemberEntityFixture;
-import com.twtw.backend.support.stub.StubConfig;
+import com.twtw.backend.support.fake.FakeConfig;
 import com.twtw.backend.support.testcontainer.ContainerTestConfig;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -20,13 +20,13 @@ import org.springframework.test.context.ContextConfiguration;
 @ServiceTest
 @ContextConfiguration(
         initializers = {ContainerTestConfig.class},
-        classes = StubConfig.class)
+        classes = FakeConfig.class)
 public abstract class LoginTest {
 
     @MockBean protected AuthService authService;
+    protected Member loginUser;
     @MockBean private FcmProducer fcmProducer;
     @Autowired private MemberRepository memberRepository;
-    protected Member loginUser;
 
     @BeforeEach
     public void setup() {

@@ -1,4 +1,4 @@
-package com.twtw.backend.support.stub;
+package com.twtw.backend.support.fake;
 
 import com.twtw.backend.domain.member.entity.RefreshToken;
 import com.twtw.backend.domain.member.repository.RefreshTokenRepository;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class StubRefreshTokenRepository implements RefreshTokenRepository {
+public class FakeRefreshTokenRepository implements RefreshTokenRepository {
 
     private final Map<UUID, RefreshToken> map = new HashMap<>();
 

@@ -1,4 +1,4 @@
-package com.twtw.backend.support.stub;
+package com.twtw.backend.support.fake;
 
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.repository.FriendCommandRepository;
@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class StubFriendCommandRepository implements FriendCommandRepository {
+public class FakeFriendCommandRepository implements FriendCommandRepository {
 
     private final Map<UUID, Friend> map;
 

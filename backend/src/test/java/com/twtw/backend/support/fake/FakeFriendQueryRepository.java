@@ -1,4 +1,4 @@
-package com.twtw.backend.support.stub;
+package com.twtw.backend.support.fake;
 
 import com.twtw.backend.domain.friend.entity.Friend;
 import com.twtw.backend.domain.friend.entity.FriendStatus;
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.*;
 
 @RequiredArgsConstructor
-public class StubFriendQueryRepository implements FriendQueryRepository {
+public class FakeFriendQueryRepository implements FriendQueryRepository {
 
     private final Map<UUID, Friend> map;
 
